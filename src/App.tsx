@@ -65,6 +65,7 @@ const DATA = {
     ร้วงสัน: "อย่าเย็บลายเข้านุ่ง จะได้ห่มเมื่อตาย",
     เต่าเร้า: "อย่าถมชีไฟ เตาไฟ ผีดั้งจักชัง",
     ก่าเส็ด: "อย่าซื้อวัวควายมาคอก ผีด้ำบ่ดี",
+    ร้วงเร้า: "อย่าตีฆ้องกลอง ผีจะกินตน (ห้ามทำการมงคล)",
     กาบไค้: "อย่าดื่มเหล้าในงานเลี้ยง",
   },
   masterRules: {
@@ -99,9 +100,21 @@ const DATA = {
     ["สิทธิ","โชค","ชัย","ปลอด","รุ่ง","เสีย","คาบ","ห้าม"],
     ["โชค","ชัย","ปลอด","รุ่ง","เสีย","คาบ","ห้าม","สิทธิ"],
   ],
-  maeMue: ["กาบ","ดับ","รวาย","เมือง","เปิก","กัด","กด","ร้วง","เต่า","ก่า"],
+  maeMue: ["เปิก", "กัด", "กด", "ร้วง", "เต่า", "กา", "กาบ", "ดับ", "รวาย", "เมือง"],
   lukMue: ["ไจ้","เป้า","ยี่","เหม้า","สี","ไส้","สะง้า","เม็ด","สัน","เร้า","เส็ด","ไค้"],
   monthNames: ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"],
+  nawaDithiNames: ["กัลยาณะ", "อัตถะ", "เกยยะ", "วัคคะ", "มรณะ", "ยศะ", "ลาภะ", "พะละ", "วิชัยยะ"],
+  nawaDithiDescs: {
+    "อัตถะ": "จะได้ลาภ มีทรัพย์สินเงินทอง",
+    "เกยยะ": "จะมีชัยชนะในการทั้งปวง",
+    "วัคคะ": "จะมีบริวารพรั่งพร้อม",
+    "มรณะ": "จะฉิบหาย มีอันตราย (ควรเลี่ยง)",
+    "ยศะ": "จะมีชื่อเสียง เกียรติยศ",
+    "ลาภะ": "จะได้ลาภลอย พรั่งพร้อมด้วยโภคทรัพย์",
+    "พะละ": "จะมีกำลัง วาสนา บารมี",
+    "วิชัยยะ": "จะชนะศัตรู หมู่มาร",
+    "กัลยาณะ": "จะมีความสุข ความเจริญ"
+  },
 };
 
 // ============================================================
@@ -189,35 +202,45 @@ function getLannaDate(date) {
   const fahVal = (cs % 108 + (parseInt(lannaMonthStr) || 0) + currentKham) * 5 - 7;
   const fahTeeSang = (fahVal % 9 < 0) ? (fahVal % 9 + 9) : (fahVal % 9);
 
+
   const zodiacList = [
-    { name: "เส็ด", thai: "จอ", emoji: "🐶", flower: "ดอกจำปี", tree: "ต้นคูน" },
-    { name: "ไก้", thai: "กุน", emoji: "🐘", flower: "ดอกหอมไกล", tree: "ต้นพุทรา" },
-    { name: "ไจ้", thai: "ชวด", emoji: "🐭", flower: "ดอกบัวหลวง", tree: "ต้นมะพร้าว" },
-    { name: "เป้า", thai: "ฉลู", emoji: "🐮", flower: "ดอกสลิด", tree: "ต้นตาล" },
-    { name: "ยี่", thai: "ขาล", emoji: "🐯", flower: "ดอกรัง", tree: "ต้นรัง" },
-    { name: "เหม้า", thai: "เถาะ", emoji: "🐰", flower: "ดอกกุ่ม", tree: "ต้นงิ้ว" },
-    { name: "สี", thai: "มะโรง", emoji: "🐉", flower: "ดอกพยอม", tree: "ต้นไผ่" },
-    { name: "ไส้", thai: "มะเส็ง", emoji: "🐍", flower: "ดอกบัวแดง", tree: "ต้นโพธิ์" },
-    { name: "สะง้า", thai: "มะเมีย", emoji: "🐴", flower: "ดอกเล็บมือนาง", tree: "ต้นตะเคียน" },
-    { name: "เม็ด", thai: "มะแม", emoji: "🐑", flower: "ดอกชบา", tree: "ต้นทองหลาง" },
-    { name: "สัน", thai: "วอก", emoji: "🐒", flower: "ดอกพิกุล", tree: "ต้นขนุน" },
-    { name: "เล้า", thai: "ระกา", emoji: "🐔", flower: "ดอกบัว", tree: "ต้นทองกวาว" }
+    { name: "เส็ด", thai: "จอ", emoji: "", flower: "ดอกจำปี", tree: "ต้นคูน" },
+    { name: "ไก้", thai: "กุน", emoji: "", flower: "ดอกหอมไกล", tree: "ต้นพุทรา" },
+    { name: "ไจ้", thai: "ชวด", emoji: "", flower: "ดอกบัวหลวง", tree: "ต้นมะพร้าว" },
+    { name: "เป้า", thai: "ฉลู", emoji: "", flower: "ดอกสลิด", tree: "ต้นตาล" },
+    { name: "ยี่", thai: "ขาล", emoji: "", flower: "ดอกรัง", tree: "ต้นรัง" },
+    { name: "เหม้า", thai: "เถาะ", emoji: "", flower: "ดอกกุ่ม", tree: "ต้นงิ้ว" },
+    { name: "สี", thai: "มะโรง", emoji: "", flower: "ดอกพยอม", tree: "ต้นไผ่" },
+    { name: "ไส้", thai: "มะเส็ง", emoji: "", flower: "ดอกบัวแดง", tree: "ต้นโพธิ์" },
+    { name: "สะง้า", thai: "มะเมีย", emoji: "", flower: "ดอกเล็บมือนาง", tree: "ต้นตะเคียน" },
+    { name: "เม็ด", thai: "มะแม", emoji: "", flower: "ดอกชบา", tree: "ต้นทองหลาง" },
+    { name: "สัน", thai: "วอก", emoji: "", flower: "ดอกพิกุล", tree: "ต้นขนุน" },
+    { name: "เล้า", thai: "ระกา", emoji: "", flower: "ดอกบัว", tree: "ต้นทองกวาว" }
   ];
   const maePeeList = ["เปิก", "กัด", "กด", "ร้วง", "เต่า", "กา", "กาบ", "ดับ", "รวาย", "เมือง"];
   const zInfo = zodiacList[cs % 12];
   const yearZodiac = maePeeList[cs % 10] + zInfo.name + " (" + zInfo.thai + ")";
+
+  const nawaIdx = (cs + currentMonth + currentKham) % 9;
+  const nawaName = DATA.nawaDithiNames[nawaIdx];
+  const nawaDesc = DATA.nawaDithiDescs[nawaName];
+  const kaoKongName = Object.keys(DATA.kaoKongInfo)[(wanThaiIdx % 12 - {1:7,2:6,3:5,4:4,5:3,6:2,7:1,8:0,9:11,10:10,11:9,12:8}[currentMonth] + 12) % 12];
 
   return {
     date, lannaMonth: lannaMonthStr, lunarDay: currentKham, phase: currentPhase, rawLunarDay, dow, wanThai,
     wanThaiDesc: DATA.wanThaiDetailed[wanThai] || "",
     sitthi, isSia: (siaCheck[currentMonth] || []).includes(dow), isJom: (jomCheck[currentMonth] || []).includes(dow),
     isFoo: (fooCheck[currentMonth] || []).includes(dow), isSin, isHuaRiang: [2,4,6,8,10,11,12,13].includes(currentKham),
+    isWanMutju: (currentMonth === 5 && dow === 0) || (currentMonth === 6 && dow === 1) || (currentMonth === 7 && dow === 2) || (currentMonth === 8 && dow === 3) || (currentMonth === 9 && dow === 4) || (currentMonth === 10 && dow === 5) || (currentMonth === 11 && dow === 6),
+    isRahuTok: [4, 8, 12, 16, 20, 24, 28].includes(rawLunarDay),
     dithiName: {1:"นันทา",2:"ภัทรา",3:"ไชยา",4:"ริตตา",5:"ปุณณา",6:"นันทา",7:"ภัทรา",8:"ไชยา",9:"ริตตา",10:"ปุณณา",11:"นันทา",12:"ภัทรา",13:"ไชยา",14:"ริตตา",15:"ปุณณา",16:"นันทา",17:"ภัทรา",18:"ไชยา",19:"ริตตา",20:"ปุณณา",21:"นันทา",22:"ภัทรา",23:"ไชยา",24:"ริตตา",25:"ปุณณา",26:"นันทา",27:"ภัทรา",28:"ไชยา",29:"ริตตา",30:"ปุณณา"}[currentKham],
     master: (DATA.masterRules[(dow-(rawLunarDay-1)%7+7)%7]||{})[rawLunarDay] || {n:"ปรกติ",s:"ปรกติ"},
-    sri: {0:"ใต้",1:"ตกแจ่งใต้",2:"ตก",3:"ตกแจ่งเหนือ",4:"ออกแจ่งเหนือ",5:"ออกแจ่งใต้",6:"เหนือ"}[dow],
-    kala: {0:"เหนือ",1:"ออกแจ่งเหนือ",2:"ออก",3:"ออกแจ่งใต้",4:"ตกแจ่งใต้",5:"ตกแจ่งเหนือ",6:"ใต้"}[dow],
-    jangrai: {0:"ตก",1:"ออก",2:"เหนือ",3:"ใต้",4:"ตก",5:"ออก",6:"ตก"}[dow],
-    kaoKong: Object.keys(DATA.kaoKongInfo)[(wanThaiIdx % 12 - {1:7,2:6,3:5,4:4,5:3,6:2,7:1,8:0,9:11,10:10,11:9,12:8}[currentMonth] + 12) % 12],
+    sri: {0:"ใต้",1:"วันตกแจ่งใต้",2:"วันตก",3:"วันตกแจ่งเหนือ",4:"วันออกแจ่งเหนือ",5:"วันออกแจ่งใต้",6:"เหนือ"}[dow],
+    kala: {0:"เหนือ",1:"วันออกแจ่งเหนือ",2:"วันออก",3:"วันออกแจ่งใต้",4:"วันตกแจ่งใต้",5:"วันตกแจ่งเหนือ",6:"ใต้"}[dow],
+    jangrai: {0:"วันตก",1:"วันออก",2:"เหนือ",3:"ใต้",4:"วันตก",5:"วันออก",6:"วันตก"}[dow],
+    kaoKong: kaoKongName,
+    nawaName, nawaDesc,
+    kaoKongDesc: DATA.kaoKongInfo[kaoKongName],
     yam: DATA.yamData[dow], cs, fahTeeSang, isFahTeeSangGood: [2,4,5,6].includes(fahTeeSang),
     phiKinSat: {1:[4],2:[5],3:[6],4:[0],5:[1],6:[2],7:[3],8:[4],9:[5],10:[6],11:[0],12:[1]}[currentMonth]?.includes(dow) ? "ผีกินสัตว์" : null,
     huaKhaoOk: [1,8,15,22].includes(currentKham) ? "วันหัวเข้า" : ([4,11,18,25].includes(currentKham) ? "วันหัวออก" : null),
@@ -229,7 +252,8 @@ function getLannaDate(date) {
     washHair: ["ดำหัวดี (มีศรี)","ห้ามดำหัว (จะเสีย)","ห้ามดำหัว (จะขัดสน)","ห้ามดำหัว (จะป่วย)","ดำหัวดี (มีอายุ)","ดำหัวดี (มีสุข)","ห้ามดำหัว (จะตกใจ)"][dow],
     newClothes: ["นุ่งผ้าใหม่ดี","นุ่งผ้าใหม่ดี","ห้ามฉลองผ้าใหม่","นุ่งผ้าใหม่ดี","นุ่งผ้าใหม่ดี","นุ่งผ้าใหม่ดีที่สุด","ห้ามฉลองผ้าใหม่"][dow],
     isGoodTravel: !DATA.wanThaiDetailed[wanThai]?.includes("อย่าเดินทาง"),
-    isSoulCalling: DATA.wanThaiDetailed[wanThai]?.includes("เรียกขวัญ") || DATA.wanThaiDetailed[wanThai]?.includes("มงคล"),
+    isSoulCalling: DATA.wanThaiDetailed[wanThai]?.includes("เรียกขวัญ"),
+    isSiriMongkhon: DATA.wanThaiDetailed[wanThai]?.includes("มงคล") && !DATA.wanThaiDetailed[wanThai]?.includes("เรียกขวัญ"),
     isGoodPlanting: DATA.wanThaiDetailed[wanThai]?.includes("ปลูกพืช") || DATA.wanThaiDetailed[wanThai]?.includes("แรกน้ำ"),
     isGiveMoneyBad: DATA.wanThaiDetailed[wanThai]?.includes("ห้ามให้เงินท่าน"),
     isThongChai: dow === 0, isAthipadi: dow === 1, isUbat: dow === 6, isLokawinat: dow === 3,
@@ -252,10 +276,6 @@ function Badge({ label, bgColor }) {
 function DetailRow({ label, icon, desc, color }) {
   return (
     <div className="flex items-center gap-[15px] py-[15px] border-b border-gray-200 last:border-0 w-full">
-      <div className="w-12 h-12 flex items-center justify-center text-white text-[1.4rem] flex-shrink-0 shadow-inner"
-        style={{ backgroundColor: color || "#6B4231" }}>
-        {icon}
-      </div>
       <div className="flex-1">
         <div className="text-[1.2rem] font-black text-[#8B5E3C]">{label}</div>
         <div className="text-[1.4rem] text-[#333] font-bold leading-tight">{desc}</div>
@@ -281,10 +301,11 @@ function SectionDetail({ title, desc, color }) {
 // ============================================================
 function getSongkranLabel(date) {
   const info = getLannaDate(date); if (!info) return null;
-  const dStr = date.toISOString().split('T')[0];
-  const sStr = info.sangKhanLong.toISOString().split('T')[0];
-  const nStr = info.wanNao.toISOString().split('T')[0];
-  const pStr = info.phayaWan.toISOString().split('T')[0];
+  const toLoc = (d) => `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+  const dStr = toLoc(date);
+  const sStr = toLoc(info.sangKhanLong);
+  const nStr = toLoc(info.wanNao);
+  const pStr = toLoc(info.phayaWan);
   if (dStr === sStr) return "สังขานต์ล่อง";
   if (dStr === nStr) return "วันเนาว์";
   if (dStr === pStr) return "พญาวัน";
@@ -298,9 +319,7 @@ function yamColor(name) {
 }
 
 function getZodiacEmoji(name) {
-  const map = { "ไจ้":"🐭", "เป้า":"🐮", "ยี่":"🐯", "เหม้า":"🐰", "สี":"🐉", "ไส้":"🐍", "สะง้า":"🐴", "เม็ด":"🐑", "สัน":"🐒", "เร้า":"🐔", "เส็ด":"🐶", "ไก้":"🐘" };
-  for (let k in map) { if (name.includes(k)) return map[k]; }
-  return "🐴";
+  return "";
 }
 
 // ===== BUG FIX #5: คำอธิบาย วันโลก ครบทั้ง 7 ค่า =====
@@ -339,7 +358,7 @@ function mahaChalongDesc(name) {
 // ============================================================
 // MAIN APP
 // ============================================================
-export default function App() {
+function App() {
   const [view, setView] = useState("monthly");
 
   // ===== BUG FIX #2: ใช้ new Date() แทน hardcode April 29 =====
@@ -380,9 +399,13 @@ export default function App() {
       if (!d) return { date: d, visible: true };
       const info = getLannaDate(d);
       let visible = true;
+      const isAuspiciousDithi = !!info?.dithiName;
       if (filter === "sin") visible = !!info?.isSin;
-      else if (filter === "auspicious") visible = !!(info?.isThongChai || info?.isAthipadi || info?.sitthi || info?.isFahTeeSangGood);
-      else if (filter === "inauspicious") visible = !!(info?.isSia || info?.isUbat || info?.isLokawinat || info?.isWanMutju);
+      else if (filter === "auspicious") visible = !!(info?.isThongChai || info?.isAthipadi || info?.sitthi || info?.isFahTeeSangGood || isAuspiciousDithi);
+      else if (filter === "inauspicious") {
+        const hasBad = !!(info?.isSia || info?.isUbat || info?.isLokawinat || info?.isWanMutju);
+        visible = hasBad && !isAuspiciousDithi;
+      }
       return { date: d, visible };
     }),
     [calendarDays, filter]
@@ -391,9 +414,6 @@ export default function App() {
   const headerBar = (
     <div className="bg-[#6B4231] text-[#FEF3C7] mb-4 p-3 flex justify-between items-center shadow-lg border border-[#4D3024]">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 bg-[#FEF3C7] flex items-center justify-center text-[#6B4231] text-[1.2rem] font-black shadow-inner">
-          {getZodiacEmoji(dayInfo?.yearZodiac || "")}
-        </div>
         <div>
           <div className="text-[0.65rem] font-bold opacity-80 uppercase tracking-widest">ปีนักษัตร</div>
           <div className="text-[0.85rem] font-black leading-tight">ปี{dayInfo?.yearZodiac}</div>
@@ -518,11 +538,11 @@ export default function App() {
                             </div>
                           </div>
                           <div className="text-[1.5rem] text-[#3D3128] leading-relaxed">
-                            {songkran && <span className="text-[#0891B2] font-black block mb-2">✨ {songkran}: {songkran==="พญาวัน"?"วันเถลิงศกใหม่ เปลี่ยนจุลศักราชและนักษัตรประจำปี เป็นสิริมงคลสูงสุด":songkran==="สังขานต์ล่อง"?"วันสิ้นสุดปีเก่า ชำระล้างสิ่งไม่ดี":"วันว่างระหว่างปีเก่าและปีใหม่"}</span>}
-                            {info?.isSin && <span className="text-[#D97706] font-black block mb-2">☸️ วันศีล: เหมาะแก่การเข้าวัดฟังธรรม รักษาศีล และทำจิตใจให้ผ่องใส</span>}
-                            {info?.sitthi && <span className="text-[#059669] font-black block mb-2">💎 {info.sitthi}: ฤกษ์มงคลที่ให้ผลสำเร็จอย่างรวดเร็วและยั่งยืน</span>}
-                            {info?.isThongChai && <span className="text-[#059669] font-black block mb-2">🚩 วันธงชัย: วันแห่งชัยชนะ เหมาะแก่การยกทัพ จับงานใหญ่ หรือเปิดกิจการ</span>}
-                            {info?.isAthipadi && <span className="text-[#2563EB] font-black block mb-2">👑 วันอธิบดี: วันแห่งความเป็นใหญ่ เหมาะแก่การเข้าหาผู้ใหญ่ หรือแต่งตั้งโยกย้าย</span>}
+                            {songkran && <span className="text-[#0891B2] font-black block mb-2"> {songkran}: {songkran==="พญาวัน"?"วันเถลิงศกใหม่ เปลี่ยนจุลศักราชและนักษัตรประจำปี เป็นสิริมงคลสูงสุด":songkran==="สังขานต์ล่อง"?"วันสิ้นสุดปีเก่า ชำระล้างสิ่งไม่ดี":"วันว่างระหว่างปีเก่าและปีใหม่"}</span>}
+                            {info?.isSin && <span className="text-[#D97706] font-black block mb-2"> วันศีล: เหมาะแก่การเข้าวัดฟังธรรม รักษาศีล และทำจิตใจให้ผ่องใส</span>}
+                            {info?.sitthi && <span className="text-[#059669] font-black block mb-2"> {info.sitthi}: ฤกษ์แห่งความสำเร็จ ให้ลาภผลที่ดี สมปรารถนา {info.sitthi==="วันมหาสิทธิโชค"?"(เป็นโชคหลวงมหาวัน)":""}</span>}
+                            {info?.isThongChai && <span className="text-[#059669] font-black block mb-2"> วันธงชัย: ฤกษ์ดีมีชัยชนะ มิ่งขวัญ ทำการใดก็สำเร็จได้ผลดี เหมาะแก่การเริ่มต้นงานมงคล</span>}
+                            {info?.isAthipadi && <span className="text-[#2563EB] font-black block mb-2"> วันอธิบดี: ฤกษ์แห่งความมั่นคง มีอำนาจและความเจริญ เหมาะแก่การวางรากฐานและจัดการธุระสำคัญ</span>}
                             <p className="m-0 opacity-80 mt-2 italic border-t border-gray-200 pt-2 font-bold">"{info?.wanThaiDesc}"</p>
                           </div>
                         </div>
@@ -563,6 +583,7 @@ export default function App() {
           <div className="bg-[#F9F6F1] p-6 border border-[#D1CDC7] shadow-sm">
             <div className="flex justify-between mb-6">
               <button onClick={() => setView("monthly")}
+                style={{ color: "white" }}
                 className="border-none bg-[#6B4231] text-white px-7 py-3 font-black cursor-pointer text-[1.2rem] shadow-sm">‹ รายเดือน</button>
               <button onClick={() => setSelectedDate(new Date())}
                 className="border-none bg-[#D6D3D1] px-7 py-3 font-black cursor-pointer text-[1.2rem]">วันนี้</button>
@@ -595,9 +616,8 @@ export default function App() {
 
             {/* ===== BUG FIX #4: ปรับปรุงการคำนวณเดือนและดิถีแบบล้านนา (Athikamat/Athikawan) ให้แม่นยำสูงสุด ===== */}
 
-            <h2 className="text-[2.2rem] font-black leading-tight flex flex-col items-center gap-4">
-              <span>{c?.phase} {c?.lunarDay} ค่ำ</span>
-              <span>เดือน {c?.lannaMonth}</span>
+            <h2 className="text-[2.2rem] font-black leading-tight flex items-center justify-center gap-4">
+              <span>{c?.phase} {c?.lunarDay} ค่ำ เดือน {c?.lannaMonth}</span>
             </h2>
 
             <div className="flex flex-wrap gap-[6px] justify-center mt-8 pt-6 border-t border-white/10">
@@ -623,13 +643,15 @@ export default function App() {
             <div className="flex flex-col">
               {c?.isLokawinat && <SectionDetail title="วันโลกาวินาศ" desc="ห้ามทำการมงคลเด็ดขาด จะเกิดความพินาศฉิบหาย สูญเสียทรัพย์สินและบารมี" color="#000" />}
               {c?.isUbat && <SectionDetail title="วันอุบาทว์" desc="ห้ามริเริ่มงานใหม่หรือทำพิธีมงคล จะเกิดอุปสรรค ขัดข้อง และเรื่องเดือดร้อน" color="#DC2626" />}
+              {c?.isThongChai && <SectionDetail title="วันธงชัย" desc="ฤกษ์ดีมีชัยชนะ มิ่งขวัญ ทำการใดก็สำเร็จได้ผลดี เหมาะแก่การยกทัพหรือเริ่มงานมงคลใหญ่" color="#059669" />}
+              {c?.isAthipadi && <SectionDetail title="วันอธิบดี" desc="ฤกษ์แห่งความมั่นคงและอำนาจ เหมาะแก่การวางศิลาฤกษ์ ลงเสาเอก ตั้งศาลพระภูมิ และเปลี่ยนชื่อนามสกุล" color="#2563EB" />}
               <SectionDetail title={`วัน${c?.wanLohk}`} desc={wanLohkDesc(c?.wanLohk)} color="#4B5563" />
               {c?.isJom && <SectionDetail title="วันจม" desc="ห้ามทำการมงคลที่เกี่ยวกับความคงทนถาวร เช่น ปลูกบ้าน ลงเสาเอก หรือซื้อสัตว์ใหญ่มาเลี้ยง" color="#4B5563" />}
-              {c?.isFoo && <SectionDetail title="วันฟู" desc="วันแห่งความรุ่งเรือง เหมาะแก่การริเริ่มกิจการใหม่ ขึ้นบ้านใหม่ งานจะเฟื่องฟูและก้าวหน้า" color="#10B981" />}
-              {c?.isHuaRiang && <SectionDetail title="วันหัวเรียงหมอน" desc="ฤกษ์มงคลสำหรับพิธีแต่งงาน ส่งตัวเข้าหอ จะทำให้คู่บ่าวสาวอยู่เย็นเป็นสุข รักกันยั่งยืน" color="#DB2777" />}
+              {c?.isFoo && <SectionDetail title="วันฟู" desc="วันแห่งความเจริญก้าวหน้า เหมาะแก่การค้าขาย เริ่มต้นเพาะปลูก หรือขยายธุรกิจให้เฟื่องฟู" color="#10B981" />}
+              {c?.isHuaRiang && <SectionDetail title="วันหัวเรียงหมอน" desc="ฤกษ์มงคลสมรสที่ดีที่สุดสำหรับการเริ่มต้นชีวิตคู่ จะทำให้คู่บ่าวสาวอยู่เย็นเป็นสุข" color="#DB2777" />}
               <SectionDetail
                 title={`${c?.dithiName}ดิถี`}
-                desc={c?.dithiName==="นันทา"?"ดิถีแห่งความบันเทิงใจ ให้ผลดีในงานมงคลทั่วไป":c?.dithiName==="ภัทรา"?"ดิถีแห่งความเป็นศิริมงคล ให้ผลด้านความรุ่งเรืองและโชคลาภ":c?.dithiName==="ไชยา"?"ดิถีแห่งชัยชนะ ให้ผลดีเยี่ยมในการแข่งขัน เจรจา และความสำเร็จ":c?.dithiName==="ริตตา"?"ดิถีที่ว่างเปล่า (ดิถีเสีย) ควรหลีกเลี่ยงงานมงคลสำคัญ":c?.dithiName==="ปุณณา"?"ดิถีที่เต็มเปี่ยม ให้ผลมงคลสูงสุดในทุกด้าน":""}
+                desc={c?.dithiName==="นันทา"?"พญาวันแห่งการสร้างสรรค์: เหมาะแก่การปลูกสร้างบ้านเรือน วิหาร หล่อพระพุทธรูป ขุดสระ และเริ่มต้นประกอบการค้า":c?.dithiName==="ภัทรา"?"พญาวันแห่งสิริมงคล: เหมาะแก่การส่งตัวบ่าวสาว ทำพิธีแต่งงาน ดำหัว ย้ายที่อยู่ และตั้งชื่อยศนามศักดิ์":c?.dithiName==="ไชยา"?"พญาวันแห่งชัยชนะ: เหมาะแก่การเจรจาความเมือง ยกทัพ สร้างอาวุธ และศึกษาศิลปวิทยาคุณ":c?.dithiName==="ริตตา"?"พญาวันแห่งความอุดมสมบูรณ์: เหมาะแก่การทำสวนไร่นา ปลูกต้นไม้ สร้างถนน และทำเครื่องประดับมิ่งมงคล":c?.dithiName==="ปุณณา"?"พญาวันแห่งความเต็มเปี่ยม: เหมาะแก่การนำข้าวขึ้นยุ้งฉาง เริ่มเรียนพระธรรม และการแต่งตั้งข้าราชการ":""}
                 color="#92400E" />
               {c?.isRahuTok && <SectionDetail title="ราหูเกตุตก" desc="เกณฑ์อันตรายตามตำราโบราณ ระวังการทำพิธีใหญ่ หรือการเดินทางที่ต้องเสี่ยงภัย" color="#4338CA" />}
               <SectionDetail title={`โฉลก: ${c?.mahaChalong}`} desc={mahaChalongDesc(c?.mahaChalong)} color="#78350F" />
@@ -647,12 +669,9 @@ export default function App() {
                 </div>
               ))}
             </div>
-            <DetailRow label="แม่บทวันกระด้าง" icon="📜"
-              desc={c?.master?.n && c.master.n !== "ปรกติ" ? `${c.master.n} (${c.master.s})` : "วันนวติถี (ปรกติ)"}
-              color="#D97706" />
-            {c?.phiKinSat && <DetailRow label="วันผีกินสัตว์" icon="👹" desc="ห้ามนำสัตว์เข้าบ้านหรือทำคอกสัตว์" color="#7F1D1D" />}
-            {c?.huaKhaoOk && <DetailRow label="เกณฑ์หัวเข้า-ออก" icon="🚪"
-              desc={c.huaKhaoOk === "วันหัวเข้า" ? "เหมาะนำทรัพย์เข้าบ้าน" : "เหมาะแก่การระบายออก"}
+            {c?.phiKinSat && <DetailRow label="วันผีกินสัตว์" icon="" desc="ห้ามนำสัตว์เข้าบ้านหรือทำคอกสัตว์" color="#7F1D1D" />}
+            {c?.huaKhaoOk && <DetailRow label="เกณฑ์หัวเข้า-ออก" icon=""
+              desc={c.huaKhaoOk === "วันหัวเข้า" ? "เหมาะแก่การซื้อบ้าน ที่ดิน รถ สินค้า และจุดเทียนบูชารับโชค" : "วันสำหรับส่งเคราะห์ ส่งสินค้า และจุดเทียนบูชาลดเคราะห์"}
               color="#0369A1" />}
           </div>
 
@@ -680,28 +699,32 @@ export default function App() {
           <div className="bg-[#EEEAE3] p-8 border border-[#D1CDC7] shadow-sm">
             <h3 className="m-0 mb-6 text-[1.6rem] font-black text-[#92400E] border-b-2 border-[#D1CDC7] pb-3">คำแนะนำกิจวัตร</h3>
             <div className="flex flex-col gap-2">
-              <DetailRow label="ตัดผม" icon="✂️" desc={c?.cutHair||""} color="#10B981" />
-              <DetailRow label="ตัดเล็บ" icon="💅" desc={c?.cutNail||""} color="#8B5E3C" />
-              <DetailRow label="ดำหัวสระผม" icon="💦" desc={c?.washHair||""} color="#06B6D4" />
-              <DetailRow label="นุ่งผ้าใหม่" icon="👕" desc={c?.newClothes||""} color="#3B82F6" />
+              <DetailRow label="ตัดผม" icon="" desc={c?.cutHair||""} color="#10B981" />
+              <DetailRow label="ตัดเล็บ" icon="" desc={c?.cutNail||""} color="#8B5E3C" />
+              <DetailRow label="ดำหัวสระผม" icon="" desc={c?.washHair||""} color="#06B6D4" />
+              <DetailRow label="นุ่งผ้าใหม่" icon="" desc={c?.newClothes||""} color="#3B82F6" />
             </div>
           </div>
 
           {/* วันไท + เก้ากอง */}
           <div className="bg-[#EEEAE3] p-8 border border-[#D1CDC7] shadow-sm">
             <h3 className="m-0 mb-6 text-[1.6rem] font-black text-[#92400E]">วันไท ({c?.wanThai})</h3>
-            <p className="m-0 text-[1.6rem] text-[#3D3128] leading-relaxed italic font-bold">"{c?.wanThaiDesc}"</p>
+            <p className="m-0 text-[1.6rem] text-[#3D3128] leading-relaxed font-bold">{c?.wanThaiDesc}</p>
             <div className="flex flex-wrap gap-3 mt-6">
-              {c?.isGoodTravel
-                ? <Badge label="เดินทางมงคล" bgColor="#059669" />
-                : <Badge label="ห้ามเดินทาง" bgColor="#DC2626" />}
               {c?.isSoulCalling && <Badge label="วันเรียกขวัญ" bgColor="#7C3AED" />}
+              {c?.isSiriMongkhon && <Badge label="วันสิริมงคล" bgColor="#D97706" />}
               {c?.isGoodPlanting && <Badge label="วันปลูกพืช" bgColor="#047857" />}
               {c?.isGiveMoneyBad && <Badge label="ห้ามให้เงินท่าน" bgColor="#BE123C" />}
             </div>
             <div className="mt-8 pt-6 border-t border-[#D1CDC7]">
               <h3 className="m-0 mb-4 text-[1.6rem] font-black text-[#92400E]">ระบบเก้ากอง ({c?.kaoKong})</h3>
               <p className="m-0 text-[1.6rem] text-[#3D3128] leading-relaxed font-bold">{c?.kaoKongDesc}</p>
+            </div>
+            <div className="mt-8 pt-6 border-t border-[#D1CDC7]">
+              <h3 className="m-0 mb-4 text-[1.6rem] font-black text-[#92400E]">แม่บทวันกระด้าง </h3>
+              <p className="m-0 text-[1.6rem] text-[#3D3128] leading-relaxed font-bold">
+                {c?.master?.n && c.master.n !== "ปรกติ" ? `${c.master.n} (${c.master.s})` : `${c?.nawaName} (${c?.nawaDesc})`}
+              </p>
             </div>
           </div>
 
@@ -738,10 +761,6 @@ export default function App() {
                 </p>
               </div>
             </div>
-            <div className="text-[1.1rem] text-gray-500 font-bold text-center space-y-1">
-              <p className="m-0">สูตร: ((จ.ศ. {c?.cs} % 108) + เดือน {c?.lannaMonth} + ดิถี {c?.rawLunarDay}) × 5 - 7 แล้วหารด้วย 9</p>
-              <p className="m-0 italic opacity-80">* เกณฑ์โบราณล้านนาสำหรับหาช่วงเวลาที่ "ท้องฟ้าเปิดรุ่งอรุณ" เหมาะแก่การเริ่มงานมงคล</p>
-            </div>
           </div>
 
           <footer className="mt-12 text-center text-[1.2rem] text-[#8B5E3C] font-black pb-16 opacity-80">
@@ -752,3 +771,14 @@ export default function App() {
     </div>
   );
 }
+
+function getLunarYearInfo(yearBE) {
+  // Simple Lanna Lunar Year Calculation Rules
+  // Year with extra month (Athikamat): CS % 19 is 0, 3, 6, 9, 11, 14, 17
+  // Year with extra day (Athikawan): Varies, but simplified for 2569 (CS 1387)
+  const cs = yearBE - 1181;
+  const isAthikamat = [0, 3, 6, 9, 11, 14, 17].includes(cs % 19);
+  const isAthikawan = (yearBE === 2569); // 2569 is Athikawan in some traditions
+  return { isAthikamat, isAthikawan };
+}
+export default App;
