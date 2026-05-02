@@ -67,6 +67,7 @@ const DATA = {
     ก่าเส็ด: "อย่าซื้อวัวควายมาคอก ผีด้ำบ่ดี",
     ร้วงเร้า: "อย่าตีฆ้องกลอง ผีจะกินตน (ห้ามทำการมงคล)",
     กาบไค้: "อย่าดื่มเหล้าในงานเลี้ยง",
+    กาไค้: "อย่าทำการมงคล จะเสียทรัพย์สินเงินทอง",
   },
   masterRules: {
     0: { 1:{n:"ตุงดิน",s:"ไม่ดี"}, 2:{n:"วันปลอด",s:"ดี"}, 3:{n:"ไชยาติถี",s:"ดีมาก"}, 5:{n:"ปุณณาติถี",s:"ดีมาก"}, 6:{n:"นันทาติถี",s:"ดี"}, 11:{n:"วันปลอด",s:"ดี"}, 14:{n:"ริตตาติถี",s:"ดีมาก"}, 24:{n:"อมริสสโชค",s:"ดีมาก"} },
@@ -117,22 +118,14 @@ const DATA = {
   },
 };
 
-// ============================================================
-// LANNA DATE CALCULATION
-// ============================================================
 function getLannaDate(date) {
   if (!date || isNaN(date.getTime())) return null;
-
-  // Reference Point: April 30, 2026 (Benchmark)
-  // BE 2569, CS 1388, Lanna Month 8, Waxing 14 (ออก 14), Year Raway Sa-nga (Horse)
   const refDate = new Date(2026, 3, 30); 
   const diffDays = Math.floor((date.getTime() - refDate.getTime()) / 86400000);
-  
   let currentMonth = 8, currentKham = 14, currentPhase = 'ออก', currentYearBE = 2569;
   let isLeapMonthActive = false;
   const step = diffDays >= 0 ? 1 : -1;
   const absDiff = Math.abs(diffDays);
-  
   for (let i = 0; i < absDiff; i++) {
     const yrInfo = getLunarYearInfo(currentYearBE);
     if (step === 1) {
@@ -156,18 +149,13 @@ function getLannaDate(date) {
       } else if (currentPhase === 'แรม' && currentKham < 1) { currentKham = 15; currentPhase = 'ออก'; }
     }
   }
-
   const lannaMonthStr = isLeapMonthActive ? `${currentMonth}-${currentMonth}` : `${currentMonth}`;
   const rawLunarDay = currentPhase === 'ออก' ? currentKham : currentKham + 15;
   const dow = date.getDay();
-
-  // Wan Thai
   const baseDateWan = new Date(2024, 1, 10);
   const diffWan = Math.floor((date.getTime() - baseDateWan.getTime()) / 86400000);
   const wanThaiIdx = (diffWan % 60 + 60) % 60;
   const wanThai = DATA.maeMue[wanThaiIdx % 10] + DATA.lukMue[wanThaiIdx % 12];
-
-  // Songkran
   const yearCS = date.getFullYear() - 638; 
   const hRaw = (yearCS * 292207) + 373;
   const hDays = Math.floor(hRaw / 800);
@@ -176,11 +164,8 @@ function getLannaDate(date) {
   phayaWanDate.setHours(Math.floor((hRem * 24) / 800), Math.floor(((hRem * 24 % 800) * 60) / 800), Math.floor(((((hRem * 24 % 800) * 60) % 800) * 60) / 800), 0);
   const sangKhanLongDate = new Date(phayaWanDate.getTime() - (2 * 24 * 3600 + 3 * 3600 + 57 * 60 + 36) * 1000);
   const wanNaoDate = new Date(phayaWanDate.getTime() - 24 * 3600 * 1000);
-
   const isAfterPhayaWan = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime() >= new Date(phayaWanDate.getFullYear(), phayaWanDate.getMonth(), phayaWanDate.getDate()).getTime();
   const cs = isAfterPhayaWan ? (date.getFullYear() - 638) : (date.getFullYear() - 639);
-
-  // Stats
   const sitthi = (() => {
     const d = dow, l = currentKham;
     if ((d===0&&l===12)||(d===1&&l===11)||(d===2&&(l===7||l===12))||(d===3&&(l===3||l===13))||(d===4&&l===6)||(d===5&&l===12)||(d===6&&(l===12||l===15))) return "วันมหาสิทธิโชค";
@@ -190,42 +175,35 @@ function getLannaDate(date) {
     if ((d===0&&l===15)||(d===1&&l===14)||(d===2&&l===15)||(d===3&&l===1)||(d===4&&l===2)||(d===5&&l===3)||(d===6&&l===4)) return "วันราชาโชค";
     return null;
   })();
-
   const yrInfoNow = getLunarYearInfo(currentYearBE);
   const maxWaning = (currentMonth % 2 === 0 || (currentMonth === 9 && yrInfoNow.isAthikawan)) ? 15 : 14;
   const isSin = (currentKham === 8 || currentKham === 15 || (currentPhase === 'แรม' && currentKham === maxWaning));
-  
   const jomCheck = { 1:[4,5],2:[6,0],3:[1,2],4:[3],5:[4,5],6:[6,0],7:[1,2],8:[3],9:[4,5],10:[6,0],11:[1,2],12:[3] };
   const fooCheck = { 1:[1],2:[2],3:[3],4:[4],5:[1],6:[2],7:[3],8:[4],9:[1],10:[2],11:[3],12:[4] };
   const siaCheck = { 1:[0,1],5:[0,1],9:[0,1],2:[2],6:[2],10:[2],4:[3,5],8:[3,5],12:[3,5],3:[6,4],7:[6,4],11:[6,4] };
-  
   const fahVal = (cs % 108 + (parseInt(lannaMonthStr) || 0) + currentKham) * 5 - 7;
   const fahTeeSang = (fahVal % 9 < 0) ? (fahVal % 9 + 9) : (fahVal % 9);
-
-
   const zodiacList = [
-    { name: "เส็ด", thai: "จอ", emoji: "", flower: "ดอกจำปี", tree: "ต้นคูน" },
-    { name: "ไก้", thai: "กุน", emoji: "", flower: "ดอกหอมไกล", tree: "ต้นพุทรา" },
-    { name: "ไจ้", thai: "ชวด", emoji: "", flower: "ดอกบัวหลวง", tree: "ต้นมะพร้าว" },
-    { name: "เป้า", thai: "ฉลู", emoji: "", flower: "ดอกสลิด", tree: "ต้นตาล" },
-    { name: "ยี่", thai: "ขาล", emoji: "", flower: "ดอกรัง", tree: "ต้นรัง" },
-    { name: "เหม้า", thai: "เถาะ", emoji: "", flower: "ดอกกุ่ม", tree: "ต้นงิ้ว" },
-    { name: "สี", thai: "มะโรง", emoji: "", flower: "ดอกพยอม", tree: "ต้นไผ่" },
-    { name: "ไส้", thai: "มะเส็ง", emoji: "", flower: "ดอกบัวแดง", tree: "ต้นโพธิ์" },
-    { name: "สะง้า", thai: "มะเมีย", emoji: "", flower: "ดอกเล็บมือนาง", tree: "ต้นตะเคียน" },
-    { name: "เม็ด", thai: "มะแม", emoji: "", flower: "ดอกชบา", tree: "ต้นทองหลาง" },
-    { name: "สัน", thai: "วอก", emoji: "", flower: "ดอกพิกุล", tree: "ต้นขนุน" },
-    { name: "เล้า", thai: "ระกา", emoji: "", flower: "ดอกบัว", tree: "ต้นทองกวาว" }
+    { name: "เส็ด", thai: "จอ", flower: "ดอกจำปี", tree: "ต้นคูน" },
+    { name: "ไก้", thai: "กุน", flower: "ดอกหอมไกล", tree: "ต้นพุทรา" },
+    { name: "ไจ้", thai: "ชวด", flower: "ดอกบัวหลวง", tree: "ต้นมะพร้าว" },
+    { name: "เป้า", thai: "ฉลู", flower: "ดอกสลิด", tree: "ต้นตาล" },
+    { name: "ยี่", thai: "ขาล", flower: "ดอกรัง", tree: "ต้นรัง" },
+    { name: "เหม้า", thai: "เถาะ", flower: "ดอกกุ่ม", tree: "ต้นงิ้ว" },
+    { name: "สี", thai: "มะโรง", flower: "ดอกพยอม", tree: "ต้นไผ่" },
+    { name: "ไส้", thai: "มะเส็ง", flower: "ดอกบัวแดง", tree: "ต้นโพธิ์" },
+    { name: "สะง้า", thai: "มะเมีย", flower: "ดอกเล็บมือนาง", tree: "ต้นตะเคียน" },
+    { name: "เม็ด", thai: "มะแม", flower: "ดอกชบา", tree: "ต้นทองหลาง" },
+    { name: "สัน", thai: "วอก", flower: "ดอกพิกุล", tree: "ต้นขนุน" },
+    { name: "เล้า", thai: "ระกา", flower: "ดอกบัว", tree: "ต้นทองกวาว" }
   ];
   const maePeeList = ["เปิก", "กัด", "กด", "ร้วง", "เต่า", "กา", "กาบ", "ดับ", "รวาย", "เมือง"];
   const zInfo = zodiacList[cs % 12];
   const yearZodiac = maePeeList[cs % 10] + zInfo.name + " (" + zInfo.thai + ")";
-
   const nawaIdx = (cs + currentMonth + currentKham) % 9;
   const nawaName = DATA.nawaDithiNames[nawaIdx];
   const nawaDesc = DATA.nawaDithiDescs[nawaName];
   const kaoKongName = Object.keys(DATA.kaoKongInfo)[(wanThaiIdx % 12 - {1:7,2:6,3:5,4:4,5:3,6:2,7:1,8:0,9:11,10:10,11:9,12:8}[currentMonth] + 12) % 12];
-
   return {
     date, lannaMonth: lannaMonthStr, lunarDay: currentKham, phase: currentPhase, rawLunarDay, dow, wanThai,
     wanThaiDesc: DATA.wanThaiDetailed[wanThai] || "",
@@ -238,9 +216,7 @@ function getLannaDate(date) {
     sri: {0:"ใต้",1:"วันตกแจ่งใต้",2:"วันตก",3:"วันตกแจ่งเหนือ",4:"วันออกแจ่งเหนือ",5:"วันออกแจ่งใต้",6:"เหนือ"}[dow],
     kala: {0:"เหนือ",1:"วันออกแจ่งเหนือ",2:"วันออก",3:"วันออกแจ่งใต้",4:"วันตกแจ่งใต้",5:"วันตกแจ่งเหนือ",6:"ใต้"}[dow],
     jangrai: {0:"วันตก",1:"วันออก",2:"เหนือ",3:"ใต้",4:"วันตก",5:"วันออก",6:"วันตก"}[dow],
-    kaoKong: kaoKongName,
-    nawaName, nawaDesc,
-    kaoKongDesc: DATA.kaoKongInfo[kaoKongName],
+    kaoKong: kaoKongName, nawaName, nawaDesc, kaoKongDesc: DATA.kaoKongInfo[kaoKongName],
     yam: DATA.yamData[dow], cs, fahTeeSang, isFahTeeSangGood: [2,4,5,6].includes(fahTeeSang),
     phiKinSat: {1:[4],2:[5],3:[6],4:[0],5:[1],6:[2],7:[3],8:[4],9:[5],10:[6],11:[0],12:[1]}[currentMonth]?.includes(dow) ? "ผีกินสัตว์" : null,
     huaKhaoOk: [1,8,15,22].includes(currentKham) ? "วันหัวเข้า" : ([4,11,18,25].includes(currentKham) ? "วันหัวออก" : null),
@@ -261,9 +237,6 @@ function getLannaDate(date) {
   };
 }
 
-// ============================================================
-// COMPONENTS
-// ============================================================
 function Badge({ label, bgColor }) {
   return (
     <span className="px-4 py-1.5 text-[1.2rem] font-black text-white m-[4px] inline-block shadow-md"
@@ -286,19 +259,16 @@ function DetailRow({ label, icon, desc, color }) {
 
 function SectionDetail({ title, desc, color }) {
   return (
-    <div className="py-6 border-b border-[#D1CDC7] last:border-0">
+    <div className="mb-12 last:mb-0">
       <div className="text-[1.5rem] font-black mb-2 flex items-center gap-3" style={{ color: color || "#6B4231" }}>
         <span className="w-2.5 h-7 block" style={{ backgroundColor: color || "#6B4231" }} />
         {title}
       </div>
-      <div className="text-[1.7rem] text-[#333] leading-relaxed font-bold pl-5">{desc}</div>
+      <div className="text-[1.7rem] text-[#3D3128] leading-relaxed font-bold pl-5">{desc}</div>
     </div>
   );
 }
 
-// ============================================================
-// HELPERS
-// ============================================================
 function getSongkranLabel(date) {
   const info = getLannaDate(date); if (!info) return null;
   const toLoc = (d) => `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
@@ -318,11 +288,8 @@ function yamColor(name) {
   return "#6B7280";
 }
 
-function getZodiacEmoji(name) {
-  return "";
-}
+function getZodiacEmoji(name) { return ""; }
 
-// ===== BUG FIX #5: คำอธิบาย วันโลก ครบทั้ง 7 ค่า =====
 function wanLohkDesc(name) {
   const map = {
     กาลโชค: "วันแห่งโชคลาภจากกาล เหมาะแก่การค้าขาย ริเริ่มกิจกรรมที่ต้องอาศัยโชคและจังหวะ",
@@ -336,7 +303,6 @@ function wanLohkDesc(name) {
   return map[name] || "เกณฑ์วันตามตำราวันโลก ควรพิจารณาประกอบกับฤกษ์อื่น";
 }
 
-// ===== BUG FIX #6: คำอธิบาย มหาโฉลก ครบทั้ง 12 ค่า =====
 function mahaChalongDesc(name) {
   const map = {
     จักกะโก: "มีโชคด้านพาหนะและการเดินทาง ควรออกเดินทางหรือซื้อยานพาหนะ",
@@ -355,21 +321,14 @@ function mahaChalongDesc(name) {
   return map[name] || "เกณฑ์โฉลกประจำวันตามตำราล้านนา";
 }
 
-// ============================================================
-// MAIN APP
-// ============================================================
 function App() {
   const [view, setView] = useState("monthly");
-
-  // ===== BUG FIX #2: ใช้ new Date() แทน hardcode April 29 =====
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [calendarMonth, setCalendarMonth] = useState(() => {
     const t = new Date();
     return new Date(t.getFullYear(), t.getMonth(), 1);
   });
   const [filter, setFilter] = useState("all");
-
-  // ===== BUG FIX #3: current yam อัปเดตทุก 1 นาที =====
   const [now, setNow] = useState(new Date());
   useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 60000);
@@ -379,10 +338,7 @@ function App() {
     const r = now.getHours() * 60 + now.getMinutes();
     return r < 360 || r >= 1080 ? -1 : Math.floor((r - 360) / 90);
   }, [now]);
-
   const dayInfo = useMemo(() => getLannaDate(selectedDate), [selectedDate]);
-
-  // Build calendar grid
   const calendarDays = useMemo(() => {
     const y = calendarMonth.getFullYear(), m = calendarMonth.getMonth();
     const firstDow = new Date(y, m, 1).getDay();
@@ -392,25 +348,22 @@ function App() {
     for (let d = 1; d <= daysInMonth; d++) cells.push(new Date(y, m, d));
     return cells;
   }, [calendarMonth]);
-
-  // Filter visibility
   const filteredDays = useMemo(() =>
     calendarDays.map(d => {
       if (!d) return { date: d, visible: true };
       const info = getLannaDate(d);
       let visible = true;
-      const isAuspiciousDithi = !!info?.dithiName;
+      const isAuspicious = !!(info?.isThongChai || info?.isAthipadi || info?.sitthi || info?.isFahTeeSangGood || info?.isFoo);
+      const hasBad = !!(info?.isSia || info?.isUbat || info?.isLokawinat || info?.isWanMutju);
+      
       if (filter === "sin") visible = !!info?.isSin;
-      else if (filter === "auspicious") visible = !!(info?.isThongChai || info?.isAthipadi || info?.sitthi || info?.isFahTeeSangGood || isAuspiciousDithi);
-      else if (filter === "inauspicious") {
-        const hasBad = !!(info?.isSia || info?.isUbat || info?.isLokawinat || info?.isWanMutju);
-        visible = hasBad && !isAuspiciousDithi;
-      }
+      else if (filter === "auspicious") visible = isAuspicious;
+      else if (filter === "inauspicious") visible = hasBad;
+      
       return { date: d, visible };
     }),
     [calendarDays, filter]
   );
-
   const headerBar = (
     <div className="bg-[#6B4231] text-[#FEF3C7] mb-4 p-3 flex justify-between items-center shadow-lg border border-[#4D3024]">
       <div className="flex items-center gap-3">
@@ -426,21 +379,35 @@ function App() {
     </div>
   );
 
-  // ─── MONTHLY VIEW ───────────────────────────────────────
   if (view === "monthly") {
     return (
       <div className="bg-[#E0DDD8] min-h-screen p-3 text-[#2D1B08] font-sans antialiased">
         <div className="max-w-[480px] mx-auto">
           {headerBar}
-
           <div className="bg-white p-5 shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-gray-200">
-            {/* Month navigator */}
             <div className="flex justify-between items-center mb-6">
               <button onClick={() => setCalendarMonth(new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() - 1, 1))}
                 className="border-none bg-[#F3EFE9] w-10 h-10 flex items-center justify-center font-black cursor-pointer hover:bg-[#EAE2D8] transition-colors">‹</button>
-              <div className="text-center group relative">
-                <div className="font-black text-[1.3rem] text-[#6B4231] tracking-tight">
-                  {DATA.monthNames[calendarMonth.getMonth()]} {calendarMonth.getFullYear() + 543}
+              <div className="text-center group relative flex flex-col items-center">
+                <div className="flex items-center gap-1">
+                  <select 
+                    value={calendarMonth.getMonth()} 
+                    onChange={(e) => setCalendarMonth(new Date(calendarMonth.getFullYear(), parseInt(e.target.value), 1))}
+                    className="bg-transparent font-black text-[1.3rem] text-[#6B4231] border-none cursor-pointer outline-none appearance-none text-center"
+                  >
+                    {DATA.monthNames.map((name, i) => (
+                      <option key={i} value={i} className="text-black">{name}</option>
+                    ))}
+                  </select>
+                  <select 
+                    value={calendarMonth.getFullYear() + 543}
+                    onChange={(e) => setCalendarMonth(new Date(parseInt(e.target.value) - 543, calendarMonth.getMonth(), 1))}
+                    className="w-24 bg-transparent font-black text-[1.3rem] text-[#6B4231] border-none cursor-pointer outline-none appearance-none text-center"
+                  >
+                    {[...Array(21)].map((_, i) => (
+                      <option key={i} value={2560+i} className="text-black">{2560+i}</option>
+                    ))}
+                  </select>
                 </div>
                 <div className="text-[0.75rem] font-bold text-[#A38D74]">
                   จุลศักราช {getLannaDate(calendarMonth)?.cs}
@@ -454,25 +421,19 @@ function App() {
               <button onClick={() => setCalendarMonth(new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + 1, 1))}
                 className="border-none bg-[#F3EFE9] w-10 h-10 flex items-center justify-center font-black cursor-pointer hover:bg-[#EAE2D8] transition-colors">›</button>
             </div>
-
-            {/* Filter buttons */}
             <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
               {[{id:"all",label:"ทั้งหมด"},{id:"auspicious",label:"วันมงคล"},{id:"sin",label:"วันศีล"},{id:"inauspicious",label:"วันเสีย"}].map(f => (
                 <button key={f.id} onClick={() => setFilter(f.id)}
-                  className={`px-4 py-1.5 text-[0.7rem] font-black whitespace-nowrap transition-all ${filter===f.id?"bg-[#6B4231] text-white shadow-md":"bg-[#F3EFE9] text-[#8B5E3C]"}`}>
+                  className={`px-4 py-1.5 text-[0.7rem] font-black whitespace-nowrap transition-all ${filter===f.id?"bg-[#92400E] text-[#FEF3C7] shadow-lg ring-2 ring-[#FEF3C7] ring-inset scale-105":"bg-[#F3EFE9] text-[#8B5E3C] hover:bg-[#EAE2D8]"}`}>
                   {f.label}
                 </button>
               ))}
             </div>
-
-            {/* Day headers */}
             <div className="grid grid-cols-7 gap-[4px] text-center mb-3">
               {["อา","จ","อ","พ","พฤ","ศ","ส"].map((d,i) => (
                 <div key={d} className={`text-[0.75rem] font-black ${i===0?"text-[#E11D48]":"text-[#8B5E3C]"}`}>{d}</div>
               ))}
             </div>
-
-            {/* Calendar cells */}
             <div className="grid grid-cols-7 gap-[6px]">
               {filteredDays.map(({ date: d, visible }, idx) => {
                 if (!d) return <div key={`e${idx}`} className="aspect-[1/1.7]" />;
@@ -481,29 +442,28 @@ function App() {
                 const isSelected = d.toDateString() === selectedDate.toDateString();
                 const isToday = d.toDateString() === new Date().toDateString();
                 const badge = songkran || (info.isSin?"วันศีล":info.sitthi?info.sitthi.replace("วัน",""):info.isThongChai?"ธงชัย":info.isAthipadi?"อธิบดี":"");
-
                 return (
                   <button key={d.toISOString()} onClick={() => { setSelectedDate(d); setView("daily"); }}
                     className={`aspect-[1/1.7] flex flex-col items-center justify-start p-1.5 cursor-pointer transition-all border-[2px]
                       ${isSelected?"border-[#92400E] bg-[#6B4231] text-white shadow-md z-10":isToday?"border-[#FCD34D] bg-[#FEF3C7] text-[#2D1B08]":"border-transparent bg-[#F9F6F1] text-[#2D1B08]"}
-                      ${!visible?"opacity-20 grayscale":""}
+                      ${!visible?"opacity-[0.05] grayscale pointer-events-none":""}
                       ${!isSelected&&d.getDay()===0?"text-[#E11D48]":""}
                       hover:border-[#D1CDC7]`}>
-                    <div className="w-full flex justify-between items-start mb-1">
-                      <span className="text-[1.7rem] font-black leading-[1]">{d.getDate()}</span>
+                    <div className={`w-full flex justify-between items-start mb-1 ${!visible?"invisible":""}`}>
+                      <span className={`text-[1.7rem] font-black leading-[1] ${!visible?"invisible":""}`}>{d.getDate()}</span>
                       {info.isSin && <div className="w-[10px] h-[10px] bg-[#F59E0B] shadow-sm border-[1px] border-white flex-shrink-0" />}
                     </div>
-                    <div className="flex flex-col items-center w-full gap-0.5 mt-[-4px]">
+                    <div className={`flex flex-col items-center w-full gap-0.5 mt-[-4px] ${!visible?"invisible":""}`}>
                       <span className={`text-[1.2rem] font-black leading-none truncate ${isSelected?"text-white":"text-[#8B5E3C]"}`}>เดือน {info.lannaMonth}</span>
                       <span className={`text-[1.2rem] font-bold leading-none ${isSelected?"text-[#FEF3C7]":"text-[#A38D74]"}`}>{info.phase}{info.lunarDay}</span>
                     </div>
-                    {badge && (
+                    {badge && visible && (
                       <div className={`mt-1 text-[1.1rem] font-black px-1 text-center leading-tight truncate w-full
-                        ${isSelected?"text-[#FEF3C7]":songkran?"text-[#06B6D4]":info.isSin?"text-[#D97706]":"text-[#059669]"}`}>
+                        ${isSelected?"text-[#FEF3C7]":songkran?"text-[#06B6D4]":info.isSin?"text-[#D97706]":(info.isSia||info.isUbat||info.isLokawinat||info.isWanMutju)?"text-[#EF4444]":"text-[#059669]"}`}>
                         {badge}
                       </div>
                     )}
-                    <div className="mt-auto w-full flex flex-wrap gap-[4px] justify-center pb-1">
+                    <div className={`mt-auto w-full flex flex-wrap gap-[4px] justify-center pb-1 ${!visible?"invisible":""}`}>
                       {(info.isThongChai||info.isAthipadi||info.sitthi||info.isFahTeeSangGood) && <div className="w-[10px] h-[10px] bg-[#10B981] shadow-sm border-[1px] border-white" />}
                       {(info.isSia||info.isUbat||info.isLokawinat||info.isWanMutju) && <div className="w-[10px] h-[10px] bg-[#EF4444] shadow-sm border-[1px] border-white" />}
                     </div>
@@ -511,29 +471,28 @@ function App() {
                 );
               })}
             </div>
-
-            {/* Monthly auspicious list */}
             <div className="mt-8 border-t border-gray-100 pt-6">
               <h4 className="text-[1.8rem] font-black text-[#6B4231] mb-6 flex items-center gap-3">
                 <span className="w-3.5 h-8 bg-[#6B4231]" />
-                รายละเอียดวันมงคลและวันสำคัญ
+                รายละเอียด{filter === "inauspicious" ? "วันเสีย" : filter === "auspicious" ? "วันมงคล" : filter === "sin" ? "วันศีล" : "วันมงคลและวันสำคัญ"}
               </h4>
               <div className="flex flex-col gap-4">
-                {calendarDays.filter(d => d).map(d => {
+                {filteredDays.filter(item => item.date && item.visible).map(({ date: d }) => {
                   const info = getLannaDate(d);
                   const songkran = getSongkranLabel(d);
-                  if (!info?.isThongChai && !info?.isAthipadi && !info?.sitthi && !info?.isFahTeeSangGood && !songkran && !info?.isSin) return null;
+                  const hasBad = !!(info?.isSia || info?.isUbat || info?.isLokawinat || info?.isWanMutju);
+                  const isAuspicious = !!(info?.isThongChai || info?.isAthipadi || info?.sitthi || info?.isFahTeeSangGood || info?.dithiName || songkran);
+                  if (filter === "all" && !isAuspicious && !info?.isSin && !hasBad) return null;
                   return (
                     <div key={d.toISOString()} className="bg-[#F9F6F1] p-6 border border-[#EEE] shadow-sm">
                       <div className="flex items-start gap-5">
-                        <div className={`w-16 h-16 flex items-center justify-center text-white text-[2rem] font-black flex-shrink-0 shadow-md ${info?.isSin?"bg-[#F59E0B]":songkran?"bg-[#06B6D4]":"bg-[#10B981]"}`}>
+                        <div className={`w-16 h-16 flex items-center justify-center text-white text-[2rem] font-black flex-shrink-0 shadow-md ${info?.isSin?"bg-[#F59E0B]":songkran?"bg-[#06B6D4]":hasBad?"bg-[#EF4444]":"bg-[#10B981]"}`}>
                           {d.getDate()}
                         </div>
                         <div className="flex-1">
                           <div className="flex flex-col mb-2">
-                            <div className="text-[1.6rem] font-black text-[#6B4231] leading-tight">{info?.phase} {info?.lunarDay} ค่ำ</div>
+                            <div className="text-[1.6rem] font-black text-[#6B4231] leading-tight">{info?.phase} {info?.lunarDay} ค่ำ เดือน {info?.lannaMonth}</div>
                             <div className="flex items-center gap-2 mt-1">
-                              <div className="text-[1.2rem] font-black text-[#8B5E3C]">เดือน {info?.lannaMonth}</div>
                               <div className="text-[1.1rem] font-bold px-3 py-0.5 bg-white border border-gray-200 text-[#A38D74]">{info?.wanThai}</div>
                             </div>
                           </div>
@@ -543,7 +502,15 @@ function App() {
                             {info?.sitthi && <span className="text-[#059669] font-black block mb-2"> {info.sitthi}: ฤกษ์แห่งความสำเร็จ ให้ลาภผลที่ดี สมปรารถนา {info.sitthi==="วันมหาสิทธิโชค"?"(เป็นโชคหลวงมหาวัน)":""}</span>}
                             {info?.isThongChai && <span className="text-[#059669] font-black block mb-2"> วันธงชัย: ฤกษ์ดีมีชัยชนะ มิ่งขวัญ ทำการใดก็สำเร็จได้ผลดี เหมาะแก่การเริ่มต้นงานมงคล</span>}
                             {info?.isAthipadi && <span className="text-[#2563EB] font-black block mb-2"> วันอธิบดี: ฤกษ์แห่งความมั่นคง มีอำนาจและความเจริญ เหมาะแก่การวางรากฐานและจัดการธุระสำคัญ</span>}
-                            <p className="m-0 opacity-80 mt-2 italic border-t border-gray-200 pt-2 font-bold">"{info?.wanThaiDesc}"</p>
+                            {hasBad && (
+                              <>
+                                {info?.isLokawinat && <span className="text-[#EF4444] font-black block mb-2"> วันโลกาวินาศ: ห้ามทำการมงคลเด็ดขาด จะเกิดความพินาศฉิบหาย</span>}
+                                {info?.isUbat && <span className="text-[#EF4444] font-black block mb-2"> วันอุบาทว์: ห้ามริเริ่มงานใหม่หรือทำพิธีมงคล จะเกิดอุปสรรค</span>}
+                                {info?.isSia && <span className="text-[#EF4444] font-black block mb-2"> วันเสีย: เป็นวันเสียตามรอบเดือน ควรหลีกเลี่ยงงานสำคัญ</span>}
+                                {info?.isWanMutju && <span className="text-[#EF4444] font-black block mb-2"> วันมัจจุราช: วันอันตรายตามตำราเดือน</span>}
+                              </>
+                            )}
+                            <p className="m-0 opacity-80 mt-2 italic border-t border-gray-200 pt-2 font-bold">{info?.wanThaiDesc}</p>
                           </div>
                         </div>
                       </div>
@@ -552,8 +519,6 @@ function App() {
                 })}
               </div>
             </div>
-
-            {/* Legend */}
             <div className="mt-6 flex flex-wrap justify-center gap-3 border-t border-gray-100 pt-4">
               {[["#06B6D4","สงกรานต์"],["#F59E0B","วันศีล"],["#10B981","ฟ้าตีแส่งดี"],["#EF4444","วันเสีย"]].map(([c,l]) => (
                 <div key={l} className="flex items-center gap-1.5">
@@ -568,7 +533,6 @@ function App() {
     );
   }
 
-  // ─── DAILY VIEW ──────────────────────────────────────────
   const c = dayInfo;
   const songkranLabel = getSongkranLabel(selectedDate);
 
@@ -576,50 +540,39 @@ function App() {
     <div className="bg-[#E0DDD8] min-h-screen p-3 text-[#2D1B08] font-sans antialiased">
       <div className="max-w-[480px] mx-auto">
         {headerBar}
-
         <div className="flex flex-col gap-6">
-
-          {/* Nav */}
           <div className="bg-[#F9F6F1] p-6 border border-[#D1CDC7] shadow-sm">
             <div className="flex justify-between mb-6">
-              <button onClick={() => setView("monthly")}
-                style={{ color: "white" }}
-                className="border-none bg-[#6B4231] text-white px-7 py-3 font-black cursor-pointer text-[1.2rem] shadow-sm">‹ รายเดือน</button>
-              <button onClick={() => setSelectedDate(new Date())}
-                className="border-none bg-[#D6D3D1] px-7 py-3 font-black cursor-pointer text-[1.2rem]">วันนี้</button>
+              <button onClick={() => setView("monthly")} style={{ color: "white" }} className="border-none bg-[#6B4231] text-white px-7 py-3 font-black cursor-pointer text-[1.2rem] shadow-sm">‹ รายเดือน</button>
+              <button onClick={() => setSelectedDate(new Date())} className="border-none bg-[#D6D3D1] px-7 py-3 font-black cursor-pointer text-[1.2rem]">วันนี้</button>
             </div>
             <div className="flex justify-between items-center px-4">
-              <button onClick={() => { const d = new Date(selectedDate); d.setDate(d.getDate()-1); setSelectedDate(d); }}
-                className="border-none bg-[#D6D3D1] w-14 h-14 flex items-center justify-center font-black cursor-pointer">‹</button>
-              <div className="text-center">
-                <div className="text-[1.2rem] font-bold text-[#6B4231] opacity-60 uppercase tracking-widest">เลือกวัน</div>
-              </div>
-              <button onClick={() => { const d = new Date(selectedDate); d.setDate(d.getDate()+1); setSelectedDate(d); }}
-                className="border-none bg-[#D6D3D1] w-14 h-14 flex items-center justify-center font-black cursor-pointer">›</button>
+              <button onClick={() => { const d = new Date(selectedDate); d.setDate(d.getDate()-1); setSelectedDate(d); }} className="border-none bg-[#D6D3D1] w-14 h-14 flex items-center justify-center font-black cursor-pointer">‹</button>
+              <div className="text-center"><div className="text-[1.2rem] font-bold text-[#6B4231] opacity-60 uppercase tracking-widest">เลือกวัน</div></div>
+              <button onClick={() => { const d = new Date(selectedDate); d.setDate(d.getDate()+1); setSelectedDate(d); }} className="border-none bg-[#D6D3D1] w-14 h-14 flex items-center justify-center font-black cursor-pointer">›</button>
             </div>
           </div>
 
-          {/* Hero date card */}
           <div className="bg-[#6B4231] p-10 border border-[#4D3024] text-center text-[#FEF3C7] shadow-xl relative overflow-hidden">
             <div className="absolute top-[-20px] left-[-20px] w-32 h-32 bg-white opacity-5 rounded-full" />
             <div className="absolute bottom-[-30px] right-[-30px] w-52 h-52 bg-black opacity-10 rounded-full" />
             {songkranLabel && <div className="text-[#06B6D4] text-[3.8rem] font-black block mb-8 drop-shadow-lg animate-pulse leading-none">{songkranLabel}</div>}
-
-            <div className="flex flex-col gap-3 mb-8 pb-8 border-b border-white/20">
-              <div className="text-[2.2rem] font-black tracking-tight">
-                {selectedDate.getDate()} {DATA.monthNames[selectedDate.getMonth()]} {selectedDate.getFullYear() + 543}
+            <div className="flex flex-col gap-3 mb-8 pb-8 border-b border-white/20 relative">
+              <div className="flex items-center justify-center gap-1 text-[2.2rem] font-black tracking-tight relative z-10">
+                <select value={selectedDate.getDate()} onChange={(e) => { const d = new Date(selectedDate); d.setDate(parseInt(e.target.value)); setSelectedDate(d); }} className="bg-transparent border-none text-inherit font-black cursor-pointer outline-none appearance-none text-right">
+                  {[...Array(new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0).getDate())].map((_, i) => ( <option key={i} value={i+1} className="text-black">{i+1}</option> ))}
+                </select>
+                <select value={selectedDate.getMonth()} onChange={(e) => { const d = new Date(selectedDate); d.setMonth(parseInt(e.target.value)); setSelectedDate(d); }} className="bg-transparent border-none text-inherit font-black cursor-pointer outline-none appearance-none text-center">
+                  {DATA.monthNames.map((name, i) => ( <option key={i} value={i} className="text-black">{name}</option> ))}
+                </select>
+                <select value={selectedDate.getFullYear() + 543} onChange={(e) => { const d = new Date(selectedDate); d.setFullYear(parseInt(e.target.value) - 543); setSelectedDate(d); }} className="w-28 bg-transparent border-none text-inherit font-black cursor-pointer outline-none appearance-none text-left">
+                  {[...Array(21)].map((_, i) => ( <option key={i} value={2560+i} className="text-black">{2560+i}</option> ))}
+                </select>
               </div>
-              <div className="text-[2.2rem] font-bold opacity-90">
-                จ.ศ. {c?.cs} ปี{c?.yearZodiac}
-              </div>
+              <div className="text-[2.2rem] font-bold opacity-90 relative z-10">จ.ศ. {c?.cs} ปี{c?.yearZodiac}</div>
+              <input type="date" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => { const t = new Date(e.target.value); if (!isNaN(t.getTime())) { setSelectedDate(t); setCalendarMonth(new Date(t.getFullYear(), t.getMonth(), 1)); } }} />
             </div>
-
-            {/* ===== BUG FIX #4: ปรับปรุงการคำนวณเดือนและดิถีแบบล้านนา (Athikamat/Athikawan) ให้แม่นยำสูงสุด ===== */}
-
-            <h2 className="text-[2.2rem] font-black leading-tight flex items-center justify-center gap-4">
-              <span>{c?.phase} {c?.lunarDay} ค่ำ เดือน {c?.lannaMonth}</span>
-            </h2>
-
+            <h2 className="text-[2.2rem] font-black leading-tight flex items-center justify-center gap-4"><span>{c?.phase} {c?.lunarDay} ค่ำ เดือน {c?.lannaMonth}</span></h2>
             <div className="flex flex-wrap gap-[6px] justify-center mt-8 pt-6 border-t border-white/10">
               {c?.isSin && <Badge label="วันศีล" bgColor="#F59E0B" />}
               {c?.isThongChai && <Badge label="วันธงชัย" bgColor="#059669" />}
@@ -637,76 +590,7 @@ function App() {
             </div>
           </div>
 
-          {/* เกณฑ์วันและดิถี */}
-          <div className="bg-[#EEEAE3] p-8 border border-[#D1CDC7] shadow-sm">
-            <h3 className="m-0 mb-2 text-[1.8rem] font-black text-[#92400E] border-b-2 border-[#D1CDC7] pb-3">ความหมายเกณฑ์วันและดิถี</h3>
-            <div className="flex flex-col">
-              {c?.isLokawinat && <SectionDetail title="วันโลกาวินาศ" desc="ห้ามทำการมงคลเด็ดขาด จะเกิดความพินาศฉิบหาย สูญเสียทรัพย์สินและบารมี" color="#000" />}
-              {c?.isUbat && <SectionDetail title="วันอุบาทว์" desc="ห้ามริเริ่มงานใหม่หรือทำพิธีมงคล จะเกิดอุปสรรค ขัดข้อง และเรื่องเดือดร้อน" color="#DC2626" />}
-              {c?.isThongChai && <SectionDetail title="วันธงชัย" desc="ฤกษ์ดีมีชัยชนะ มิ่งขวัญ ทำการใดก็สำเร็จได้ผลดี เหมาะแก่การยกทัพหรือเริ่มงานมงคลใหญ่" color="#059669" />}
-              {c?.isAthipadi && <SectionDetail title="วันอธิบดี" desc="ฤกษ์แห่งความมั่นคงและอำนาจ เหมาะแก่การวางศิลาฤกษ์ ลงเสาเอก ตั้งศาลพระภูมิ และเปลี่ยนชื่อนามสกุล" color="#2563EB" />}
-              <SectionDetail title={`วัน${c?.wanLohk}`} desc={wanLohkDesc(c?.wanLohk)} color="#4B5563" />
-              {c?.isJom && <SectionDetail title="วันจม" desc="ห้ามทำการมงคลที่เกี่ยวกับความคงทนถาวร เช่น ปลูกบ้าน ลงเสาเอก หรือซื้อสัตว์ใหญ่มาเลี้ยง" color="#4B5563" />}
-              {c?.isFoo && <SectionDetail title="วันฟู" desc="วันแห่งความเจริญก้าวหน้า เหมาะแก่การค้าขาย เริ่มต้นเพาะปลูก หรือขยายธุรกิจให้เฟื่องฟู" color="#10B981" />}
-              {c?.isHuaRiang && <SectionDetail title="วันหัวเรียงหมอน" desc="ฤกษ์มงคลสมรสที่ดีที่สุดสำหรับการเริ่มต้นชีวิตคู่ จะทำให้คู่บ่าวสาวอยู่เย็นเป็นสุข" color="#DB2777" />}
-              <SectionDetail
-                title={`${c?.dithiName}ดิถี`}
-                desc={c?.dithiName==="นันทา"?"พญาวันแห่งการสร้างสรรค์: เหมาะแก่การปลูกสร้างบ้านเรือน วิหาร หล่อพระพุทธรูป ขุดสระ และเริ่มต้นประกอบการค้า":c?.dithiName==="ภัทรา"?"พญาวันแห่งสิริมงคล: เหมาะแก่การส่งตัวบ่าวสาว ทำพิธีแต่งงาน ดำหัว ย้ายที่อยู่ และตั้งชื่อยศนามศักดิ์":c?.dithiName==="ไชยา"?"พญาวันแห่งชัยชนะ: เหมาะแก่การเจรจาความเมือง ยกทัพ สร้างอาวุธ และศึกษาศิลปวิทยาคุณ":c?.dithiName==="ริตตา"?"พญาวันแห่งความอุดมสมบูรณ์: เหมาะแก่การทำสวนไร่นา ปลูกต้นไม้ สร้างถนน และทำเครื่องประดับมิ่งมงคล":c?.dithiName==="ปุณณา"?"พญาวันแห่งความเต็มเปี่ยม: เหมาะแก่การนำข้าวขึ้นยุ้งฉาง เริ่มเรียนพระธรรม และการแต่งตั้งข้าราชการ":""}
-                color="#92400E" />
-              {c?.isRahuTok && <SectionDetail title="ราหูเกตุตก" desc="เกณฑ์อันตรายตามตำราโบราณ ระวังการทำพิธีใหญ่ หรือการเดินทางที่ต้องเสี่ยงภัย" color="#4338CA" />}
-              <SectionDetail title={`โฉลก: ${c?.mahaChalong}`} desc={mahaChalongDesc(c?.mahaChalong)} color="#78350F" />
-            </div>
-          </div>
-
-          {/* ทิศมงคล */}
-          <div className="bg-[#EEEAE3] p-8 border border-[#D1CDC7] shadow-sm">
-            <h3 className="m-0 mb-6 text-[1.6rem] font-black text-[#92400E] border-b-2 border-[#D1CDC7] pb-3">เกณฑ์และทิศมงคล</h3>
-            <div className="grid grid-cols-3 gap-4 mb-6">
-              {[["ทิศศรี",c?.sri,"#059669"],["กาลกิณี",c?.kala,"#DC2626"],["ทิศจังไร",c?.jangrai,"#000"]].map(([t,v,co]) => (
-                <div key={t} className="bg-white p-4 text-center shadow-sm">
-                  <p className="m-0 text-[1.1rem] font-black text-gray-400 mb-1">{t}</p>
-                  <p className="m-0 text-[1.6rem] font-black" style={{color:co}}>{v}</p>
-                </div>
-              ))}
-            </div>
-            {c?.phiKinSat && <DetailRow label="วันผีกินสัตว์" icon="" desc="ห้ามนำสัตว์เข้าบ้านหรือทำคอกสัตว์" color="#7F1D1D" />}
-            {c?.huaKhaoOk && <DetailRow label="เกณฑ์หัวเข้า-ออก" icon=""
-              desc={c.huaKhaoOk === "วันหัวเข้า" ? "เหมาะแก่การซื้อบ้าน ที่ดิน รถ สินค้า และจุดเทียนบูชารับโชค" : "วันสำหรับส่งเคราะห์ ส่งสินค้า และจุดเทียนบูชาลดเคราะห์"}
-              color="#0369A1" />}
-          </div>
-
-          {/* ยามมงคล */}
-          <div className="bg-[#EEEAE3] p-8 border border-[#D1CDC7] shadow-sm">
-            <h3 className="m-0 mb-6 text-[1.6rem] font-black text-[#92400E] border-b-2 border-[#D1CDC7] pb-3">ยามมงคลประจำวัน</h3>
-            <div className="grid grid-cols-4 gap-3">
-              {c?.yam.map((name, i) => {
-                const totalMin = i * 90;
-                const h = String(6 + Math.floor(totalMin / 60)).padStart(2, "0");
-                const m = String(totalMin % 60).padStart(2, "0");
-                const isCurrentYam = selectedDate.toDateString() === new Date().toDateString() && i === currentYam;
-                return (
-                  <div key={i} className={`p-4 text-center border-2 transition-all ${isCurrentYam?"bg-white border-[#92400E] shadow-md scale-105":"bg-white/50 border-transparent"}`}>
-                    <p className="m-0 text-[1rem] font-black text-gray-400 mb-1">{h}:{m}</p>
-                    <p className="m-0 text-[1.3rem] font-black" style={{ color: yamColor(name) }}>{name}</p>
-                    {isCurrentYam && <div className="text-[0.8rem] font-black text-[#92400E] mt-1 animate-pulse">ขณะนี้</div>}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* คำแนะนำกิจวัตร */}
-          <div className="bg-[#EEEAE3] p-8 border border-[#D1CDC7] shadow-sm">
-            <h3 className="m-0 mb-6 text-[1.6rem] font-black text-[#92400E] border-b-2 border-[#D1CDC7] pb-3">คำแนะนำกิจวัตร</h3>
-            <div className="flex flex-col gap-2">
-              <DetailRow label="ตัดผม" icon="" desc={c?.cutHair||""} color="#10B981" />
-              <DetailRow label="ตัดเล็บ" icon="" desc={c?.cutNail||""} color="#8B5E3C" />
-              <DetailRow label="ดำหัวสระผม" icon="" desc={c?.washHair||""} color="#06B6D4" />
-              <DetailRow label="นุ่งผ้าใหม่" icon="" desc={c?.newClothes||""} color="#3B82F6" />
-            </div>
-          </div>
-
-          {/* วันไท + เก้ากอง */}
+          {/* 1. วันไท + เก้ากอง + แม่บท (MOVED TO TOP) */}
           <div className="bg-[#EEEAE3] p-8 border border-[#D1CDC7] shadow-sm">
             <h3 className="m-0 mb-6 text-[1.6rem] font-black text-[#92400E]">วันไท ({c?.wanThai})</h3>
             <p className="m-0 text-[1.6rem] text-[#3D3128] leading-relaxed font-bold">{c?.wanThaiDesc}</p>
@@ -728,38 +612,71 @@ function App() {
             </div>
           </div>
 
-          {/* ฟ้าตีแส่ง */}
-          <div className="bg-[#EEEAE3] p-8 border border-[#D1CDC7] shadow-2xl">
-            <div className="flex justify-between items-center mb-6 border-b-2 border-[#D1CDC7] pb-3">
-              <h3 className="m-0 text-[2.2rem] font-black text-[#92400E]">ฟ้าตีแส่งเศษ {c?.fahTeeSang}</h3>
-              <div className={`px-5 py-2 text-[1.3rem] font-black ${c?.isFahTeeSangGood?"bg-[#10B981] text-white shadow-md":"bg-[#EF4444] text-white shadow-md"}`}>
-                {c?.isFahTeeSangGood ? "ฤกษ์ดีมงคล" : "ฤกษ์เสียควรเลี่ยง"}
-              </div>
+          {/* 2. ความหมายเกณฑ์วันและดิถี (INCLUDING FAH TEE SANG) */}
+          <div className="bg-[#EEEAE3] p-8 border border-[#D1CDC7] shadow-sm">
+            <h3 className="m-0 mb-2 text-[1.8rem] font-black text-[#92400E] border-b-2 border-[#D1CDC7] pb-3">ความหมายเกณฑ์วันและดิถี</h3>
+            <div className="flex flex-col">
+              {c?.isLokawinat && <SectionDetail title="วันโลกาวินาศ" desc="ห้ามทำการมงคลเด็ดขาด จะเกิดความพินาศฉิบหาย สูญเสียทรัพย์สินและบารมี" color="#000" />}
+              {c?.isUbat && <SectionDetail title="วันอุบาทว์" desc="ห้ามริเริ่มงานใหม่หรือทำพิธีมงคล จะเกิดอุปสรรค ขัดข้อง และเรื่องเดือดร้อน" color="#DC2626" />}
+              {c?.isThongChai && <SectionDetail title="วันธงชัย" desc="ฤกษ์ดีมีชัยชนะ มิ่งขวัญ ทำการใดก็สำเร็จได้ผลดี เหมาะแก่การยกทัพหรือเริ่มงานมงคลใหญ่" color="#059669" />}
+              {c?.isAthipadi && <SectionDetail title="วันอธิบดี" desc="ฤกษ์แห่งความมั่นคงและอำนาจ เหมาะแก่การวางศิลาฤกษ์ ลงเสาเอก ตั้งศาลพระภูมิ และเปลี่ยนชื่อนามสกุล" color="#2563EB" />}
+              <SectionDetail title={`วัน${c?.wanLohk}`} desc={wanLohkDesc(c?.wanLohk)} color="#4B5563" />
+              {c?.isJom && <SectionDetail title="วันจม" desc="ห้ามทำการมงคลที่เกี่ยวกับความคงทนถาวร เช่น ปลูกบ้าน ลงเสาเอก หรือซื้อสัตว์ใหญ่มาเลี้ยง" color="#4B5563" />}
+              {c?.isFoo && <SectionDetail title="วันฟู" desc="วันแห่งความเจริญก้าวหน้า เหมาะแก่การค้าขาย เริ่มต้นเพาะปลูก หรือขยายธุรกิจให้เฟื่องฟู" color="#10B981" />}
+              {c?.isHuaRiang && <SectionDetail title="วันหัวเรียงหมอน" desc="ฤกษ์มงคลสมรสที่ดีที่สุดสำหรับการเริ่มต้นชีวิตคู่ จะทำให้คู่บ่าวสาวอยู่เย็นเป็นสุข" color="#DB2777" />}
+              <SectionDetail title={`${c?.dithiName}ดิถี`} desc={c?.dithiName==="นันทา"?"พญาวันแห่งการสร้างสรรค์: เหมาะแก่การปลูกสร้างบ้านเรือน วิหาร หล่อพระพุทธรูป ขุดสระ และเริ่มต้นประกอบการค้า":c?.dithiName==="ภัทรา"?"พญาวันแห่งสิริมงคล: เหมาะแก่การส่งตัวบ่าวสาว ทำพิธีแต่งงาน ดำหัว ย้ายที่อยู่ และตั้งชื่อยศนามศักดิ์":c?.dithiName==="ไชยา"?"พญาวันแห่งชัยชนะ: เหมาะแก่การเจรจาความเมือง ยกทัพ สร้างอาวุธ และศึกษาศิลปวิทยาคุณ":c?.dithiName==="ริตตา"?"พญาวันแห่งความอุดมสมบูรณ์: เหมาะแก่การทำสวนไร่นา ปลูกต้นไม้ สร้างถนน และทำเครื่องประดับมิ่งมงคล":c?.dithiName==="ปุณณา"?"พญาวันแห่งความเต็มเปี่ยม: เหมาะแก่การนำข้าวขึ้นยุ้งฉาง เริ่มเรียนพระธรรม และการแต่งตั้งข้าราชการ":""} color="#92400E" />
+              {c?.isRahuTok && <SectionDetail title="ราหูเกตุตก" desc="เกณฑ์อันตรายตามตำราโบราณ ระวังการทำพิธีใหญ่ หรือการเดินทางที่ต้องเสี่ยงภัย" color="#4338CA" />}
+              <SectionDetail title={`โฉลก: ${c?.mahaChalong}`} desc={mahaChalongDesc(c?.mahaChalong)} color="#78350F" />
+              <SectionDetail title={`ฟ้าตีแส่งเศษ ${c?.fahTeeSang}`} desc={(
+                <div className="mt-2 font-black">
+                  {[0,1,8].includes(c?.fahTeeSang ?? -1) && ( <span className="text-[#EF4444] block"> <span className="text-[2.2rem] block mb-3 underline decoration-double">เกณฑ์เสีย (พินาศฉิบหาย)</span>ไม่ดี แม้เป็นพระญาอินทราธิราชขึ้นทรงปราสาทก็จักวินาศฉิบหาย อย่าทำพิธีหรือกิจกรรมใด ถ้าทำไปไม่ถึงปีก็จักตาย หรือฉิบหาย หรือถูกไล่หนี </span> )}
+                  {[3,7].includes(c?.fahTeeSang ?? -1) && ( <span className="text-[#EF4444] block"> <span className="text-[2.2rem] block mb-3 underline decoration-double">เกณฑ์เสีย (ไฟและอุบัติเหตุ)</span>ไม่ดี ไฟจักไหม้ หรือจักประสบอุบัติเหตุ เป็นอันตรายแก่ท้าวพระญา ผีเสื้อบ้าน เสื้อเมือง หรือมิฉะนั้นตนจักตาย หรือจักเสียทรัพย์สิน เสียข้าวของเงินทอง </span> )}
+                  {[2,4,5,6].includes(c?.fahTeeSang ?? -1) && ( <span className="text-[#10B981] block"> <span className="text-[2.2rem] block mb-3 underline decoration-double">เกณฑ์ดี (มงคลสำเร็จ)</span>ดี จะประสบผลสำเร็จทุกประการ แม้นทุกข์ยากเข็ญใจก็จักได้ดี อยู่ดีมีสุข พรั่งพร้อมด้วยยศ สมบัติ ข้าวของเงินทอง </span> )}
+                </div>
+              )} color={c?.isFahTeeSangGood ? "#10B981" : "#EF4444"} />
             </div>
-            <div className="bg-white p-8 shadow-inner mb-6 border border-gray-100">
-              <div className="p-6 bg-[#F9F6F1] border-l-[12px] border-[#92400E] shadow-sm">
-                <h4 className="text-[1.6rem] font-black text-[#6B4231] mb-3">คำทำนายตำราฟ้าตีแส่ง:</h4>
-                <p className="m-0 text-[1.8rem] text-[#3D3128] leading-relaxed font-black">
-                  {[0,1,8].includes(c?.fahTeeSang ?? -1) && (
-                    <span className="text-[#EF4444] block">
-                      <span className="text-[2.2rem] block mb-3 underline decoration-double">เกณฑ์เสีย (พินาศฉิบหาย)</span>
-                      ไม่ดี แม้เป็นพระญาอินทราธิราชขึ้นทรงปราสาทก็จักวินาศฉิบหาย อย่าทำพิธีหรือกิจกรรมใด ถ้าทำไปไม่ถึงปีก็จักตาย หรือฉิบหาย หรือถูกไล่หนี
-                    </span>
-                  )}
-                  {[3,7].includes(c?.fahTeeSang ?? -1) && (
-                    <span className="text-[#EF4444] block">
-                      <span className="text-[2.2rem] block mb-3 underline decoration-double">เกณฑ์เสีย (ไฟและอุบัติเหตุ)</span>
-                      ไม่ดี ไฟจักไหม้ หรือจักประสบอุบัติเหตุ เป็นอันตรายแก่ท้าวพระญา ผีเสื้อบ้าน เสื้อเมือง หรือมิฉะนั้นตนจักตาย หรือจักเสียทรัพย์สิน เสียข้าวของเงินทอง
-                    </span>
-                  )}
-                  {[2,4,5,6].includes(c?.fahTeeSang ?? -1) && (
-                    <span className="text-[#10B981] block">
-                      <span className="text-[2.2rem] block mb-3 underline decoration-double">เกณฑ์ดี (มงคลสำเร็จ)</span>
-                      ดี จะประสบผลสำเร็จทุกประการ แม้นทุกข์ยากเข็ญใจก็จักได้ดี อยู่ดีมีสุข พรั่งพร้อมด้วยยศ สมบัติ ข้าวของเงินทอง
-                    </span>
-                  )}
-                </p>
-              </div>
+          </div>
+
+          <div className="bg-[#EEEAE3] p-8 border border-[#D1CDC7] shadow-sm">
+            <h3 className="m-0 mb-6 text-[1.6rem] font-black text-[#92400E] border-b-2 border-[#D1CDC7] pb-3">เกณฑ์และทิศมงคล</h3>
+            <div className="grid grid-cols-3 gap-4 mb-6">
+              {[["ทิศศรี",c?.sri,"#059669"],["กาลกิณี",c?.kala,"#DC2626"],["ทิศจังไร",c?.jangrai,"#000"]].map(([t,v,co]) => (
+                <div key={t} className="bg-white p-4 text-center shadow-sm">
+                  <p className="m-0 text-[1.1rem] font-black text-gray-400 mb-1">{t}</p>
+                  <p className="m-0 text-[1.6rem] font-black" style={{color:co}}>{v}</p>
+                </div>
+              ))}
+            </div>
+            {c?.phiKinSat && <DetailRow label="วันผีกินสัตว์" icon="" desc="ห้ามนำสัตว์เข้าบ้านหรือทำคอกสัตว์" color="#7F1D1D" />}
+            {c?.huaKhaoOk && <DetailRow label="เกณฑ์หัวเข้า-ออก" icon="" desc={c.huaKhaoOk === "วันหัวเข้า" ? "เหมาะแก่การซื้อบ้าน ที่ดิน รถ สินค้า และจุดเทียนบูชารับโชค" : "วันสำหรับส่งเคราะห์ ส่งสินค้า และจุดเทียนบูชาลดเคราะห์"} color="#0369A1" />}
+          </div>
+
+          <div className="bg-[#EEEAE3] p-8 border border-[#D1CDC7] shadow-sm">
+            <h3 className="m-0 mb-6 text-[1.6rem] font-black text-[#92400E] border-b-2 border-[#D1CDC7] pb-3">ยามมงคลประจำวัน</h3>
+            <div className="grid grid-cols-4 gap-3">
+              {c?.yam.map((name, i) => {
+                const totalMin = i * 90;
+                const h = String(6 + Math.floor(totalMin / 60)).padStart(2, "0");
+                const m = String(totalMin % 60).padStart(2, "0");
+                const isCurrentYam = selectedDate.toDateString() === new Date().toDateString() && i === currentYam;
+                return (
+                  <div key={i} className={`p-4 text-center border-2 transition-all ${isCurrentYam?"bg-white border-[#92400E] shadow-md scale-105":"bg-white/50 border-transparent"}`}>
+                    <p className="m-0 text-[1rem] font-black text-gray-400 mb-1">{h}:{m}</p>
+                    <p className="m-0 text-[1.3rem] font-black" style={{ color: yamColor(name) }}>{name}</p>
+                    {isCurrentYam && <div className="text-[0.8rem] font-black text-[#92400E] mt-1 animate-pulse">ขณะนี้</div>}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="bg-[#EEEAE3] p-8 border border-[#D1CDC7] shadow-sm">
+            <h3 className="m-0 mb-6 text-[1.6rem] font-black text-[#92400E] border-b-2 border-[#D1CDC7] pb-3">คำแนะนำกิจวัตร</h3>
+            <div className="flex flex-col gap-2">
+              <DetailRow label="ตัดผม" icon="" desc={c?.cutHair||""} color="#10B981" />
+              <DetailRow label="ตัดเล็บ" icon="" desc={c?.cutNail||""} color="#8B5E3C" />
+              <DetailRow label="ดำหัวสระผม" icon="" desc={c?.washHair||""} color="#06B6D4" />
+              <DetailRow label="นุ่งผ้าใหม่" icon="" desc={c?.newClothes||""} color="#3B82F6" />
             </div>
           </div>
 
@@ -773,12 +690,9 @@ function App() {
 }
 
 function getLunarYearInfo(yearBE) {
-  // Simple Lanna Lunar Year Calculation Rules
-  // Year with extra month (Athikamat): CS % 19 is 0, 3, 6, 9, 11, 14, 17
-  // Year with extra day (Athikawan): Varies, but simplified for 2569 (CS 1387)
   const cs = yearBE - 1181;
   const isAthikamat = [0, 3, 6, 9, 11, 14, 17].includes(cs % 19);
-  const isAthikawan = (yearBE === 2569); // 2569 is Athikawan in some traditions
+  const isAthikawan = (yearBE === 2569); 
   return { isAthikamat, isAthikawan };
 }
 export default App;
