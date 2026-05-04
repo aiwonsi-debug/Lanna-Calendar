@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+:root {
+  --lanna-brown: #6B4231;
+  --lanna-gold: #FEF3C7;
+  --lanna-bg: #F5F0E8;
+  --lanna-green: #10B981;
+  --lanna-red: #DC2626;
+  --lanna-sin: #F59E0B;
+  --lanna-gray: #6B7280;
+}
+
+body {
+  background-color: var(--lanna-bg);
+  color: #2D1B08;
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  overscroll-behavior-y: none;
+}
+
+.brown-gradient {
+  background: linear-gradient(135deg, #6B4231 0%, #4D3024 100%);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
