@@ -223,9 +223,16 @@ export function getLannaDate(date: Date) {
   })(dow, currentKham);
 
   const isSitthi = !!sitthi;
+  const thongChaiDow = ((cs * 10) + 3) % 7;
+  const athipadiDow = (cs % 498) % 7;
+  const ubatDow = ((cs * 10) + 2) % 7;
+  const lokawinatDow = (cs + 1120) % 7;
+
+  const isThongChai = dow === thongChaiDow;
+  const isAthipadi = dow === athipadiDow;
+  const isUbat = dow === ubatDow;
+  const isLokawinat = dow === lokawinatDow;
   const isWanMai = currentKham === 1 && currentPhase === 'ออก';
-  const isUbat = dow === 6;
-  const isLokawinat = dow === 3;
   let isSia = isSiaRaw;
 
   // STEP 3 — Add verification log
@@ -243,7 +250,7 @@ export function getLannaDate(date: Date) {
     wanThaiDesc: DATA.wanThaiDetailed[wanThai as keyof typeof DATA.wanThaiDetailed] || "",
     isSin, cs, yearZodiac: yearZodiacName, zodiacThai: zInfo.thai,
     kaoKong: kaoKongName, kaoKongDesc: DATA.kaoKongInfo[kaoKongName as keyof typeof DATA.kaoKongInfo],
-    isThongChai: dow === 0, isAthipadi: dow === 1, isUbat, isLokawinat, isWanMai,
+    isThongChai, isAthipadi, isUbat, isLokawinat, isWanMai,
     isSia,
     sitthi,
     isFoo: { 1:[1],2:[2],3:[3],4:[4],5:[1],6:[2],7:[3],8:[4],9:[1],10:[2],11:[3],12:[4] }[currentMonth as keyof typeof monthMap]?.includes(dow),

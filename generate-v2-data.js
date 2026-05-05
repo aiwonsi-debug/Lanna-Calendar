@@ -120,11 +120,16 @@ function getLannaDate(date) {
 
   const isSitthi = !!sitthi;
   const isWanMai = currentKham === 1 && currentPhase === 'ออก';
-  const isUbat = dow === 6;
-  const isLokawinat = dow === 3;
-  let isSiaFinal = isSiaRaw;
+  const thongChaiDow = ((cs * 10) + 3) % 7;
+  const athipadiDow = (cs % 498) % 7;
+  const ubatDow = ((cs * 10) + 2) % 7;
+  const lokawinatDow = (cs + 1120) % 7;
 
-  const isGood = dow === 0;
+  const isThongChai = dow === thongChaiDow;
+  const isAthipadi = dow === athipadiDow;
+  const isUbat = dow === ubatDow;
+  const isLokawinat = dow === lokawinatDow;
+  const isGood = isThongChai || isAthipadi || dow === 0;
 
   const lunarText = `${currentPhase === 'ออก' ? 'ขึ้น' : 'แรม'} ${currentKham} ค่ำ`;
   const extra = extractDetails(isSiaFinal, isSin, isGood, lunarText, wanThai, date);
