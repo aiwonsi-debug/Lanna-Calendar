@@ -120,29 +120,27 @@ function getLannaDate(date) {
 
   const isSitthi = !!sitthi;
   const isWanMai = currentKham === 1 && currentPhase === 'ออก';
-  // Use April of the current Gregorian year to determine CS for Songkran
+
+  // Chulasakarat (CS) calculation for Kalayok
   const csForSongkran = date.getFullYear() - (date.getMonth() < 3 ? 639 : 638);
   const baseHarkun = Math.floor((1386 * 292207 + 373) / 800);
   const currentHarkun = Math.floor((csForSongkran * 292207 + 373) / 800);
   const currentFraction = ((csForSongkran * 292207 + 373) % 800) / 800;
-  
   const diffDaysFromBase = currentHarkun - baseHarkun;
   const basePhayaWan2024 = new Date(2024, 3, 16).getTime();
-  const thaloengSokExactTime = basePhayaWan2024 + diffDaysFromBase * 86400000 + currentFraction * 86400000;
-
-  const phayaWanDate = new Date(thaloengSokExactTime);
+  const phayaWanDate = new Date(basePhayaWan2024 + diffDaysFromBase * 86400000 + currentFraction * 86400000);
   const cs = (date.getTime() >= phayaWanDate.getTime()) ? (date.getFullYear() - 638) : (date.getFullYear() - 639);
 
-  const thongChaiDow = ((cs * 10) + 3) % 7;
-  const athipadiDow = (cs % 498) % 7;
-  const ubatDow = ((cs * 10) + 2) % 7;
-  const lokawinatDow = (cs + 1120) % 7;
+  // Kalayok (กาลโยค) Calculation
+  const getKalayokDow = (base) => (base % 7 - 1 + 7) % 7;
 
-  const isThongChai = dow === thongChaiDow;
-  const isAthipadi = dow === athipadiDow;
-  const isUbat = dow === ubatDow;
-  const isLokawinat = dow === lokawinatDow;
+  const isThongChai = dow === getKalayokDow(cs * 10 + 3);
+  const isAthipadi = dow === getKalayokDow(cs * 137 + 5);
+  const isUbat = dow === getKalayokDow(cs * 10 + 2);
+  const isLokawinat = dow === getKalayokDow(cs * 1123 + 6);
   const isGood = isThongChai || isAthipadi || dow === 0;
+
+  const isSiaFinal = isSiaRaw;
 
   const lunarText = `${currentPhase === 'ออก' ? 'ขึ้น' : 'แรม'} ${currentKham} ค่ำ`;
   const extra = extractDetails(isSiaFinal, isSin, isGood, lunarText, wanThai, date);
