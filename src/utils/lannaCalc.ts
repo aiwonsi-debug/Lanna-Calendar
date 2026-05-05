@@ -36,7 +36,7 @@ export const DATA = {
     "เปิกไจ้": "ดีใส่รัก ทาเกี๊ยะแป๋งกล่องและกุบ (มงคลด้านงานช่าง and ศิลปะ)",
     "กัดเป้า": "อย่าได้สืบคำเมืองท่านบ่สู้ (ห้ามเจรจาความเมืองหรือเรื่องสำคัญ)",
     "กดยี่": "หื้อสานก๋วยไปค้า ได้คำเต๋มชาน (มงคลด้านการค้าขายและการจักสาน)",
-    "ร้วงเหม้า": "ดีเยียะสวน ปลูกยา เป็นดอกดีงาม (วันปลูกพืชสมุนไพร)",
+    "ร้วงเหม้า": "ดีเยียะสวน ปลูกยา เป็นดอกดีงาม (วันปลูกพืชสมุนพรร)",
     "เต่าสี": "หื้อกระทำการเรือหอม สวนผักดาดี (วันเริ่มสวนครัว)",
     "กาไส้": "อย่าเอากันกินแขก จักถูกถ้อยคำ (ห้ามจัดงานเลี้ยงใหญ่ จะเกิดเรื่อง)",
     "กาบสะง้า": "หื้อแรกน้ำใส่นา ข้าวเต๋มหลอง (วันเริ่มทำนาหรือเหมืองฝาย)",
@@ -107,8 +107,45 @@ const SIA_CHECK: Record<number, number[]> = {
 };
 
 // ============================================================
+// HELPERS
+// ============================================================
+
+export function getKalaYok(cs: number): {
+  thongChai: number;   // dow (0=Sun..6=Sat) 
+  ubat: number;
+  lokawinat: number;
+} {
+  const modToDow = (r: number) => r === 0 ? 6 : r - 1;
+  const thaiRaw = (cs * 10 + 3) % 7;
+  const ubatRaw  = (cs * 10 + 2) % 7;
+  const lokaRaw  = (cs + 1120)   % 7;
+  return {
+    thongChai: modToDow(thaiRaw),
+    ubat: modToDow(ubatRaw),
+    lokawinat: modToDow(lokaRaw),
+  };
+}
+
+export function getDailyKalaYoga(rawLunarDay: number, dow: number): { name: string; meaning: string; isGood: boolean } {
+  const remainder = (rawLunarDay + dow) % 9;
+  const table: Record<number, { name: string; meaning: string; isGood: boolean }> = {
+    0: { name: "วิษกัมภ์", meaning: "มีอุปสรรคขัดขวาง ไม่เป็นมงคล ควรหลีกเลี่ยงงานสำคัญ", isGood: false },
+    1: { name: "ปรีดิ", meaning: "สำเร็จสมปรารถนา เหมาะแก่การเริ่มงานมงคลทุกประการ", isGood: true },
+    2: { name: "อายุษมัน", meaning: "มีอายุยืน สุขภาพดี เหมาะแก่การรักษาพยาบาลและดูแลสุขภาพ", isGood: true },
+    3: { name: "เสาภาค", meaning: "มีโชคลาภ เหมาะแก่การค้าขายและหาทรัพย์", isGood: true },
+    4: { name: "โศภณ", meaning: "งดงามเป็นสิริมงคล เหมาะแก่งานแต่งงานและพิธีมงคล", isGood: true },
+    5: { name: "อติคัณฑ์", meaning: "อันตราย ควรระวังอุบัติเหตุและโรคภัย ไม่เหมาะแก่การเริ่มงาน", isGood: false },
+    6: { name: "สุกรรม", meaning: "มีกรรมดีหนุนนำ เหมาะแก่การทำบุญและกุศลกรรม", isGood: true },
+    7: { name: "ธฤดิ", meaning: "มั่นคงยั่งยืน เหมาะแก่การลงทุนและวางรากฐาน", isGood: true },
+    8: { name: "ศูล", meaning: "เจ็บปวดและสูญเสีย ไม่เป็นมงคล ควรหลีกเลี่ยงงานสำคัญ", isGood: false },
+  };
+  return table[remainder] || table[0];
+}
+
+// ============================================================
 // CALCULATIONS
 // ============================================================
+
 export function getLunarYearInfo(yearBE: number) {
   const cs = yearBE - 1181;
   const harkun = Math.floor((cs * 292207 + 373) / 800);
@@ -120,7 +157,6 @@ export function getLunarYearInfo(yearBE: number) {
 
 export function getLannaDate(date: Date) {
   if (!date || isNaN(date.getTime())) return null;
-  // Reference anchor: 2026-04-30 is 14 Kham Waxing, Month 8 Lanna
   const refDate = new Date(2026, 3, 30); 
   const diffDays = Math.floor((date.getTime() - refDate.getTime()) / 86400000);
   
@@ -136,20 +172,11 @@ export function getLannaDate(date: Date) {
       currentKham++;
       let maxKham = (currentMonth % 2 === 0) ? 15 : 14;
       if (currentMonth === 9 && yrInfo.isAthikawan) maxKham = 15;
-      
-      if (currentPhase === 'ออก' && currentKham > 15) { 
-        currentKham = 1; 
-        currentPhase = 'แรม'; 
-      } else if (currentPhase === 'แรม' && currentKham > maxKham) {
-        currentKham = 1; 
-        currentPhase = 'ออก';
-        if (currentMonth === 9 && yrInfo.isAthikamat && !isLeapMonthActive) {
-          isLeapMonthActive = true; 
-        } else { 
-          isLeapMonthActive = false; 
-          currentMonth++; 
-          if (currentMonth > 12) { currentMonth = 1; currentYearBE++; } 
-        }
+      if (currentPhase === 'ออก' && currentKham > 15) { currentKham = 1; currentPhase = 'แรม'; } 
+      else if (currentPhase === 'แรม' && currentKham > maxKham) {
+        currentKham = 1; currentPhase = 'ออก';
+        if (currentMonth === 9 && yrInfo.isAthikamat && !isLeapMonthActive) { isLeapMonthActive = true; } 
+        else { isLeapMonthActive = false; currentMonth++; if (currentMonth > 12) { currentMonth = 1; currentYearBE++; } }
       }
     } else {
       currentKham--;
@@ -162,10 +189,7 @@ export function getLannaDate(date: Date) {
         currentPhase = 'แรม'; 
         const yrInfoNow = getLunarYearInfo(currentYearBE);
         currentKham = (currentMonth % 2 === 0 || (currentMonth === 9 && yrInfoNow.isAthikawan)) ? 15 : 14;
-      } else if (currentPhase === 'แรม' && currentKham < 1) { 
-        currentKham = 15; 
-        currentPhase = 'ออก'; 
-      }
+      } else if (currentPhase === 'แรม' && currentKham < 1) { currentKham = 15; currentPhase = 'ออก'; }
     }
   }
 
@@ -175,24 +199,17 @@ export function getLannaDate(date: Date) {
   const wanThaiIdx = (diffWan % 60 + 60) % 60;
   const wanThai = DATA.maeMue[wanThaiIdx % 10] + DATA.lukMue[wanThaiIdx % 12];
   
-  // Use April of the current Gregorian year to determine CS for Songkran
   const csForSongkran = date.getFullYear() - (date.getMonth() < 3 ? 639 : 638);
-  
-  // Base date CS 1386 (2024 CE) 16 April
   const baseHarkun = Math.floor((1386 * 292207 + 373) / 800);
   const currentHarkun = Math.floor((csForSongkran * 292207 + 373) / 800);
   const currentFraction = ((csForSongkran * 292207 + 373) % 800) / 800;
-  
   const diffDaysFromBase = currentHarkun - baseHarkun;
   const basePhayaWan2024 = new Date(2024, 3, 16).getTime();
-  
   const thaloengSokExactTime = basePhayaWan2024 + diffDaysFromBase * 86400000 + currentFraction * 86400000;
-  // Maha Songkran is 2.165 days before Thaloeng Sok
-  const mahaSongkranExactTime = thaloengSokExactTime - 187056000; 
-
   const phayaWanDate = new Date(thaloengSokExactTime);
 
   const cs = (date.getTime() >= phayaWanDate.getTime()) ? (date.getFullYear() - 638) : (date.getFullYear() - 639);
+  const kalaYok = getKalaYok(cs);
   
   const zodiacList = [
     { name: "เส็ด", thai: "จอ" }, { name: "ไก้", thai: "กุน" }, { name: "ไจ้", thai: "ชวด" },
@@ -212,7 +229,6 @@ export function getLannaDate(date: Date) {
   const kaoKongIndex = (wanThaiIdx % 12 - (monthMap[currentMonth] || 0) + 12) % 12;
   const kaoKongName = Object.keys(DATA.kaoKongInfo)[kaoKongIndex];
 
-  // Fix: lannaMonth rule logic
   const finalLannaMonth = currentMonth;
   const isSiaRaw = (SIA_CHECK[finalLannaMonth] || []).includes(dow);
 
@@ -222,29 +238,12 @@ export function getLannaDate(date: Date) {
     return null;
   })(dow, currentKham);
 
-  const isSitthi = !!sitthi;
-  // Kalayok (กาลโยค) Calculation
-  // Bases: ThongChai=(CS*10+3), Athipadi=(CS*137+5), Ubat=(CS*10+2), Lokawinat=(CS*1123+6)
-  // Day: Base % 7 (1=Sun, 2=Mon, 3=Tue, 4=Wed, 5=Thu, 6=Fri, 0=Sat)
-  // Map to JS getDay(): (Result % 7 - 1 + 7) % 7
-  const getKalayokDow = (base: number) => (base % 7 - 1 + 7) % 7;
-  
-  const isThongChai = dow === getKalayokDow(cs * 10 + 3);
-  const isAthipadi = dow === getKalayokDow(cs * 137 + 5);
-  const isUbat = dow === getKalayokDow(cs * 10 + 2);
-  const isLokawinat = dow === getKalayokDow(cs * 1123 + 6);
+  const isThongChai = dow === kalaYok.thongChai;
+  const isAthipadi = dow === 1; 
+  const isUbat = dow === kalaYok.ubat;
+  const isLokawinat = dow === kalaYok.lokawinat;
   
   const isWanMai = currentKham === 1 && currentPhase === 'ออก';
-  let isSia = isSiaRaw;
-
-  // STEP 3 — Add verification log
-  if (date.getFullYear()===2026 && date.getMonth()===4) {
-    console.log(date.getDate(),
-      'finalLannaMonth:', finalLannaMonth,
-      'siaDoWs:', SIA_CHECK[finalLannaMonth],
-      'dow:', dow, 'isSia:', isSia)
-  }
-
   const isWanMutju = (currentMonth === 5 && dow === 0) || (currentMonth === 6 && dow === 1) || (currentMonth === 7 && dow === 2) || (currentMonth === 8 && dow === 3) || (currentMonth === 9 && dow === 4) || (currentMonth === 10 && dow === 5) || (currentMonth === 11 && dow === 6);
 
   return {
@@ -253,7 +252,7 @@ export function getLannaDate(date: Date) {
     isSin, cs, yearZodiac: yearZodiacName, zodiacThai: zInfo.thai,
     kaoKong: kaoKongName, kaoKongDesc: DATA.kaoKongInfo[kaoKongName as keyof typeof DATA.kaoKongInfo],
     isThongChai, isAthipadi, isUbat, isLokawinat, isWanMai,
-    isSia,
+    isSia: isSiaRaw,
     sitthi,
     isFoo: { 1:[1],2:[2],3:[3],4:[4],5:[1],6:[2],7:[3],8:[4],9:[1],10:[2],11:[3],12:[4] }[currentMonth as keyof typeof monthMap]?.includes(dow),
     yam: DATA.yamData[dow],

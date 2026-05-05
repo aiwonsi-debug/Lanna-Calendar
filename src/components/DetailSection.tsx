@@ -1,6 +1,6 @@
 import React from 'react';
 
-// --- DATA INTERFACES (Synced with LannaParser) ---
+// --- DATA INTERFACES ---
 export interface LunarData {
   phase: "waxing" | "waning";
   day: number;
@@ -15,6 +15,7 @@ export interface DayData {
   y: number;
   m: number;
   d: number;
+  lannaMonth: number;
   lunar: LunarData;
   labels: {
     good: string[];
@@ -30,6 +31,11 @@ export interface DayData {
     sri: string;
     ka: string;
   };
+  kalaYok?: {
+    name: string;
+    meaning: string;
+    isGood: boolean;
+  };
 }
 
 interface DetailSectionProps {
@@ -39,11 +45,13 @@ interface DetailSectionProps {
 
 /**
  * DetailSection Component
- * Displays the full structured Lanna calendar data for a selected day.
- * Mobile-first, scrollable, and no truncation.
+ * Original stylized version with Kala Yoga integrated.
  */
 export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
-  const monthTitle = new Intl.DateTimeFormat('th-TH', { month: 'long', year: 'numeric' }).format(date);
+  const monthTitle = date instanceof Date && !isNaN(date.getTime())
+    ? new Intl.DateTimeFormat('th-TH', { month: 'long' }).format(date)
+    : "";
+    
   const lunarText = `${data.lunar.phase === 'waxing' ? 'ขึ้น' : 'แรม'} ${data.lunar.day} ค่ำ`;
 
   return (
@@ -55,10 +63,13 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
             ปั๊กขะทืนล้านนา • {lunarText}
           </span>
           <h2 className="text-[42px] font-black text-[#6B4231] leading-[1.1] tracking-tighter">
-            {data.d} {monthTitle.split(' ')[0]}
+            {data.d} {monthTitle}
           </h2>
           <span className="text-[16px] font-bold text-gray-300 -mt-1">
-            พุทธศักราช {date.getFullYear() + 543}
+            พุทธศักราช {data.y}
+          </span>
+          <span className="text-[14px] font-bold text-[#5A3520] mt-1">
+            เดือน {data.lannaMonth}
           </span>
         </div>
         
@@ -97,6 +108,23 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
               </div>
               <p className="text-[19px] text-[#6B4231] leading-relaxed font-medium whitespace-pre-wrap italic">
                 {data.description}
+              </p>
+            </div>
+          </section>
+        )}
+
+        {/* Kala Yoga Section */}
+        {data.kalaYok && (
+          <section>
+            <h3 className="text-[11px] font-black text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+              <span className="w-4 h-px bg-gray-200" /> กาลโยค
+            </h3>
+            <div className={`p-6 rounded-[28px] border ${data.kalaYok.isGood ? 'bg-emerald-50/30 border-emerald-100' : 'bg-red-50/30 border-red-100'}`}>
+              <h4 className={`text-[18px] font-black mb-1 ${data.kalaYok.isGood ? 'text-emerald-700' : 'text-red-700'}`}>
+                {data.kalaYok.name}
+              </h4>
+              <p className={`text-[15px] font-medium leading-relaxed ${data.kalaYok.isGood ? 'text-emerald-900/70' : 'text-red-900/70'}`}>
+                {data.kalaYok.meaning}
               </p>
             </div>
           </section>
