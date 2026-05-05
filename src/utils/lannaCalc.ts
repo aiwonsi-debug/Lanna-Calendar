@@ -228,7 +228,7 @@ export function getLannaDate(date: Date) {
   const isLokawinat = dow === 3;
   let isSia = isSiaRaw;
 
-  if (isSitthi || isUbat || isLokawinat) {
+  if (isSitthi || isWanMai) {
     isSia = false;
   }
 

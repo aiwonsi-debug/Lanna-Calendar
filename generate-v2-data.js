@@ -124,7 +124,7 @@ function getLannaDate(date) {
   const isLokawinat = dow === 3;
   let isSiaFinal = isSiaRaw;
 
-  if (isSitthi || isUbat || isLokawinat) {
+  if (isSitthi || isWanMai) {
     isSiaFinal = false;
   }
 
