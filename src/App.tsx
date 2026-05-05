@@ -121,7 +121,7 @@ export default function App() {
       sri: dir.sri,
       kala: dir.ka,
       dithiName,
-      dithiDesc: `เป็นวัน${dithiName}ดิถี ${dithiName === "ริตต" ? "ไม่ควรประกอบการมงคล" : "เป็นมงคลดีแล"}`,
+      dithiDesc: `วัน${dithiName}ดิถี ${dithiName === "ริตต" ? "ไม่ควรประกอบการมงคล" : "เป็นมงคลดีแล"}`,
       mahaChalong,
       mahaChalongDesc: `ตกโฉลก${mahaChalong} ${mahaChalong === "กาลกิณี" ? "ควรระวัง" : "ให้คุณดีนัก"}`,
       fahTeeSang,
