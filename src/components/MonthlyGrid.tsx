@@ -63,7 +63,6 @@ export function MonthlyGrid({ viewMonth, days, selectedDate, onSelect }: Monthly
         {days.map((day, i) => {
           const selected = isSelected(day.d);
           const currentIsToday = isToday(day.d);
-          const isFirstOfMonth = i === 0 || days[i-1].lannaMonth !== day.lannaMonth;
           
           const hasInfo = day.isSin || day.isSia || day.isUbat || day.isLokawinat || 
                          day.isThongChai || day.isAthipadi || day.sitthi || 
@@ -81,16 +80,16 @@ export function MonthlyGrid({ viewMonth, days, selectedDate, onSelect }: Monthly
               onClick={() => onSelect(day.date)}
               className={`relative aspect-square border-b border-r border-gray-100 flex flex-col p-1 cursor-pointer transition-colors ${bgColor} ${currentIsToday && !selected ? 'border-2 border-[#F59E0B] z-10' : ''}`}
             >
+              {/* Unconditional Month Pill */}
+              <div className="flex flex-col gap-0.5">
+                <span className={`text-[8px] font-bold px-[3px] py-[1px] rounded-[2px] w-fit ${selected ? 'bg-[#FEF3C7] text-[#5A3520]' : 'bg-[#EDE8DF] text-[#5A3520]'}`}>
+                  เดือน{day.lannaMonth}
+                </span>
+              </div>
+
               {hasInfo ? (
                 <>
                   <div className="flex justify-between items-start leading-none relative z-10">
-                    <div className="flex flex-col gap-0.5">
-                      {isFirstOfMonth && (
-                        <span className={`text-[8px] font-bold px-[3px] py-[1px] rounded-[2px] w-fit ${selected ? 'bg-[#FEF3C7] text-[#5A3520]' : 'bg-[#EDE8DF] text-[#5A3520]'}`}>
-                          เดือน{day.lannaMonth}
-                        </span>
-                      )}
-                    </div>
                     <span className={`text-[12px] font-bold ml-auto ${selected ? 'text-[#FEF3C7]' : (day.date.getDay() === 0 ? 'text-[#DC2626]' : 'text-[#333]')}`}>
                       {day.d}
                     </span>

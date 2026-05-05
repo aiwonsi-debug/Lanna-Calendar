@@ -59,6 +59,29 @@ export default function App() {
     fetchData();
   }, [viewMonth]);
 
+  useEffect(() => {
+    const months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.',
+                    'ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.']
+    const days = ['อา','จ','อ','พ','พฤ','ศ','ส']
+    console.group('=== lannaMonth + isSia 2026 ===')
+    for (let m = 0; m < 12; m++) {
+      for (let d = 1; d <= 7; d++) {
+        const date = new Date(2026, m, d)
+        const info = getLannaDate(date)
+        if (info) {
+          console.log(
+            `${d} ${months[m]}`,
+            `lannaM:${info.lannaMonth}`,
+            `${days[date.getDay()]}(${date.getDay()})`,
+            `isSia:${info.isSia}`
+          )
+        }
+      }
+      console.log('---')
+    }
+    console.groupEnd()
+  }, [])
+
   const headerInfo = useMemo(() => {
     const lanna = getLannaDate(new Date(viewMonth.getFullYear(), viewMonth.getMonth(), 1));
     return {
@@ -97,7 +120,6 @@ export default function App() {
       song,
       sri: dir.sri,
       kala: dir.ka,
-      jangrai: "ทิศตะวันตก", // Mocked
       dithiName,
       dithiDesc: `เป็นวัน${dithiName}ดิถี ${dithiName === "ริตต" ? "ไม่ควรประกอบการมงคล" : "เป็นมงคลดีแล"}`,
       mahaChalong,
@@ -126,7 +148,8 @@ export default function App() {
   };
 
   const formatDate = (date: Date) => {
-    return `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear() + 543}`;
+    const thaiDayNames = ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'];
+    return `วัน${thaiDayNames[date.getDay()]} ที่ ${date.getDate()} ${MONTH_NAMES[date.getMonth()]} พ.ศ.${date.getFullYear() + 543}`;
   };
 
   return (
@@ -182,7 +205,7 @@ export default function App() {
               {/* Daily Header: centered, no bg */}
               <div className="text-center py-6">
                 <h2 className="text-[16px] font-bold text-[#1A0A00]">
-                  วันที่ {formatDate(selectedDate)}
+                  {formatDate(selectedDate)}
                 </h2>
                 <div className="text-[11px] text-[#777] mt-0.5">
                   จ.ศ. {selectedDayFullInfo.cs} · ปี{selectedDayFullInfo.yearZodiac}
@@ -232,12 +255,11 @@ export default function App() {
               {/* 1px separator below pills */}
               <div className="mx-4 h-px bg-[#F0EDE8] mb-[6px]" />
 
-              {/* Direction Grid: 3 columns, gap 6px, margin 6px 0 10px */}
-              <div className="px-4 grid grid-cols-3 gap-[6px] mb-[10px]">
+              {/* Direction Grid: 2 columns, gap 6px, margin 6px 0 10px */}
+              <div className="px-4 grid grid-cols-2 gap-[6px] mb-[10px]">
                 {[
                   { label: "ทิศศรี", val: selectedDayFullInfo.sri, color: "text-[#059669]" },
-                  { label: "กาลกิณี", val: selectedDayFullInfo.kala, color: "text-[#DC2626]" },
-                  { label: "ทิศจังไร", val: selectedDayFullInfo.jangrai, color: "text-[#374151]" }
+                  { label: "กาลกิณี", val: selectedDayFullInfo.kala, color: "text-[#DC2626]" }
                 ].map((dir, i) => (
                   <div key={i} className="bg-[#F9F6F1] rounded-[6px] py-[6px] text-center">
                     <div className="text-[9px] text-[#8B6E57] mb-[2px]">{dir.label}</div>

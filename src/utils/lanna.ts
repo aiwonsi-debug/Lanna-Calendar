@@ -19,11 +19,11 @@ export async function loadMonthData(viewMonth: Date): Promise<DayData[]> {
       const days = mod.default?.days || mod.days || mod.default || mod;
       return Array.isArray(days) ? days : [];
     } catch (e) {
-      console.error("Failed to load Lanna data", e);
+      console.error("Failed to load Lanna data for", key, e);
       return [];
     }
   } else {
-    console.warn("Data file not found:", key);
+    console.warn("Data file not found:", key, "Available keys:", Object.keys(dataset));
     return [];
   }
 }

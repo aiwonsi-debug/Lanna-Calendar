@@ -100,6 +100,12 @@ export const DATA = {
   ],
 };
 
+const SIA_CHECK: Record<number, number[]> = {
+  1: [0, 1], 2: [2, 3], 3: [4, 5], 4: [6, 0],
+  5: [1, 2], 6: [3, 4], 7: [5, 6], 8: [0, 1],
+  9: [2, 3], 10: [4, 5], 11: [6, 0], 12: [1, 2]
+};
+
 // ============================================================
 // CALCULATIONS
 // ============================================================
@@ -114,6 +120,7 @@ export function getLunarYearInfo(yearBE: number) {
 
 export function getLannaDate(date: Date) {
   if (!date || isNaN(date.getTime())) return null;
+  // Reference anchor: 2026-04-30 is 14 Kham Waxing, Month 8 Lanna
   const refDate = new Date(2026, 3, 30); 
   const diffDays = Math.floor((date.getTime() - refDate.getTime()) / 86400000);
   
@@ -205,7 +212,10 @@ export function getLannaDate(date: Date) {
   const kaoKongIndex = (wanThaiIdx % 12 - (monthMap[currentMonth] || 0) + 12) % 12;
   const kaoKongName = Object.keys(DATA.kaoKongInfo)[kaoKongIndex];
 
-  const siaCheck = isWanSia(currentMonth, dow);
+  // Fix: lannaMonth rule logic
+  const finalLannaMonth = currentMonth;
+  const isSiaRaw = (SIA_CHECK[finalLannaMonth] || []).includes(dow);
+
   const sitthi = ((d, l) => {
     if ((d===0&&l===12)||(d===1&&l===11)||(d===2&&(l===7||l===12))||(d===3&&(l===3||l===13))||(d===4&&l===6)||(d===5&&l===12)||(d===6&&(l===12||l===15))) return "วันมหาสิทธิโชค";
     if ((d===0&&l===11)||(d===1&&l===5)||(d===2&&l===3)||(d===3&&l===6)||(d===4&&l===12)||(d===5&&l===11)||(d===6&&l===15)) return "วันสิทธิโชค";
@@ -216,21 +226,29 @@ export function getLannaDate(date: Date) {
   const isWanMai = currentKham === 1 && currentPhase === 'ออก';
   const isUbat = dow === 6;
   const isLokawinat = dow === 3;
-  let isSiaFinal = siaCheck;
+  let isSia = isSiaRaw;
 
-  if (isSitthi || isWanMai || isUbat || isLokawinat) {
-    isSiaFinal = false;
+  if (isSitthi || isUbat || isLokawinat) {
+    isSia = false;
+  }
+
+  // STEP 3 — Add verification log
+  if (date.getFullYear()===2026 && date.getMonth()===4) {
+    console.log(date.getDate(),
+      'finalLannaMonth:', finalLannaMonth,
+      'siaDoWs:', SIA_CHECK[finalLannaMonth],
+      'dow:', dow, 'isSia:', isSia)
   }
 
   const isWanMutju = (currentMonth === 5 && dow === 0) || (currentMonth === 6 && dow === 1) || (currentMonth === 7 && dow === 2) || (currentMonth === 8 && dow === 3) || (currentMonth === 9 && dow === 4) || (currentMonth === 10 && dow === 5) || (currentMonth === 11 && dow === 6);
 
   return {
-    date, lannaMonth: currentMonth, lunarDay: currentKham, phase: currentPhase, dow, wanThai,
+    date, lannaMonth: finalLannaMonth, lunarDay: currentKham, phase: currentPhase, dow, wanThai,
     wanThaiDesc: DATA.wanThaiDetailed[wanThai as keyof typeof DATA.wanThaiDetailed] || "",
     isSin, cs, yearZodiac: yearZodiacName, zodiacThai: zInfo.thai,
     kaoKong: kaoKongName, kaoKongDesc: DATA.kaoKongInfo[kaoKongName as keyof typeof DATA.kaoKongInfo],
     isThongChai: dow === 0, isAthipadi: dow === 1, isUbat, isLokawinat, isWanMai,
-    isSia: isSiaFinal,
+    isSia,
     sitthi,
     isFoo: { 1:[1],2:[2],3:[3],4:[4],5:[1],6:[2],7:[3],8:[4],9:[1],10:[2],11:[3],12:[4] }[currentMonth as keyof typeof monthMap]?.includes(dow),
     yam: DATA.yamData[dow],
@@ -242,11 +260,7 @@ export function getLannaDate(date: Date) {
 }
 
 export const isWanSia = (month: number, dow: number) => {
-  const rules: Record<number, number[]> = {
-    1: [0, 1], 2: [2, 3], 3: [4, 5], 4: [6, 0], 5: [1, 2], 6: [3, 4],
-    7: [5, 6], 8: [0, 1], 9: [2, 3], 10: [4, 5], 11: [6, 0], 12: [1, 2]
-  };
-  return (rules[month] || []).includes(dow);
+  return (SIA_CHECK[month] || []).includes(dow);
 };
 
 export function getSongkranLabel(date: Date) {
