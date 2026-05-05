@@ -103,7 +103,7 @@ export function MonthlyGrid({ viewMonth, days, selectedDate, onSelect }: Monthly
                     )}
                     {(day.isSia || day.isUbat || day.isLokawinat) && (
                       <span className={`text-[8px] font-bold text-[#DC2626] truncate leading-tight`}>
-                        {day.isLokawinat ? 'โลกาวินาศ' : day.isUbat ? 'อุบาทว์' : day.isSia ? 'วันเสีย' : ''}
+                        {day.isSia ? 'วันเสีย' : day.isLokawinat ? 'โลกาวินาศ' : day.isUbat ? 'อุบาทว์' : ''}
                       </span>
                     )}
                     {(day.isThongChai || day.isAthipadi || day.sitthi) && (
