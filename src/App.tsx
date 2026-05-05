@@ -26,14 +26,6 @@ export default function App() {
         
         if (!lanna) return { d: d.d, date, lannaMonth: 0, lunarDay: 0, phase: '', wanThai: '' } as LannaDayData;
 
-        // Mock/Derive extra UI flags
-        const fahTeeSang = (date.getDate() % 7) + 1;
-        const isFahTeeSangGood = [2, 4, 5, 6].includes(fahTeeSang);
-        const isRahuTok = date.getDate() % 10 === 0;
-
-        const dithiNames = ["นัท", "ภัทร", "ไชย", "ริตต", "ปุณณ"];
-        const dithiName = dithiNames[(lanna.lunarDay - 1) % 5];
-
         return {
           d: d.d,
           date,
@@ -49,10 +41,7 @@ export default function App() {
           isThongChai: lanna.isThongChai || d.labels?.good?.includes("วันธงชัย"),
           isAthipadi: lanna.isAthipadi || d.labels?.good?.includes("วันอธิบดี"),
           sitthi: lanna.sitthi,
-          songkranLabel: getSongkranLabel(date),
-          isRahuTok,
-          isFahTeeSangGood,
-          dithiName
+          songkranLabel: getSongkranLabel(date)
         } as LannaDayData;
       });
       
@@ -80,7 +69,7 @@ export default function App() {
     const song = getSongkranLabel(selectedDate);
     const dir = getDirections(selectedDate.getDay());
     
-    // Kala Yoga
+    // Kala Yoga (9-cycle)
     const rawLunarDay = lanna.phase === 'ออก' ? lanna.lunarDay : lanna.lunarDay + 15;
     const kalaYok = getDailyKalaYoga(rawLunarDay, selectedDate.getDay());
 
