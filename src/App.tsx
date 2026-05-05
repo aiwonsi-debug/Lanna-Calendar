@@ -248,7 +248,7 @@ export default function App() {
                 {selectedDayFullInfo.isFahGood ? (
                   <span className="text-[10px] font-semibold bg-[#F0FDF4] text-[#166534] px-[7px] py-[2px] rounded-[10px]">ฟ้าตีแส่งดี</span>
                 ) : (
-                  <span className="text-[10px] font-semibold bg-[#FEF2F2] text-[#B91C1C] px-[7px] py-[2px] rounded-[10px]">ฟ้าตีแส่งเสีย</span>
+                  <span className="text-[10px] font-semibold bg-[#FEF2F2] text-[#B91C1C] px-[7px] py-[2px] rounded-[10px]">ฟ้าตีแส่งเศษ {selectedDayFullInfo.fahTeeSang}</span>
                 )}
               </div>
 
