@@ -275,7 +275,7 @@ export default function App() {
                   { label: "วันโลก", val: `${selectedDayFullInfo.wanLohk} — ${selectedDayFullInfo.wanLohkDesc}` },
                   { label: "มหาโฉลก", val: `${selectedDayFullInfo.mahaChalong} — ${selectedDayFullInfo.mahaChalongDesc}` },
                   { label: "ดิถี", val: selectedDayFullInfo.dithiDesc },
-                  { label: "วันเก้ากอง", val: `(${selectedDayFullInfo.kaoKong}) — ${selectedDayFullInfo.kaoKongDesc}` },
+                  { label: "วันเก้ากอง", val: `${selectedDayFullInfo.kaoKong} — ${selectedDayFullInfo.kaoKongDesc}` },
                   { 
                     label: "ฟ้าตีแส่ง", 
                     val: `เศษ ${selectedDayFullInfo.fahTeeSang} — ${
