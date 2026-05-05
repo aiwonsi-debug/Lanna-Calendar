@@ -223,15 +223,17 @@ export function getLannaDate(date: Date) {
   })(dow, currentKham);
 
   const isSitthi = !!sitthi;
-  const thongChaiDow = ((cs * 10) + 3) % 7;
-  const athipadiDow = (cs % 498) % 7;
-  const ubatDow = ((cs * 10) + 2) % 7;
-  const lokawinatDow = (cs + 1120) % 7;
-
-  const isThongChai = dow === thongChaiDow;
-  const isAthipadi = dow === athipadiDow;
-  const isUbat = dow === ubatDow;
-  const isLokawinat = dow === lokawinatDow;
+  // Kalayok (กาลโยค) Calculation
+  // Bases: ThongChai=(CS*10+3), Athipadi=(CS*137+5), Ubat=(CS*10+2), Lokawinat=(CS*1123+6)
+  // Day: Base % 7 (1=Sun, 2=Mon, 3=Tue, 4=Wed, 5=Thu, 6=Fri, 0=Sat)
+  // Map to JS getDay(): (Result % 7 - 1 + 7) % 7
+  const getKalayokDow = (base: number) => (base % 7 - 1 + 7) % 7;
+  
+  const isThongChai = dow === getKalayokDow(cs * 10 + 3);
+  const isAthipadi = dow === getKalayokDow(cs * 137 + 5);
+  const isUbat = dow === getKalayokDow(cs * 10 + 2);
+  const isLokawinat = dow === getKalayokDow(cs * 1123 + 6);
+  
   const isWanMai = currentKham === 1 && currentPhase === 'ออก';
   let isSia = isSiaRaw;
 
