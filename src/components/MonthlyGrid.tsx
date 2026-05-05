@@ -101,10 +101,14 @@ export function MonthlyGrid({ viewMonth, days, selectedDate, onSelect }: Monthly
                     {day.songkranLabel && (
                       <span className="text-[8px] font-bold text-[#0891B2] truncate leading-tight">{day.songkranLabel}</span>
                     )}
-                    {(day.isSia || day.isUbat || day.isLokawinat) && (
-                      <span className={`text-[8px] font-bold text-[#DC2626] truncate leading-tight`}>
-                        {[day.isSia ? 'วันเสีย' : '', day.isLokawinat ? 'โลกาวินาศ' : '', day.isUbat ? 'อุบาทว์' : ''].filter(Boolean).join(' ')}
-                      </span>
+                    {day.isSia && (
+                      <span className="text-[8px] font-bold text-[#DC2626] truncate leading-tight">วันเสีย</span>
+                    )}
+                    {day.isLokawinat && (
+                      <span className="text-[8px] font-bold text-[#DC2626] truncate leading-tight">โลกาวินาศ</span>
+                    )}
+                    {day.isUbat && (
+                      <span className="text-[8px] font-bold text-[#DC2626] truncate leading-tight">อุบาทว์</span>
                     )}
                     {(day.isThongChai || day.isAthipadi || day.sitthi) && (
                       <span className={`text-[8px] font-bold text-[#059669] truncate leading-tight`}>
