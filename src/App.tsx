@@ -259,7 +259,7 @@ export default function App() {
               <div className="px-4 grid grid-cols-2 gap-[6px] mb-[10px]">
                 {[
                   { label: "ทิศศรี", val: selectedDayFullInfo.sri, color: "text-[#059669]" },
-                  { label: "กาลกิณี", val: selectedDayFullInfo.kala, color: "text-[#DC2626]" }
+                  { label: "ทิศกาลกิณี", val: selectedDayFullInfo.kala, color: "text-[#DC2626]" }
                 ].map((dir, i) => (
                   <div key={i} className="bg-[#F9F6F1] rounded-[6px] py-[6px] text-center">
                     <div className="text-[9px] text-[#8B6E57] mb-[2px]">{dir.label}</div>
