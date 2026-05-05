@@ -124,10 +124,6 @@ function getLannaDate(date) {
   const isLokawinat = dow === 3;
   let isSiaFinal = isSiaRaw;
 
-  if (isSitthi || isWanMai) {
-    isSiaFinal = false;
-  }
-
   const isGood = dow === 0;
 
   const lunarText = `${currentPhase === 'ออก' ? 'ขึ้น' : 'แรม'} ${currentKham} ค่ำ`;

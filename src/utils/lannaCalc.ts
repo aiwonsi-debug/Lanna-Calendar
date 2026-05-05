@@ -228,10 +228,6 @@ export function getLannaDate(date: Date) {
   const isLokawinat = dow === 3;
   let isSia = isSiaRaw;
 
-  if (isSitthi || isWanMai) {
-    isSia = false;
-  }
-
   // STEP 3 — Add verification log
   if (date.getFullYear()===2026 && date.getMonth()===4) {
     console.log(date.getDate(),
