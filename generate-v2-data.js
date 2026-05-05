@@ -104,7 +104,11 @@ function getLannaDate(date) {
   const isSin = (currentKham === 8 || currentKham === 15 || (currentPhase === 'แรม' && currentKham === maxWaning));
   
   const isSiaRaw = ((month, dow) => {
-    const rules = { 1:[0,1], 5:[0,1], 9:[0,1], 2:[2], 6:[2], 10:[2], 3:[4,6], 7:[4,6], 11:[4,6], 4:[3,5], 8:[3,5], 12:[3,5] };
+    const rules = {
+      1: [0, 1], 2: [2, 3], 3: [4, 5], 4: [6, 0],
+      5: [1, 2], 6: [3, 4], 7: [5, 6], 8: [0, 1],
+      9: [2, 3], 10: [4, 5], 11: [6, 0], 12: [1, 2]
+    };
     return (rules[month] || []).includes(dow);
   })(currentMonth, dow);
 
@@ -120,7 +124,7 @@ function getLannaDate(date) {
   const isLokawinat = dow === 3;
   let isSiaFinal = isSiaRaw;
 
-  if (isSitthi || isWanMai || isUbat || isLokawinat) {
+  if (isSitthi || isUbat || isLokawinat) {
     isSiaFinal = false;
   }
 
