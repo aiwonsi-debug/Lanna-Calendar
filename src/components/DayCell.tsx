@@ -8,11 +8,15 @@ type Props = {
 
 /**
  * Formats lunar string according to traditional Thai Lanna print rules.
- * Fine-tuned for ultra-dense typography.
+ * "ขึ้น 1 ค่ำ" -> "ออก 1 ค่ำ"
  */
 const formatLannaLunar = (lunarStr: string): { month: string, phase: string } => {
     if (!lunarStr) return { month: "", phase: "" };
+    
+    // Traditional Lanna: "ขึ้น" becomes "ออก"
     const cleaned = lunarStr.replace("ขึ้น", "ออก");
+    
+    // Extract "เดือน X" and "ออก/แรม Y ค่ำ"
     const monthMatch = cleaned.match(/เดือน\s*\d+/);
     const phaseMatch = cleaned.match(/(?:ออก|แรม)\s*\d+\s*ค่ำ/);
     
@@ -30,13 +34,19 @@ export default function DayCell({
   const isGood = data.score === 'good';
   const isBad = data.score === 'bad';
   
+  // Important day detection for automatic background highlighting
+  const isImportant = data.labels.some(l => 
+    l.includes('วันพญาวัน') || 
+    l.includes('วันเสีย') || 
+    l.includes('วันธงชัย') || 
+    l.includes('วันมงคล')
+  );
+
   const { month, phase } = formatLannaLunar(data.lunar);
   
-  // Selection / Subtle Paper-like Tint
-  const bgClass = selected ? "bg-[#f7ecd9]" : "bg-white";
-  
-  // Normalized Color Hierarchy
-  const textClass = isBad ? "text-red-600" : isGood ? "text-green-700" : "text-neutral-500";
+  // Final Color Logic
+  const bgClass = selected ? "bg-[#f1dfc7]" : isImportant ? "bg-[#f3e2ca]" : "bg-white";
+  const textClass = isBad ? "text-red-600" : isGood ? "text-green-700" : "text-neutral-700";
 
   return (
     <div
@@ -52,34 +62,44 @@ export default function DayCell({
         ${bgClass}
       `}
     >
-      {/* Gregorian Day Number - Subtle Corner (Print Style) */}
-      <div className="absolute top-[2px] right-[3px] text-[9px] font-medium text-neutral-300 leading-none">
+      {/* 1. Gregorian Day Number - Top Right */}
+      <div className={`absolute top-[2px] right-[3px] text-[9px] font-medium leading-none ${selected ? 'text-neutral-900' : 'text-neutral-400'}`}>
         {data.day}
       </div>
       
-      {/* Lanna Month Name - Very Faint */}
-      <div className="text-[7px] font-normal text-neutral-300 leading-none mb-[2px]">
+      {/* 2. Lunar Month Text */}
+      <div className="text-[8px] font-bold text-neutral-400 leading-none mb-[1px]">
         {month}
       </div>
 
-      {/* Lunar Phase - Ultra Dense Typography */}
-      <div className={`text-[8px] leading-[1] text-center font-normal ${textClass}`}>
+      {/* 3. Lunar Phase Text */}
+      <div className={`text-[10px] font-medium leading-tight text-center ${textClass}`}>
         {phase}
       </div>
 
-      {/* Labels - Informational Density */}
-      <div className="flex flex-col gap-0 mt-auto w-full">
-        {data.labels.slice(0, 2).map((l, i) => (
+      {/* 4. Semantic Labels Stack (Vertical) */}
+      <div className="flex flex-col gap-0 w-full mt-1">
+        {data.labels.slice(0, 3).map((l, i) => (
           <div
             key={i}
             className={`
-                text-[8px] leading-[1] text-center truncate font-medium uppercase tracking-tighter
-                ${isBad ? 'text-red-500' : isGood ? 'text-green-600' : 'text-blue-500'}
+                text-[7px] leading-[1] text-center truncate font-black uppercase tracking-tighter
+                ${l.includes('เสีย') || l.includes('มัจจุ') ? 'text-red-600' : 
+                  l.includes('พญาวัน') || l.includes('ธงชัย') ? 'text-blue-700' : 
+                  isGood ? 'text-green-700' : 'text-neutral-700'}
             `}
           >
             {l}
           </div>
         ))}
+      </div>
+
+      {/* 5. Status Dots Indicator */}
+      <div className="flex gap-[2px] mt-auto pb-[2px]">
+        {data.score === 'good' && <span className="w-[5px] h-[5px] rounded-full bg-green-600" />}
+        {data.score === 'bad' && <span className="w-[5px] h-[5px] rounded-full bg-red-500" />}
+        {data.labels.some(l => l.includes('วันศีล')) && <span className="w-[5px] h-[5px] rounded-full bg-blue-500" />}
+        {isImportant && !isGood && !isBad && <span className="w-[5px] h-[5px] rounded-full bg-orange-400" />}
       </div>
     </div>
   )
