@@ -41,7 +41,7 @@ export default function CalendarMonth({
 
   return (
     <div className="max-w-[980px] w-full mx-auto bg-white border-[0.5px] border-neutral-300">
-      {/* HEADER BAR - SUBTLE PRINT STYLE */}
+      {/* HEADER BAR - COMPRESSED PRINT STYLE */}
       <div className="h-[24px] flex items-center justify-between px-2 bg-[#6f4632] text-white">
         <button 
           onClick={onPrev}
@@ -49,7 +49,7 @@ export default function CalendarMonth({
         >
           ◄
         </button>
-        <h2 className="text-[10px] font-bold uppercase tracking-[0.1em]">{monthTitle}</h2>
+        <h2 className="text-[10px] font-bold uppercase tracking-[0.15em]">{monthTitle}</h2>
         <button 
           onClick={onNext}
           className="w-5 h-5 flex items-center justify-center hover:bg-white/10 transition-colors text-[10px]"
@@ -58,19 +58,19 @@ export default function CalendarMonth({
         </button>
       </div>
 
-      {/* WEEK HEADER - COMPRESSED */}
+      {/* WEEK HEADER - ULTRA COMPRESSED */}
       <div className="grid grid-cols-7 border-b-[0.5px] border-neutral-300">
         {headers.map((h, i) => (
           <div
             key={h}
-            className={`h-[22px] flex items-center justify-center border-r-[0.5px] last:border-r-0 border-neutral-300 text-[10px] font-medium ${i === 0 ? 'text-red-500 bg-red-50/20' : 'text-neutral-500 bg-neutral-100/30'}`}
+            className={`h-[22px] flex items-center justify-center border-r-[0.5px] last:border-r-0 border-neutral-300 text-[10px] font-medium ${i === 0 ? 'text-red-500 bg-red-50/20' : 'text-neutral-400 bg-neutral-100/30'}`}
           >
             {h}
           </div>
         ))}
       </div>
 
-      {/* CALENDAR GRID - DENSE PRINT PROPORTIONS */}
+      {/* CALENDAR GRID - RIGID PROPORTIONS */}
       <div className="grid grid-cols-7 border-b-[0.5px] border-neutral-300">
         {grid.map((cell, idx) => (
           <div
@@ -90,8 +90,8 @@ export default function CalendarMonth({
         ))}
       </div>
 
-      {/* LEGEND - SPREADSHEET FOOTER STYLE */}
-      <div className="flex justify-center items-center gap-2 py-1 bg-white border-b-[0.5px] border-neutral-300 text-[9px] font-medium text-neutral-400">
+      {/* LEGEND - SPREADSHEET FOOTER */}
+      <div className="flex justify-center items-center gap-2 py-1 bg-white border-b-[0.5px] border-neutral-300 text-[9px] font-medium text-neutral-400 uppercase tracking-tighter">
         <div className="flex items-center gap-1">
           <span className="w-[7px] h-[7px] bg-green-700"></span>
           <span>วันมงคล</span>
@@ -106,7 +106,7 @@ export default function CalendarMonth({
         </div>
       </div>
 
-      {/* DETAIL SECTION (PRINT FORM STYLE) */}
+      {/* DETAIL SECTION (MATERIALIZED VIEW) */}
       <div className="bg-white">
         {selectedRecord ? (
           <DetailSection data={selectedRecord} />

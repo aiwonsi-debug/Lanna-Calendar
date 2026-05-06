@@ -32,11 +32,11 @@ export default function DayCell({
   
   const { month, phase } = formatLannaLunar(data.lunar);
   
-  // Selection / Paper-like Print Style
+  // Selection / Subtle Paper-like Tint
   const bgClass = selected ? "bg-[#f7ecd9]" : "bg-white";
   
-  // Normalized Color Hierarchy for Print
-  const textClass = isBad ? "text-red-600" : isGood ? "text-green-700" : "text-neutral-600";
+  // Normalized Color Hierarchy
+  const textClass = isBad ? "text-red-600" : isGood ? "text-green-700" : "text-neutral-500";
 
   return (
     <div
@@ -52,13 +52,13 @@ export default function DayCell({
         ${bgClass}
       `}
     >
-      {/* Gregorian Day Number - Subtle Corner (Print style) */}
-      <div className="absolute top-[2px] right-[3px] text-[9px] font-medium text-neutral-400 leading-none">
+      {/* Gregorian Day Number - Subtle Corner (Print Style) */}
+      <div className="absolute top-[2px] right-[3px] text-[9px] font-medium text-neutral-300 leading-none">
         {data.day}
       </div>
       
-      {/* Lanna Month Name - Faint Header */}
-      <div className="text-[7px] font-medium text-neutral-300 leading-none mb-[2px]">
+      {/* Lanna Month Name - Very Faint */}
+      <div className="text-[7px] font-normal text-neutral-300 leading-none mb-[2px]">
         {month}
       </div>
 
@@ -67,14 +67,14 @@ export default function DayCell({
         {phase}
       </div>
 
-      {/* Special Labels - Spreadsheet Row Style */}
+      {/* Labels - Informational Density */}
       <div className="flex flex-col gap-0 mt-auto w-full">
         {data.labels.slice(0, 2).map((l, i) => (
           <div
             key={i}
             className={`
                 text-[8px] leading-[1] text-center truncate font-medium uppercase tracking-tighter
-                ${isBad ? 'text-red-500' : isGood ? 'text-green-600' : 'text-blue-600'}
+                ${isBad ? 'text-red-500' : isGood ? 'text-green-600' : 'text-blue-500'}
             `}
           >
             {l}
