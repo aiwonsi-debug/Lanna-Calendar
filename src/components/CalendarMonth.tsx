@@ -4,7 +4,7 @@ import { createCalendarGrid } from "../utils/createCalendarGrid"
 import DayCell from "./DayCell"
 import DetailSection from "./DetailSection"
 
-const headers = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"]
+const headers = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."]
 
 type Props = {
   monthTitle: string
@@ -41,41 +41,41 @@ export default function CalendarMonth({
 
   return (
     <div className="max-w-[980px] w-full mx-auto bg-white border-[0.5px] border-neutral-400">
-      {/* THIN HEADER BAR */}
-      <div className="h-[32px] flex items-center justify-between px-2 bg-[#6B4231] text-white">
+      {/* HEADER BAR - PRINT STYLE */}
+      <div className="h-[32px] flex items-center justify-between px-2 bg-[#6f4632] text-white">
         <button 
           onClick={onPrev}
-          className="w-6 h-6 flex items-center justify-center hover:bg-white/10 transition-colors text-sm"
+          className="w-6 h-6 flex items-center justify-center hover:bg-white/10 transition-colors text-xs"
         >
           ◄
         </button>
-        <h2 className="text-[14px] font-black uppercase tracking-widest">{monthTitle}</h2>
+        <h2 className="text-[12px] font-black uppercase tracking-widest">{monthTitle}</h2>
         <button 
           onClick={onNext}
-          className="w-6 h-6 flex items-center justify-center hover:bg-white/10 transition-colors text-sm"
+          className="w-6 h-6 flex items-center justify-center hover:bg-white/10 transition-colors text-xs"
         >
           ►
         </button>
       </div>
 
-      {/* WEEK HEADER - RIGID SPREADSHEET */}
+      {/* WEEK HEADER - RIGID */}
       <div className="grid grid-cols-7 border-b-[0.5px] border-neutral-400">
         {headers.map((h, i) => (
           <div
             key={h}
-            className={`h-[24px] flex items-center justify-center border-r-[0.5px] last:border-r-0 border-neutral-400 text-[9px] font-black ${i === 0 ? 'text-red-600 bg-red-50' : 'text-neutral-800 bg-neutral-100'}`}
+            className={`h-[24px] flex items-center justify-center border-r-[0.5px] last:border-r-0 border-neutral-400 text-[11px] font-semibold ${i === 0 ? 'text-red-600 bg-red-50/30' : 'text-neutral-700 bg-neutral-100/50'}`}
           >
             {h}
           </div>
         ))}
       </div>
 
-      {/* CALENDAR GRID - FIXED DENSE HEIGHT */}
+      {/* CALENDAR GRID - DENSE 105px HEIGHT */}
       <div className="grid grid-cols-7 border-b-[0.5px] border-neutral-400">
         {grid.map((cell, idx) => (
           <div
             key={idx}
-            className="h-[96px] border-r-[0.5px] border-b-[0.5px] last:border-r-0 border-neutral-400 relative"
+            className="h-[105px] border-r-[0.5px] border-b-[0.5px] last:border-r-0 border-neutral-400 relative"
           >
             {cell ? (
               <DayCell
@@ -84,31 +84,35 @@ export default function CalendarMonth({
                 onClick={() => setSelectedISO(cell.dateISO)}
               />
             ) : (
-              <div className="h-full w-full bg-neutral-50" />
+              <div className="h-full w-full bg-neutral-50/50" />
             )}
           </div>
         ))}
       </div>
 
-      {/* LEGEND - COMPACT */}
-      <div className="flex justify-center items-center gap-4 py-1 bg-white border-b-[0.5px] border-neutral-400 text-[10px] font-bold">
-        <div className="flex items-center gap-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-          <span>วันมงคล</span>
+      {/* LEGEND - VERY COMPACT */}
+      <div className="flex justify-center items-center gap-3 py-1 bg-white border-b-[0.5px] border-neutral-400 text-[10px] font-bold">
+        <div className="flex items-center gap-1.5">
+          <span className="w-2 h-2 bg-green-700"></span>
+          <span className="text-green-700">วันมงคล</span>
         </div>
-        <div className="flex items-center gap-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-red-500"></span>
-          <span>วันหลีกเลี่ยง</span>
+        <div className="flex items-center gap-1.5">
+          <span className="w-2 h-2 bg-red-600"></span>
+          <span className="text-red-600">วันหลีกเลี่ยง</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="w-2 h-2 bg-blue-700"></span>
+          <span className="text-blue-700">วันพิเศษ</span>
         </div>
       </div>
 
-      {/* DETAIL SECTION (TABLE STYLE) */}
+      {/* DETAIL SECTION (CONNECTED) */}
       <div className="bg-white">
         {selectedRecord ? (
           <DetailSection data={selectedRecord} />
         ) : (
-          <div className="p-4 text-center text-[10px] text-neutral-400">
-            — กรุณาเลือกวันที่ —
+          <div className="p-4 text-center text-[10px] text-neutral-400 italic">
+            — เลือกวันที่เพื่อดูตำรา —
           </div>
         )}
       </div>

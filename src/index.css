@@ -1,10 +1,9 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Taviraj:wght@400;700;900&family=Noto+Sans+Thai:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Taviraj:wght@400;500;600;700;900&family=Noto+Sans+Thai:wght@400;500;700&display=swap');
 
 :root {
-  --lanna-brown: #6B4231;
-  --lanna-gold: #FEF3C7;
+  --lanna-brown-dark: #6f4632;
   --lanna-bg: #F0EDE4;
   --lanna-border: #A3A3A3;
 }
@@ -12,19 +11,16 @@
 body {
   background-color: var(--lanna-bg);
   color: #1A1A1A;
-  font-family: "Taviraj", "Noto Sans Thai", serif;
+  font-family: "Taviraj", "Noto Sans Thai", sans-serif;
   -webkit-tap-highlight-color: transparent;
-  line-height: 1.1;
+  line-height: 1.05;
 }
 
-/* Print-like Reset */
+/* Rigid Print Layout Reset */
 * {
   border-radius: 0 !important;
   box-shadow: none !important;
-}
-
-.spreadsheet-grid {
-  border-collapse: collapse;
+  outline: none !important;
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -33,4 +29,9 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Typography Overrides */
+h1, h2, h3, h4 {
+  letter-spacing: -0.01em;
 }
