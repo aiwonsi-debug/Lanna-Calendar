@@ -1,28 +1,30 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Taviraj:wght@400;700;900&family=Noto+Sans+Thai:wght@400;700&display=swap');
 
 :root {
   --lanna-brown: #6B4231;
   --lanna-gold: #FEF3C7;
-  --lanna-bg: #F5F0E8;
-  --lanna-green: #10B981;
-  --lanna-red: #DC2626;
-  --lanna-sin: #F59E0B;
-  --lanna-gray: #6B7280;
+  --lanna-bg: #F0EDE4;
+  --lanna-border: #A3A3A3;
 }
 
 body {
   background-color: var(--lanna-bg);
-  color: #2D1B08;
-  font-family: system-ui, -apple-system, sans-serif;
+  color: #1A1A1A;
+  font-family: "Taviraj", "Noto Sans Thai", serif;
   -webkit-tap-highlight-color: transparent;
-  user-select: none;
-  overscroll-behavior-y: none;
+  line-height: 1.1;
 }
 
-.brown-gradient {
-  background: linear-gradient(135deg, #6B4231 0%, #4D3024 100%);
+/* Print-like Reset */
+* {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.spreadsheet-grid {
+  border-collapse: collapse;
 }
 
 .no-scrollbar::-webkit-scrollbar {

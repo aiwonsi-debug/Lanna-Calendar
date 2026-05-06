@@ -4,7 +4,7 @@ import { createCalendarGrid } from "../utils/createCalendarGrid"
 import DayCell from "./DayCell"
 import DetailSection from "./DetailSection"
 
-const headers = ["อา", "จ", "อ", "พ", "พฤ", "ศ", "ส"]
+const headers = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"]
 
 type Props = {
   monthTitle: string
@@ -40,42 +40,42 @@ export default function CalendarMonth({
   }, [year, monthNumber, data])
 
   return (
-    <div className="max-w-[850px] mx-auto bg-[#FDFCF9] shadow-md border-[0.5px] border-neutral-300">
-      {/* COMPACT HEADER */}
-      <div className="flex items-center justify-between px-3 py-1.5 bg-[#6B4231] text-white">
+    <div className="max-w-[980px] w-full mx-auto bg-white border-[0.5px] border-neutral-400">
+      {/* THIN HEADER BAR */}
+      <div className="h-[32px] flex items-center justify-between px-2 bg-[#6B4231] text-white">
         <button 
           onClick={onPrev}
-          className="w-8 h-8 flex items-center justify-center hover:bg-white/10 rounded transition-colors text-lg"
+          className="w-6 h-6 flex items-center justify-center hover:bg-white/10 transition-colors text-sm"
         >
-          ←
+          ◄
         </button>
-        <h2 className="text-base font-bold tracking-tight">{monthTitle}</h2>
+        <h2 className="text-[14px] font-black uppercase tracking-widest">{monthTitle}</h2>
         <button 
           onClick={onNext}
-          className="w-8 h-8 flex items-center justify-center hover:bg-white/10 rounded transition-colors text-lg"
+          className="w-6 h-6 flex items-center justify-center hover:bg-white/10 transition-colors text-sm"
         >
-          →
+          ►
         </button>
       </div>
 
-      {/* WEEK HEADER - TIGHT */}
-      <div className="grid grid-cols-7 bg-neutral-100 border-b-[0.5px] border-neutral-400">
+      {/* WEEK HEADER - RIGID SPREADSHEET */}
+      <div className="grid grid-cols-7 border-b-[0.5px] border-neutral-400">
         {headers.map((h, i) => (
           <div
             key={h}
-            className={`py-1 text-center text-[10px] font-bold ${i === 0 ? 'text-red-600' : 'text-neutral-500'}`}
+            className={`h-[24px] flex items-center justify-center border-r-[0.5px] last:border-r-0 border-neutral-400 text-[9px] font-black ${i === 0 ? 'text-red-600 bg-red-50' : 'text-neutral-800 bg-neutral-100'}`}
           >
             {h}
           </div>
         ))}
       </div>
 
-      {/* CALENDAR GRID - SPREADSHEET STYLE */}
-      <div className="grid grid-cols-7 border-l-[0.5px] border-neutral-400">
+      {/* CALENDAR GRID - FIXED DENSE HEIGHT */}
+      <div className="grid grid-cols-7 border-b-[0.5px] border-neutral-400">
         {grid.map((cell, idx) => (
           <div
             key={idx}
-            className="h-[85px] sm:h-[100px] border-r-[0.5px] border-b-[0.5px] border-neutral-400 relative"
+            className="h-[96px] border-r-[0.5px] border-b-[0.5px] last:border-r-0 border-neutral-400 relative"
           >
             {cell ? (
               <DayCell
@@ -84,19 +84,31 @@ export default function CalendarMonth({
                 onClick={() => setSelectedISO(cell.dateISO)}
               />
             ) : (
-              <div className="h-full w-full bg-neutral-50/50" />
+              <div className="h-full w-full bg-neutral-50" />
             )}
           </div>
         ))}
       </div>
 
-      {/* DETAIL SECTION REFINEMENT */}
-      <div className="bg-white border-t-[0.5px] border-neutral-400">
+      {/* LEGEND - COMPACT */}
+      <div className="flex justify-center items-center gap-4 py-1 bg-white border-b-[0.5px] border-neutral-400 text-[10px] font-bold">
+        <div className="flex items-center gap-1">
+          <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+          <span>วันมงคล</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <span className="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+          <span>วันหลีกเลี่ยง</span>
+        </div>
+      </div>
+
+      {/* DETAIL SECTION (TABLE STYLE) */}
+      <div className="bg-white">
         {selectedRecord ? (
           <DetailSection data={selectedRecord} />
         ) : (
-          <div className="py-8 text-center text-[11px] text-neutral-400 italic">
-            แตะวันที่เพื่อดูตำราปั๊กขะทืน
+          <div className="p-4 text-center text-[10px] text-neutral-400">
+            — กรุณาเลือกวันที่ —
           </div>
         )}
       </div>

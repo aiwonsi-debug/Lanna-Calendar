@@ -14,10 +14,9 @@ export default function DayCell({
   const isGood = data.score === 'good';
   const isBad = data.score === 'bad';
   
-  // Dense layout colors
-  const bgClass = selected ? "bg-[#FFF9EB]" : "bg-white";
-  const textColor = isGood ? "text-green-700" : isBad ? "text-red-700" : "text-neutral-800";
-  const lunarColor = isGood ? "text-green-600/70" : isBad ? "text-red-600/70" : "text-neutral-400";
+  // Print-style dense logic
+  const bgClass = selected ? "bg-[#F4E5CF]" : "bg-white";
+  const textColor = isBad ? "text-red-600" : isGood ? "text-green-700" : "text-black";
 
   return (
     <div
@@ -27,18 +26,19 @@ export default function DayCell({
         p-1
         cursor-pointer
         overflow-hidden
-        transition-colors duration-100
-        flex flex-col items-center
-        ${bgClass} hover:bg-neutral-50
+        flex flex-col
+        border-none
+        relative
+        ${bgClass}
       `}
     >
-      {/* Day Number - Compact */}
-      <div className={`text-sm font-bold leading-none mt-0.5 ${textColor}`}>
+      {/* Day Number - Top Right (Spreadsheet style) */}
+      <div className="absolute top-[2px] right-[4px] text-[9px] font-bold text-neutral-500 leading-none">
         {data.day}
       </div>
       
-      {/* Lunar Text - Very small/Tight */}
-      <div className={`text-[9px] leading-tight mt-0.5 text-center px-0.5 line-clamp-2 ${lunarColor}`}>
+      {/* Lunar Text - Dense Center */}
+      <div className={`text-[9px] leading-[1.05] mt-2 mb-1 text-center font-medium ${textColor}`}>
         {data.lunar}
       </div>
 
@@ -47,7 +47,7 @@ export default function DayCell({
         {data.labels.slice(0, 2).map((l, i) => (
           <div
             key={i}
-            className={`text-[8px] leading-[1.1] text-center truncate px-0.5 font-medium ${isGood ? 'text-green-600' : isBad ? 'text-red-600' : 'text-blue-600'}`}
+            className={`text-[8px] leading-[1] text-center truncate font-bold uppercase tracking-tighter ${isBad ? 'text-red-600' : isGood ? 'text-green-700' : 'text-neutral-600'}`}
           >
             {l}
           </div>
