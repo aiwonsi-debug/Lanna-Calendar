@@ -1,0 +1,92 @@
+{
+  "strategy": "Paragraph parser (Split by 'วัน', 'เดือน')",
+  "extractedRecords": [
+    {
+      "type": "lunar_rule",
+      "description": "๕ ออก ๑ ค่ำํา ฟ้้ตีีแส่่ ่งเศษ ๘"
+    },
+    {
+      "type": "lunar_rule",
+      "description": "๕ ออก ๒ ค่ำํา ฟ้้ตีีแส่่งเศษ ษ ๔"
+    },
+    {
+      "type": "lunar_rule",
+      "description": "๕ ออก ๓ ค่ำํา ฟ้้ตีีแส่่งเศษ ๐"
+    },
+    {
+      "type": "lunar_rule",
+      "description": "๕ ออก ๕ ค่ำํา ฟ้้ ้ตีีแส่่งเศษ ๑"
+    },
+    {
+      "type": "lunar_rule",
+      "description": "๕ ออก ๖ ค่ำํา ฟ้้ตีีแส่่ง งเศษ ๖"
+    },
+    {
+      "type": "lunar_rule",
+      "description": "๕ ออก ๗ ค่ำํา ฟ้้ตีีแส่่งเศษ ๒"
+    },
+    {
+      "type": "lunar_rule",
+      "description": "๕ ออก ๘ ค่ำํา ฟ้้ตีีแส่่งเศษ ๗"
+    },
+    {
+      "type": "lunar_rule",
+      "description": "๕ ออก ๙ ค่ำํา ฟ้้ตีีแส่่งเศษ ๓"
+    },
+    {
+      "type": "lunar_rule",
+      "description": "๕ ออก ๑๐ ค่ำํา ฟ้้ตีีแส่่งเศษ ๘ n"
+    },
+    {
+      "type": "lunar_rule",
+      "description": "๕ ออก ๑๑ ค่ำํา ฟ้้ตีีแส่่งเศษ ๔"
+    },
+    {
+      "type": "lunar_rule",
+      "description": "น ๕ ออก ๑๓ ค่ำํา ฟ้้ตีีแส่่งเศษ ๕"
+    },
+    {
+      "type": "day_rule",
+      "detectedDays": [
+        3,
+        6,
+        11,
+        17,
+        22,
+        27
+      ],
+      "description": "เป้็น"
+    },
+    {
+      "type": "day_rule",
+      "detectedDays": [
+        1,
+        2,
+        17
+      ],
+      "description": "๐ ๒๙ ๓๐ แล ละ ๓๑ เป้็น"
+    },
+    {
+      "type": "day_rule",
+      "detectedDays": [
+        2,
+        7,
+        9,
+        14,
+        16,
+        19,
+        25,
+        26
+      ],
+      "description": "เป้็น"
+    },
+    {
+      "type": "day_rule",
+      "detectedDays": [
+        13,
+        28
+      ],
+      "description": "เป้็น"
+    }
+  ]
+}

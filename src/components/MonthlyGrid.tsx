@@ -1,136 +1,144 @@
 import React from 'react';
+import { NormalizedRecord } from '../utils/lanna';
 
-export interface LannaDayData {
-  d: number;
-  date: Date;
-  lannaMonth: number;
-  lunarDay: number;
-  phase: string;
-  wanThai: string;
-  isSin?: boolean;
-  isSia?: boolean;
-  isUbat?: boolean;
-  isLokawinat?: boolean;
-  isWanMutju?: boolean;
-  isThongChai?: boolean;
-  isAthipadi?: boolean;
-  sitthi?: string;
-  songkranLabel?: string;
-  isRahuTok?: boolean;
-  isFahTeeSangGood?: boolean;
-  dithiName?: string;
-}
+// Thai Numeral Helper (Removed, using Arabic)
+const thaiNum = (n: number | string) => n.toString();
 
-interface MonthlyGridProps {
+const WEEK_DAYS = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
+
+interface DayCellProps {
+  record: NormalizedRecord | null;
+  dayNumber: number;
+  isSelected: boolean;
+  isToday: boolean;
+  onSelect: (record: NormalizedRecord | null, date: Date) => void;
   viewMonth: Date;
-  days: LannaDayData[];
-  selectedDate: Date | null;
-  onSelect: (date: Date) => void;
 }
 
-export function MonthlyGrid({ viewMonth, days, selectedDate, onSelect }: MonthlyGridProps) {
-  const firstDay = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), 1).getDay();
-  const blanks = Array.from({ length: firstDay }, (_, i) => i);
+function DayCell({ record, dayNumber, isSelected, isToday, onSelect, viewMonth }: DayCellProps) {
+  const currentDate = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), dayNumber);
+
+  if (!record) {
+    return (
+      <div className="min-h-[100px] sm:min-h-[120px] p-1 sm:p-2 border-b border-r border-gray-100 bg-gray-50/50">
+        <div className="text-right text-gray-400 text-sm font-medium">{thaiNum(dayNumber)}</div>
+      </div>
+    );
+  }
+
+  let bgClass = "bg-white hover:bg-orange-50 cursor-pointer transition-colors";
+  let borderClass = isSelected ? "ring-2 ring-inset ring-orange-500" : "";
+  let textColor = "text-gray-700";
+
+  if (record.score === 'good') {
+    bgClass = "bg-green-50 hover:bg-green-100 cursor-pointer transition-colors";
+    textColor = "text-green-800";
+  } else if (record.score === 'bad') {
+    bgClass = "bg-red-50 hover:bg-red-100 cursor-pointer transition-colors";
+    textColor = "text-red-800";
+  }
+
+  if (isToday) {
+    borderClass = "ring-2 ring-inset ring-blue-500";
+  }
+
+  // Find if it's a Buddhist holy day
+  const isWanPhra = record.labels.includes("วันพระ");
+
+  return (
+    <div 
+      onClick={() => onSelect(record, currentDate)}
+      className={`min-h-[100px] sm:min-h-[120px] p-1 sm:p-2 border-b border-r border-gray-100 flex flex-col ${bgClass} ${borderClass}`}
+    >
+      <div className="flex justify-between items-start mb-1">
+        <span className={`text-xs sm:text-[10px] md:text-xs font-medium px-1 rounded-sm ${
+          isWanPhra ? 'bg-yellow-100 text-yellow-800' : 'text-gray-500'
+        } truncate max-w-[70%]`}>
+          {record.lunar}
+        </span>
+        <span className={`text-base sm:text-lg font-bold ${textColor}`}>
+          {dayNumber}
+        </span>
+      </div>
+
+      <div className="flex-1 overflow-hidden">
+        {record.labels.length > 0 && (
+          <div className="flex flex-wrap gap-1 mt-1">
+            {record.labels.slice(0, 2).map((label, i) => (
+              <span key={i} className="inline-block text-[10px] leading-tight px-1 py-0.5 bg-white/60 rounded border border-gray-200 truncate max-w-full">
+                {label}
+              </span>
+            ))}
+            {record.labels.length > 2 && (
+              <span className="inline-block text-[10px] leading-tight px-1 py-0.5 text-gray-500">
+                +{record.labels.length - 2}
+              </span>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+interface MonthViewProps {
+  viewMonth: Date;
+  records: NormalizedRecord[];
+  selectedDate: Date | null;
+  onSelect: (record: NormalizedRecord | null, date: Date) => void;
+}
+
+export function MonthView({ viewMonth, records, selectedDate, onSelect }: MonthViewProps) {
+  const firstDayOfWeek = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), 1).getDay();
+  const daysInMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 0).getDate();
+  const blanks = Array.from({ length: firstDayOfWeek }, (_, i) => i);
   const today = new Date();
-  
-  const isToday = (d: number) => 
-    today.getDate() === d && 
-    today.getMonth() === viewMonth.getMonth() && 
-    today.getFullYear() === viewMonth.getFullYear();
 
-  const isSelected = (d: number) => 
-    selectedDate?.getDate() === d && 
-    selectedDate?.getMonth() === viewMonth.getMonth() && 
-    selectedDate?.getFullYear() === viewMonth.getFullYear();
+  // Create a map for quick lookup
+  const recordMap = new Map<number, NormalizedRecord>();
+  records.forEach(r => recordMap.set(r.day, r));
 
-  const weekDays = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
+  const isToday = (dayNum: number) => {
+    return today.getDate() === dayNum && 
+           today.getMonth() === viewMonth.getMonth() && 
+           today.getFullYear() === viewMonth.getFullYear();
+  };
+
+  const isSelected = (dayNum: number) => {
+    return selectedDate?.getDate() === dayNum && 
+           selectedDate?.getMonth() === viewMonth.getMonth() && 
+           selectedDate?.getFullYear() === viewMonth.getFullYear();
+  };
 
   return (
     <div className="w-full">
       <div className="grid grid-cols-7 border-b border-gray-100">
-        {weekDays.map((wd, i) => (
-          <div key={wd} className={`py-2 text-center text-[10px] font-bold ${i === 0 ? 'text-red-500' : 'text-gray-400'}`}>
-            {wd}
+        {WEEK_DAYS.map((day, i) => (
+          <div key={day} className={`py-2 sm:py-3 text-center text-xs sm:text-sm font-semibold border-r border-gray-100 last:border-r-0 ${
+            i === 0 ? 'text-red-600 bg-red-50' : 
+            i === 6 ? 'text-purple-600 bg-purple-50' : 'text-gray-700 bg-gray-50'
+          }`}>
+            {day}
           </div>
         ))}
       </div>
-      
-      <div className="grid grid-cols-7">
-        {blanks.map(b => (
-          <div key={`b-${b}`} className="aspect-square border-b border-r border-gray-50 bg-gray-50/30" />
+
+      <div className="grid grid-cols-7 border-l border-t border-gray-100">
+        {blanks.map(blank => (
+          <div key={`blank-${blank}`} className="min-h-[100px] sm:min-h-[120px] bg-gray-50 border-b border-r border-gray-100"></div>
         ))}
-        
-        {days.map((day, i) => {
-          const selected = isSelected(day.d);
-          const currentIsToday = isToday(day.d);
-          
-          const hasInfo = day.isSin || day.isSia || day.isUbat || day.isLokawinat || 
-                         day.isThongChai || day.isAthipadi || day.sitthi || 
-                         day.isWanMutju || day.isRahuTok || day.songkranLabel;
 
-          const bgColor = selected 
-            ? 'bg-[#5A3520]' 
-            : currentIsToday 
-              ? 'bg-[#FFFBEB]' 
-              : day.lannaMonth % 2 !== 0 ? 'bg-[#FFFFFF]' : 'bg-[#FAF7F2]';
-
-          return (
-            <div 
-              key={day.d}
-              onClick={() => onSelect(day.date)}
-              className={`relative aspect-square border-b border-r border-gray-100 flex flex-col p-1 cursor-pointer transition-colors ${bgColor} ${currentIsToday && !selected ? 'border-2 border-[#F59E0B] z-10' : ''}`}
-            >
-              {/* Header: Lunar Info (Left) and Day (Right) */}
-              <div className="flex justify-between items-start leading-none relative z-10">
-                <div className="flex flex-col gap-0.5">
-                  <span className={`text-[8px] font-bold px-[3px] py-[1px] rounded-[2px] w-fit ${selected ? 'bg-[#FEF3C7] text-[#5A3520]' : 'bg-[#EDE8DF] text-[#5A3520]'}`}>
-                    เดือน{day.lannaMonth}
-                  </span>
-                  <span className={`text-[8.5px] ${selected ? 'text-[#FDE68A]' : 'text-[#8B6E57]'}`}>
-                    {day.phase}{day.lunarDay}
-                  </span>
-                </div>
-                <span className={`text-[12px] font-bold ${selected ? 'text-[#FEF3C7]' : (day.date.getDay() === 0 ? 'text-[#DC2626]' : 'text-[#333]')}`}>
-                  {day.d}
-                </span>
-              </div>
-
-              {hasInfo && (
-                <>
-                  <div className="flex flex-col mt-auto overflow-hidden">
-                    {day.songkranLabel && (
-                      <span className="text-[8px] font-bold text-[#0891B2] truncate leading-tight">{day.songkranLabel}</span>
-                    )}
-                    {day.isSia && (
-                      <span className="text-[8px] font-bold text-[#DC2626] truncate leading-tight">วันเสีย</span>
-                    )}
-                    {day.isLokawinat && (
-                      <span className="text-[8px] font-bold text-[#DC2626] truncate leading-tight">โลกาวินาศ</span>
-                    )}
-                    {day.isUbat && (
-                      <span className="text-[8px] font-bold text-[#DC2626] truncate leading-tight">อุบาทว์</span>
-                    )}
-                    {(day.isThongChai || day.isAthipadi || day.sitthi) && (
-                      <span className={`text-[8px] font-bold text-[#059669] truncate leading-tight`}>
-                        {day.isThongChai ? 'ธงชัย' : day.isAthipadi ? 'อธิบดี' : day.sitthi}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="flex gap-[2px] mt-0.5">
-                    {day.isSin && <div className={`w-[6px] h-[6px] rounded-full ${selected ? 'bg-[#FDE68A]' : 'bg-orange-400'}`} />}
-                    {(day.isSia || day.isUbat || day.isLokawinat || day.isWanMutju) && (
-                      <div className={`w-[6px] h-[6px] rounded-full ${selected ? 'bg-[#FCA5A5]' : 'bg-red-500'}`} />
-                    )}
-                    {(day.isThongChai || day.isAthipadi || day.sitthi || day.isFahTeeSangGood) && (
-                      <div className={`w-[6px] h-[6px] rounded-full ${selected ? 'bg-[#6EE7B7]' : 'bg-green-500'}`} />
-                    )}
-                  </div>
-                </>
-              )}
-            </div>
-          );
-        })}
+        {Array.from({ length: daysInMonth }, (_, i) => i + 1).map(dayNum => (
+          <DayCell 
+            key={`day-${dayNum}`}
+            record={recordMap.get(dayNum) || null}
+            dayNumber={dayNum}
+            isSelected={isSelected(dayNum)}
+            isToday={isToday(dayNum)}
+            onSelect={onSelect}
+            viewMonth={viewMonth}
+          />
+        ))}
       </div>
     </div>
   );

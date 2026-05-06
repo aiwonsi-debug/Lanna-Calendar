@@ -1,0 +1,80 @@
+{
+  "strategy": "Fallback parser (Partial Data)",
+  "extractedRecords": [
+    {
+      "day": 6,
+      "lunar": "Unknown",
+      "partial": true
+    },
+    {
+      "day": 7,
+      "lunar": "Unknown",
+      "partial": true
+    },
+    {
+      "day": 1,
+      "lunar": "Unknown",
+      "partial": true
+    },
+    {
+      "day": "Unknown",
+      "lunar": "เดืือน ๑๑ ออก ๑ ค่ำํ",
+      "partial": true
+    },
+    {
+      "day": "Unknown",
+      "lunar": "เดืือน ๑๑ ออก ๓ ค่ำํ",
+      "partial": true
+    },
+    {
+      "day": "Unknown",
+      "lunar": "เดืือน ๑๑ ออก ๔ ค่ำํ",
+      "partial": true
+    },
+    {
+      "day": "Unknown",
+      "lunar": "เดืือน ๑๑ ออ อก ๕ ค่ำํ",
+      "partial": true
+    },
+    {
+      "day": "Unknown",
+      "lunar": "เดืือน ๑๑ ออก ๖ ค่ำํ",
+      "partial": true
+    },
+    {
+      "day": "Unknown",
+      "lunar": "เดืือน ๑๑ ออก ๗ ค่ำํ",
+      "partial": true
+    },
+    {
+      "day": "Unknown",
+      "lunar": "เดืือน ๑๑ ออก ๘ ค่ำํ",
+      "partial": true
+    },
+    {
+      "day": "Unknown",
+      "lunar": "เดื ือน ๑๑ ออก ๙ ค่ำํ",
+      "partial": true
+    },
+    {
+      "day": "Unknown",
+      "lunar": "เดืือน ๑๑ ออก ๑๑ ค่ำํ",
+      "partial": true
+    },
+    {
+      "day": "Unknown",
+      "lunar": "เดืือน ๑๑ ออ อก ๑๔ ค่ำํ",
+      "partial": true
+    },
+    {
+      "day": "Unknown",
+      "lunar": "เดืือน ๑๑ ออก ๑๕ ค่ำํ",
+      "partial": true
+    },
+    {
+      "day": "Unknown",
+      "lunar": "เดืือน ๑๑ แรีม ๑ ค่ำํ",
+      "partial": true
+    }
+  ]
+}

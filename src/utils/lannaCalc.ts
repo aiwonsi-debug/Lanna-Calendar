@@ -241,8 +241,11 @@ export function getLannaDate(date: Date) {
 
   const isWanMutju = (currentMonth === 5 && dow === 0) || (currentMonth === 6 && dow === 1) || (currentMonth === 7 && dow === 2) || (currentMonth === 8 && dow === 3) || (currentMonth === 9 && dow === 4) || (currentMonth === 10 && dow === 5) || (currentMonth === 11 && dow === 6);
 
+  const fahTeeSang = ((cs % 108) + finalLannaMonth + currentKham) * 5 % 9;
+
   return {
     date, lannaMonth: finalLannaMonth, lunarDay: currentKham, phase: currentPhase, dow, wanThai,
+    fahTeeSang,
     wanThaiDesc: DATA.wanThaiDetailed[wanThai as keyof typeof DATA.wanThaiDetailed] || "",
     isSin, cs, yearZodiac: yearZodiacName, zodiacThai: zInfo.thai,
     kaoKong: kaoKongName, kaoKongDesc: DATA.kaoKongInfo[kaoKongName as keyof typeof DATA.kaoKongInfo],

@@ -1,0 +1,72 @@
+{
+  "strategy": "Error correction triggered: Grid -> Hybrid fallback",
+  "bestEffortDataset": {
+    "totalRecords": 10,
+    "records": [
+      {
+        "dateISO": "2026-05-01",
+        "day": 1,
+        "lunar": "เดืือน ๑๐ ออก ๑๒ ค่ำํา��",
+        "labels": [],
+        "description": [
+          "ฟ้้� �ตีีแส่่งเศษ ๖",
+          "วัันรี้วังเม็ดื วัันไส่เส่ีย",
+          "ว วัันหััวัเรีียงหัมอน"
+        ],
+        "score": "neutral",
+        "partial": false
+      },
+      {
+        "dateISO": "2026-05-02",
+        "day": 2,
+        "lunar": "เดืือน ๑๐ ออก ๑๓ ค่ำํา��",
+        "labels": [],
+        "description": [
+          "ฟ ฟ้้�ตีีแส่่งเศษ ๒",
+          "วัันเตี่�ส่ัน วัันท้�ยป้้�วั ั",
+          "วัันมหั�ส่ิทธิิโชค่ำ"
+        ],
+        "score": "good",
+        "partial": false
+      },
+      {
+        "dateISO": "2026-05-03",
+        "day": 3,
+        "lunar": "เดืือน ๑๐ ออก ๑๔ ค่ำํา�� �",
+        "labels": [],
+        "description": [
+          "ฟ้้�ตีีแส่่งเศษ ๗",
+          "วัันก่�เรี้� วัันยีเพียง\\"
+        ],
+        "score": "neutral",
+        "partial": false
+      },
+      {
+        "dateISO": "2026-05-04",
+        "day": 4,
+        "lunar": "เดืือน ๑๐ ออก ๑๕ ค่ำํา��",
+        "labels": [],
+        "description": [
+          "ฟ้้�ตีีแส่่งเศษ ๓",
+          "nวัันก�บเส่็ดื วัันเก้�กอง",
+          "วัันเส่ีย"
+        ],
+        "score": "neutral",
+        "partial": false
+      },
+      {
+        "dateISO": "2026-05-05",
+        "day": 5,
+        "lunar": "เดืือน ๑๐ แรีม ๑ ค่ำํา��",
+        "labels": [],
+        "description": [
+          "ฟ้้�ตีีแส่่งเศษ ๘",
+          "วัันดืับใค่ ่ำ้ วัันรีองพืน",
+          "วัันอาทิิตย์์"
+        ],
+        "score": "neutral",
+        "partial": false
+      }
+    ]
+  }
+}

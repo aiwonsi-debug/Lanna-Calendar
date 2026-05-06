@@ -1,0 +1,8 @@
+{
+  "valid": false,
+  "errors": [
+    "Expected 31 days, but found 10 records.",
+    "Missing 'lunar' for day 6"
+  ],
+  "errorPercentage": "70.97%"
+}

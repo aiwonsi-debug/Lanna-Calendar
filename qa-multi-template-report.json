@@ -1,0 +1,17 @@
+{
+  "evaluation": "Cross-Template Consistency & Accuracy",
+  "templatesEvaluated": 2,
+  "templateStats": {
+    "LEGACY_V1": {
+      "samplesChecked": 862,
+      "validSamples": 862,
+      "accuracy": "100%"
+    },
+    "T3": {
+      "samplesChecked": 2,
+      "validSamples": 2,
+      "accuracy": "100%"
+    }
+  },
+  "mismatches": []
+}
