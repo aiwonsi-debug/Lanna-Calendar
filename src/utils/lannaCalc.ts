@@ -1,3 +1,5 @@
+import { getLannaYearTransition, resolveLannaZodiacForDate } from "./getLannaZodiac";
+
 // ============================================================
 // DATA & CONSTANTS
 // ============================================================
@@ -175,35 +177,18 @@ export function getLannaDate(date: Date) {
   const wanThaiIdx = (diffWan % 60 + 60) % 60;
   const wanThai = DATA.maeMue[wanThaiIdx % 10] + DATA.lukMue[wanThaiIdx % 12];
   
-  // Use April of the current Gregorian year to determine CS for Songkran
-  const csForSongkran = date.getFullYear() - (date.getMonth() < 3 ? 639 : 638);
-  
-  // Base date CS 1386 (2024 CE) 16 April
-  const baseHarkun = Math.floor((1386 * 292207 + 373) / 800);
-  const currentHarkun = Math.floor((csForSongkran * 292207 + 373) / 800);
-  const currentFraction = ((csForSongkran * 292207 + 373) % 800) / 800;
-  
-  const diffDaysFromBase = currentHarkun - baseHarkun;
-  const basePhayaWan2024 = new Date(2024, 3, 16).getTime();
-  
-  const thaloengSokExactTime = basePhayaWan2024 + diffDaysFromBase * 86400000 + currentFraction * 86400000;
-  // Maha Songkran is 2.165 days before Thaloeng Sok
-  const mahaSongkranExactTime = thaloengSokExactTime - 187056000; 
-
-  const phayaWanDate = new Date(thaloengSokExactTime);
-
-  const cs = (date.getTime() >= phayaWanDate.getTime()) ? (date.getFullYear() - 638) : (date.getFullYear() - 639);
+  const transition = getLannaYearTransition(date.getFullYear());
+  const lannaYear = resolveLannaZodiacForDate(date, transition);
+  const cs = lannaYear.chulasakarat;
   const kalaYok = getKalaYok(cs);
-
-  const zodiacList = [
-    { name: "เส็ด", thai: "จอ" }, { name: "ไก้", thai: "กุน" }, { name: "ไจ้", thai: "ชวด" },
-    { name: "เป้า", thai: "ฉลู" }, { name: "ยี่", thai: "ขาล" }, { name: "เถาะ", thai: "เถาะ" },
-    { name: "สี", thai: "มะโรง" }, { name: "ไส้", thai: "มะเส็ง" }, { name: "สะง้า", thai: "มะเมีย" },
-    { name: "เม็ด", thai: "มะแม" }, { name: "สัน", thai: "วอก" }, { name: "เล้า", thai: "ระกา" }
-  ];
-  const maePeeList = ["เปิก", "กัด", "กด", "ร้วง", "เต่า", "กา", "กาบ", "ดับ", "รวาย", "เมือง"];
-  const zInfo = zodiacList[cs % 12];
-  const yearZodiacName = maePeeList[cs % 10] + zInfo.name;
+  const fromIsoDate = (isoDate: string) => {
+    const [year, month, day] = isoDate.split("-").map(Number);
+    return new Date(year, month - 1, day);
+  };
+  const sangKhanLongDate = fromIsoDate(transition.sankranLongDate);
+  const wanNaoDate = fromIsoDate(transition.naoDate);
+  const phayaWanDate = fromIsoDate(transition.payaWanDate);
+  const thaloengSokDate = fromIsoDate(transition.thaloengSokDate);
 
   const yrInfoNow = getLunarYearInfo(currentYearBE);
   const maxWaning = (currentMonth % 2 === 0 || (currentMonth === 9 && yrInfoNow.isAthikawan)) ? 15 : 14;
@@ -234,11 +219,6 @@ export function getLannaDate(date: Date) {
 
   let isSia = isSiaRaw;
 
-  // Verification log for May 2026
-  if (date.getFullYear()===2026 && date.getDate()===1 && date.getMonth()===4) {
-    console.log('CS:', cs, 'กาลโยค:', kalaYok)
-  }
-
   const isWanMutju = (currentMonth === 5 && dow === 0) || (currentMonth === 6 && dow === 1) || (currentMonth === 7 && dow === 2) || (currentMonth === 8 && dow === 3) || (currentMonth === 9 && dow === 4) || (currentMonth === 10 && dow === 5) || (currentMonth === 11 && dow === 6);
 
   const fahTeeSang = ((cs % 108) + finalLannaMonth + currentKham) * 5 % 9;
@@ -247,16 +227,26 @@ export function getLannaDate(date: Date) {
     date, lannaMonth: finalLannaMonth, lunarDay: currentKham, phase: currentPhase, dow, wanThai,
     fahTeeSang,
     wanThaiDesc: DATA.wanThaiDetailed[wanThai as keyof typeof DATA.wanThaiDetailed] || "",
-    isSin, cs, yearZodiac: yearZodiacName, zodiacThai: zInfo.thai,
+    isSin,
+    cs,
+    yearZodiac: lannaYear.zodiacLanna,
+    zodiacThai: lannaYear.zodiacThai,
+    lannaYear: {
+      zodiacLanna: lannaYear.zodiacLanna,
+      zodiacThai: lannaYear.zodiacThai,
+      chulasakarat: lannaYear.chulasakarat,
+    },
     kaoKong: kaoKongName, kaoKongDesc: DATA.kaoKongInfo[kaoKongName as keyof typeof DATA.kaoKongInfo],
     isThongChai, isAthipadi, isUbat, isLokawinat, isWanMai,
     isSia,
     sitthi,
     isFoo: { 1:[1],2:[2],3:[3],4:[4],5:[1],6:[2],7:[3],8:[4],9:[1],10:[2],11:[3],12:[4] }[currentMonth as keyof typeof monthMap]?.includes(dow),
     yam: DATA.yamData[dow],
-    sangKhanLong: new Date(phayaWanDate.getTime() - 2 * 24 * 3600 * 1000),
-    wanNao: new Date(phayaWanDate.getTime() - 24 * 3600 * 1000),
+    sangKhanLong: sangKhanLongDate,
+    wanNao: wanNaoDate,
     phayaWan: phayaWanDate,
+    thaloengSok: thaloengSokDate,
+    lannaYearTransition: transition,
     wanLohk: (["กาลโชค","มหาวัน","มรณะ","นันทะ","วุฒิ","ลาภะ","วินาศ"] as const)[dow]
   };
   }

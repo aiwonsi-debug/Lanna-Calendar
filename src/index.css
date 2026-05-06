@@ -1,26 +1,36 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Taviraj:wght@400;500;600;700;900&family=Noto+Sans+Thai:wght@400;500;700&display=swap');
-
 :root {
-  --lanna-brown-dark: #6f4632;
-  --lanna-bg: #F0EDE4;
-  --lanna-border: #A3A3A3;
+  --lanna-brown: #6B4231;
+  --lanna-gold: #FEF3C7;
+  --lanna-bg: #F5F0E8;
+  --lanna-green: #10B981;
+  --lanna-red: #DC2626;
+  --lanna-sin: #F59E0B;
+  --lanna-gray: #6B7280;
 }
 
 body {
-  background-color: var(--lanna-bg);
-  color: #1A1A1A;
-  font-family: "Taviraj", "Noto Sans Thai", sans-serif;
+  margin: 0;
+  background-color: #ffffff;
+  color: #000000;
+  font-family: Tahoma, "Noto Sans Thai", Arial, sans-serif;
   -webkit-tap-highlight-color: transparent;
-  line-height: 1.05;
 }
 
-/* Rigid Print Layout Reset */
+button {
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  font: inherit;
+}
+
 * {
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  outline: none !important;
+  box-sizing: border-box;
+}
+
+.brown-gradient {
+  background: linear-gradient(135deg, #6B4231 0%, #4D3024 100%);
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -29,9 +39,4 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
-
-/* Typography Overrides */
-h1, h2, h3, h4 {
-  letter-spacing: -0.01em;
 }
