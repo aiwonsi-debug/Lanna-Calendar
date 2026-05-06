@@ -3,57 +3,52 @@ import { DayRecord } from "../types"
 export default function DetailSection({ data }: { data: DayRecord }) {
   const isGood = data.score === 'good';
   const isBad = data.score === 'bad';
-  
-  const statusColor = isGood ? "text-green-600" : isBad ? "text-red-600" : "text-[#6B4231]";
-  const statusBg = isGood ? "bg-green-50" : isBad ? "bg-red-50" : "bg-[#FDFCF9]";
 
   return (
-    <div className={`p-6 sm:p-10 ${statusBg} transition-all duration-500 animate-in fade-in slide-in-from-bottom-4`}>
-      <div className="max-w-4xl mx-auto">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b-2 border-[#6B4231]/10 pb-6 mb-8">
-          <div>
-            <span className={`text-sm font-bold uppercase tracking-[0.2em] mb-2 block ${statusColor}`}>
-              {isGood ? "วันดีมงคล" : isBad ? "วันเสีย/ควรหลีกเลี่ยง" : "วันปกติ"}
+    <div className="p-3 sm:p-5 bg-white animate-in fade-in duration-300">
+      <div className="max-w-2xl mx-auto">
+        {/* COMPACT ROW-BASED HEADER */}
+        <div className="flex justify-between items-center border-b-[0.5px] border-neutral-300 pb-2 mb-3">
+          <div className="flex items-center gap-3">
+            <span className="text-xl font-bold text-neutral-800">วันที่ {data.day}</span>
+            <span className={`text-[10px] font-black uppercase px-1.5 py-0.5 rounded ${isGood ? 'bg-green-100 text-green-700' : isBad ? 'bg-red-100 text-red-700' : 'bg-neutral-100 text-neutral-500'}`}>
+               {isGood ? "วันดีมงคล" : isBad ? "วันหลีกเลี่ยง" : "วันปกติ"}
             </span>
-            <h3 className="text-4xl font-black text-[#2D1B08]">
-              วันที่ {data.day}
-            </h3>
-            <p className="text-[#6B4231]/60 font-medium mt-1">
-               {data.dateISO}
-            </p>
           </div>
-          <div className="text-right sm:text-right">
-            <div className="text-xl font-bold text-[#6B4231]">
-              {data.lunar}
-            </div>
-            <div className="flex gap-2 mt-2 justify-end">
-              {data.labels.map((l, i) => (
-                <span key={i} className="px-3 py-1 bg-[#6B4231] text-white text-[10px] font-black rounded-full uppercase tracking-wider">
-                  {l}
-                </span>
-              ))}
-            </div>
+          <div className="text-right">
+             <div className="text-sm font-bold text-[#6B4231]">{data.lunar}</div>
           </div>
         </div>
 
-        <div className="space-y-6">
-          <div>
-            <h4 className="text-xs font-black text-[#6B4231]/40 uppercase tracking-widest mb-3">คำทำนายและข้อควรปฏิบัติ</h4>
-            <div className="text-lg sm:text-xl text-[#4D3024] leading-relaxed font-medium space-y-4">
-              {data.description.length > 0 ? (
-                data.description.map((d, i) => (
-                  <p key={i} className="relative pl-6">
-                    <span className="absolute left-0 top-3 w-2 h-2 bg-[#6B4231]/20 rounded-full"></span>
-                    {d}
-                  </p>
-                ))
-              ) : (
-                <p className="italic text-[#6B4231]/30">ไม่มีรายละเอียดเพิ่มเติมสำหรับวันนี้</p>
-              )}
-            </div>
-          </div>
+        {/* LABELS ROW */}
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {data.labels.map((l, i) => (
+            <span key={i} className="px-2 py-0.5 border-[0.5px] border-[#6B4231]/30 text-[#6B4231] text-[9px] font-bold rounded-sm uppercase tracking-tighter">
+              {l}
+            </span>
+          ))}
+        </div>
+
+        {/* CONTENT - SPREADSHEET STYLE ROWS */}
+        <div className="space-y-1.5">
+          {data.description.length > 0 ? (
+            data.description.map((desc, i) => (
+              <div key={i} className="flex gap-2 items-start text-[11px] leading-snug text-neutral-700">
+                <span className="text-[#6B4231] font-bold mt-[1px]">▸</span>
+                <p className="flex-1">{desc}</p>
+              </div>
+            ))
+          ) : (
+            <p className="text-[10px] text-neutral-400 italic">ไม่มีข้อมูลเพิ่มเติม</p>
+          )}
+        </div>
+        
+        {/* FOOTER METADATA */}
+        <div className="mt-4 pt-2 border-t-[0.5px] border-neutral-100 text-[8px] text-neutral-300 flex justify-between uppercase tracking-widest">
+            <span>{data.dateISO}</span>
+            <span>ปั๊กขะทืนล้านนา 2.0c</span>
         </div>
       </div>
     </div>
-  )
+  );
 }
