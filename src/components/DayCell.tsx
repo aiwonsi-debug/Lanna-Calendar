@@ -8,15 +8,11 @@ type Props = {
 
 /**
  * Formats lunar string according to traditional Thai Lanna print rules.
- * "ขึ้น 1 ค่ำ" -> "ออก 1 ค่ำ"
+ * Fine-tuned for ultra-dense typography.
  */
 const formatLannaLunar = (lunarStr: string): { month: string, phase: string } => {
     if (!lunarStr) return { month: "", phase: "" };
-    
-    // Replace "ขึ้น" with "ออก"
     const cleaned = lunarStr.replace("ขึ้น", "ออก");
-    
-    // Logic to separate "เดือน X" from "ออก/แรม Y ค่ำ"
     const monthMatch = cleaned.match(/เดือน\s*\d+/);
     const phaseMatch = cleaned.match(/(?:ออก|แรม)\s*\d+\s*ค่ำ/);
     
@@ -36,11 +32,11 @@ export default function DayCell({
   
   const { month, phase } = formatLannaLunar(data.lunar);
   
-  // Selection / Print Style
-  const bgClass = selected ? "bg-[#f1dfc7]" : "bg-white";
+  // Selection / Paper-like Print Style
+  const bgClass = selected ? "bg-[#f7ecd9]" : "bg-white";
   
-  // Color Hierarchy
-  const textClass = isBad ? "text-red-600" : isGood ? "text-green-700" : "text-neutral-700";
+  // Normalized Color Hierarchy for Print
+  const textClass = isBad ? "text-red-600" : isGood ? "text-green-700" : "text-neutral-600";
 
   return (
     <div
@@ -50,35 +46,35 @@ export default function DayCell({
         p-1
         cursor-pointer
         overflow-hidden
-        flex flex-col items-center justify-start
+        flex flex-col items-center justify-start pt-[10px]
         relative
         transition-colors duration-75
         ${bgClass}
       `}
     >
-      {/* Gregorian Day Number - Top Right Corner */}
-      <div className="absolute top-[2px] right-[3px] text-[10px] font-semibold text-neutral-500 leading-none">
+      {/* Gregorian Day Number - Subtle Corner (Print style) */}
+      <div className="absolute top-[2px] right-[3px] text-[9px] font-medium text-neutral-400 leading-none">
         {data.day}
       </div>
       
-      {/* Lanna Month Name */}
-      <div className="text-[8px] font-bold text-neutral-400 mt-0.5 leading-none">
+      {/* Lanna Month Name - Faint Header */}
+      <div className="text-[7px] font-medium text-neutral-300 leading-none mb-[2px]">
         {month}
       </div>
 
-      {/* Lunar Phase - Primary Content */}
-      <div className={`text-[9px] leading-[1.05] mt-0.5 text-center font-bold ${textClass}`}>
+      {/* Lunar Phase - Ultra Dense Typography */}
+      <div className={`text-[8px] leading-[1] text-center font-normal ${textClass}`}>
         {phase}
       </div>
 
-      {/* Labels - High Information Density */}
+      {/* Special Labels - Spreadsheet Row Style */}
       <div className="flex flex-col gap-0 mt-auto w-full">
         {data.labels.slice(0, 2).map((l, i) => (
           <div
             key={i}
             className={`
-                text-[8px] leading-[1.05] text-center truncate font-black uppercase tracking-tighter
-                ${isBad ? 'text-red-600' : isGood ? 'text-green-700' : 'text-blue-700'}
+                text-[8px] leading-[1] text-center truncate font-medium uppercase tracking-tighter
+                ${isBad ? 'text-red-500' : isGood ? 'text-green-600' : 'text-blue-600'}
             `}
           >
             {l}
