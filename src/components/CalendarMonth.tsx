@@ -1,8 +1,8 @@
-import { useMemo, useState, useEffect } from "react"
+import { useMemo, useState } from "react"
 import { DayRecord } from "../types"
 import { createCalendarGrid } from "../utils/createCalendarGrid"
 import DayCell from "./DayCell"
-import DetailSection from "./DetailSection"
+import { DetailSection } from "./DetailSection"
 
 const headers = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."]
 
@@ -23,21 +23,19 @@ export default function CalendarMonth({
   onPrev,
   onNext
 }: Props) {
-  const [selectedISO, setSelectedISO] = useState<string>("")
+  const [manualSelectedISO, setManualSelectedISO] = useState<string | null>(null)
   
   const grid = useMemo(() => {
     return createCalendarGrid(year, monthNumber, data)
   }, [year, monthNumber, data])
 
   const selectedRecord = useMemo(() => {
-    return data.find(d => d.dateISO === selectedISO) || data[0] || null
-  }, [selectedISO, data])
-
-  useEffect(() => {
-    if (data.length > 0) {
-      setSelectedISO(data[0].dateISO)
+    if (manualSelectedISO) {
+      const found = data.find(d => d.dateISO === manualSelectedISO)
+      if (found) return found
     }
-  }, [year, monthNumber, data])
+    return data[0] || null
+  }, [manualSelectedISO, data])
 
   return (
     <div className="max-w-[980px] w-full mx-auto bg-white border-[0.5px] border-neutral-300">
@@ -81,7 +79,7 @@ export default function CalendarMonth({
               <DayCell
                 data={cell}
                 selected={cell.dateISO === selectedRecord?.dateISO}
-                onClick={() => setSelectedISO(cell.dateISO)}
+                onClick={() => setManualSelectedISO(cell.dateISO)}
               />
             ) : (
               <div className="h-full w-full bg-neutral-50/20" />

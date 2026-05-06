@@ -23,7 +23,7 @@ export async function loadMonthData(viewMonth: Date): Promise<NormalizedRecord[]
 
   if (dataset[key]) {
     try {
-      const mod = (await dataset[key]()) as any;
+      const mod = (await dataset[key]()) as { default?: { records: NormalizedRecord[] }, records?: NormalizedRecord[] };
       // Resolved schema has 'records' as a flat array of DayRecord[]
       const records = mod.default?.records || mod.records || [];
       return Array.isArray(records) ? records : [];

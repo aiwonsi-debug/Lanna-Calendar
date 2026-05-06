@@ -1,4 +1,4 @@
-import { loadFromLocal, persistLocally, OfflineCache } from './offlineStorage';
+import { loadFromLocal } from './offlineStorage';
 
 /**
  * Sync Engine for Lanna Calendar

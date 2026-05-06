@@ -208,7 +208,6 @@ export function getLannaDate(date: Date) {
     return null;
   })(dow, currentKham);
 
-  const isSitthi = !!sitthi;
   const isWanMai = currentKham === 1 && currentPhase === 'ออก';
 
   // Dynamic Kalayok
@@ -217,9 +216,7 @@ export function getLannaDate(date: Date) {
   const isUbat = dow === kalaYok.ubat;
   const isLokawinat = dow === kalaYok.lokawinat;
 
-  let isSia = isSiaRaw;
-
-  const isWanMutju = (currentMonth === 5 && dow === 0) || (currentMonth === 6 && dow === 1) || (currentMonth === 7 && dow === 2) || (currentMonth === 8 && dow === 3) || (currentMonth === 9 && dow === 4) || (currentMonth === 10 && dow === 5) || (currentMonth === 11 && dow === 6);
+  const isSia = isSiaRaw;
 
   const fahTeeSang = ((cs % 108) + finalLannaMonth + currentKham) * 5 % 9;
 

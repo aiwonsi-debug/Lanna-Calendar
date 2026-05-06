@@ -10,7 +10,27 @@ const toArabicDigits = (value: string | number) =>
 
 const WEEKDAY_LABELS = ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'];
 
-const getStatusLines = (day: any) => [
+interface Day {
+  date: Date;
+  day: number;
+  lannaMonth: number;
+  lunarDay: number;
+  phase: 'ออก' | 'แรม';
+  isSin: boolean;
+  isSia: boolean;
+  isUbat: boolean;
+  isLokawinat: boolean;
+  isThongChai: boolean;
+  isAthipadi: boolean;
+  sitthi: string | null;
+  songkranLabel: string | null;
+  yearZodiac: string;
+  cs: number;
+  raw: NormalizedRecord;
+  wanThai: string;
+}
+
+const getStatusLines = (day: Day) => [
   day.isSin ? { text: 'วันศีล', className: 'text-[#f2994a]' } : null,
   day.isSia ? { text: 'วันเสีย', className: 'text-[#d71920]' } : null,
   day.isUbat ? { text: 'วันอุบาทว์', className: 'text-[#0645c0]' } : null,
@@ -24,8 +44,8 @@ const getStatusLines = (day: any) => [
 export default function App() {
   const [viewMonth, setViewMonth] = useState(new Date(2026, 3, 1)); // April 2026
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date(2026, 3, 16));
-  const [monthData, setMonthData] = useState<any[]>([]);
-  const [rawMonthData, setRawMonthData] = useState<any[]>([]);
+  const [monthData, setMonthData] = useState<Day[]>([]);
+  const [rawMonthData, setRawMonthData] = useState<NormalizedRecord[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   
   const dailyRef = useRef<HTMLDivElement>(null);
@@ -38,23 +58,24 @@ export default function App() {
       setRawMonthData(data);
       
       const enriched = data.map(d => {
-        const date = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), d.d);
+        const date = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), d.day);
         const lanna = getLannaDate(date);
         if (!lanna) return null;
 
         return {
           ...lanna,
-          d: d.d,
-          isSin: lanna.isSin || d.labels?.special?.includes("วันศีล"),
-          isSia: lanna.isSia || d.labels?.bad?.includes("วันเสีย"),
-          isUbat: lanna.isUbat || d.labels?.bad?.includes("วันอุบาทว์"),
-          isLokawinat: lanna.isLokawinat || d.labels?.bad?.includes("วันโลกาวินาศ"),
-          isThongChai: lanna.isThongChai || d.labels?.good?.includes("วันธงชัย"),
-          isAthipadi: lanna.isAthipadi || d.labels?.good?.includes("วันอธิบดี"),
+          day: d.day,
+          isSin: lanna.isSin || d.labels?.includes("วันศีล"),
+          isSia: lanna.isSia || d.labels?.includes("วันเสีย"),
+          isUbat: lanna.isUbat || d.labels?.includes("วันอุบาทว์"),
+          isLokawinat: lanna.isLokawinat || d.labels?.includes("วันโลกาวินาศ"),
+          isThongChai: lanna.isThongChai || d.labels?.includes("วันธงชัย"),
+          isAthipadi: lanna.isAthipadi || d.labels?.includes("วันอธิบดี"),
           songkranLabel: getSongkranLabel(date),
-          raw: d
+          raw: d,
+          wanThai: lanna.wanThai
         };
-      }).filter(Boolean);
+      }).filter(Boolean) as Day[];
       
       setMonthData(enriched);
       setIsLoading(false);
@@ -83,7 +104,7 @@ export default function App() {
     const lanna = getLannaDate(selectedDate);
     if (!lanna) return null;
 
-    const raw = rawMonthData.find(d => d.d === selectedDate.getDate());
+    const raw = rawMonthData.find(d => d.day === selectedDate.getDate());
     const song = getSongkranLabel(selectedDate);
     const dir = getDirections(selectedDate.getDay());
     const rawLunarDay = lanna.phase === 'ออก' ? lanna.lunarDay : lanna.lunarDay + 15;
@@ -106,9 +127,9 @@ export default function App() {
         bad: [lanna.isSia ? "วันเสีย" : "", lanna.isUbat ? "วันอุบาทว์" : "", lanna.isLokawinat ? "วันโลกาวินาศ" : ""].filter(Boolean),
         special: lanna.isSin ? ["วันศีล"] : []
       },
-      description: raw?.description || "วันดีมงคล เหมาะแก่การเริ่มต้นกิจการงานใหม่ การประกอบพิธีมงคล หรือการติดต่อประสานงาน",
-      warnings: raw?.warnings || [],
-      rituals: raw?.rituals || [],
+      description: Array.isArray(raw?.description) ? raw.description.join('\n') : raw?.description || "วันดีมงคล เหมาะแก่การเริ่มต้นกิจการงานใหม่ การประกอบพิธีมงคล หรือการติดต่อประสานงาน",
+      warnings: Array.isArray(raw?.warnings) ? raw.warnings : [],
+      rituals: Array.isArray(raw?.rituals) ? raw.rituals : [],
       festival: song || "",
       rawText: raw?.rawText || "",
       directions: { sri: dir.sri, ka: dir.ka },
@@ -149,11 +170,11 @@ export default function App() {
           ) : (
             <div className="flex flex-col">
               {/* Day Labels Header Row */}
-              <div className="grid grid-cols-7 border-b border-black">
+              <div className="grid grid-cols-7 border-t border-l border-black">
                 {WEEKDAY_LABELS.map((label, index) => (
                   <div 
                     key={label}
-                    className={`h-[20px] border-r border-black last:border-r-0 flex items-center justify-center text-[11px] font-bold ${index === 0 ? 'text-red-600' : ''}`}
+                    className={`h-[25px] border-r border-b border-black flex items-center justify-center text-[11px] font-bold ${index === 0 ? 'text-red-600' : ''}`}
                   >
                     {label}
                   </div>
@@ -161,58 +182,58 @@ export default function App() {
               </div>
 
               {/* Calendar Grid */}
-              <div className="grid grid-cols-7 border-b border-black">
+              <div className="grid grid-cols-7 border-l border-black">
                 {/* Blanks */}
                 {blanks.map((_, i) => (
-                  <div key={`blank-${i}`} className="h-[150px] border-r border-b border-black last:border-r-0 bg-white" />
+                  <div key={`blank-${i}`} className="h-[150px] border-r border-b border-black bg-white" />
                 ))}
 
                 {/* Days */}
                 {monthData.map((day) => {
                   const isSunday = day.date.getDay() === 0;
-                  const isLastDayOfMonth = day.d === monthData.length;
-                  const isSelected = selectedDate?.getDate() === day.d &&
+                  const isSelected = selectedDate?.getDate() === day.day &&
                     selectedDate?.getMonth() === viewMonth.getMonth() &&
                     selectedDate?.getFullYear() === viewMonth.getFullYear();
                   const statusLines = getStatusLines(day);
                   const compactLines = [
                     { text: toArabicDigits(`เดือน ${day.lannaMonth}`), className: 'text-black' },
                     { text: toArabicDigits(`${day.phase}${day.lunarDay} ค่ำ`), className: 'text-black' },
+                    { text: day.wanThai, className: 'text-[#0645c0]' },
                     ...statusLines,
                   ];
                   const visibleLines = compactLines;
                   
                   return (
                     <div 
-                      key={day.d}
+                      key={day.day}
                       onClick={() => handleSelect(day.date)}
-                      className={`relative h-[150px] border-r border-b border-black last:border-r-0 bg-white cursor-pointer overflow-hidden ${
+                      className={`relative h-[150px] border-r border-b border-black bg-white cursor-pointer overflow-hidden ${
                         isSelected ? 'bg-[#fff1d8] outline outline-1 outline-[#0b62ff] outline-offset-[-1px]' : 'hover:bg-[#f8f8f8]'
-                      } ${isLastDayOfMonth ? 'ring-2 ring-inset ring-[#111111]' : ''}`}
+                      }`}
                     >
                       <span
-                        className={`absolute right-1 top-[10%] text-[50px] font-black leading-[0.8] opacity-35 select-none pointer-events-none ${
+                        className={`absolute right-1 bottom-1 text-[50px] font-black leading-[0.8] opacity-35 select-none pointer-events-none ${
                           isSunday ? 'text-red-600' : 'text-black'
                         }`}
                       >
-                        {toArabicDigits(day.d)}
+                        {toArabicDigits(day.day)}
                       </span>
 
                       <div
-                        className={`relative z-10 m-[3px] p-[4px] leading-[1.15] font-bold max-h-[calc(100%-10px)] overflow-y-auto no-scrollbar border ${
-                          isSelected ? 'text-[9px] border-[#0b62ff] bg-[#fff4df]' : 'text-[9px] border-black/70 bg-white'
+                        className={`relative z-10 m-[3px] p-[4px] leading-[1.15] font-bold max-h-[calc(100%-10px)] overflow-y-auto no-scrollbar ${
+                          isSelected ? 'text-[10px] bg-[#fff4df]/80' : 'text-[10px] bg-transparent'
                         }`}
                       >
                         {visibleLines.map((line) => (
-                          <div key={`${day.d}-${line.text}`} className={line.className}>
+                          <div key={`${day.day}-${line.text}`} className={line.className}>
                             {line.text}
                           </div>
                         ))}
-                        {(isSelected || day.isSin || day.isSia || day.isUbat || day.isLokawinat || day.isThongChai || day.isAthipadi || day.sitthi || day.isFahTeeSangGood) && (
+                        {(isSelected || day.isSin || day.isSia || day.isUbat || day.isLokawinat || day.isThongChai || day.isAthipadi || day.sitthi) && (
                           <div className="flex gap-[5px] mt-2">
                             {day.isSin && <span className="w-[8px] h-[8px] rounded-full bg-[#f2994a]" />}
-                            {(day.isSia || day.isUbat || day.isLokawinat || day.isWanMutju) && <span className="w-[8px] h-[8px] rounded-full bg-[#d71920]" />}
-                            {(day.isThongChai || day.isAthipadi || day.sitthi || day.isFahTeeSangGood) && <span className="w-[8px] h-[8px] rounded-full bg-[#138a2e]" />}
+                            {(day.isSia || day.isUbat || day.isLokawinat) && <span className="w-[8px] h-[8px] rounded-full bg-[#d71920]" />}
+                            {(day.isThongChai || day.isAthipadi || day.sitthi) && <span className="w-[8px] h-[8px] rounded-full bg-[#138a2e]" />}
                           </div>
                         )}
                       </div>

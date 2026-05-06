@@ -1,5 +1,3 @@
-import { getLannaDate } from "./lannaCalc";
-
 export type DayStatus = 'holy' | 'good' | 'bad' | 'neutral';
 
 export interface DayTheme {

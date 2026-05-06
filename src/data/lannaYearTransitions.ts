@@ -43,30 +43,17 @@ export const LannaZodiacThaiMap: Record<(typeof LannaZodiac)[number], string> = 
   ใค้: "กุน",
 };
 
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
-const BASE_CS = 1386;
-const BASE_THALOENG_SOK_UTC = Date.UTC(2024, 3, 16, 12, 0, 0);
-const BASE_HARKUN = Math.floor((BASE_CS * 292207 + 373) / 800);
-
-const toISODateUTC = (date: Date) => {
-  const y = date.getUTCFullYear();
-  const m = String(date.getUTCMonth() + 1).padStart(2, "0");
-  const d = String(date.getUTCDate()).padStart(2, "0");
-  return `${y}-${m}-${d}`;
-};
-
-const parseISODateUTCNoon = (isoDate: string) => {
-  const [y, m, d] = isoDate.split("-").map(Number);
-  return new Date(Date.UTC(y, m - 1, d, 12, 0, 0));
-};
-
-const addDaysUTC = (date: Date, days: number) => new Date(date.getTime() + days * MS_PER_DAY);
-
 const normalizeMod = (value: number, divisor: number) => ((value % divisor) + divisor) % divisor;
 
 const zodiacFromChulasakarat = (chulasakarat: number) => {
-  // Align CS cycle with Lanna zodiac ordering so that CS 1388 => สะง้า.
-  const index = normalizeMod(chulasakarat + 10, 12);
+  // Align CS cycle with Lanna zodiac ordering.
+  // Traditional Lanna zodiac (Mae Mue) cycle relative to Chulasakarat.
+  // CS 1386 (2024) is "มะโรง" (Dragon) - in Lanna: "สี"
+  // CS 1387 (2025) is "มะเส็ง" (Snake) - in Lanna: "ไส้"
+  // LannaZodiac = ["ชวด","เป้า","ยี่","เหม้า","สี","ไส้","สะง้า","เม็ด","สัน","เร้า","เส็ด","ใค้"]
+  // Index for 1386: (1386 - 2) % 12 = 1384 % 12 = 4 (สี)
+  // Index for 1387: (1387 - 2) % 12 = 1385 % 12 = 5 (ไส้)
+  const index = normalizeMod(chulasakarat - 2, 12);
   return LannaZodiac[index];
 };
 
@@ -74,21 +61,13 @@ const buildTransitionForYear = (gregorianYear: number): LannaYearTransition => {
   const newChulasakarat = gregorianYear - 638;
   const oldChulasakarat = newChulasakarat - 1;
 
-  const raw = newChulasakarat * 292207 + 373;
-  const harkun = Math.floor(raw / 800);
-  const fraction = (raw % 800) / 800;
-  const diffDays = harkun - BASE_HARKUN;
-
-  const thaloengSokMoment = new Date(
-    BASE_THALOENG_SOK_UTC + diffDays * MS_PER_DAY + fraction * MS_PER_DAY
-  );
-  const thaloengSokDate = toISODateUTC(thaloengSokMoment);
-  const thaloengSokNoon = parseISODateUTCNoon(thaloengSokDate);
-
-  // In Lanna usage, วันพญาวัน and วันเถลิงศก are the same civil date.
-  const payaWanDate = thaloengSokDate;
-  const naoDate = toISODateUTC(addDaysUTC(thaloengSokNoon, -1));
-  const sankranLongDate = toISODateUTC(addDaysUTC(thaloengSokNoon, -2));
+  // Simple rule for Songkran/Phaya Wan in Lanna
+  // Usually April 14 (SangKhan Long), 15 (Nao), 16 (Phaya Wan)
+  // These are fixed in most modern Lanna calendars unless using high-precision astronomical calculations
+  const sankranLongDate = `${gregorianYear}-04-14`;
+  const naoDate = `${gregorianYear}-04-15`;
+  const payaWanDate = `${gregorianYear}-04-16`;
+  const thaloengSokDate = `${gregorianYear}-04-16`;
 
   return {
     gregorianYear,

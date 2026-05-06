@@ -36,7 +36,7 @@ const MonthRow = memo(({ index, style, data }: MonthRowProps) => {
     };
     fetchMonth();
     return () => { isMounted = false; };
-  }, [monthKey]);
+  }, [monthKey, monthDate]);
 
   return (
     <div style={style} key={monthKey} className="px-4 py-8">

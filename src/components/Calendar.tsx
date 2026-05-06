@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { loadMonthData, NormalizedRecord, MONTH_NAMES } from '../utils/lanna';
+import { getLannaDate } from '../utils/lannaCalc';
 import { MonthView } from './MonthlyGrid';
 import { DetailSection } from './DetailSection';
 
@@ -110,7 +111,39 @@ export function Calendar() {
         <div className="w-full lg:w-96 shrink-0">
           <div ref={detailRef} className="lg:sticky lg:top-24">
             {selectedDate ? (
-              <DetailSection selectedDate={selectedDate} record={selectedRecord} />
+              <DetailSection 
+                date={selectedDate} 
+                data={(() => {
+                  const lanna = getLannaDate(selectedDate);
+                  // Basic mapping similar to App.tsx
+                  return {
+                    y: selectedDate.getFullYear() + 543,
+                    m: selectedDate.getMonth() + 1,
+                    d: selectedDate.getDate(),
+                    lannaMonth: lanna?.lannaMonth || 0,
+                    lannaYear: lanna?.lannaYear,
+                    wanThai: lanna?.wanThai,
+                    wanThaiDesc: lanna?.wanThaiDesc,
+                    kaoKong: lanna?.kaoKong,
+                    kaoKongDesc: lanna?.kaoKongDesc,
+                    fahTeeSang: lanna?.fahTeeSang,
+                    lunar: { 
+                      phase: lanna?.phase === 'ออก' ? "waxing" : "waning", 
+                      day: lanna?.lunarDay || 0 
+                    },
+                    labels: {
+                      good: [lanna?.isThongChai ? "วันธงชัย" : "", lanna?.isAthipadi ? "วันอธิบดี" : "", lanna?.sitthi || ""].filter(Boolean),
+                      bad: [lanna?.isSia ? "วันเสีย" : "", lanna?.isUbat ? "วันอุบาทว์" : "", lanna?.isLokawinat ? "วันโลกาวินาศ" : ""].filter(Boolean),
+                      special: lanna?.isSin ? ["วันศีล"] : []
+                    },
+                    description: selectedRecord?.description?.join('\n') || "วันดีมงคล...",
+                    warnings: [],
+                    rituals: [],
+                    festival: "",
+                    rawText: "",
+                  };
+                })()} 
+              />
             ) : (
               <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 text-center text-gray-400 mt-0">
                 <span className="text-5xl block mb-4 opacity-30">🗓️</span>

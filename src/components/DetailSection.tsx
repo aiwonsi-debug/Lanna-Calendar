@@ -110,20 +110,20 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
 
   return (
     <div className="bg-white text-[12px] leading-[1.35]">
-      <div className="h-[14px] border-b border-black" />
-      <div className="text-center font-bold text-[#168019] py-[3px] border-b border-black">
+      <div className="h-[14px]" />
+      <div className="text-center font-bold text-[#168019] py-[3px]">
         {formatDate(date)}
       </div>
-      <div className="text-center font-bold py-[3px] border-b border-black">
+      <div className="text-center font-bold py-[3px]">
         {formatDate(date)}
         <span className="ml-2">{toArabicDigits(`ปี${zodiacLanna}`)}</span>
         <span className="ml-2">{toArabicDigits(`ปี${zodiacThai}`)}</span>
       </div>
-      <div className="text-center font-bold py-[3px] border-b border-black">
+      <div className="text-center font-bold py-[3px]">
         {toArabicDigits(`${lunarText} เดือน ${data.lannaMonth} จ.ศ.${cs ?? '-'} ปีรวาย${zodiacLanna}`)}
       </div>
       {allLabels.length > 0 && (
-        <div className="text-center py-[3px] border-b border-black">
+        <div className="text-center py-[3px]">
           {allLabels.map((label) => (
             <span
               key={label}
@@ -137,7 +137,7 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
 
       <div>
         {rows.map((row, i) => (
-          <div key={`${row.val}-${i}`} className={`min-h-[30px] px-1 py-[5px] border-b border-black ${row.color}`}>
+          <div key={`${row.val}-${i}`} className={`min-h-[30px] px-1 py-[5px] ${row.color}`}>
             {row.val}
           </div>
         ))}

@@ -7,9 +7,11 @@ const DB_NAME = 'LannaCalendarDB';
 const STORE_NAME = 'calendarCache';
 const DB_VERSION = 1;
 
+import { NormalizedRecord } from "./lanna";
+
 export interface OfflineCache {
-  resolvedData: any;      // Current single source of truth for UI
-  rawVersions: any;       // All versions per month for re-resolution
+  resolvedData: Record<string, NormalizedRecord[]>;      // Current single source of truth for UI
+  rawVersions: Record<string, unknown>;       // All versions per month for re-resolution
   fileHash: string;
   lastUpdated: string;
 }

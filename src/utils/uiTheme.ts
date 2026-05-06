@@ -10,7 +10,7 @@ export interface DayTheme {
   label: string;
 }
 
-export const getDayTheme = (date: Date): { status: DayStatus; theme: DayTheme; info: any } => {
+export const getDayTheme = (date: Date): { status: DayStatus; theme: DayTheme; info: ReturnType<typeof getLannaDate> } => {
   const info = getLannaDate(date);
   if (!info) return { status: 'neutral', theme: {} as DayTheme, info: null };
 
