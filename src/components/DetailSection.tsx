@@ -46,6 +46,8 @@ export interface DayData {
     meaning: string;
     isGood: boolean;
   };
+  phiKin?: string;
+  phiKinMonthly?: string;
 }
 
 interface DetailSectionProps {
@@ -83,6 +85,8 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
   const getRitualDesc = (title: string) => toArabicDigits(data.rituals?.find(r => r.title === title)?.description || "-");
   const allLabels = [...data.labels.special, ...data.labels.good, ...data.labels.bad, data.festival].filter(Boolean).map(toArabicDigits);
   const rows = [
+    data.phiKin ? { val: toArabicDigits(`วันผีกิ๋น: ${data.phiKin}`), color: 'text-[#d71920] font-bold' } : null,
+    data.phiKinMonthly ? { val: toArabicDigits(`เดือนนี้${data.phiKinMonthly}`), color: 'text-black font-bold' } : null,
     { val: toArabicDigits(data.description), color: 'text-[#168019]' },
     {
       val: toArabicDigits(`วันไท ${data.wanThai || '-'}: ${data.wanThaiDesc || '-'}`),
@@ -99,8 +103,8 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
     data.labels.good.length ? { val: toArabicDigits(data.labels.good.join(' ') + ' เหมาะแก่การปลูกสร้าง หรือเริ่มงานที่เน้นความมั่นคง'), color: 'text-[#168019]' } : null,
     data.labels.bad.length ? { val: toArabicDigits(data.labels.bad.join(' ') + ' ควรหลีกเลี่ยงงานมงคลสำคัญ'), color: 'text-[#d71920]' } : null,
     data.kalaYok ? { val: toArabicDigits(`${data.kalaYok.name} ${data.kalaYok.meaning}`), color: data.kalaYok.isGood ? 'text-[#168019]' : 'text-[#d71920]' } : null,
-    { val: getRitualDesc("การตัดผม"), color: getRitualDesc("การตัดผม").includes('ไม่') || getRitualDesc("การตัดผม").includes('เสีย') ? 'text-[#d71920]' : 'text-black' },
-    { val: getRitualDesc("การตัดเล็บ"), color: getRitualDesc("การตัดเล็บ").includes('ไม่') || getRitualDesc("การตัดเล็บ").includes('เสีย') ? 'text-[#d71920]' : 'text-black' },
+    getRitualDesc("การตัดผม") !== "-" ? { val: getRitualDesc("การตัดผม"), color: getRitualDesc("การตัดผม").includes('ไม่') || getRitualDesc("การตัดผม").includes('เสีย') ? 'text-[#d71920]' : 'text-black' } : null,
+    getRitualDesc("การตัดเล็บ") !== "-" ? { val: getRitualDesc("การตัดเล็บ"), color: getRitualDesc("การตัดเล็บ").includes('ไม่') || getRitualDesc("การตัดเล็บ").includes('เสีย') ? 'text-[#d71920]' : 'text-black' } : null,
     data.warnings.length ? { val: toArabicDigits(data.warnings.join(' ')), color: 'text-[#d71920]' } : null,
     data.directions ? { val: toArabicDigits(`ทิศศรี ${data.directions.sri}`), color: 'text-[#168019]' } : null,
     data.directions ? { val: toArabicDigits(`ทิศกาลกิณี ${data.directions.ka}`), color: 'text-[#d71920]' } : null,

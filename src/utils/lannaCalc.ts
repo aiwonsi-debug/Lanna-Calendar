@@ -310,3 +310,46 @@ export function getLannaDate(date: Date) {
   };
   return table[remainder] || table[0];
   }
+
+  export function getWanPhiKin(lannaMonth: number, lunarDay: number, phase: 'ออก' | 'แรม'): string {
+    // ภูมิปัญญาพื้นบ้านล้านนา: วันผีกิ๋น (กฎตายตัวตามค่ำ ครบถ้วน 30 วัน)
+    
+    if (phase === 'ออก') {
+      switch (lunarDay) {
+        case 1: case 11: return "ผีกิ๋นผี: บ่ดีเสียผี";
+        case 2: case 15: return "ผีกิ๋นหมา: บ่ดีเอาหมาเข้าบ้าน";
+        case 3: return "ผีกิ๋นควาย: บ่ดีซื้อควาย บ่ดีกิ๋นเนื้อควาย";
+        case 4: return "ผีกิ๋นจ๊าง(ช้าง): บ่ดีซื้อจ๊าง";
+        case 5: case 9: return "ผีกิ๋นม้า: บ่ดีซื้อม้ามาขี่มาเลี้ยง";
+        case 6: case 10: return "ผีกิ๋นคน: บ่ดีรับเอาคนเข้าบ้าน";
+        case 7: case 12: return "ผีกิ๋นไก่: บ่ดีซื้อไก่ บ่ดีกิ๋นไก่";
+        case 8: case 13: return "ผีกิ๋นเป็ด: บ่ดีซื้อเป็ด บ่ดีกิ๋นเป็ด";
+        case 14: return "ผีกิ๋นหมู: บ่ดีซื้อหมูมาเลี้ยง บ่ดีกิ๋นจิ๊นหมู";
+      }
+    } else { // แรม (แฮม)
+      // เดือนคี่ (1,3,5,7,9,11) มี 29 วัน ดับที่ 14 ค่ำ
+      // เดือนคู่ (2,4,6,8,10,12) มี 30 วัน ดับที่ 15 ค่ำ
+      const isOddMonth = lannaMonth % 2 !== 0;
+      const isDarkMoon = (isOddMonth && lunarDay === 14) || lunarDay === 15;
+
+      if (isDarkMoon) {
+        return "ผีกิ๋นผี: บ่ดีเสียผี เอาศพไปเสีย";
+      }
+
+      switch (lunarDay) {
+        case 1: case 2: case 10: return "ผีกิ๋นหมา: บ่ดีเอาหมาเข้าบ้าน";
+        case 3: case 12: return "ผีกิ๋นควาย: บ่ดีซื้อควายและกิ๋นจิ๊นควาย";
+        case 4: case 13: return "ผีกิ๋นจ๊าง: ผีกิ๋นจ๊างเข้าบ้าน";
+        case 5: return "ผีกิ๋นม้า: บ่ดีซื้อม้าเข้าบ้าน มาขี่";
+        case 6: return "ผีกิ๋นคน: บ่ดีฮับ(รับ)เอาคนเข้าบ้าน";
+        case 7: return "ผีกิ๋นไก่: บ่ดีซื้อไก่ กิ๋นจิ๊นไก่";
+        case 8: return "ผีกิ๋นเป็ด: บ่ดีซื้อเป็ด กิ๋นจิ๊นเป็ด";
+        case 9: return "ผีกิ๋นหมู: บ่ดีซื้อหมู กิ๋นจิ๊นหมู";
+        case 11: return "ผีกิ๋นงัว(วัว): บ่ดีซื้องัวมาเลี้ยง บ่ดีกิ๋นจิ๊นงัว";
+        case 14: return "ผีกิ๋นม้า: บ่ดีซื้อม้าเข้าบ้าน มาขี่"; // จะเข้าเงื่อนไขนี้เฉพาะเดือนคู่
+      }
+    }
+    return "";
+  }
+
+  // Remove getPhiKinMonthlyOmen as it's not consistent with the new rules provided

@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { loadMonthData } from './utils/lanna';
-import { getLannaDate, getSongkranLabel, getDirections, getDailyKalaYoga } from './utils/lannaCalc';
+import { getLannaDate, getSongkranLabel, getDirections, getDailyKalaYoga, getWanPhiKin } from './utils/lannaCalc';
 import { DetailSection, DayData } from './components/DetailSection';
 
 const toArabicDigits = (value: string | number) =>
@@ -28,6 +28,8 @@ interface Day {
   cs: number;
   raw: NormalizedRecord;
   wanThai: string;
+  phiKin: string;
+  phiKinMonthly: string;
 }
 
 const getStatusLines = (day: Day) => [
@@ -73,7 +75,9 @@ export default function App() {
           isAthipadi: lanna.isAthipadi || d.labels?.includes("วันอธิบดี"),
           songkranLabel: getSongkranLabel(date),
           raw: d,
-          wanThai: lanna.wanThai
+          wanThai: lanna.wanThai,
+          phiKin: getWanPhiKin(lanna.lannaMonth, lanna.lunarDay, lanna.phase),
+          phiKinMonthly: "" // Monthly omen removed as per new rules
         };
       }).filter(Boolean) as Day[];
       
@@ -109,6 +113,7 @@ export default function App() {
     const dir = getDirections(selectedDate.getDay());
     const rawLunarDay = lanna.phase === 'ออก' ? lanna.lunarDay : lanna.lunarDay + 15;
     const kalaYok = getDailyKalaYoga(rawLunarDay, selectedDate.getDay());
+    const phiKin = getWanPhiKin(lanna.lannaMonth, lanna.lunarDay, lanna.phase);
 
     const detailData: DayData = {
       y: selectedDate.getFullYear() + 543,
@@ -133,7 +138,9 @@ export default function App() {
       festival: song || "",
       rawText: raw?.rawText || "",
       directions: { sri: dir.sri, ka: dir.ka },
-      kalaYok
+      kalaYok,
+      phiKin,
+      phiKinMonthly: ""
     };
 
     return { ...lanna, detailData };

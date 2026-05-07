@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { loadMonthData, NormalizedRecord, MONTH_NAMES } from '../utils/lanna';
-import { getLannaDate } from '../utils/lannaCalc';
+import { getLannaDate, getWanPhiKin, getPhiKinMonthlyOmen } from '../utils/lannaCalc';
 import { MonthView } from './MonthlyGrid';
 import { DetailSection } from './DetailSection';
 
@@ -133,7 +133,7 @@ export function Calendar() {
                     },
                     labels: {
                       good: [lanna?.isThongChai ? "วันธงชัย" : "", lanna?.isAthipadi ? "วันอธิบดี" : "", lanna?.sitthi || ""].filter(Boolean),
-                      bad: [lanna?.isSia ? "วันเสีย" : "", lanna?.isUbat ? "วันอุบาทว์" : "", lanna?.isLokawinat ? "วันโลกาวินาศ" : ""].filter(Boolean),
+                      bad: [lanna?.isSia ? "วันเสีย" : "", lanna?.isUbat ? "วันอุบาทว์" : "", lanna?.isLokawinat ? "วันโลกาวินาศ" : "", lanna ? getWanPhiKin(lanna.lannaMonth, lanna.lunarDay, lanna.phase) ? "วันผีกิน" : "" : ""].filter(Boolean),
                       special: lanna?.isSin ? ["วันศีล"] : []
                     },
                     description: selectedRecord?.description?.join('\n') || "วันดีมงคล...",
@@ -141,6 +141,8 @@ export function Calendar() {
                     rituals: [],
                     festival: "",
                     rawText: "",
+                    phiKin: lanna ? getWanPhiKin(lanna.lannaMonth, lanna.lunarDay, lanna.phase) : "",
+                    phiKinMonthly: lanna ? getPhiKinMonthlyOmen(lanna.lannaMonth) : ""
                   };
                 })()} 
               />
