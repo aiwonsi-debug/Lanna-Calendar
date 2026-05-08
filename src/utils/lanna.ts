@@ -4,9 +4,16 @@ export interface NormalizedRecord {
   dateISO: string;
   day: number;
   lunar: string;
-  labels: string[];
+  labels: {
+    good: string[];
+    bad: string[];
+    special: string[];
+  };
   description: string[];
   score: 'good' | 'bad' | 'neutral';
+  rawText?: string;
+  warnings?: string[];
+  rituals?: { title: string; description: string }[];
 }
 
 const dataset = import.meta.glob('../data/v2/*.json');

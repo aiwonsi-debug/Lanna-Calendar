@@ -2,6 +2,73 @@ import fs from 'fs';
 import path from 'path';
 
 // ============================================================
+// DATA & MAPPING
+// ============================================================
+
+const WAN_THAI_DESCRIPTIONS = {
+  "กาบไจ้": "ดี เป็นสิริมงคล",
+  "ดับเป้า": "อย่าเดินทางค้าขาย",
+  "รวายยี่": "อย่าให้เหล้าแก่ท้าวพญา",
+  "เมืองเหม้า": "อย่าออกศึก อย่าต่อสู้คดีความ อย่าพนันขันต่อ",
+  "เปิกสี": "ควรหมั้นหมาย",
+  "กัดไส้": "อย่าซื้ออาวุธ",
+  "กดสะง้า": "อย่าเดินทางค้าขาย",
+  "ร้วงเม็ด": "อย่าทำหน้าไม้",
+  "เต่าสัน": "ควรผูกมิตร",
+  "กาเร้า": "ควรถักแห ทำตาข่ายดักสัตว์",
+  "กาบเส็ด": "อย่าสร้างเครื่องทอผ้า",
+  "ดับไค้": "อย่าตัดเสื้อผ้า",
+  "รวายไจ้": "อย่าออกตรวจราชการ อย่าออกตรวจงาน",
+  "เมืองเป้า": "อย่าทำที่นอน",
+  "เปิกยี่": "อย่าสานเสื่อ",
+  "กัดเหม้า": "ไปค้าขาย ดีนัก",
+  "กดสี": "ควรตัดไม้มาสร้างบ้าน",
+  "ร้วงไส้": "อย่าฟั่นเชือกล่ามสัตว์",
+  "เต่าสะง้า": "อย่าเดินทางค้าขาย",
+  "กาเม็ด": "อย่าซื้ออาวุธ",
+  "กาบสัน": "อย่าสร้างที่กักกันสัตว์",
+  "ดับเร้า": "ควรตัดผม หวีผม",
+  "รวายเส็ด": "อย่าปลูกต้นหมาก",
+  "เมืองไค้": "ควรแก่การออกศึก ควรเกี้ยวสาว",
+  "เปิกไจ้": "ควรสักหมึก ลงยันต์",
+  "กัดเป้า": "อย่าสู้คดีความ",
+  "กดหยี่": "ควรไปค้าขาย",
+  "ร้วงเหม้า": "ทำการใดๆ ดีทั้งปวง",
+  "เต่าสี": "ควรปลูกพืช",
+  "กาไส้": "อย่าไปงานเลี้ยง",
+  "กาบสะง้า": "ควรสร้างยุ้งข้าว",
+  "ดับเม็ด": "อย่าเดินทาง",
+  "รวายสัน": "ควรสร้างรั้ว สร้างกำแพง",
+  "เมืองเร้า": "อย่าไปงานเลี้ยง",
+  "เปิกเส็ด": "อย่าออกศึก",
+  "กัดไค้": "อย่าทำหน้าไม้",
+  "กดไจ้": "ไปค้าขาย ดีนัก",
+  "ร้วงเป้า": "อย่าปลูกอ้อย",
+  "เต่ายี่": "อย่าปลูกหมาก",
+  "กาเหม้า": "อย่าขายของมีค่า",
+  "กาบสี": "ย้อมผ้าหรือสิ่งของด้วยสีแดง จะเกิดความเป็นสิริมงคล",
+  "ดับไส้": "อย่าแต่งงาน ภริยาจะตายทั้งกลม",
+  "รวายสะง้า": "ทำครก ทำสาก ดี",
+  "เมืองเม็ด": "ถักแห ทำตาข่ายดักสัตว์ ดีนัก",
+  "เปิกสัน": "อย่าให้เหล้าแก่ท้าวพญา",
+  "กัดเร้า": "ทำเครื่องดักนก ดีนัก",
+  "กดเส็ด": "อย่าฟั่นเชือกล่ามสัตว์",
+  "ร้วงไค้": "อย่าดื่มเหล้าในงานเลี้ยง",
+  "เต่าไจ้": "อย่าสร้างเตาไฟ",
+  "กาเป้า": "อย่าลงเรือ",
+  "กาบยี่": "อย่าเข้าป่า",
+  "ดับเหม้า": "นุ่งผ้าใหม่ ตัดผมใหม่ ดี",
+  "รวายสี": "ทำที่นอน ดีนัก",
+  "เมืองไส้": "อย่าออกศึก",
+  "เปิกสะง้า": "อย่าออกตรวจราชการ อย่าออกตรวจงาน",
+  "กัดเม็ด": "ซื้อสัตว์ ดี",
+  "กดสัน": "เจรจาขอสาว ดีนัก",
+  "ร้วงเร้า": "อย่าทำผ้าห่ม",
+  "เต่าเส็ด": "อย่าสร้างเตาไฟ",
+  "กาไค้": "อย่าซื้อสัตว์เลี้ยง"
+};
+
+// ============================================================
 // LOGIC ENGINE
 // ============================================================
 function getLunarYearInfo(yearBE) {
@@ -13,32 +80,71 @@ function getLunarYearInfo(yearBE) {
   };
 }
 
+function getWanPhiKin(month, day, phase) {
+    const monthGroup = ((month - 1) % 4); 
+    const offset = monthGroup;
+
+    if (phase === 'ออก') {
+      const baseDays = [1, 4, 6, 9, 11];
+      const targetDays = baseDays.map(d => d + offset);
+      if (day === targetDays[0]) return "ผีกิ๋นคน: บ่ดีเดินทางไกล";
+      if (day === targetDays[1]) return "ผีกิ๋นเครื่อง: บ่ดีนุ่งผ้าใหม่";
+      if (day === targetDays[2]) return "ผีกิ๋นตัว: บ่ดีทำการมงคล";
+      if (day === targetDays[3]) return "ผีกิ๋นตีน: บ่ดีซื้อเกือกใหม่";
+      if (day === targetDays[4]) return "ผีกิ๋นมือ: บ่ดีหยิบเครื่องของ";
+    } else {
+      const baseDays = [2, 7, 12, 14];
+      const targetDays = baseDays.map(d => {
+          let res = d + offset;
+          if (res > 15) res -= 15;
+          return res;
+      });
+      if (day === targetDays[0]) return "ผีกิ๋นไก่: บ่ดีกิ๋นจิ๊นไก่";
+      if (day === targetDays[1]) return "ผีกิ๋นหมู: บ่ดีกิ๋นจิ๊นหมู";
+      if (day === targetDays[2]) return "ผีกิ๋นงัว: บ่ดีกิ๋นจิ๊นงัว";
+      if (day === targetDays[3]) return "ผีกิ๋นม้า: บ่ดีซื้อม้าเข้าบ้าน";
+    }
+    return "";
+}
+
 /**
  * Extracts specific Lanna details from a generated day
  */
-function extractDetails(isSia, isSin, isGood, lunarText, wanThai, date) {
-    const description = isSia 
-        ? "วันเสียใหญ่ ตามตำราปั๊กขะทืนล้านนาระบุว่าเป็นวันไม่เป็นมงคล ห้ามทำการมงคลทุกประการ\nหากประกอบพิธีมงคลในวันนี้อาจเกิดอุปสรรค ความขัดแย้ง หรืออันตรายตามมาภายหลัง" 
-        : "วันดีมงคล เหมาะแก่การเริ่มต้นกิจการงานใหม่ การประกอบพิธีมงคล หรือการติดต่อประสานงาน\nเป็นวันที่เกื้อหนุนดวงชะตาและสร้างความเป็นสิริมงคลให้แก่ผู้ปฏิบัติ";
+function extractDetails(isSia, isSin, isGood, wanThai) {
+    let description = "";
+    
+    // Priority 1: Label meanings
+    if (isSia) {
+        description = "เป็นวันไม่เป็นมงคล ควรหลีกเลี่ยงการมงคล";
+    } else if (isGood) {
+        description = "เป็นวันดีมงคล เหมาะแก่การประกอบพิธีมงคล";
+    } else if (isSin) {
+        description = "วันพระ ควรทำบุญรักษาศีล";
+    }
+    
+    // Priority 2: WanThai meaning
+    if (!description && WAN_THAI_DESCRIPTIONS[wanThai]) {
+        description = WAN_THAI_DESCRIPTIONS[wanThai];
+    }
+    
+    // Priority 3: Fallback
+    if (!description) {
+        description = "วันทั่วไป";
+    }
 
-    const warnings = isSia 
-        ? ["ห้ามทำการมงคลทุกประการ", "ไม่ควรเดินทางไกล", "อย่าเริ่มงานใหญ่"] 
-        : [];
-
+    const warnings = isSia ? ["ไม่ควรประกอบพิธีมงคล"] : [];
     const rituals = [
         {
             title: "การตัดผม",
-            description: isSia ? "ห้ามตัดผมในวันนี้ จะเสียเสน่ห์และอาภัพรัก" : "ตัดผมวันนี้ดีนัก จะมีเสน่ห์เป็นที่รักแก่คนทั้งหลาย"
+            description: isSia ? "ไม่ควรตัดผมในวันนี้" : "ตัดผมวันนี้ดีมีโชคลาภ"
         },
         {
             title: "การตัดเล็บ",
-            description: isSia ? "ไม่ควรตัดเล็บ จะทำให้มีเรื่องเดือดร้อนใจ" : "ตัดเล็บวันนี้เป็นมงคล จะมีโชคลาภวาสนา"
+            description: isSia ? "ไม่ควรตัดเล็บในวันนี้" : "ตัดเล็บวันนี้ดีนักจะมีโชค"
         }
     ];
 
-    const rawText = `วันที่ ${date.getDate()} ${lunarText} วัน${wanThai} ${isSia ? 'วันเสีย' : 'วันดี'} ${isSin ? 'วันศีล' : ''}\nรายละเอียด: ${description}`;
-
-    return { description, warnings, rituals, rawText };
+    return { description: [description], warnings, rituals };
 }
 
 function getLannaDate(date) {
@@ -112,41 +218,25 @@ function getLannaDate(date) {
     return (rules[month] || []).includes(dow);
   })(currentMonth, dow);
 
-  const sitthi = ((d, l) => {
-    if ((d===0&&l===12)||(d===1&&l===11)||(d===2&&(l===7||l===12))||(d===3&&(l===3||l===13))||(d===4&&l===6)||(d===5&&l===12)||(d===6&&(l===12||l===15))) return "วันมหาสิทธิโชค";
-    if ((d===0&&l===11)||(d===1&&l===5)||(d===2&&l===3)||(d===3&&l===6)||(d===4&&l===12)||(d===5&&l===11)||(d===6&&l===15)) return "วันสิทธิโชค";
-    return null;
-  })(dow, currentKham);
-
-  const isSitthi = !!sitthi;
-  const isWanMai = currentKham === 1 && currentPhase === 'ออก';
-  const isUbat = dow === 6;
-  const isLokawinat = dow === 3;
-  let isSiaFinal = isSiaRaw;
-
   const isGood = dow === 0;
 
-  const lunarText = `${currentPhase === 'ออก' ? 'ขึ้น' : 'แรม'} ${currentKham} ค่ำ`;
-  const extra = extractDetails(isSiaFinal, isSin, isGood, lunarText, wanThai, date);
+  const extra = extractDetails(isSiaRaw, isSin, isGood, wanThai);
+
+  const labels = [];
+  if (isGood) labels.push("วันดี");
+  if (isSiaRaw) labels.push("วันเสีย");
+  if (isSin) labels.push("วันศีล");
+
+  const phiKin = getWanPhiKin(currentMonth, currentKham, currentPhase);
 
   return {
-    d: date.getDate(),
-    s: (isSin ? 4 : 0) | (isSiaFinal ? 2 : 0) | (isGood ? 1 : 0),
-    l: lunarText,
-    wt: wanThai,
-    lunar: {
-        phase: currentPhase === 'ออก' ? "waxing" : "waning",
-        day: currentKham
-    },
-    labels: {
-        good: isGood ? ["วันดี"] : [],
-        bad: isSiaFinal ? ["วันเสีย"] : [],
-        special: isSin ? ["วันศีล"] : []
-    },
+    dateISO: date.toISOString().split('T')[0],
+    day: date.getDate(),
+    lunar: `${currentPhase === 'ออก' ? 'ขึ้น' : 'แรม'} ${currentKham} ค่ำ`,
+    labels: labels,
     description: extra.description,
-    warnings: extra.warnings,
-    rituals: extra.rituals,
-    rawText: extra.rawText
+    score: isGood ? "good" : (isSiaRaw ? "bad" : "neutral"),
+    phiKin: phiKin 
   };
 }
 
@@ -155,7 +245,7 @@ function getLannaDate(date) {
 // ============================================================
 const START_YEAR = 2025;
 const END_YEAR = 2035;
-const OUTPUT_DIR = './src/data/v2'; // Direct to src/data/v2
+const OUTPUT_DIR = './src/data/v2'; 
 
 function run() {
   console.log(`Running Generator for ${START_YEAR}-${END_YEAR} -> ${OUTPUT_DIR}`);
@@ -164,22 +254,35 @@ function run() {
 
   for (let y = START_YEAR; y <= END_YEAR; y++) {
     for (let m = 0; m < 12; m++) {
-      const days = [];
+      const records = [];
       const date = new Date(y, m, 1);
       while (date.getMonth() === m) {
-        days.push(getLannaDate(new Date(date)));
+        records.push(getLannaDate(new Date(date)));
         date.setDate(date.getDate() + 1);
       }
 
+      const monthStr = (m + 1).toString().padStart(2, '0');
+      const monthKey = `${y}-${monthStr}`;
+
+      // 1. Standard YYYY-MM.json
       const payload = {
-        v: "2.1.0",
+        v: "2.1.1",
         y: y + 543,
         m: m + 1,
-        days: days
+        days: records
       };
+      fs.writeFileSync(path.join(OUTPUT_DIR, `${monthKey}.json`), JSON.stringify(payload, null, 2));
 
-      const monthStr = (m + 1).toString().padStart(2, '0');
-      fs.writeFileSync(path.join(OUTPUT_DIR, `${y}-${monthStr}.json`), JSON.stringify(payload));
+      // 2. resolved-YYYY-MM.json
+      const resolvedPayload = {
+        metadata: {
+            resolvedAt: new Date().toISOString(),
+            strategy: "GENERATED_REPLACEMENT_V2"
+        },
+        month: monthKey,
+        records: records
+      };
+      fs.writeFileSync(path.join(OUTPUT_DIR, `resolved-${monthKey}.json`), JSON.stringify(resolvedPayload, null, 2));
     }
   }
 

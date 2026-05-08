@@ -6,7 +6,11 @@ export type DayRecord = {
   month: number;
   year: number;
   lunar: string;
-  labels: string[];
+  labels: {
+    good: string[];
+    bad: string[];
+    special: string[];
+  };
   description: string[];
   score: Score;
 };

@@ -55,12 +55,20 @@ interface DetailSectionProps {
   data: DayData;
 }
 
-export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
-  const toArabicDigits = (value: string | number) =>
-    value
-      .toString()
-      .replace(/[๐-๙]/g, (char) => String('๐๑๒๓๔๕๖๗๘๙'.indexOf(char)));
+const toArabicDigits = (value: string | number) =>
+  value
+    .toString()
+    .replace(/[๐-๙]/g, (char) => String('๐๑๒๓๔๕๖๗๘๙'.indexOf(char)));
 
+const SectionHeader = ({ title }: { title: string }) => (
+  <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-1 font-bold">
+    {title}
+  </div>
+);
+
+const Divider = () => <div className="border-b border-[#e5e5e5]" />;
+
+export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
   const thaiDayNames = ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'];
   const monthNames = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
   
@@ -69,69 +77,41 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
   };
 
   const lunarText = toArabicDigits(`${data.lunar.phase === 'waxing' ? 'ออก' : 'แรม'} ${data.lunar.day} ค่ำ`);
-  const getFahTeeSangMeaning = (value?: number) => {
-    if (value === undefined || value === null) return "-";
-    const badSet = new Set([0, 1, 3, 7, 8]);
-    if (badSet.has(value)) {
-      return "ไม่เป็นมงคล ควรหลีกเลี่ยงงานสำคัญ";
-    }
-    return "เป็นมงคล เหมาะสำหรับเริ่มงานหรือทำพิธีมงคล";
-  };
+  
   const cs = data.lannaYear?.chulasakarat;
   const zodiacLanna = data.lannaYear?.zodiacLanna ?? "-";
   const zodiacThai = data.lannaYear?.zodiacThai ?? "-";
 
-  // Helper to extract specific rituals from the list
-  const getRitualDesc = (title: string) => toArabicDigits(data.rituals?.find(r => r.title === title)?.description || "-");
   const allLabels = [...data.labels.special, ...data.labels.good, ...data.labels.bad, data.festival].filter(Boolean).map(toArabicDigits);
-  const rows = [
-    data.phiKin ? { val: toArabicDigits(`วันผีกิ๋น: ${data.phiKin}`), color: 'text-[#d71920] font-bold' } : null,
-    data.phiKinMonthly ? { val: toArabicDigits(`เดือนนี้${data.phiKinMonthly}`), color: 'text-black font-bold' } : null,
-    { val: toArabicDigits(data.description), color: 'text-[#168019]' },
-    {
-      val: toArabicDigits(`วันไท ${data.wanThai || '-'}: ${data.wanThaiDesc || '-'}`),
-      color: 'text-black'
-    },
-    {
-      val: toArabicDigits(`วันเก้ากอง ${data.kaoKong || '-'}: ${data.kaoKongDesc || '-'}`),
-      color: 'text-black'
-    },
-    {
-      val: toArabicDigits(`ฟ้าตีแส่งเศษ ${data.fahTeeSang ?? '-'}: ${getFahTeeSangMeaning(data.fahTeeSang)}`),
-      color: data.fahTeeSang !== undefined && data.fahTeeSang !== null && [0, 1, 3, 7, 8].includes(data.fahTeeSang) ? 'text-[#d71920]' : 'text-[#168019]'
-    },
-    data.labels.good.length ? { val: toArabicDigits(data.labels.good.join(' ') + ' เหมาะแก่การปลูกสร้าง หรือเริ่มงานที่เน้นความมั่นคง'), color: 'text-[#168019]' } : null,
-    data.labels.bad.length ? { val: toArabicDigits(data.labels.bad.join(' ') + ' ควรหลีกเลี่ยงงานมงคลสำคัญ'), color: 'text-[#d71920]' } : null,
-    data.kalaYok ? { val: toArabicDigits(`${data.kalaYok.name} ${data.kalaYok.meaning}`), color: data.kalaYok.isGood ? 'text-[#168019]' : 'text-[#d71920]' } : null,
-    getRitualDesc("การตัดผม") !== "-" ? { val: getRitualDesc("การตัดผม"), color: getRitualDesc("การตัดผม").includes('ไม่') || getRitualDesc("การตัดผม").includes('เสีย') ? 'text-[#d71920]' : 'text-black' } : null,
-    getRitualDesc("การตัดเล็บ") !== "-" ? { val: getRitualDesc("การตัดเล็บ"), color: getRitualDesc("การตัดเล็บ").includes('ไม่') || getRitualDesc("การตัดเล็บ").includes('เสีย') ? 'text-[#d71920]' : 'text-black' } : null,
-    data.warnings.length ? { val: toArabicDigits(data.warnings.join(' ')), color: 'text-[#d71920]' } : null,
-    data.directions ? { val: toArabicDigits(`ทิศศรี ${data.directions.sri}`), color: 'text-[#168019]' } : null,
-    data.directions ? { val: toArabicDigits(`ทิศกาลกิณี ${data.directions.ka}`), color: 'text-[#d71920]' } : null,
-    { val: toArabicDigits('ตัดผมแล้วดี จะมีลาภ'), color: 'text-[#168019]' },
-    { val: toArabicDigits('ตัดเล็บดี มีโชค'), color: 'text-[#168019]' },
-  ].filter(Boolean) as { val: string; color: string }[];
 
   return (
-    <div className="bg-white text-[12px] leading-[1.35]">
-      <div className="h-[14px]" />
-      <div className="text-center font-bold text-[#168019] py-[3px]">
+    <div className="bg-white text-[14px] leading-[1.5] px-4 pb-10">
+      <div className="h-[20px]" />
+      
+      {/* DATE HEADER & INTRO */}
+      <div className="text-center font-bold text-[#168019] py-[6px]">
         {formatDate(date)}
       </div>
       <div className="text-center font-bold py-[3px]">
-        {formatDate(date)}
-        <span className="ml-2">{toArabicDigits(`ปี${zodiacLanna}`)}</span>
-        <span className="ml-2">{toArabicDigits(`ปี${zodiacThai}`)}</span>
+        <span className="mr-2">{toArabicDigits(`ปี${zodiacLanna}`)} / ปี{zodiacThai}</span>
       </div>
       <div className="text-center font-bold py-[3px]">
-        {toArabicDigits(`${lunarText} เดือน ${data.lannaMonth} จ.ศ.${cs ?? '-'} ปีรวาย${zodiacLanna}`)}
+        {toArabicDigits(`${lunarText} เดือน ${data.lannaMonth} จ.ศ.${cs ?? '-'} ปี${zodiacLanna}`)}
       </div>
+
+      {/* LABELS PILLS */}
       {allLabels.length > 0 && (
-        <div className="text-center py-[3px]">
+        <div className="flex flex-wrap justify-center gap-2 py-4">
           {allLabels.map((label) => (
             <span
               key={label}
-              className={data.labels.bad.includes(label) ? 'text-[#d71920] mx-1' : data.labels.good.includes(label) ? 'text-[#168019] mx-1' : 'text-[#f2994a] mx-1'}
+              className={`px-2 py-0.5 rounded-full text-[12px] font-bold ${
+                data.labels.bad.includes(label) 
+                  ? 'bg-red-50 text-[#d71920] border border-red-100' 
+                  : data.labels.good.includes(label) 
+                    ? 'bg-green-50 text-[#168019] border border-green-100' 
+                    : 'bg-orange-50 text-[#f2994a] border border-orange-100'
+              }`}
             >
               {label}
             </span>
@@ -139,13 +119,84 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
         </div>
       )}
 
-      <div>
-        {rows.map((row, i) => (
-          <div key={`${row.val}-${i}`} className={`min-h-[30px] px-1 py-[5px] ${row.color}`}>
-            {row.val}
-          </div>
-        ))}
+      <Divider />
+
+      {/* SECTION 1: คำทำนาย (Prediction) */}
+      <div className="pt-[10px] pb-[6px] space-y-1">
+        {data.description && toArabicDigits(data.description).split('\n').map((line, idx) => {
+          let className = "text-black";
+          if (line.startsWith("ฟ้าตีแส่ง")) {
+            className = (line.includes("ระวัง") || line.includes("ไม่เป็นมงคล")) ? "text-[#d71920]" : "text-[#168019]";
+          } else if (line.startsWith("ผีกิ๋น") || line.startsWith("วันผีกิ๋น")) {
+            className = "text-[#d71920]";
+          }
+          return (
+            <div key={idx} className={`${className} font-bold`}>
+              {line}
+            </div>
+          );
+        })}
       </div>
+
+      <Divider />
+
+      {/* SECTION 2: เกณฑ์โบราณ (Ancient Criteria) */}
+      <div className="pt-[10px] pb-[6px]">
+        <SectionHeader title="เกณฑ์โบราณ" />
+        <div className="space-y-1">
+          {data.kalaYok && (
+            <div className={data.kalaYok.isGood ? 'text-[#168019]' : 'text-[#d71920]'}>
+              <span className="font-bold">{toArabicDigits(`${data.kalaYok.name}:`)}</span> {toArabicDigits(data.kalaYok.meaning)}
+            </div>
+          )}
+        </div>
+
+        {/* DIRECTIONS GRID (2-column) */}
+        {data.directions && (
+          <div className="grid grid-cols-2 gap-2 mt-4 pt-2 border-t border-gray-50">
+            <div className="text-center border-r border-gray-100">
+              <div className="text-[10px] text-gray-400 uppercase">ทิศศรี</div>
+              <div className="text-[#168019] font-bold">{toArabicDigits(data.directions.sri)}</div>
+            </div>
+            <div className="text-center">
+              <div className="text-[10px] text-gray-400 uppercase">กาลกิณี</div>
+              <div className="text-[#d71920] font-bold">{toArabicDigits(data.directions.ka)}</div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <Divider />
+
+      {/* SECTION 3: กิจวัตร (Routine) */}
+      <div className="pt-[10px] pb-[6px]">
+        <SectionHeader title="กิจวัตร" />
+        <div className="space-y-2">
+          {data.rituals && data.rituals.length > 0 ? (
+            data.rituals.map((r, i) => {
+              const isBad = r.description.includes('ไม่') || r.description.includes('ห้าม') || r.description.includes('เสีย');
+              return (
+                <div key={i} className={isBad ? 'text-[#d71920]' : 'text-[#168019]'}>
+                  <span className="font-bold">{toArabicDigits(r.title)}:</span> {toArabicDigits(r.description)}
+                </div>
+              );
+            })
+          ) : (
+            <div className="text-gray-400 italic">ไม่มีข้อมูลกิจวัตร</div>
+          )}
+          
+          {data.warnings && data.warnings.length > 0 && (
+            <div className="mt-4 space-y-1">
+              {data.warnings.map((w, i) => (
+                <div key={i} className="text-[#d71920] font-bold bg-red-50 p-2 rounded">
+                  ⚠️ {toArabicDigits(w)}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
     </div>
   );
 };

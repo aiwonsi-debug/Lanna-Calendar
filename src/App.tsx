@@ -8,7 +8,15 @@ const toArabicDigits = (value: string | number) =>
     .toString()
     .replace(/[๐-๙]/g, (char) => String('๐๑๒๓๔๕๖๗๘๙'.indexOf(char)));
 
-const WEEKDAY_LABELS = ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'];
+const WEEKDAY_STYLES = [
+  { label: 'อา', header: 'bg-[#E24B4A] text-white', cell: 'bg-[#FEF5F5]' }, // Red
+  { label: 'จ',  header: 'bg-[#F2C94C] text-black', cell: 'bg-[#FFFBEB]' }, // Yellow
+  { label: 'อ',  header: 'bg-[#D4537E] text-white', cell: 'bg-[#FDF0F5]' }, // Pink
+  { label: 'พ',  header: 'bg-[#219653] text-white', cell: 'bg-[#F0FDF4]' }, // Green
+  { label: 'พฤ', header: 'bg-[#F2994A] text-white', cell: 'bg-[#FFF7ED]' }, // Orange
+  { label: 'ศ',  header: 'bg-[#2D9CDB] text-white', cell: 'bg-[#F0F9FF]' }, // Light Blue
+  { label: 'ส',  header: 'bg-[#9B51E0] text-white', cell: 'bg-[#FAF5FF]' }, // Purple
+];
 
 interface Day {
   date: Date;
@@ -26,14 +34,45 @@ interface Day {
   songkranLabel: string | null;
   yearZodiac: string;
   cs: number;
-  raw: NormalizedRecord;
+  raw: any;
   wanThai: string;
   phiKin: string;
-  phiKinMonthly: string;
+}
+
+function buildDescription(lanna: any, phiKin: string): string {
+  if (!lanna) return "";
+  const lines: string[] = [];
+
+  // วันไท
+  if (lanna.wanThaiDesc) {
+    lines.push(`วันไท (${lanna.wanThai}): ${lanna.wanThaiDesc}`);
+  }
+
+  // เก้ากอง
+  if (lanna.kaoKong && lanna.kaoKongDesc) {
+    lines.push(`วันเก้ากอง (${lanna.kaoKong}): ${lanna.kaoKongDesc}`);
+  }
+
+  // ฟ้าตีแส่ง
+  if (lanna.fahTeeSang !== undefined && lanna.fahTeeSang !== null) {
+    const good = [2,4,5,6].includes(lanna.fahTeeSang);
+    const meaning = good
+      ? "ทำการสิ่งใดจักได้ดี อยู่ดีมีสุข พรั่งพร้อมด้วยยศสมบัติ"
+      : lanna.fahTeeSang === 3 || lanna.fahTeeSang === 7
+        ? "ระวัง ไฟจักไหม้หรือประสบอุบัติเหตุ เสียทรัพย์สิน"
+        : "ไม่เป็นมงคล อย่าทำพิธีหรือกิจกรรมสำคัญ";
+    lines.push(`ฟ้าตีแส่งเศษ ${lanna.fahTeeSang}: ${meaning}`);
+  }
+
+  // วันผีกิน
+  if (phiKin) {
+    lines.push(`${phiKin}`);
+  }
+
+  return lines.join("\n");
 }
 
 const getStatusLines = (day: Day) => [
-  day.isSin ? { text: 'วันศีล', className: 'text-[#f2994a]' } : null,
   day.isSia ? { text: 'วันเสีย', className: 'text-[#d71920]' } : null,
   day.isUbat ? { text: 'วันอุบาทว์', className: 'text-[#0645c0]' } : null,
   day.isLokawinat ? { text: 'โลกาวินาศ', className: 'text-[#111111]' } : null,
@@ -44,10 +83,13 @@ const getStatusLines = (day: Day) => [
 ].filter(Boolean) as { text: string; className: string }[];
 
 export default function App() {
-  const [viewMonth, setViewMonth] = useState(new Date(2026, 3, 1)); // April 2026
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date(2026, 3, 16));
+  const [viewMonth, setViewMonth] = useState(() => {
+    const t = new Date();
+    return new Date(t.getFullYear(), t.getMonth(), 1);
+  });
+  const [selectedDate, setSelectedDate] = useState<Date | null>(() => new Date());
   const [monthData, setMonthData] = useState<Day[]>([]);
-  const [rawMonthData, setRawMonthData] = useState<NormalizedRecord[]>([]);
+  const [rawMonthData, setRawMonthData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   
   const dailyRef = useRef<HTMLDivElement>(null);
@@ -56,33 +98,34 @@ export default function App() {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const data = await loadMonthData(viewMonth);
-      setRawMonthData(data);
-      
-      const enriched = data.map(d => {
-        const date = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), d.day);
-        const lanna = getLannaDate(date);
-        if (!lanna) return null;
+      try {
+        const data = await loadMonthData(viewMonth);
+        setRawMonthData(data);
+        
+        const enriched = data.map(d => {
+          const date = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), d.day);
+          const lanna = getLannaDate(date);
+          if (!lanna) return null;
 
-        return {
-          ...lanna,
-          day: d.day,
-          isSin: lanna.isSin || d.labels?.includes("วันศีล"),
-          isSia: lanna.isSia || d.labels?.includes("วันเสีย"),
-          isUbat: lanna.isUbat || d.labels?.includes("วันอุบาทว์"),
-          isLokawinat: lanna.isLokawinat || d.labels?.includes("วันโลกาวินาศ"),
-          isThongChai: lanna.isThongChai || d.labels?.includes("วันธงชัย"),
-          isAthipadi: lanna.isAthipadi || d.labels?.includes("วันอธิบดี"),
-          songkranLabel: getSongkranLabel(date),
-          raw: d,
-          wanThai: lanna.wanThai,
-          phiKin: getWanPhiKin(lanna.lannaMonth, lanna.lunarDay, lanna.phase),
-          phiKinMonthly: "" // Monthly omen removed as per new rules
-        };
-      }).filter(Boolean) as Day[];
-      
-      setMonthData(enriched);
-      setIsLoading(false);
+          const phiKin = getWanPhiKin(lanna.lannaMonth, lanna.lunarDay, lanna.phase);
+
+          return {
+            ...lanna,
+            day: d.day,
+            isSin: lanna.isSin || (d.labels && d.labels.includes("วันศีล")),
+            songkranLabel: getSongkranLabel(date),
+            raw: d,
+            wanThai: lanna.wanThai,
+            phiKin: phiKin
+          };
+        }).filter(Boolean) as Day[];
+        
+        setMonthData(enriched);
+      } catch (e) {
+        console.error("fetchData error", e);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchData();
   }, [viewMonth]);
@@ -115,6 +158,8 @@ export default function App() {
     const kalaYok = getDailyKalaYoga(rawLunarDay, selectedDate.getDay());
     const phiKin = getWanPhiKin(lanna.lannaMonth, lanna.lunarDay, lanna.phase);
 
+    const description = buildDescription(lanna, phiKin);
+
     const detailData: DayData = {
       y: selectedDate.getFullYear() + 543,
       m: selectedDate.getMonth() + 1,
@@ -132,15 +177,17 @@ export default function App() {
         bad: [lanna.isSia ? "วันเสีย" : "", lanna.isUbat ? "วันอุบาทว์" : "", lanna.isLokawinat ? "วันโลกาวินาศ" : ""].filter(Boolean),
         special: lanna.isSin ? ["วันศีล"] : []
       },
-      description: Array.isArray(raw?.description) ? raw.description.join('\n') : raw?.description || "วันดีมงคล เหมาะแก่การเริ่มต้นกิจการงานใหม่ การประกอบพิธีมงคล หรือการติดต่อประสานงาน",
+      description: description,
       warnings: Array.isArray(raw?.warnings) ? raw.warnings : [],
       rituals: Array.isArray(raw?.rituals) ? raw.rituals : [],
       festival: song || "",
       rawText: raw?.rawText || "",
-      directions: { sri: dir.sri, ka: dir.ka },
+      directions: { 
+        sri: dir.sri, 
+        ka: dir.ka 
+      },
       kalaYok,
-      phiKin,
-      phiKinMonthly: ""
+      phiKin
     };
 
     return { ...lanna, detailData };
@@ -178,12 +225,12 @@ export default function App() {
             <div className="flex flex-col">
               {/* Day Labels Header Row */}
               <div className="grid grid-cols-7 border-t border-l border-black">
-                {WEEKDAY_LABELS.map((label, index) => (
+                {WEEKDAY_STYLES.map((style) => (
                   <div 
-                    key={label}
-                    className={`h-[25px] border-r border-b border-black flex items-center justify-center text-[11px] font-bold ${index === 0 ? 'text-red-600' : ''}`}
+                    key={style.label}
+                    className={`h-[36px] border-r border-b border-black flex items-center justify-center text-[13px] font-bold ${style.header}`}
                   >
-                    {label}
+                    {style.label}
                   </div>
                 ))}
               </div>
@@ -192,12 +239,13 @@ export default function App() {
               <div className="grid grid-cols-7 border-l border-black">
                 {/* Blanks */}
                 {blanks.map((_, i) => (
-                  <div key={`blank-${i}`} className="h-[150px] border-r border-b border-black bg-white" />
+                  <div key={`blank-${i}`} className="min-h-[100px] border-r border-b border-black bg-white" />
                 ))}
 
                 {/* Days */}
                 {monthData.map((day) => {
-                  const isSunday = day.date.getDay() === 0;
+                  const dow = day.date.getDay();
+                  const style = WEEKDAY_STYLES[dow];
                   const isSelected = selectedDate?.getDate() === day.day &&
                     selectedDate?.getMonth() === viewMonth.getMonth() &&
                     selectedDate?.getFullYear() === viewMonth.getFullYear();
@@ -205,22 +253,20 @@ export default function App() {
                   const compactLines = [
                     { text: toArabicDigits(`เดือน ${day.lannaMonth}`), className: 'text-black' },
                     { text: toArabicDigits(`${day.phase}${day.lunarDay} ค่ำ`), className: 'text-black' },
-                    { text: day.wanThai, className: 'text-[#0645c0]' },
                     ...statusLines,
                   ];
-                  const visibleLines = compactLines;
                   
                   return (
                     <div 
                       key={day.day}
                       onClick={() => handleSelect(day.date)}
-                      className={`relative h-[150px] border-r border-b border-black bg-white cursor-pointer overflow-hidden ${
-                        isSelected ? 'bg-[#fff1d8] outline outline-1 outline-[#0b62ff] outline-offset-[-1px]' : 'hover:bg-[#f8f8f8]'
+                      className={`relative min-h-[100px] border-r border-b border-black cursor-pointer overflow-hidden ${
+                        isSelected ? 'bg-[#fff1d8] outline outline-1 outline-[#0b62ff] outline-offset-[-1px]' : `${style.cell} hover:bg-[#f8f8f8]`
                       }`}
                     >
                       <span
-                        className={`absolute right-1 bottom-1 text-[50px] font-black leading-[0.8] opacity-35 select-none pointer-events-none ${
-                          isSunday ? 'text-red-600' : 'text-black'
+                        className={`absolute right-1 bottom-1 text-[36px] font-black leading-[0.8] opacity-20 select-none pointer-events-none ${
+                          dow === 0 ? 'text-red-600' : 'text-black'
                         }`}
                       >
                         {toArabicDigits(day.day)}
@@ -228,19 +274,19 @@ export default function App() {
 
                       <div
                         className={`relative z-10 m-[3px] p-[4px] leading-[1.15] font-bold max-h-[calc(100%-10px)] overflow-y-auto no-scrollbar ${
-                          isSelected ? 'text-[10px] bg-[#fff4df]/80' : 'text-[10px] bg-transparent'
+                          isSelected ? 'text-[12px] bg-[#fff4df]/80' : 'text-[12px] bg-transparent'
                         }`}
                       >
-                        {visibleLines.map((line) => (
+                        {compactLines.map((line) => (
                           <div key={`${day.day}-${line.text}`} className={line.className}>
                             {line.text}
                           </div>
                         ))}
                         {(isSelected || day.isSin || day.isSia || day.isUbat || day.isLokawinat || day.isThongChai || day.isAthipadi || day.sitthi) && (
                           <div className="flex gap-[5px] mt-2">
-                            {day.isSin && <span className="w-[8px] h-[8px] rounded-full bg-[#f2994a]" />}
-                            {(day.isSia || day.isUbat || day.isLokawinat) && <span className="w-[8px] h-[8px] rounded-full bg-[#d71920]" />}
-                            {(day.isThongChai || day.isAthipadi || day.sitthi) && <span className="w-[8px] h-[8px] rounded-full bg-[#138a2e]" />}
+                            {day.isSin && <span className="w-[10px] h-[10px] rounded-full bg-[#f2994a]" />}
+                            {(day.isSia || day.isUbat || day.isLokawinat) && <span className="w-[10px] h-[10px] rounded-full bg-[#d71920]" />}
+                            {(day.isThongChai || day.isAthipadi || day.sitthi) && <span className="w-[10px] h-[10px] rounded-full bg-[#138a2e]" />}
                           </div>
                         )}
                       </div>
@@ -250,9 +296,9 @@ export default function App() {
               </div>
 
               <div className="h-[42px] flex items-center justify-center gap-3 text-[12px] border-b border-black">
-                <span className="inline-flex items-center gap-1 text-[#f2994a]"><span className="w-[8px] h-[8px] rounded-full bg-[#f2994a]" />วันศีล</span>
-                <span className="inline-flex items-center gap-1 text-[#d71920]"><span className="w-[8px] h-[8px] rounded-full bg-[#d71920]" />วันไม่ดี</span>
-                <span className="inline-flex items-center gap-1 text-[#138a2e]"><span className="w-[8px] h-[8px] rounded-full bg-[#138a2e]" />วันดี</span>
+                <span className="inline-flex items-center gap-1 text-[#f2994a]"><span className="w-[10px] h-[10px] rounded-full bg-[#f2994a]" />วันศีล</span>
+                <span className="inline-flex items-center gap-1 text-[#d71920]"><span className="w-[10px] h-[10px] rounded-full bg-[#d71920]" />วันไม่ดี</span>
+                <span className="inline-flex items-center gap-1 text-[#138a2e]"><span className="w-[10px] h-[10px] rounded-full bg-[#138a2e]" />วันดี</span>
               </div>
             </div>
           )}
