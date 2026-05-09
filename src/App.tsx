@@ -165,16 +165,16 @@ const getStatusLines = (day: Day) => {
   const check = (term: string) => combinedText.includes(term);
 
   // High priority bad days
-  if (day.isSia || check("วันเสีย")) 
+  if (day.isSia) 
     lines.push({ text: 'วันเสีย', className: 'text-[#d71920] font-black' });
   
-  if (day.isUbat || check("อุบาทว์")) 
+  if (day.isUbat) 
     lines.push({ text: 'วันอุบาทว์', className: 'text-[#d71920] font-black' });
   
-  if (day.isLokawinat || check("โลกาวินาศ")) 
+  if (day.isLokawinat) 
     lines.push({ text: 'โลกาวินาศ', className: 'text-[#d71920] font-black' });
   
-  if (day.isLomLuang || check("หล่มหลวง")) 
+  if (day.isLomLuang) 
     lines.push({ text: 'หล่มหลวง', className: 'text-[#d71920] font-black' });
 
   // Good days
@@ -185,8 +185,8 @@ const getStatusLines = (day: Day) => {
     lines.push({ text: 'อธิบดี', className: 'text-[#0f8a2a] font-black' });
 
   // Special/Labels
-  if (day.sitthi) 
-    lines.push({ text: toArabicDigits(day.sitthi), className: 'text-[#0645c0] font-black' });
+  if (day.sitthi || check("สิทธิโชค")) 
+    lines.push({ text: toArabicDigits(day.sitthi || ""), className: 'text-[#0645c0] font-black' });
   
   if (day.songkranLabel) 
     lines.push({ text: toArabicDigits(day.songkranLabel), className: 'text-[#0645c0] font-black' });
@@ -225,8 +225,8 @@ export default function App() {
             ...lanna,
             day: d.day,
             isSin: lanna.isSin || labels.includes("วันศีล"),
-            isUbat: lanna.isUbat || labels.some(l => l.includes("อุบาทว์")),
-            isLokawinat: lanna.isLokawinat || labels.some(l => l.includes("โลกาวินาศ")),
+            isUbat: lanna.isUbat,
+            isLokawinat: lanna.isLokawinat,
             songkranLabel: getSongkranLabel(date),
             raw: d
           };
@@ -298,7 +298,8 @@ export default function App() {
       rawText: raw?.rawText || "",
       directions: { 
         sri: dir.sri, 
-        ka: dir.ka 
+        ka: dir.ka,
+        jangrai: dir.jangrai
       },
       kalaYok,
       wanMuai: lanna.wanMuai,

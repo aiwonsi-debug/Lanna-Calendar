@@ -1,22 +1,50 @@
-เพิ่มข้อมูลกิจวัตรประจำวัน
+@src/App.tsx @src/utils/lannaCalc.ts @package.json
 
- วันอาทิตย์
-        ตัดผม-อายุยืน, ตัดเล็บ-มีศัตรูมาก, ทาน้ำมัน-จะหายโฉม, นุ่งผ้าใหม่-ชนะศัตรู, ก่อนเดินทาง-อ่านใส่หัวเสียก่อนจึงไป
+Fix 5 bugs found in code review of v0.03d:
 
-     วันจันทร์
-        ตัดผม-มีภัย, ตัดเล็บ-คนจะรัก, ทาน้ำมัน-ชอบใจคน, นุ่งผ้าใหม่-ชอบใจคนรัก, ก่อนเดินทาง-แต่งตัวแล้วนอนเสียก่อนจึงไป
+BUG 1+2 — Remove ALL JSON label fallbacks for bad day flags.
+Lanna calculation is the single source of truth.
 
-     วันอังคาร
-        ตัดผม-มีศัตรูมาก, ตัดเล็บ-จะฉิบหาย, ทาน้ำมัน-จากกันมิดี, นุ่งผ้าใหม่-จะมีทุกข์, ก่อนเดินทาง-กินน้ำเสียก่อนจึงไป
+In getStatusLines function, replace:
+  if (day.isSia || check("วันเสีย"))
+  if (day.isUbat || check("อุบาทว์"))
+  if (day.isLokawinat || check("โลกาวินาศ"))
+  if (day.isLomLuang || check("หล่มหลวง"))
 
-     วันพุธ
-        ตัดผม-จะมีความ, ตัดเล็บ-จำเริญสวัสดิ์, ทาน้ำมัน-สุขสวัสดี, นุ่งผ้าใหม่-มีสุขสวัสดิ์, ก่อนเดินทาง-ให้คนทั้งหลายกินข้าวแล้วจึงไป
+With (remove all check() fallbacks for bad days):
+  if (day.isSia)
+  if (day.isUbat)
+  if (day.isLokawinat)
+  if (day.isLomLuang)
 
-     วันพฤหัสบดี
-        ตัดผม-เทพยุดารักษา, ตัดเล็บ-จะมีลูกมาก, ทาน้ำมัน-เทพยุดารักษา, นุ่งผ้าใหม่-สวัสดิ์, ก่อนเดินทาง-หยิบเอาเถ้าขาวเจิมหน้าผากแล้วจึงไป
+Keep check() ONLY for:
+  if (day.isThongChai || check("ธงชัย"))
+  if (day.isAthipadi || check("อธิบดี"))
+  if (day.sitthi || check("สิทธิโชค"))
 
-     วันศุกร์
-        ตัดผม-อาหารมาก, ตัดเล็บ-อาหารมาก, ทาน้ำมัน-อาหารมาก, นุ่งผ้าใหม่-มีสุข, ก่อนเดินทาง-ทำเครื่องหอมแล้วจึงไป
+In the fetchData useEffect enriched mapping, change:
+  isUbat: lanna.isUbat || labels.some(l => l.includes("อุบาทว์"))
+  isLokawinat: lanna.isLokawinat || labels.some(l => l.includes("โลกาวินาศ"))
+To:
+  isUbat: lanna.isUbat
+  isLokawinat: lanna.isLokawinat
 
-     วันเสาร์
-       ตัดผม-สิทธิทุกวัน, ตัดเล็บ-จะเจ็บไข้มิดี, ทาน้ำมัน-สาระพัดประสิทธิ, นุ่งผ้าใหม่-ตัวตาย, ก่อนเดินทาง-ทำเป็นโกรธวิวาทก่อนจึงไป
+BUG 3 — Delete stray file:
+  src/components/import React from react.txt
+Just delete it, no code change needed.
+
+BUG 4 — getDirections missing jangrai:
+In lannaCalc.ts, find getDirections function.
+It currently returns { sri, ka }.
+Add jangrai to the return based on day-of-week:
+  const jangrai = ['ตก','ออกแจ่งใต้','เหนือ','ใต้','ตก','ออกแจ่งเหนือ','ตก'][dow] || '-'
+  return { sri, ka, jangrai }
+
+In App.tsx selectedDayFullInfo useMemo, update:
+  directions: { sri: dir.sri, ka: dir.ka }
+To:
+  directions: { sri: dir.sri, ka: dir.ka, jangrai: dir.jangrai }
+
+
+Output complete modified files:
+App.tsx, lannaCalc.ts, package.json
