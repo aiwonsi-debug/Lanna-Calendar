@@ -1,7 +1,7 @@
 {
   "name": "lanna-calendar",
   "private": true,
-  "version": "2.0.2d",
+  "version": "0.03d",
   "type": "module",
   "scripts": {
     "dev": "vite",

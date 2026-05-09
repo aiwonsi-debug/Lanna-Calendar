@@ -1,371 +1,1042 @@
 {
-  "v": "2.1.1",
+  "v": "2.2.0",
   "y": 2575,
   "m": 4,
   "days": [
     {
+      "date": "2032-03-31T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 6,
+      "phase": "แรม",
+      "wanThai": "เต่าเส็ด",
+      "wanThaiDesc": "อย่าถมยังชีไฟ เตาไฟ ผีดั้งจักชังเนอ",
+      "isSia": false,
+      "isUbat": true,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1393,
+      "yearZodiac": "ร้วงใค้ (กุน)",
+      "lannaYear": {
+        "zodiacLanna": "ร้วงใค้",
+        "zodiacThai": "กุน",
+        "chulasakarat": 1393
+      },
+      "kaoKong": "วันเก้ากอง",
+      "kaoKongDesc": "เป็นวันที่กระทำการมงคลดี จะทำกิจการใด ๆ ดีทุกอย่าง จักมีเงินคำสัมปัตติพอหมื่นบ่ไร้ เอาข้าวใหม่ใส่ยุ้งฉางดี เทียวทางไกลจะกลับคืนมาโดยสวัสดี แต่ห้ามกระทำการฌาปนกิจศพในวันนี้เป็นอันขาด",
+      "fahTeeSang": 3,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยผู้หญิง: เอาผู้หญิงมาอยู่บ้านไม่ดี",
+      "wanPhiKin": "ผีกิ๋นคน: บ่ดีฮับเอาคนเข้าบ้าน",
+      "panjaDithi": "นันทาดิถี",
       "dateISO": "2032-03-31",
       "day": 1,
-      "lunar": "แรม 8 ค่ำ",
+      "lunar": "แรม 6 ค่ำ",
       "labels": [
-        "วันเสีย",
-        "วันศีล"
-      ],
-      "description": [
-        "เป็นวันไม่เป็นมงคล ควรหลีกเลี่ยงการมงคล"
-      ],
-      "score": "bad",
-      "phiKin": ""
+        "วันอุบาทว์"
+      ]
     },
     {
+      "date": "2032-04-01T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 7,
+      "phase": "แรม",
+      "wanThai": "กาไค้",
+      "wanThaiDesc": "อย่าซื้อวัวควายมาคอก ผีด้ำซ้ำบ่ดีสังแล",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1393,
+      "yearZodiac": "ร้วงใค้ (กุน)",
+      "lannaYear": {
+        "zodiacLanna": "ร้วงใค้",
+        "zodiacThai": "กุน",
+        "chulasakarat": 1393
+      },
+      "kaoKong": "วันรองพื้น",
+      "kaoKongDesc": "อย่าเก็บเอาและเผาถ่าน ไม้ฟืนหลัว บ่ดี การทำไร่ใส่นาและทำสวนดี การปลูกบ้านแปลงเรือนจักอยู่เย็นเป็นสุข",
+      "fahTeeSang": 8,
+      "isLomLuang": false,
+      "wanMuai": "ม้วย: ติดตั้งไฟฟ้า กองไฟไม่ได้ ปลูกครัวไม่ดี",
+      "wanPhiKin": "ผีกิ๋นไก่: บ่ดีซื้อไก่ กิ๋นจิ๊นไก่",
+      "panjaDithi": "ภัทราดิถี",
       "dateISO": "2032-04-01",
       "day": 2,
-      "lunar": "แรม 9 ค่ำ",
-      "labels": [],
-      "description": [
-        "อย่าสร้างเตาไฟ"
-      ],
-      "score": "neutral",
-      "phiKin": "ผีกิ๋นหมู: บ่ดีกิ๋นจิ๊นหมู"
+      "lunar": "แรม 7 ค่ำ",
+      "labels": []
     },
     {
+      "date": "2032-04-02T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 8,
+      "phase": "แรม",
+      "wanThai": "กาบไจ้",
+      "wanThaiDesc": "แม่วันดี คันจักเยียะได้ หื้อหาวันปลอด (ดี เป็นสิริมงคล)",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": true,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1393,
+      "yearZodiac": "ร้วงใค้ (กุน)",
+      "lannaYear": {
+        "zodiacLanna": "ร้วงใค้",
+        "zodiacThai": "กุน",
+        "chulasakarat": 1393
+      },
+      "kaoKong": "วันพื้นดอก",
+      "kaoKongDesc": "กระทำการมงคลกรรมดีทุกอย่าง จักมีลูกหลานมากมาย ทำคอกวัว คอกควาย สร้างแปลงรั้วดี นำสัตว์เลี้ยงมาเลี้ยงดีจักแพร่หลาย",
+      "fahTeeSang": 4,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยบ่าวสาว: แต่งงานไม่ดี ปลูกครัวดี",
+      "wanPhiKin": "ผีกิ๋นเป็ด: บ่ดีซื้อเป็ด กิ๋นจิ๊นเป็ด",
+      "panjaDithi": "ไชยาดิถี",
       "dateISO": "2032-04-02",
       "day": 3,
-      "lunar": "แรม 10 ค่ำ",
+      "lunar": "แรม 8 ค่ำ",
       "labels": [
-        "วันเสีย"
-      ],
-      "description": [
-        "เป็นวันไม่เป็นมงคล ควรหลีกเลี่ยงการมงคล"
-      ],
-      "score": "bad",
-      "phiKin": ""
+        "วันศีล"
+      ]
     },
     {
+      "date": "2032-04-03T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 9,
+      "phase": "แรม",
+      "wanThai": "ดับเป้า",
+      "wanThaiDesc": "อย่าได้สานหับไปค้า จะถูกฆ่ากลางทาง (อย่าเดินทางค้าขาย)",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": true,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1393,
+      "yearZodiac": "ร้วงใค้ (กุน)",
+      "lannaYear": {
+        "zodiacLanna": "ร้วงใค้",
+        "zodiacThai": "กุน",
+        "chulasakarat": 1393
+      },
+      "kaoKong": "วันพื้นดาย",
+      "kaoKongDesc": "ซื้องัวควายและสัตว์เลี้ยงมาเลี้ยงจักตายจาก นำข้าทาสมาเรือนบ่วุฒิ",
+      "fahTeeSang": 0,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยนักปราชญ์: แต่งตั้งนักปราชญ์ ตั้งอาจารย์ไม่ได้",
+      "wanPhiKin": "ผีกิ๋นหมู: บ่ดีซื้อหมู กิ๋นจิ๊นหมู",
+      "panjaDithi": "ปุณณาดิถี",
       "dateISO": "2032-04-03",
       "day": 4,
-      "lunar": "แรม 11 ค่ำ",
+      "lunar": "แรม 9 ค่ำ",
       "labels": [
-        "วันดี"
-      ],
-      "description": [
-        "เป็นวันดีมงคล เหมาะแก่การประกอบพิธีมงคล"
-      ],
-      "score": "good",
-      "phiKin": ""
+        "วันธงชัย"
+      ]
     },
     {
+      "date": "2032-04-04T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 10,
+      "phase": "แรม",
+      "wanThai": "รวายยี่",
+      "wanThaiDesc": "-",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1393,
+      "yearZodiac": "ร้วงใค้ (กุน)",
+      "lannaYear": {
+        "zodiacLanna": "ร้วงใค้",
+        "zodiacThai": "กุน",
+        "chulasakarat": 1393
+      },
+      "kaoKong": "วันสุพัก",
+      "kaoKongDesc": "รับซื้อสัตว์เลี้ยงวัวควายช้างม้า เป็ดไก่ดี การจัดกินแขกแต่งงานวิวาห์มงคลดี มีลูกหญิงชายจักอยู่ในโอวาท",
+      "fahTeeSang": 5,
+      "isLomLuang": true,
+      "wanMuai": "ม้วยน้ำ (ผีกินหมา): ปลูกครัวไม่ดี ใช้น้ำเอาน้ำเข้านาไม่ดี",
+      "wanPhiKin": "ผีกิ๋นหมา: บ่ดีเอาหมาเข้าบ้าน",
+      "panjaDithi": "ริตตาดิถี",
       "dateISO": "2032-04-04",
       "day": 5,
-      "lunar": "แรม 12 ค่ำ",
-      "labels": [],
-      "description": [
-        "อย่าเดินทางค้าขาย"
-      ],
-      "score": "neutral",
-      "phiKin": ""
+      "lunar": "แรม 10 ค่ำ",
+      "labels": [
+        "วันหล่มหลวง"
+      ]
     },
     {
+      "date": "2032-04-05T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 11,
+      "phase": "แรม",
+      "wanThai": "เมืองเหม้า",
+      "wanThaiDesc": "อย่ายอพลรบท่าน จะตายถูกปืน (อย่าสู้รบ)",
+      "isSia": true,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": "ราชาโชค",
+      "cs": 1393,
+      "yearZodiac": "ร้วงใค้ (กุน)",
+      "lannaYear": {
+        "zodiacLanna": "ร้วงใค้",
+        "zodiacThai": "กุน",
+        "chulasakarat": 1393
+      },
+      "kaoKong": "วันรับได้",
+      "kaoKongDesc": "อย่าได้รับฝากของไว้ การไปติดต่อผู้ใหญ่บ่ดี",
+      "fahTeeSang": 1,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยข้าวของเงินคำ: ไปเอาทองเงินไม่ดี",
+      "wanPhiKin": "ผีกิ๋นงัว: บ่ดีซื้องัวมาเลี้ยง บ่ดีกิ๋นจิ๊นงัว",
+      "panjaDithi": "นันทาดิถี",
       "dateISO": "2032-04-05",
       "day": 6,
-      "lunar": "แรม 13 ค่ำ",
-      "labels": [],
-      "description": [
-        "อย่าให้เหล้าแก่ท้าวพญา"
-      ],
-      "score": "neutral",
-      "phiKin": ""
+      "lunar": "แรม 11 ค่ำ",
+      "labels": [
+        "ราชาโชค",
+        "วันเสีย"
+      ]
     },
     {
+      "date": "2032-04-06T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 12,
+      "phase": "แรม",
+      "wanThai": "เปิกสี",
+      "wanThaiDesc": "หื้อห่อหมากถามสาว พ่อแม่หากวางหื้อลูก (ควรหมั้นหมาย)",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": true,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1393,
+      "yearZodiac": "ร้วงใค้ (กุน)",
+      "lannaYear": {
+        "zodiacLanna": "ร้วงใค้",
+        "zodiacThai": "กุน",
+        "chulasakarat": 1393
+      },
+      "kaoKong": "วันรับตาย",
+      "kaoKongDesc": "งดการวิวาห์มงคล การกินแขกแต่งงานและห้ามนำสัตว์เลี้ยง 2 ตีน 4 ตีน มาเลี้ยง",
+      "fahTeeSang": 6,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยสัตว์ต่างๆ: เอาสัตว์มาเลี้ยงไม่ได้ ปลูกครัวดี",
+      "wanPhiKin": "ผีกิ๋นควาย: บ่ดีซื้อควายและกิ๋นจิ๊นควาย",
+      "panjaDithi": "ภัทราดิถี",
       "dateISO": "2032-04-06",
       "day": 7,
-      "lunar": "แรม 14 ค่ำ",
+      "lunar": "แรม 12 ค่ำ",
       "labels": [
-        "วันศีล"
-      ],
-      "description": [
-        "วันพระ ควรทำบุญรักษาศีล"
-      ],
-      "score": "neutral",
-      "phiKin": "ผีกิ๋นงัว: บ่ดีกิ๋นจิ๊นงัว"
+        "วันโลกาวินาศ"
+      ]
     },
     {
+      "date": "2032-04-07T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 13,
+      "phase": "แรม",
+      "wanThai": "กัดไส้",
+      "wanThaiDesc": "อย่าสร้างดาบเถี่ยนกล้า จักพลันได้ฟันตน (อย่าประดิษฐ์หรือซื้ออาวุธ)",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1393,
+      "yearZodiac": "ร้วงใค้ (กุน)",
+      "lannaYear": {
+        "zodiacLanna": "ร้วงใค้",
+        "zodiacThai": "กุน",
+        "chulasakarat": 1393
+      },
+      "kaoKong": "วันขว้ำได้",
+      "kaoKongDesc": "อย่าเอาผัวเอาเมีย จัดกินแขกแต่งงาน จักเป็นร้างเป็นหม้ายในวันลูน บ่ดี เที่ยวทางไกล ออกเรือนไปค้าขาย จักได้ทรัพย์สมบัติดังปรารถนา",
+      "fahTeeSang": 2,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยพ่อค้า (ผีกินช้าง): ขวัญไม่มา ปลูกครัวดี ค้าขายไม่ดี",
+      "wanPhiKin": "ผีกิ๋นจ๊าง: ผีกิ๋นจ๊างเข้าบ้าน",
+      "panjaDithi": "ไชยาดิถี",
       "dateISO": "2032-04-07",
       "day": 8,
-      "lunar": "ขึ้น 1 ค่ำ",
-      "labels": [],
-      "description": [
-        "ควรหมั้นหมาย"
-      ],
-      "score": "neutral",
-      "phiKin": ""
+      "lunar": "แรม 13 ค่ำ",
+      "labels": []
     },
     {
+      "date": "2032-04-08T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 14,
+      "phase": "แรม",
+      "wanThai": "กดสะง้า",
+      "wanThaiDesc": "อย่าขี่ม้าเทียวเมือง จักตกม้าตายเผิดหน้า (อย่าออกเดินทาง)",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1393,
+      "yearZodiac": "ร้วงใค้ (กุน)",
+      "lannaYear": {
+        "zodiacLanna": "ร้วงใค้",
+        "zodiacThai": "กุน",
+        "chulasakarat": 1393
+      },
+      "kaoKong": "วันไสเจ้า",
+      "kaoKongDesc": "อย่าทำการวิวาห์มงคล อย่าซื้อสิ่งของและนำสัตว์ 2 ตีน และ 4 ตีนมาเลี้ยง บ่ดี",
+      "fahTeeSang": 7,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยสรม: บวชพระเณร ประชุมสงฆ์ อบรมโภชน์ไม่ได้",
+      "wanPhiKin": "ผีกิ๋นม้า: บ่ดีซื้อม้าเข้าบ้าน มาขี่",
+      "panjaDithi": "ปุณณาดิถี",
       "dateISO": "2032-04-08",
       "day": 9,
-      "lunar": "ขึ้น 2 ค่ำ",
-      "labels": [
-        "วันเสีย"
-      ],
-      "description": [
-        "เป็นวันไม่เป็นมงคล ควรหลีกเลี่ยงการมงคล"
-      ],
-      "score": "bad",
-      "phiKin": ""
+      "lunar": "แรม 14 ค่ำ",
+      "labels": []
     },
     {
+      "date": "2032-04-09T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 15,
+      "phase": "แรม",
+      "wanThai": "ร้วงเม็ด",
+      "wanThaiDesc": "อย่าก่ายห้างยิงกวาง แม่นทำดายบ่ได้ (อย่าทำอาวุธธนูหน้าไม้ และอย่าออกล่าสัตว์)",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": true,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": "มหาสิทธิโชค",
+      "cs": 1393,
+      "yearZodiac": "ร้วงใค้ (กุน)",
+      "lannaYear": {
+        "zodiacLanna": "ร้วงใค้",
+        "zodiacThai": "กุน",
+        "chulasakarat": 1393
+      },
+      "kaoKong": "วันไสเสีย",
+      "kaoKongDesc": "อย่าออกจากเรือนไปค้าขายทางไกล จักประสบอุบัติเหตุกลางทาง",
+      "fahTeeSang": 3,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยคฤหัสถ์ (ผีกินผี): ขวัญไม่มา การแต่งตั้ง การประชุมไม่ดี ปลูกครัวดี",
+      "wanPhiKin": "ผีกิ๋นผี: บ่ดีเสียผี เอาศพไปเสีย",
+      "panjaDithi": "ริตตาดิถี",
       "dateISO": "2032-04-09",
       "day": 10,
-      "lunar": "ขึ้น 3 ค่ำ",
-      "labels": [],
-      "description": [
-        "อย่าเดินทางค้าขาย"
-      ],
-      "score": "neutral",
-      "phiKin": ""
+      "lunar": "แรม 15 ค่ำ",
+      "labels": [
+        "มหาสิทธิโชค",
+        "วันศีล"
+      ]
     },
     {
+      "date": "2032-04-10T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 1,
+      "phase": "ออก",
+      "wanThai": "เต่าสัน",
+      "wanThaiDesc": "หื้อห่อหมากขอสาวหุมมาสู่ (ควรผูกมิตร)",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": true,
+      "sitthi": null,
+      "cs": 1393,
+      "yearZodiac": "ร้วงใค้ (กุน)",
+      "lannaYear": {
+        "zodiacLanna": "ร้วงใค้",
+        "zodiacThai": "กุน",
+        "chulasakarat": 1393
+      },
+      "kaoKong": "วันท้ายป้าว",
+      "kaoKongDesc": "อย่าเดินทางทางน้ำ อย่าไปค้าขายทางเรือ หากำไรยาก ขาดทุนเร็ว การไปค้าขายทางบกดี",
+      "fahTeeSang": 8,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยบ้าน (ผีกินผี): สร้างบ้านไม่ดี ปลูกมะม่วง ขนุนดี",
+      "wanPhiKin": "ผีกิ๋นผี: บ่ดีเสียผี",
+      "panjaDithi": "นันทาดิถี",
       "dateISO": "2032-04-10",
       "day": 11,
-      "lunar": "ขึ้น 4 ค่ำ",
+      "lunar": "ขึ้น 1 ค่ำ",
       "labels": [
-        "วันดี"
-      ],
-      "description": [
-        "เป็นวันดีมงคล เหมาะแก่การประกอบพิธีมงคล"
-      ],
-      "score": "good",
-      "phiKin": "ผีกิ๋นคน: บ่ดีเดินทางไกล"
+        "วันอธิบดี"
+      ]
     },
     {
+      "date": "2032-04-11T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 2,
+      "phase": "ออก",
+      "wanThai": "กาเร้า",
+      "wanThaiDesc": "หื้อหาขวัญลูกเต้า เอาขวัญข้าวแควนดี (ควรถักแห)",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1393,
+      "yearZodiac": "ร้วงใค้ (กุน)",
+      "lannaYear": {
+        "zodiacLanna": "ร้วงใค้",
+        "zodiacThai": "กุน",
+        "chulasakarat": 1393
+      },
+      "kaoKong": "วันยี่เพียง",
+      "kaoKongDesc": "การวิวาห์มงคลแต่งผัวแต่งเมีย การเอาคนเข้าบ้านเข้าเมือง การซื้อของ สัตว์ 2 ตีน 4 ตีนทุกสิ่งทุกอย่างดี จัดค้าขายมีกำไรดี จักทำกิจการทุกอย่างในวันนี้ดีมาก",
+      "fahTeeSang": 4,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยน้ำ: เอาน้ำเข้าบ้าน ทำเหมืองฝายไม่ดี",
+      "wanPhiKin": "ผีกิ๋นหมา: บ่ดีเอาหมาเข้าบ้าน",
+      "panjaDithi": "ภัทราดิถี",
       "dateISO": "2032-04-11",
       "day": 12,
-      "lunar": "ขึ้น 5 ค่ำ",
-      "labels": [],
-      "description": [
-        "ควรผูกมิตร"
-      ],
-      "score": "neutral",
-      "phiKin": ""
+      "lunar": "ขึ้น 2 ค่ำ",
+      "labels": []
     },
     {
+      "date": "2032-04-12T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 3,
+      "phase": "ออก",
+      "wanThai": "กาบเส็ด",
+      "wanThaiDesc": "อย่าม้วนหูกทอลาย จะตกตาย บ่ดี",
+      "isSia": true,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1393,
+      "yearZodiac": "ร้วงใค้ (กุน)",
+      "lannaYear": {
+        "zodiacLanna": "ร้วงใค้",
+        "zodiacThai": "กุน",
+        "chulasakarat": 1393
+      },
+      "kaoKong": "วันเก้ากอง",
+      "kaoKongDesc": "เป็นวันที่กระทำการมงคลดี จะทำกิจการใด ๆ ดีทุกอย่าง จักมีเงินคำสัมปัตติพอหมื่นบ่ไร้ เอาข้าวใหม่ใส่ยุ้งฉางดี เทียวทางไกลจะกลับคืนมาโดยสวัสดี แต่ห้ามกระทำการฌาปนกิจศพในวันนี้เป็นอันขาด",
+      "fahTeeSang": 0,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยเรือน (ผีกินไก่): เรียกขวัญไม่มา ปลูกต้นไม้ไม่ดี",
+      "wanPhiKin": "ผีกิ๋นควาย: บ่ดีซื้อควาย บ่ดีกิ๋นเนื้อควาย",
+      "panjaDithi": "ไชยาดิถี",
       "dateISO": "2032-04-12",
       "day": 13,
-      "lunar": "ขึ้น 6 ค่ำ",
-      "labels": [],
-      "description": [
-        "ควรถักแห ทำตาข่ายดักสัตว์"
-      ],
-      "score": "neutral",
-      "phiKin": ""
+      "lunar": "ขึ้น 3 ค่ำ",
+      "labels": [
+        "วันเสีย"
+      ]
     },
     {
+      "date": "2032-04-13T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 4,
+      "phase": "ออก",
+      "wanThai": "ดับไค้",
+      "wanThaiDesc": "อย่าตัดผม ไปม่ายสาว สาวบ่ชมบ่สู้",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": "มหาสิทธิโชค",
+      "cs": 1393,
+      "yearZodiac": "ร้วงใค้ (กุน)",
+      "lannaYear": {
+        "zodiacLanna": "ร้วงใค้",
+        "zodiacThai": "กุน",
+        "chulasakarat": 1393
+      },
+      "kaoKong": "วันรองพื้น",
+      "kaoKongDesc": "อย่าเก็บเอาและเผาถ่าน ไม้ฟืนหลัว บ่ดี การทำไร่ใส่นาและทำสวนดี การปลูกบ้านแปลงเรือนจักอยู่เย็นเป็นสุข",
+      "fahTeeSang": 5,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยดิน (ผีกินหมู): ทำนา ซื้อที่ดินทำสวนไม่ดี ปลูกต้นไม้ดี",
+      "wanPhiKin": "ผีกิ๋นจ๊าง: บ่ดีซื้อจ๊าง",
+      "panjaDithi": "ปุณณาดิถี",
       "dateISO": "2032-04-13",
       "day": 14,
-      "lunar": "ขึ้น 7 ค่ำ",
+      "lunar": "ขึ้น 4 ค่ำ",
       "labels": [
-        "วันเสีย"
-      ],
-      "description": [
-        "เป็นวันไม่เป็นมงคล ควรหลีกเลี่ยงการมงคล"
-      ],
-      "score": "bad",
-      "phiKin": "ผีกิ๋นเครื่อง: บ่ดีนุ่งผ้าใหม่"
+        "มหาสิทธิโชค"
+      ]
     },
     {
+      "date": "2032-04-14T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 5,
+      "phase": "ออก",
+      "wanThai": "รวายไจ้",
+      "wanThaiDesc": "อย่าได้ขี่ม้าแอ่วเที่ยวทาง จะเสียนางร่วมห้อง",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": "ชัยโชค",
+      "cs": 1393,
+      "yearZodiac": "ร้วงใค้ (กุน)",
+      "lannaYear": {
+        "zodiacLanna": "ร้วงใค้",
+        "zodiacThai": "กุน",
+        "chulasakarat": 1393
+      },
+      "kaoKong": "วันพื้นดอก",
+      "kaoKongDesc": "กระทำการมงคลกรรมดีทุกอย่าง จักมีลูกหลานมากมาย ทำคอกวัว คอกควาย สร้างแปลงรั้วดี นำสัตว์เลี้ยงมาเลี้ยงดีจักแพร่หลาย",
+      "fahTeeSang": 1,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยน้ำ: เลี้ยงหมาไม่ดี ปลูกต้นไม้ไม่ดี",
+      "wanPhiKin": "ผีกิ๋นม้า: บ่ดีซื้อม้ามาขี่มาเลี้ยง",
+      "panjaDithi": "ริตตาดิถี",
       "dateISO": "2032-04-14",
       "day": 15,
-      "lunar": "ขึ้น 8 ค่ำ",
+      "lunar": "ขึ้น 5 ค่ำ",
       "labels": [
-        "วันศีล"
-      ],
-      "description": [
-        "วันพระ ควรทำบุญรักษาศีล"
-      ],
-      "score": "neutral",
-      "phiKin": ""
+        "ชัยโชค"
+      ]
     },
     {
+      "date": "2032-04-15T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 6,
+      "phase": "ออก",
+      "wanThai": "เมืองเป้า",
+      "wanThaiDesc": "อย่าตัดผ้าไหมนุ่ง จะตายจากกัน",
+      "isSia": false,
+      "isUbat": true,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1394,
+      "yearZodiac": "เต่าชวด (หนู)",
+      "lannaYear": {
+        "zodiacLanna": "เต่าชวด",
+        "zodiacThai": "หนู",
+        "chulasakarat": 1394
+      },
+      "kaoKong": "วันพื้นดาย",
+      "kaoKongDesc": "ซื้องัวควายและสัตว์เลี้ยงมาเลี้ยงจักตายจาก นำข้าทาสมาเรือนบ่วุฒิ",
+      "fahTeeSang": 6,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยข้าว (ผีกินวัว): ปลูกยุ้งข้าว เอาข้าวเข้าบ้านไม่ดี",
+      "wanPhiKin": "ผีกิ๋นคน: บ่ดีฮับเอาคนเข้าบ้าน",
+      "panjaDithi": "นันทาดิถี",
       "dateISO": "2032-04-15",
       "day": 16,
-      "lunar": "ขึ้น 9 ค่ำ",
+      "lunar": "ขึ้น 6 ค่ำ",
       "labels": [
-        "วันเสีย"
-      ],
-      "description": [
-        "เป็นวันไม่เป็นมงคล ควรหลีกเลี่ยงการมงคล"
-      ],
-      "score": "bad",
-      "phiKin": "ผีกิ๋นตัว: บ่ดีทำการมงคล"
+        "วันอุบาทว์"
+      ]
     },
     {
+      "date": "2032-04-16T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 7,
+      "phase": "ออก",
+      "wanThai": "เปิกยี่",
+      "wanThaiDesc": "อย่าได้สานสาด (เสื่อ) ปูชานช่อง เยียวได้ร้อนเอ่าตัวเก่า",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1394,
+      "yearZodiac": "เต่าชวด (หนู)",
+      "lannaYear": {
+        "zodiacLanna": "เต่าชวด",
+        "zodiacThai": "หนู",
+        "chulasakarat": 1394
+      },
+      "kaoKong": "วันสุพัก",
+      "kaoKongDesc": "รับซื้อสัตว์เลี้ยงวัวควายช้างม้า เป็ดไก่ดี การจัดกินแขกแต่งงานวิวาห์มงคลดี มีลูกหญิงชายจักอยู่ในโอวาท",
+      "fahTeeSang": 2,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยท้าวพระยา: แต่งตั้งท้าวพระยาไม่ได้",
+      "wanPhiKin": "ผีกิ๋นไก่: บ่ดีซื้อไก่ บ่ดีกิ๋นไก่",
+      "panjaDithi": "ภัทราดิถี",
       "dateISO": "2032-04-16",
       "day": 17,
-      "lunar": "ขึ้น 10 ค่ำ",
-      "labels": [],
-      "description": [
-        "อย่าทำที่นอน"
-      ],
-      "score": "neutral",
-      "phiKin": ""
+      "lunar": "ขึ้น 7 ค่ำ",
+      "labels": []
     },
     {
+      "date": "2032-04-17T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 8,
+      "phase": "ออก",
+      "wanThai": "กัดเหม้า",
+      "wanThaiDesc": "ดีฟันเรือไว้หว้ายท่า ไปค้าได้แสนคำ",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": true,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": "อมฤตโชค",
+      "cs": 1394,
+      "yearZodiac": "เต่าชวด (หนู)",
+      "lannaYear": {
+        "zodiacLanna": "เต่าชวด",
+        "zodiacThai": "หนู",
+        "chulasakarat": 1394
+      },
+      "kaoKong": "วันรับได้",
+      "kaoKongDesc": "อย่าได้รับฝากของไว้ การไปติดต่อผู้ใหญ่บ่ดี",
+      "fahTeeSang": 7,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยเสนาอำมาตย์ (ผีกินช้าง): แต่งตั้งขุนนาง ผู้ใหญ่บ้าน กำนันไม่ดี",
+      "wanPhiKin": "ผีกิ๋นเป็ด: บ่ดีซื้อเป็ด บ่ดีกิ๋นเป็ด",
+      "panjaDithi": "ไชยาดิถี",
       "dateISO": "2032-04-17",
       "day": 18,
-      "lunar": "ขึ้น 11 ค่ำ",
+      "lunar": "ขึ้น 8 ค่ำ",
       "labels": [
-        "วันดี"
-      ],
-      "description": [
-        "เป็นวันดีมงคล เหมาะแก่การประกอบพิธีมงคล"
-      ],
-      "score": "good",
-      "phiKin": ""
+        "อมฤตโชค",
+        "วันศีล"
+      ]
     },
     {
+      "date": "2032-04-18T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 9,
+      "phase": "ออก",
+      "wanThai": "กดสี",
+      "wanThaiDesc": "หื้อแรกไม้แปล๋งเรือน วัวควายหลายเต๋มชูห้อง",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": true,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1394,
+      "yearZodiac": "เต่าชวด (หนู)",
+      "lannaYear": {
+        "zodiacLanna": "เต่าชวด",
+        "zodiacThai": "หนู",
+        "chulasakarat": 1394
+      },
+      "kaoKong": "วันรับตาย",
+      "kaoKongDesc": "งดการวิวาห์มงคล การกินแขกแต่งงานและห้ามนำสัตว์เลี้ยง 2 ตีน 4 ตีน มาเลี้ยง",
+      "fahTeeSang": 3,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยกล้วย อ้อย หมอ: แต่งตั้งหมอไม่ดี ปลูกต้นไม้ไม่ดี",
+      "wanPhiKin": "ผีกิ๋นม้า: บ่ดีซื้อม้ามาขี่มาเลี้ยง",
+      "panjaDithi": "ปุณณาดิถี",
       "dateISO": "2032-04-18",
       "day": 19,
-      "lunar": "ขึ้น 12 ค่ำ",
-      "labels": [],
-      "description": [
-        "ไปค้าขาย ดีนัก"
-      ],
-      "score": "neutral",
-      "phiKin": "ผีกิ๋นตีน: บ่ดีซื้อเกือกใหม่"
+      "lunar": "ขึ้น 9 ค่ำ",
+      "labels": [
+        "วันธงชัย"
+      ]
     },
     {
+      "date": "2032-04-19T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 10,
+      "phase": "ออก",
+      "wanThai": "ร้วงไส้",
+      "wanThaiDesc": "อย่ากระทำการเอาขวัญ เยียวเสียหลานเหลนกับลูกเต้า",
+      "isSia": true,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": "ชัยโชค",
+      "cs": 1394,
+      "yearZodiac": "เต่าชวด (หนู)",
+      "lannaYear": {
+        "zodiacLanna": "เต่าชวด",
+        "zodiacThai": "หนู",
+        "chulasakarat": 1394
+      },
+      "kaoKong": "วันขว้ำได้",
+      "kaoKongDesc": "อย่าเอาผัวเอาเมีย จัดกินแขกแต่งงาน จักเป็นร้างเป็นหม้ายในวันลูน บ่ดี เที่ยวทางไกล ออกเรือนไปค้าขาย จักได้ทรัพย์สมบัติดังปรารถนา",
+      "fahTeeSang": 8,
+      "isLomLuang": true,
+      "wanMuai": "ม้วยคนเฒ่า (ผีกินคน): ให้คนเฒ่าเข้าบ้านไม่ดี",
+      "wanPhiKin": "ผีกิ๋นคน: บ่ดีฮับเอาคนเข้าบ้าน",
+      "panjaDithi": "ริตตาดิถี",
       "dateISO": "2032-04-19",
       "day": 20,
-      "lunar": "ขึ้น 13 ค่ำ",
-      "labels": [],
-      "description": [
-        "ควรตัดไม้มาสร้างบ้าน"
-      ],
-      "score": "neutral",
-      "phiKin": ""
+      "lunar": "ขึ้น 10 ค่ำ",
+      "labels": [
+        "ชัยโชค",
+        "วันเสีย",
+        "วันหล่มหลวง"
+      ]
     },
     {
+      "date": "2032-04-20T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 11,
+      "phase": "ออก",
+      "wanThai": "เต่าสะง้า",
+      "wanThaiDesc": "ฝั้นเชือกวัวควาย เยียวตัวตายตมม้วย",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1394,
+      "yearZodiac": "เต่าชวด (หนู)",
+      "lannaYear": {
+        "zodiacLanna": "เต่าชวด",
+        "zodiacThai": "หนู",
+        "chulasakarat": 1394
+      },
+      "kaoKong": "วันไสเจ้า",
+      "kaoKongDesc": "อย่าทำการวิวาห์มงคล อย่าซื้อสิ่งของและนำสัตว์ 2 ตีน และ 4 ตีนมาเลี้ยง บ่ดี",
+      "fahTeeSang": 4,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยบ่าวสาว: แต่งงานไม่ดี",
+      "wanPhiKin": "ผีกิ๋นผี: บ่ดีเสียผี",
+      "panjaDithi": "นันทาดิถี",
       "dateISO": "2032-04-20",
       "day": 21,
-      "lunar": "ขึ้น 14 ค่ำ",
-      "labels": [
-        "วันเสีย"
-      ],
-      "description": [
-        "เป็นวันไม่เป็นมงคล ควรหลีกเลี่ยงการมงคล"
-      ],
-      "score": "bad",
-      "phiKin": "ผีกิ๋นมือ: บ่ดีหยิบเครื่องของ"
+      "lunar": "ขึ้น 11 ค่ำ",
+      "labels": []
     },
     {
+      "date": "2032-04-21T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 12,
+      "phase": "ออก",
+      "wanThai": "กาเม็ด",
+      "wanThaiDesc": "อย่าฝนหลาวเถี่ยนกล้า เยียวหากฆ่าฟันตน",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": true,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1394,
+      "yearZodiac": "เต่าชวด (หนู)",
+      "lannaYear": {
+        "zodiacLanna": "เต่าชวด",
+        "zodiacThai": "หนู",
+        "chulasakarat": 1394
+      },
+      "kaoKong": "วันไสเสีย",
+      "kaoKongDesc": "อย่าออกจากเรือนไปค้าขายทางไกล จักประสบอุบัติเหตุกลางทาง",
+      "fahTeeSang": 0,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยพ่อเรือน แม่เรือน: แต่งงานขึ้นบ้านใหม่ไม่ดี",
+      "wanPhiKin": "ผีกิ๋นไก่: บ่ดีซื้อไก่ บ่ดีกิ๋นไก่",
+      "panjaDithi": "ภัทราดิถี",
       "dateISO": "2032-04-21",
       "day": 22,
+      "lunar": "ขึ้น 12 ค่ำ",
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
+    },
+    {
+      "date": "2032-04-22T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 13,
+      "phase": "ออก",
+      "wanThai": "กาบสัน",
+      "wanThaiDesc": "หื้อล้อมวัวควาย มีหลายบ่น้อย",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1394,
+      "yearZodiac": "เต่าชวด (หนู)",
+      "lannaYear": {
+        "zodiacLanna": "เต่าชวด",
+        "zodiacThai": "หนู",
+        "chulasakarat": 1394
+      },
+      "kaoKong": "วันท้ายป้าว",
+      "kaoKongDesc": "อย่าเดินทางทางน้ำ อย่าไปค้าขายทางเรือ หากำไรยาก ขาดทุนเร็ว การไปค้าขายทางบกดี",
+      "fahTeeSang": 5,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยไร่นา สวน: ปลูกต้นไม้ สร้างสวนไม่ได้",
+      "wanPhiKin": "ผีกิ๋นเป็ด: บ่ดีซื้อเป็ด บ่ดีกิ๋นเป็ด",
+      "panjaDithi": "ไชยาดิถี",
+      "dateISO": "2032-04-22",
+      "day": 23,
+      "lunar": "ขึ้น 13 ค่ำ",
+      "labels": []
+    },
+    {
+      "date": "2032-04-23T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 14,
+      "phase": "ออก",
+      "wanThai": "ดับเร้า",
+      "wanThaiDesc": "หื้อตัดผม ม่ายชู้สาวหากสู้มาหา",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1394,
+      "yearZodiac": "เต่าชวด (หนู)",
+      "lannaYear": {
+        "zodiacLanna": "เต่าชวด",
+        "zodiacThai": "หนู",
+        "chulasakarat": 1394
+      },
+      "kaoKong": "วันยี่เพียง",
+      "kaoKongDesc": "การวิวาห์มงคลแต่งผัวแต่งเมีย การเอาคนเข้าบ้านเข้าเมือง การซื้อของ สัตว์ 2 ตีน 4 ตีนทุกสิ่งทุกอย่างดี จัดค้าขายมีกำไรดี จักทำกิจการทุกอย่างในวันนี้ดีมาก",
+      "fahTeeSang": 1,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยเจ้าสรม: บวชพระเณรทำพิธีสงฆ์ไม่ได้ พุทธาภิเษกไม่ได้",
+      "wanPhiKin": "ผีกิ๋นหมู: บ่ดีซื้อหมูมาเลี้ยง บ่ดีกิ๋นจิ๊นหมู",
+      "panjaDithi": "ปุณณาดิถี",
+      "dateISO": "2032-04-23",
+      "day": 24,
+      "lunar": "ขึ้น 14 ค่ำ",
+      "labels": []
+    },
+    {
+      "date": "2032-04-24T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 15,
+      "phase": "ออก",
+      "wanThai": "รวายเส็ด",
+      "wanThaiDesc": "อย่าปลูกครัวยังสวน เยียดหลือใจบ่ได้มาก",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": true,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1394,
+      "yearZodiac": "เต่าชวด (หนู)",
+      "lannaYear": {
+        "zodiacLanna": "เต่าชวด",
+        "zodiacThai": "หนู",
+        "chulasakarat": 1394
+      },
+      "kaoKong": "วันเก้ากอง",
+      "kaoKongDesc": "เป็นวันที่กระทำการมงคลดี จะทำกิจการใด ๆ ดีทุกอย่าง จักมีเงินคำสัมปัตติพอหมื่นบ่ไร้ เอาข้าวใหม่ใส่ยุ้งฉางดี เทียวทางไกลจะกลับคืนมาโดยสวัสดี แต่ห้ามกระทำการฌาปนกิจศพในวันนี้เป็นอันขาด",
+      "fahTeeSang": 6,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยผีอารักษ์: ตั้งศาลพระภูมิไม่ได้ ปลูกครัว ปลูกไม้ดี",
+      "wanPhiKin": "ผีกิ๋นหมา: บ่ดีเอาหมาเข้าบ้าน",
+      "panjaDithi": "ริตตาดิถี",
+      "dateISO": "2032-04-24",
+      "day": 25,
       "lunar": "ขึ้น 15 ค่ำ",
       "labels": [
         "วันศีล"
-      ],
-      "description": [
-        "วันพระ ควรทำบุญรักษาศีล"
-      ],
-      "score": "neutral",
-      "phiKin": ""
+      ]
     },
     {
-      "dateISO": "2032-04-22",
-      "day": 23,
-      "lunar": "แรม 1 ค่ำ",
-      "labels": [
-        "วันเสีย"
-      ],
-      "description": [
-        "เป็นวันไม่เป็นมงคล ควรหลีกเลี่ยงการมงคล"
-      ],
-      "score": "bad",
-      "phiKin": ""
-    },
-    {
-      "dateISO": "2032-04-23",
-      "day": 24,
-      "lunar": "แรม 2 ค่ำ",
-      "labels": [],
-      "description": [
-        "อย่าสร้างที่กักกันสัตว์"
-      ],
-      "score": "neutral",
-      "phiKin": "ผีกิ๋นม้า: บ่ดีซื้อม้าเข้าบ้าน"
-    },
-    {
-      "dateISO": "2032-04-24",
-      "day": 25,
-      "lunar": "แรม 3 ค่ำ",
-      "labels": [
-        "วันดี"
-      ],
-      "description": [
-        "เป็นวันดีมงคล เหมาะแก่การประกอบพิธีมงคล"
-      ],
-      "score": "good",
-      "phiKin": ""
-    },
-    {
+      "date": "2032-04-25T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 1,
+      "phase": "แรม",
+      "wanThai": "เมืองไค้",
+      "wanThaiDesc": "หื้อยอพลรบกับท่าน ได้ทั้งช้างกับนาง",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": true,
+      "sitthi": null,
+      "cs": 1394,
+      "yearZodiac": "เต่าชวด (หนู)",
+      "lannaYear": {
+        "zodiacLanna": "เต่าชวด",
+        "zodiacThai": "หนู",
+        "chulasakarat": 1394
+      },
+      "kaoKong": "วันรองพื้น",
+      "kaoKongDesc": "อย่าเก็บเอาและเผาถ่าน ไม้ฟืนหลัว บ่ดี การทำไร่ใส่นาและทำสวนดี การปลูกบ้านแปลงเรือนจักอยู่เย็นเป็นสุข",
+      "fahTeeSang": 2,
+      "isLomLuang": false,
+      "wanMuai": "ม้วย (ผีกินหมา): ซื้อข้าว ปลูกข้าว ทำยุ้งข้าวไม่ดี",
+      "wanPhiKin": "ผีกิ๋นหมา: บ่ดีเอาหมาเข้าบ้าน",
+      "panjaDithi": "นันทาดิถี",
       "dateISO": "2032-04-25",
       "day": 26,
-      "lunar": "แรม 4 ค่ำ",
-      "labels": [],
-      "description": [
-        "อย่าปลูกต้นหมาก"
-      ],
-      "score": "neutral",
-      "phiKin": ""
+      "lunar": "แรม 1 ค่ำ",
+      "labels": [
+        "วันอธิบดี"
+      ]
     },
     {
+      "date": "2032-04-26T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 2,
+      "phase": "แรม",
+      "wanThai": "เปิกไจ้",
+      "wanThaiDesc": "ดีใส่รัก ทาเกี๊ยะแป๋งกล่อง และกุบ ดี",
+      "isSia": true,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1394,
+      "yearZodiac": "เต่าชวด (หนู)",
+      "lannaYear": {
+        "zodiacLanna": "เต่าชวด",
+        "zodiacThai": "หนู",
+        "chulasakarat": 1394
+      },
+      "kaoKong": "วันพื้นดอก",
+      "kaoKongDesc": "กระทำการมงคลกรรมดีทุกอย่าง จักมีลูกหลานมากมาย ทำคอกวัว คอกควาย สร้างแปลงรั้วดี นำสัตว์เลี้ยงมาเลี้ยงดีจักแพร่หลาย",
+      "fahTeeSang": 7,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยผู้เฒ่า: เอาผู้เฒ่าเข้าบ้านไม่ดี",
+      "wanPhiKin": "ผีกิ๋นหมา: บ่ดีเอาหมาเข้าบ้าน",
+      "panjaDithi": "ภัทราดิถี",
       "dateISO": "2032-04-26",
       "day": 27,
-      "lunar": "แรม 5 ค่ำ",
-      "labels": [],
-      "description": [
-        "ควรแก่การออกศึก ควรเกี้ยวสาว"
-      ],
-      "score": "neutral",
-      "phiKin": "ผีกิ๋นไก่: บ่ดีกิ๋นจิ๊นไก่"
-    },
-    {
-      "dateISO": "2032-04-27",
-      "day": 28,
-      "lunar": "แรม 6 ค่ำ",
+      "lunar": "แรม 2 ค่ำ",
       "labels": [
         "วันเสีย"
-      ],
-      "description": [
-        "เป็นวันไม่เป็นมงคล ควรหลีกเลี่ยงการมงคล"
-      ],
-      "score": "bad",
-      "phiKin": ""
+      ]
     },
     {
+      "date": "2032-04-27T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 3,
+      "phase": "แรม",
+      "wanThai": "กัดเป้า",
+      "wanThaiDesc": "อย่าได้สืบคำเมืองท่านบ่สู้",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1394,
+      "yearZodiac": "เต่าชวด (หนู)",
+      "lannaYear": {
+        "zodiacLanna": "เต่าชวด",
+        "zodiacThai": "หนู",
+        "chulasakarat": 1394
+      },
+      "kaoKong": "วันพื้นดาย",
+      "kaoKongDesc": "ซื้องัวควายและสัตว์เลี้ยงมาเลี้ยงจักตายจาก นำข้าทาสมาเรือนบ่วุฒิ",
+      "fahTeeSang": 3,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยขุนนาง (ผีกินควาย): ปลูกครัวดี ตั้งขุนนางไม่ดี",
+      "wanPhiKin": "ผีกิ๋นควาย: บ่ดีซื้อควายและกิ๋นจิ๊นควาย",
+      "panjaDithi": "ไชยาดิถี",
+      "dateISO": "2032-04-27",
+      "day": 28,
+      "lunar": "แรม 3 ค่ำ",
+      "labels": []
+    },
+    {
+      "date": "2032-04-28T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 4,
+      "phase": "แรม",
+      "wanThai": "กดยี่",
+      "wanThaiDesc": "-",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": "อมฤตโชค",
+      "cs": 1394,
+      "yearZodiac": "เต่าชวด (หนู)",
+      "lannaYear": {
+        "zodiacLanna": "เต่าชวด",
+        "zodiacThai": "หนู",
+        "chulasakarat": 1394
+      },
+      "kaoKong": "วันสุพัก",
+      "kaoKongDesc": "รับซื้อสัตว์เลี้ยงวัวควายช้างม้า เป็ดไก่ดี การจัดกินแขกแต่งงานวิวาห์มงคลดี มีลูกหญิงชายจักอยู่ในโอวาท",
+      "fahTeeSang": 8,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยน้ำ (ผีกินช้าง): เอาน้ำเข้าบ้าน ทำเหมือนฝายไม่ดี ปลูกครัวดี",
+      "wanPhiKin": "ผีกิ๋นจ๊าง: ผีกิ๋นจ๊างเข้าบ้าน",
+      "panjaDithi": "ปุณณาดิถี",
       "dateISO": "2032-04-28",
       "day": 29,
-      "lunar": "แรม 7 ค่ำ",
-      "labels": [],
-      "description": [
-        "อย่าสู้คดีความ"
-      ],
-      "score": "neutral",
-      "phiKin": ""
+      "lunar": "แรม 4 ค่ำ",
+      "labels": [
+        "อมฤตโชค"
+      ]
     },
     {
+      "date": "2032-04-29T17:00:00.000Z",
+      "lannaMonth": 10,
+      "lunarDay": 5,
+      "phase": "แรม",
+      "wanThai": "ร้วงเหม้า",
+      "wanThaiDesc": "ดีเยียะสวน ปลูกยา หากเป็นดอกดีงาม",
+      "isSia": false,
+      "isUbat": false,
+      "isLokawinat": false,
+      "isSin": false,
+      "isThongChai": false,
+      "isAthipadi": false,
+      "sitthi": null,
+      "cs": 1394,
+      "yearZodiac": "เต่าชวด (หนู)",
+      "lannaYear": {
+        "zodiacLanna": "เต่าชวด",
+        "zodiacThai": "หนู",
+        "chulasakarat": 1394
+      },
+      "kaoKong": "วันรับได้",
+      "kaoKongDesc": "อย่าได้รับฝากของไว้ การไปติดต่อผู้ใหญ่บ่ดี",
+      "fahTeeSang": 4,
+      "isLomLuang": false,
+      "wanMuai": "ม้วยไม้: ปลูกไม่ดี",
+      "wanPhiKin": "ผีกิ๋นม้า: บ่ดีซื้อม้าเข้าบ้าน มาขี่",
+      "panjaDithi": "ริตตาดิถี",
       "dateISO": "2032-04-29",
       "day": 30,
-      "lunar": "แรม 8 ค่ำ",
-      "labels": [
-        "วันเสีย",
-        "วันศีล"
-      ],
-      "description": [
-        "เป็นวันไม่เป็นมงคล ควรหลีกเลี่ยงการมงคล"
-      ],
-      "score": "bad",
-      "phiKin": ""
+      "lunar": "แรม 5 ค่ำ",
+      "labels": []
     }
   ]
 }

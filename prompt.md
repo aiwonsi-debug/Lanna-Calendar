@@ -1,48 +1,22 @@
-@src/utils/lannaCalc.ts
+เพิ่มข้อมูลกิจวัตรประจำวัน
 
-The CS year boundary uses April 16 as วันพญาวัน (confirmed correct).
-Fix the cs computation to use lannaYearTransitions data
-instead of hardcoded month/date logic.
+ วันอาทิตย์
+        ตัดผม-อายุยืน, ตัดเล็บ-มีศัตรูมาก, ทาน้ำมัน-จะหายโฉม, นุ่งผ้าใหม่-ชนะศัตรู, ก่อนเดินทาง-อ่านใส่หัวเสียก่อนจึงไป
 
-CURRENT (wrong):
-  const cs = date.getFullYear() - 638 - (someCondition ? 1 : 0)
+     วันจันทร์
+        ตัดผม-มีภัย, ตัดเล็บ-คนจะรัก, ทาน้ำมัน-ชอบใจคน, นุ่งผ้าใหม่-ชอบใจคนรัก, ก่อนเดินทาง-แต่งตัวแล้วนอนเสียก่อนจึงไป
 
-REPLACE WITH:
+     วันอังคาร
+        ตัดผม-มีศัตรูมาก, ตัดเล็บ-จะฉิบหาย, ทาน้ำมัน-จากกันมิดี, นุ่งผ้าใหม่-จะมีทุกข์, ก่อนเดินทาง-กินน้ำเสียก่อนจึงไป
 
-import { lannaYearTransitionByGregorianYear } from '../data/lannaYearTransitions';
+     วันพุธ
+        ตัดผม-จะมีความ, ตัดเล็บ-จำเริญสวัสดิ์, ทาน้ำมัน-สุขสวัสดี, นุ่งผ้าใหม่-มีสุขสวัสดิ์, ก่อนเดินทาง-ให้คนทั้งหลายกินข้าวแล้วจึงไป
 
-Inside getLannaDate:
-  const transition = lannaYearTransitionByGregorianYear.get(date.getFullYear());
-  const payaWan = transition ? new Date(transition.payaWanDate) : new Date(date.getFullYear(), 3, 16);
+     วันพฤหัสบดี
+        ตัดผม-เทพยุดารักษา, ตัดเล็บ-จะมีลูกมาก, ทาน้ำมัน-เทพยุดารักษา, นุ่งผ้าใหม่-สวัสดิ์, ก่อนเดินทาง-หยิบเอาเถ้าขาวเจิมหน้าผากแล้วจึงไป
 
-  // CS switches on payaWanDate (April 16)
-  const isNewYear = (
-    date.getMonth() > payaWan.getMonth() ||
-    (date.getMonth() === payaWan.getMonth() && date.getDate() >= payaWan.getDate())
-  );
-  const cs = isNewYear
-    ? transition?.newChulasakarat ?? (date.getFullYear() - 638)
-    : transition?.oldChulasakarat ?? (date.getFullYear() - 639);
+     วันศุกร์
+        ตัดผม-อาหารมาก, ตัดเล็บ-อาหารมาก, ทาน้ำมัน-อาหารมาก, นุ่งผ้าใหม่-มีสุข, ก่อนเดินทาง-ทำเครื่องหอมแล้วจึงไป
 
-  // yearZodiac also uses same boundary
-  const zodiacLanna = isNewYear
-    ? transition?.newZodiac ?? ""
-    : transition?.oldZodiac ?? "";
-  const zodiacThai  = zodiacLanna
-    ? (DATA.LannaZodiacThaiMap?.[zodiacLanna] ?? "")
-    : "";
-
-Update the return object:
-  cs,
-  yearZodiac: zodiacLanna + (zodiacThai ? ` (${zodiacThai})` : ""),
-  lannaYear: {
-    zodiacLanna,
-    zodiacThai,
-    chulasakarat: cs,
-  },
-
-This ensures:
-  - April 1–15, 2026  → CS 1387, ปีดับไส้ (มะเส็ง)
-  - April 16+, 2026   → CS 1388, ปีรวายสะง้า (มะเมีย)
-
-Output complete lannaCalc.ts.
+     วันเสาร์
+       ตัดผม-สิทธิทุกวัน, ตัดเล็บ-จะเจ็บไข้มิดี, ทาน้ำมัน-สาระพัดประสิทธิ, นุ่งผ้าใหม่-ตัวตาย, ก่อนเดินทาง-ทำเป็นโกรธวิวาทก่อนจึงไป

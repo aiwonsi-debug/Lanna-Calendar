@@ -4,11 +4,7 @@ export interface NormalizedRecord {
   dateISO: string;
   day: number;
   lunar: string;
-  labels: {
-    good: string[];
-    bad: string[];
-    special: string[];
-  };
+  labels: string[];
   description: string[];
   score: 'good' | 'bad' | 'neutral';
   rawText?: string;

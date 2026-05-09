@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { loadMonthData } from './utils/lanna';
-import { getLannaDate, getSongkranLabel, getDirections, getDailyKalaYoga, getWanPhiKin } from './utils/lannaCalc';
+import { getLannaDate, getDirections, getDailyKalaYoga, getSongkranLabel, getDailyRituals } from './utils/lannaCalc';
 import { DetailSection, DayData } from './components/DetailSection';
 
 const toArabicDigits = (value: string | number) =>
@@ -30,18 +30,89 @@ interface Day {
   isLokawinat: boolean;
   isThongChai: boolean;
   isAthipadi: boolean;
+  isLomLuang: boolean;
   sitthi: string | null;
   songkranLabel: string | null;
   yearZodiac: string;
   cs: number;
-  raw: any;
+  raw: {
+    day: number;
+    labels?: string[];
+    warnings?: string[];
+    rituals?: { title: string; description: string }[];
+    rawText?: string;
+  };
   wanThai: string;
-  phiKin: string;
+  wanMuai: string;
+  wanPhiKin: string;
+  wanThaiDesc: string;
+  panjaDithi?: string;
+  kaoKong: string;
+  kaoKongDesc: string;
+  fahTeeSang: number;
+  lannaYear: {
+    zodiacLanna: string;
+    zodiacThai: string;
+    chulasakarat: number;
+  };
 }
 
-function buildDescription(lanna: any, phiKin: string): string {
+function buildDescription(lanna: {
+  wanThaiDesc?: string;
+  wanThai?: string;
+  kaoKong?: string;
+  kaoKongDesc?: string;
+  fahTeeSang?: number | null;
+  wanMuai?: string;
+  wanPhiKin?: string;
+  isLomLuang?: boolean;
+  panjaDithi?: string;
+  sitthi?: string | null;
+  isUbat?: boolean;
+  isLokawinat?: boolean;
+  isMachu?: boolean;
+  isMahaMachu?: boolean;
+}): string {
   if (!lanna) return "";
   const lines: string[] = [];
+
+  // ปัญจดิถี
+  if (lanna.panjaDithi) {
+    const dithiDesc: Record<string, string> = {
+      "นันทาดิถี": "ควรสร้างบ้านเรือนวิหาร ศาลา ขุดสระน้ำ หล่อพระพุทธรูปสร้างพระธาตุ ออกเดินทางไปค้าขายยกยอมหาเถระสังฆราช ราชาภิเษกพระมหากษัตริย์ ตัดช่อและตุงไชยดีมาก",
+      "ภัทราดิถี": "คนส่งศุภสารการทูตส่งบ่าวสาวแต่งงาน ดำหัว ล้างทำความสะอาดเครื่องประดับ ย้ายที่อยู่ แกะสลักเขียนภาพ ตัดไม้ทำเรือนเข้าอยู่บ้าน ตั้งชื่อยศนามศักดิ์ ดีมาก",
+      "ไชยาดิถี": "ควรเริ่มสร้างอาวุธยกทัพ เจรจาความเมือง เลี้ยงหมู่ทหาร เรียนศิลปศาสตร์วิชาคุณก่อสร้างเมืองใหม่ ทำความสะอาดอาวุธ ทำรั้ว",
+      "ปุณณาดิถี": "ควรนำเข้าใหม่ขึ้นสู่ยุ้งฉาง นำคนใช้มาอยู่บ้าน พระสงฆ์เริ่มเรียนพระธรรมคัมภีร์ต่าง ๆ สร้างเวียงวัง เพิ่มนาม แต่งตั้งอำมาตย์ข้าราชการ เริ่มเรียนเวทมนต์คาถา",
+      "ริตตาดิถี": "ควรสร้างสวนทำไร่นา ปลูกต้นไม้ สร้างถนนหนทาง ทำแก้วแหวนมิ่งมงคล ตัดเสื้อผ้าทำขวัญสู่ขวัญตัดผมเข้าเฝ้าเจ้านาย"
+    };
+    lines.push(`ดิถี (${lanna.panjaDithi}): ${dithiDesc[lanna.panjaDithi] || ""}`);
+  }
+
+  // วันโชค (สิทธิโชค)
+  if (lanna.sitthi) {
+    const sitthiDesc: Record<string, string> = {
+      "อมฤตโชค": "ให้ผลดีมหาศาล มีความอุดมสมบูรณ์ และอายุยืนยาว เหมาะสำหรับงานมงคลทุกชนิด โดยเฉพาะการทำพิธีเพื่อความยั่งยืน",
+      "มหาสิทธิโชค": "ให้ผลดีมหาศาล เหมาะสำหรับงานมงคลทุกประการ การเริ่มต้นใหม่ การเปิดกิจการ หรือการทำพิธีใหญ่",
+      "สิทธิโชค": "ให้ผลสำเร็จสมปรารถนา เหมาะสำหรับงานมงคลทั่วไป การติดต่อเจรจา และการทำงานที่ต้องการความราบรื่น",
+      "ชัยโชค": "ให้ผลทางชัยชนะ การแข่งขัน การเอาชนะอุปสรรค เหมาะสำหรับงานที่ต้องใช้ความกล้าหาญหรือการชิงชัย",
+      "ราชาโชค": "ให้ผลทางบารมี เกียรติยศ การได้รับการอุปถัมภ์จากผู้ใหญ่ เหมาะสำหรับงานที่เกี่ยวกับยศถาบรรดาศักดิ์"
+    };
+    lines.push(`วัน${lanna.sitthi}: ${sitthiDesc[lanna.sitthi] || ""}`);
+  }
+
+  // วันเสียต่างๆ
+  if (lanna.isUbat) {
+    lines.push("วันอุบาทว์: เป็นวันแห่งอุปสรรค เคราะห์ร้าย และความไม่สงบสุข ห้ามทำการมงคล");
+  }
+  if (lanna.isLokawinat) {
+    lines.push("วันโลกาวินาศ: เป็นวันแห่งความวิบัติ ฉิบหาย และอันตรายร้ายแรงที่สุด ห้ามกระทำการมงคลเด็ดขาด");
+  }
+  if (lanna.isMachu) {
+    lines.push("วันมัจจุ: วันแห่งความตายและการสูญเสีย ห้ามทำการมงคลหรือเริ่มต้นสิ่งใหม่");
+  }
+  if (lanna.isMahaMachu) {
+    lines.push("วันมหามัจจุ: วันแห่งมหาเคราะห์ร้ายแรง ห้ามกระทำการมงคลทุกชนิด");
+  }
 
   // วันไท
   if (lanna.wanThaiDesc) {
@@ -64,23 +135,64 @@ function buildDescription(lanna: any, phiKin: string): string {
     lines.push(`ฟ้าตีแส่งเศษ ${lanna.fahTeeSang}: ${meaning}`);
   }
 
+  // วันม้วย
+  if (lanna.wanMuai) {
+    lines.push(`วัน${lanna.wanMuai}`);
+  }
+
   // วันผีกิน
-  if (phiKin) {
-    lines.push(`${phiKin}`);
+  if (lanna.wanPhiKin) {
+    lines.push(`${lanna.wanPhiKin}`);
+  }
+
+  // วันหล่มหลวง
+  if (lanna.isLomLuang) {
+    lines.push("วันหล่มหลวง: ห้ามกระทำการมงคลอื่น เว้นแต่แต่งงานและบวช");
   }
 
   return lines.join("\n");
 }
 
-const getStatusLines = (day: Day) => [
-  day.isSia ? { text: 'วันเสีย', className: 'text-[#d71920]' } : null,
-  day.isUbat ? { text: 'วันอุบาทว์', className: 'text-[#0645c0]' } : null,
-  day.isLokawinat ? { text: 'โลกาวินาศ', className: 'text-[#111111]' } : null,
-  day.isThongChai ? { text: 'ธงชัย', className: 'text-[#0f8a2a]' } : null,
-  day.isAthipadi ? { text: 'อธิบดี', className: 'text-[#0f8a2a]' } : null,
-  day.sitthi ? { text: toArabicDigits(day.sitthi), className: 'text-[#0645c0]' } : null,
-  day.songkranLabel ? { text: toArabicDigits(day.songkranLabel), className: 'text-[#0645c0]' } : null,
-].filter(Boolean) as { text: string; className: string }[];
+const getStatusLines = (day: Day) => {
+  const lines = [];
+  const raw = day.raw || {};
+  const labels = Array.isArray(raw.labels) ? raw.labels : [];
+  const warnings = Array.isArray(raw.warnings) ? raw.warnings : [];
+  
+  // Combine all possible sources of status text and clean messy characters
+  const combinedText = [...labels, ...warnings].join('|').replace(/[\s]/g, '');
+  
+  const check = (term: string) => combinedText.includes(term);
+
+  // High priority bad days
+  if (day.isSia || check("วันเสีย")) 
+    lines.push({ text: 'วันเสีย', className: 'text-[#d71920] font-black' });
+  
+  if (day.isUbat || check("อุบาทว์")) 
+    lines.push({ text: 'วันอุบาทว์', className: 'text-[#d71920] font-black' });
+  
+  if (day.isLokawinat || check("โลกาวินาศ")) 
+    lines.push({ text: 'โลกาวินาศ', className: 'text-[#d71920] font-black' });
+  
+  if (day.isLomLuang || check("หล่มหลวง")) 
+    lines.push({ text: 'หล่มหลวง', className: 'text-[#d71920] font-black' });
+
+  // Good days
+  if (day.isThongChai || check("ธงชัย")) 
+    lines.push({ text: 'ธงชัย', className: 'text-[#0f8a2a] font-black' });
+  
+  if (day.isAthipadi || check("อธิบดี")) 
+    lines.push({ text: 'อธิบดี', className: 'text-[#0f8a2a] font-black' });
+
+  // Special/Labels
+  if (day.sitthi) 
+    lines.push({ text: toArabicDigits(day.sitthi), className: 'text-[#0645c0] font-black' });
+  
+  if (day.songkranLabel) 
+    lines.push({ text: toArabicDigits(day.songkranLabel), className: 'text-[#0645c0] font-black' });
+
+  return lines;
+};
 
 export default function App() {
   const [viewMonth, setViewMonth] = useState(() => {
@@ -89,7 +201,7 @@ export default function App() {
   });
   const [selectedDate, setSelectedDate] = useState<Date | null>(() => new Date());
   const [monthData, setMonthData] = useState<Day[]>([]);
-  const [rawMonthData, setRawMonthData] = useState<any[]>([]);
+  const [rawMonthData, setRawMonthData] = useState<DayData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   
   const dailyRef = useRef<HTMLDivElement>(null);
@@ -107,18 +219,19 @@ export default function App() {
           const lanna = getLannaDate(date);
           if (!lanna) return null;
 
-          const phiKin = getWanPhiKin(lanna.lannaMonth, lanna.lunarDay, lanna.phase);
+          const labels = d.labels || [];
 
           return {
             ...lanna,
             day: d.day,
-            isSin: lanna.isSin || (d.labels && d.labels.includes("วันศีล")),
+            isSin: lanna.isSin || labels.includes("วันศีล"),
+            isUbat: lanna.isUbat || labels.some(l => l.includes("อุบาทว์")),
+            isLokawinat: lanna.isLokawinat || labels.some(l => l.includes("โลกาวินาศ")),
             songkranLabel: getSongkranLabel(date),
-            raw: d,
-            wanThai: lanna.wanThai,
-            phiKin: phiKin
+            raw: d
           };
         }).filter(Boolean) as Day[];
+
         
         setMonthData(enriched);
       } catch (e) {
@@ -156,9 +269,10 @@ export default function App() {
     const dir = getDirections(selectedDate.getDay());
     const rawLunarDay = lanna.phase === 'ออก' ? lanna.lunarDay : lanna.lunarDay + 15;
     const kalaYok = getDailyKalaYoga(rawLunarDay, selectedDate.getDay());
-    const phiKin = getWanPhiKin(lanna.lannaMonth, lanna.lunarDay, lanna.phase);
 
-    const description = buildDescription(lanna, phiKin);
+    const description = buildDescription(lanna);
+    const dailyRituals = getDailyRituals(selectedDate.getDay());
+    const mergedRituals = [...(Array.isArray(raw?.rituals) ? raw.rituals : []), ...dailyRituals];
 
     const detailData: DayData = {
       y: selectedDate.getFullYear() + 543,
@@ -174,12 +288,12 @@ export default function App() {
       lunar: { phase: lanna.phase === 'ออก' ? "waxing" : "waning", day: lanna.lunarDay },
       labels: {
         good: [lanna.isThongChai ? "วันธงชัย" : "", lanna.isAthipadi ? "วันอธิบดี" : "", lanna.sitthi || ""].filter(Boolean),
-        bad: [lanna.isSia ? "วันเสีย" : "", lanna.isUbat ? "วันอุบาทว์" : "", lanna.isLokawinat ? "วันโลกาวินาศ" : ""].filter(Boolean),
+        bad: [lanna.isSia ? "วันเสีย" : "", lanna.isUbat ? "วันอุบาทว์" : "", lanna.isLokawinat ? "วันโลกาวินาศ" : "", lanna.isLomLuang ? "วันหล่มหลวง" : ""].filter(Boolean),
         special: lanna.isSin ? ["วันศีล"] : []
       },
       description: description,
       warnings: Array.isArray(raw?.warnings) ? raw.warnings : [],
-      rituals: Array.isArray(raw?.rituals) ? raw.rituals : [],
+      rituals: mergedRituals,
       festival: song || "",
       rawText: raw?.rawText || "",
       directions: { 
@@ -187,7 +301,14 @@ export default function App() {
         ka: dir.ka 
       },
       kalaYok,
-      phiKin
+      wanMuai: lanna.wanMuai,
+      wanPhiKin: lanna.wanPhiKin,
+      panjaDithi: lanna.panjaDithi,
+      sitthi: lanna.sitthi,
+      isUbat: lanna.isUbat,
+      isLokawinat: lanna.isLokawinat,
+      isMachu: lanna.isMachu,
+      isMahaMachu: lanna.isMahaMachu
     };
 
     return { ...lanna, detailData };
@@ -195,7 +316,6 @@ export default function App() {
 
   const handleSelect = (date: Date) => {
     setSelectedDate(date);
-    setTimeout(() => dailyRef.current?.scrollIntoView({ behavior: 'smooth' }), 50);
   };
 
   const stepMonth = (n: number) => {
@@ -260,7 +380,7 @@ export default function App() {
                     <div 
                       key={day.day}
                       onClick={() => handleSelect(day.date)}
-                      className={`relative min-h-[100px] border-r border-b border-black cursor-pointer overflow-hidden ${
+                      className={`relative min-h-[125px] border-r border-b border-black cursor-pointer overflow-hidden ${
                         isSelected ? 'bg-[#fff1d8] outline outline-1 outline-[#0b62ff] outline-offset-[-1px]' : `${style.cell} hover:bg-[#f8f8f8]`
                       }`}
                     >
