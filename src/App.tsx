@@ -298,8 +298,7 @@ export default function App() {
       rawText: raw?.rawText || "",
       directions: { 
         sri: dir.sri, 
-        ka: dir.ka,
-        jangrai: dir.jangrai
+        ka: dir.ka
       },
       kalaYok,
       wanMuai: lanna.wanMuai,

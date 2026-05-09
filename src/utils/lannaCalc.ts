@@ -336,8 +336,7 @@ export function getSongkranLabel(date: Date) {
 export function getDirections(dow: number) {
   const sri = ["ใต้", "ตะวันตกตกเฉียงเหนือ", "เหนือ", "ตะวันตกออกเฉียงเหนือ", "ตะวันตกออก", "ตะวันตกออกเฉียงใต้", "ตะวันตกตก"];
   const ka = ["เหนือ", "ใต้", "ตะวันตกออกเฉียงเหนือ", "ตะวันตกตกเฉียงเหนือ", "ตะวันตกตกเฉียงใต้", "ตะวันตกตก", "ตะวันตกออก"];
-  const jangrai = ['ตก','ออกแจ่งใต้','เหนือ','ใต้','ตก','ออกแจ่งเหนือ','ตก'][dow] || '-';
-  return { sri: sri[dow], ka: ka[dow], jangrai };
+  return { sri: sri[dow], ka: ka[dow] };
 }
 
 export function getDailyKalaYoga(lunarDay: number, dow: number) {
