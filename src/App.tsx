@@ -35,7 +35,6 @@ interface Day {
   songkranLabel: string | null;
   yearZodiac: string;
   cs: number;
-  description: string; // Pre-calculated description
   raw: {
     day: number;
     labels?: string[];
@@ -157,10 +156,12 @@ function buildDescription(lanna: {
 const getStatusLines = (day: Day) => {
   const badLines = [];
   const goodLines = [];
+  const raw = day.raw || {};
+  const labels = Array.isArray(raw.labels) ? raw.labels : [];
+  const warnings = Array.isArray(raw.warnings) ? raw.warnings : [];
+  const allText = [...labels, ...warnings, raw.rawText || ""].join("|");
   
-  // Use the PRE-CALCULATED description for absolute consistency
-  const desc = day.description || "";
-  const has = (term: string) => desc.includes(term);
+  const has = (term: string) => allText.includes(term);
 
   // High priority bad days
   if (day.isSia || has("วันเสีย")) 
@@ -169,9 +170,8 @@ const getStatusLines = (day: Day) => {
   if (day.isUbat || has("อุบาทว์")) 
     badLines.push({ text: 'วันอุบาทว์', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
   
-  if (day.isLokawinat || has("โลกาวินาศ")) {
+  if (day.isLokawinat || has("โลกาวินาศ")) 
     badLines.push({ text: 'โลกาวินาศ', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
-  }
   
   if (day.isLomLuang || has("หล่มหลวง")) 
     badLines.push({ text: 'หล่มหลวง', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
@@ -226,16 +226,14 @@ export default function App() {
           if (!lanna) return null;
 
           const labels = d.labels || [];
-          const desc = buildDescription(lanna); // Unified logic
 
           return {
             ...lanna,
             day: d.day,
-            description: desc,
             isSin: lanna.isSin || labels.includes("วันศีล"),
-            isSia: lanna.isSia,
-            isUbat: lanna.isUbat,
-            isLokawinat: lanna.isLokawinat,
+            isSia: lanna.isSia || labels.includes("วันเสีย"),
+            isUbat: lanna.isUbat || labels.some(l => l.includes("อุบาทว์")),
+            isLokawinat: lanna.isLokawinat || labels.some(l => l.includes("โลกาวินาศ")),
             isThongChai: lanna.isThongChai,
             isAthipadi: lanna.isAthipadi,
             isLomLuang: lanna.isLomLuang,
@@ -345,7 +343,7 @@ export default function App() {
         <button onClick={() => stepMonth(-1)} className="h-full text-[24px] leading-none text-left pl-1 font-bold">&lt;</button>
         <div className="text-center font-bold text-[18px] leading-none whitespace-nowrap">
           ปี{headerInfo.yearZodiac}<span className="mx-7">{headerInfo.monthTitle}</span>จ.ศ. {headerInfo.cs}
-          <span className="ml-2 text-[10px] text-gray-300 font-normal">v0.0.3d-FORCE</span>
+          <span className="ml-2 text-[10px] text-gray-300 font-normal">v0.0.3d-TRUE</span>
         </div>
         <button onClick={() => stepMonth(1)} className="h-full text-[24px] leading-none text-right pr-1 font-bold">&gt;</button>
       </header>
@@ -385,8 +383,8 @@ export default function App() {
                     selectedDate?.getFullYear() === viewMonth.getFullYear();
                   const statusLines = getStatusLines(day);
                   const compactLines = [
-                    { text: toArabicDigits(`เดือน ${day.lannaMonth}`), className: 'text-black' },
-                    { text: toArabicDigits(`${day.phase}${day.lunarDay} ค่ำ`), className: 'text-black' },
+                    { text: toArabicDigits(`เดือน ${day.lannaMonth}`), className: 'text-black font-bold' },
+                    { text: toArabicDigits(`${day.phase}${day.lunarDay} ค่ำ`), className: 'text-black font-bold' },
                   ];
                   
                   return (
@@ -406,7 +404,7 @@ export default function App() {
                       </span>
 
                       <div
-                        className={`relative z-10 m-[3px] p-[4px] leading-[1.15] font-bold max-h-[calc(100%-10px)] overflow-y-auto no-scrollbar ${
+                        className={`relative z-10 m-[2px] p-[4px] leading-[1.15] max-h-[calc(100%-10px)] overflow-y-auto no-scrollbar ${
                           isSelected ? 'text-[12px] bg-[#fff4df]/80' : 'text-[12px] bg-transparent'
                         }`}
                       >
@@ -418,8 +416,8 @@ export default function App() {
                         ))}
                         
                         {/* Lunar info below status */}
-                        {compactLines.map((line) => (
-                          <div key={`${day.day}-${line.text}`} className={line.className}>
+                        {compactLines.map((line, idx) => (
+                          <div key={`${day.day}-lunar-${idx}`} className={line.className}>
                             {line.text}
                           </div>
                         ))}
