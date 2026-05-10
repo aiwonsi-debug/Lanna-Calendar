@@ -154,7 +154,8 @@ function buildDescription(lanna: {
 }
 
 const getStatusLines = (day: Day) => {
-  const lines = [];
+  const badLines = [];
+  const goodLines = [];
   const raw = day.raw || {};
   const labels = Array.isArray(raw.labels) ? raw.labels : [];
   const warnings = Array.isArray(raw.warnings) ? raw.warnings : [];
@@ -162,25 +163,27 @@ const getStatusLines = (day: Day) => {
   
   const has = (term: string) => allText.includes(term);
 
-  // High priority bad days
+  // High priority bad days -> Move to TOP with RED BG
   if (day.isSia || has("วันเสีย")) 
-    lines.push({ text: 'วันเสีย', className: 'text-[#d71920] font-black' });
+    badLines.push({ text: 'วันเสีย', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
   
   if (day.isUbat || has("อุบาทว์")) 
-    lines.push({ text: 'วันอุบาทว์', className: 'text-[#d71920] font-black' });
+    badLines.push({ text: 'วันอุบาทว์', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
   
-  if (day.isLokawinat || has("โลกาวินาศ")) 
-    lines.push({ text: 'โลกาวินาศ', className: 'text-[#d71920] font-black' });
+  if (day.isLokawinat || has("โลกาวินาศ")) {
+    if (day.day === 29) console.log("DEBUG: Day 29 Lokawinat Detected in Grid Rendering", day);
+    badLines.push({ text: 'โลกาวินาศ', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
+  }
   
   if (day.isLomLuang || has("หล่มหลวง")) 
-    lines.push({ text: 'หล่มหลวง', className: 'text-[#d71920] font-black' });
+    badLines.push({ text: 'หล่มหลวง', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
 
   // Good days
   if (day.isThongChai || has("ธงชัย")) 
-    lines.push({ text: 'ธงชัย', className: 'text-[#0f8a2a] font-black' });
+    goodLines.push({ text: 'ธงชัย', className: 'text-[#0f8a2a] font-black' });
   
   if (day.isAthipadi || has("อธิบดี")) 
-    lines.push({ text: 'อธิบดี', className: 'text-[#0f8a2a] font-black' });
+    goodLines.push({ text: 'อธิบดี', className: 'text-[#0f8a2a] font-black' });
 
   // Special/Labels (Sitthi Chok)
   const sitthiLabel = day.sitthi || 
@@ -191,12 +194,12 @@ const getStatusLines = (day: Day) => {
      has("ชัยโชค") ? "ชัยโชค" : null);
 
   if (sitthiLabel) 
-    lines.push({ text: toArabicDigits(sitthiLabel), className: 'text-[#0645c0] font-black' });
+    goodLines.push({ text: toArabicDigits(sitthiLabel), className: 'text-[#0645c0] font-black' });
   
   if (day.songkranLabel) 
-    lines.push({ text: toArabicDigits(day.songkranLabel), className: 'text-[#0645c0] font-black' });
+    goodLines.push({ text: toArabicDigits(day.songkranLabel), className: 'text-[#0645c0] font-black' });
 
-  return lines;
+  return [...badLines, ...goodLines];
 };
 
 export default function App() {
@@ -342,7 +345,7 @@ export default function App() {
         <button onClick={() => stepMonth(-1)} className="h-full text-[24px] leading-none text-left pl-1 font-bold">&lt;</button>
         <div className="text-center font-bold text-[18px] leading-none whitespace-nowrap">
           ปี{headerInfo.yearZodiac}<span className="mx-7">{headerInfo.monthTitle}</span>จ.ศ. {headerInfo.cs}
-          <span className="ml-2 text-[10px] text-gray-300 font-normal">v0.0.3d-r3</span>
+          <span className="ml-2 text-[10px] text-gray-300 font-normal">v0.0.3d-FINAL-R1</span>
         </div>
         <button onClick={() => stepMonth(1)} className="h-full text-[24px] leading-none text-right pr-1 font-bold">&gt;</button>
       </header>
@@ -384,7 +387,6 @@ export default function App() {
                   const compactLines = [
                     { text: toArabicDigits(`เดือน ${day.lannaMonth}`), className: 'text-black' },
                     { text: toArabicDigits(`${day.phase}${day.lunarDay} ค่ำ`), className: 'text-black' },
-                    ...statusLines,
                   ];
                   
                   return (
@@ -408,11 +410,20 @@ export default function App() {
                           isSelected ? 'text-[12px] bg-[#fff4df]/80' : 'text-[12px] bg-transparent'
                         }`}
                       >
+                        {/* Status lines at the VERY TOP */}
+                        {statusLines.map((line, idx) => (
+                          <div key={`${day.day}-status-${idx}`} className={line.className}>
+                            {line.text}
+                          </div>
+                        ))}
+                        
+                        {/* Lunar info below status */}
                         {compactLines.map((line) => (
                           <div key={`${day.day}-${line.text}`} className={line.className}>
                             {line.text}
                           </div>
                         ))}
+                        
                         {(isSelected || day.isSin || day.isSia || day.isUbat || day.isLokawinat || day.isThongChai || day.isAthipadi || day.sitthi) && (
                           <div className="flex gap-[5px] mt-2">
                             {day.isSin && <span className="w-[10px] h-[10px] rounded-full bg-[#f2994a]" />}
