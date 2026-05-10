@@ -155,12 +155,13 @@ export function getWanPhiKin(day: number, phase: 'ออก' | 'แรม') {
 export function getLannaDate(date: Date) {
   if (!date || isNaN(date.getTime())) return null;
 
-  // Use midnight-normalized date for day calculation
-  const d = new Date(date);
-  d.setHours(12, 0, 0, 0); // Use noon to avoid DST edge cases
-  
-  const refDate = new Date(2025, 11, 31, 12, 0, 0, 0);
-  const diffDays = Math.round((d.getTime() - refDate.getTime()) / 86400000);
+  // Use UTC-normalized date difference for absolute accuracy
+  const getDaysSinceRef = (d: Date) => {
+    return Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - 
+                       Date.UTC(2025, 11, 31)) / 86400000);
+  };
+
+  const diffDays = getDaysSinceRef(date);
   
   let currentMonth = 4, currentKham = 13, currentPhase: 'ออก' | 'แรม' = 'ออก', currentYearBE = 2569;
   let isLeapMonthActive = false;
@@ -184,7 +185,7 @@ export function getLannaDate(date: Date) {
         currentPhase = 'แรม'; 
         if (currentMonth === 9 && yrInfo.isAthikamat && !isLeapMonthActive) {
            isLeapMonthActive = true;
-           currentMonth = 10; // Shift month name jump at Full Moon in leap years
+           currentMonth = 10;
            totalTransitions++;
         }
       } else if (currentPhase === 'แรม' && currentKham > maxKham) {

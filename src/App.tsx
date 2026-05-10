@@ -35,6 +35,7 @@ interface Day {
   songkranLabel: string | null;
   yearZodiac: string;
   cs: number;
+  description: string; // Pre-calculated description
   raw: {
     day: number;
     labels?: string[];
@@ -156,14 +157,12 @@ function buildDescription(lanna: {
 const getStatusLines = (day: Day) => {
   const badLines = [];
   const goodLines = [];
-  const raw = day.raw || {};
-  const labels = Array.isArray(raw.labels) ? raw.labels : [];
-  const warnings = Array.isArray(raw.warnings) ? raw.warnings : [];
-  const allText = [...labels, ...warnings, raw.rawText || ""].join("|");
   
-  const has = (term: string) => allText.includes(term);
+  // Use the PRE-CALCULATED description for absolute consistency
+  const desc = day.description || "";
+  const has = (term: string) => desc.includes(term);
 
-  // High priority bad days -> Move to TOP with RED BG
+  // High priority bad days
   if (day.isSia || has("วันเสีย")) 
     badLines.push({ text: 'วันเสีย', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
   
@@ -171,7 +170,6 @@ const getStatusLines = (day: Day) => {
     badLines.push({ text: 'วันอุบาทว์', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
   
   if (day.isLokawinat || has("โลกาวินาศ")) {
-    if (day.day === 29) console.log("DEBUG: Day 29 Lokawinat Detected in Grid Rendering", day);
     badLines.push({ text: 'โลกาวินาศ', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
   }
   
@@ -228,10 +226,12 @@ export default function App() {
           if (!lanna) return null;
 
           const labels = d.labels || [];
+          const desc = buildDescription(lanna); // Unified logic
 
           return {
             ...lanna,
             day: d.day,
+            description: desc,
             isSin: lanna.isSin || labels.includes("วันศีล"),
             isSia: lanna.isSia,
             isUbat: lanna.isUbat,
@@ -345,7 +345,7 @@ export default function App() {
         <button onClick={() => stepMonth(-1)} className="h-full text-[24px] leading-none text-left pl-1 font-bold">&lt;</button>
         <div className="text-center font-bold text-[18px] leading-none whitespace-nowrap">
           ปี{headerInfo.yearZodiac}<span className="mx-7">{headerInfo.monthTitle}</span>จ.ศ. {headerInfo.cs}
-          <span className="ml-2 text-[10px] text-gray-300 font-normal">v0.0.3d-FINAL-R1</span>
+          <span className="ml-2 text-[10px] text-gray-300 font-normal">v0.0.3d-FORCE</span>
         </div>
         <button onClick={() => stepMonth(1)} className="h-full text-[24px] leading-none text-right pr-1 font-bold">&gt;</button>
       </header>
