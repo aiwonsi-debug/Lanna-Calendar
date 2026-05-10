@@ -158,41 +158,37 @@ const getStatusLines = (day: Day) => {
   const raw = day.raw || {};
   const labels = Array.isArray(raw.labels) ? raw.labels : [];
   const warnings = Array.isArray(raw.warnings) ? raw.warnings : [];
-  const description = raw.rawText || "";
+  const allText = [...labels, ...warnings, raw.rawText || ""].join("|");
   
-  // Combine everything and nuke ALL whitespace and special characters for stable matching
-  const clean = (text: string) => text.replace(/[^\u0E00-\u0E7F]/g, ''); // Keep only Thai characters
-  const haystack = clean([...labels, ...warnings, description].join(''));
-  
-  const check = (term: string) => haystack.includes(clean(term));
+  const has = (term: string) => allText.includes(term);
 
-  // High priority bad days (Calculated OR Deep String Match)
-  if (day.isSia || check("วันเสีย")) 
+  // High priority bad days
+  if (day.isSia || has("วันเสีย")) 
     lines.push({ text: 'วันเสีย', className: 'text-[#d71920] font-black' });
   
-  if (day.isUbat || check("อุบาทว์") || check("วันอุบาทว์")) 
+  if (day.isUbat || has("อุบาทว์")) 
     lines.push({ text: 'วันอุบาทว์', className: 'text-[#d71920] font-black' });
   
-  if (day.isLokawinat || check("โลกาวินาศ") || check("วันโลกาวินาศ")) 
+  if (day.isLokawinat || has("โลกาวินาศ")) 
     lines.push({ text: 'โลกาวินาศ', className: 'text-[#d71920] font-black' });
   
-  if (day.isLomLuang || check("หล่มหลวง")) 
+  if (day.isLomLuang || has("หล่มหลวง")) 
     lines.push({ text: 'หล่มหลวง', className: 'text-[#d71920] font-black' });
 
-  // Good days (Calculated OR JSON fallback)
-  if (day.isThongChai || check("วันธงชัย") || check("ธงชัย")) 
+  // Good days
+  if (day.isThongChai || has("ธงชัย")) 
     lines.push({ text: 'ธงชัย', className: 'text-[#0f8a2a] font-black' });
   
-  if (day.isAthipadi || check("วันอธิบดี") || check("อธิบดี")) 
+  if (day.isAthipadi || has("อธิบดี")) 
     lines.push({ text: 'อธิบดี', className: 'text-[#0f8a2a] font-black' });
 
-  // Special/Labels
+  // Special/Labels (Sitthi Chok)
   const sitthiLabel = day.sitthi || 
-    (check("มหาสิทธิโชค") ? "มหาสิทธิโชค" : 
-     check("อมฤตโชค") ? "อมฤตโชค" : 
-     check("สิทธิโชค") ? "สิทธิโชค" : 
-     check("ราชาโชค") ? "ราชาโชค" : 
-     check("ชัยโชค") ? "ชัยโชค" : null);
+    (has("มหาสิทธิโชค") ? "มหาสิทธิโชค" : 
+     has("อมฤตโชค") ? "อมฤตโชค" : 
+     has("สิทธิโชค") ? "สิทธิโชค" : 
+     has("ราชาโชค") ? "ราชาโชค" : 
+     has("ชัยโชค") ? "ชัยโชค" : null);
 
   if (sitthiLabel) 
     lines.push({ text: toArabicDigits(sitthiLabel), className: 'text-[#0645c0] font-black' });
@@ -346,6 +342,7 @@ export default function App() {
         <button onClick={() => stepMonth(-1)} className="h-full text-[24px] leading-none text-left pl-1 font-bold">&lt;</button>
         <div className="text-center font-bold text-[18px] leading-none whitespace-nowrap">
           ปี{headerInfo.yearZodiac}<span className="mx-7">{headerInfo.monthTitle}</span>จ.ศ. {headerInfo.cs}
+          <span className="ml-2 text-[10px] text-gray-300 font-normal">v0.0.3d-r3</span>
         </div>
         <button onClick={() => stepMonth(1)} className="h-full text-[24px] leading-none text-right pr-1 font-bold">&gt;</button>
       </header>
