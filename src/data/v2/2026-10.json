@@ -355,7 +355,7 @@
       "wanThai": "กาเหม้า",
       "wanThaiDesc": "อย่าหื้อของแก่ท่าน จักเสียล้านภายลูน",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": true,
@@ -379,7 +379,8 @@
       "day": 11,
       "lunar": "ขึ้น 1 ค่ำ",
       "labels": [
-        "วันธงชัย"
+        "วันธงชัย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -461,7 +462,7 @@
       "wanThaiDesc": "หื้อแป๋งครกต๋ำเข้า ได้ข้าวมาต๋ำบ่ขาด",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -484,8 +485,7 @@
       "day": 14,
       "lunar": "ขึ้น 4 ค่ำ",
       "labels": [
-        "มหาสิทธิโชค",
-        "วันโลกาวินาศ"
+        "มหาสิทธิโชค"
       ]
     },
     {
@@ -566,7 +566,7 @@
       "wanThaiDesc": "หื้อก่ายห้างยิงนก ได้เต๋มพกเพื่อวันหมาน",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -588,7 +588,9 @@
       "dateISO": "2026-10-16",
       "day": 17,
       "lunar": "ขึ้น 7 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2026-10-17T17:00:00.000Z",
@@ -703,7 +705,7 @@
       "wanThai": "กาเป้า",
       "wanThaiDesc": "อย่าชวนกันลงเรือ",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -726,9 +728,7 @@
       "dateISO": "2026-10-20",
       "day": 21,
       "lunar": "ขึ้น 11 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2026-10-21T17:00:00.000Z",
@@ -872,7 +872,7 @@
       "wanThai": "เปิกสะง้า",
       "wanThaiDesc": "อย่าสร้างครัวศึก เยียวเสียตายบ่แพ้ท่านฆ่า",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": true,
@@ -896,7 +896,8 @@
       "day": 26,
       "lunar": "แรม 1 ค่ำ",
       "labels": [
-        "วันธงชัย"
+        "วันธงชัย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -977,7 +978,7 @@
       "wanThaiDesc": "อย่าเย็บลายเข้านุ่ง (ผ้านุ่ง) เยียวจะได้ห่มเมื่อตาย",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -1000,8 +1001,7 @@
       "day": 29,
       "lunar": "แรม 4 ค่ำ",
       "labels": [
-        "อมฤตโชค",
-        "วันโลกาวินาศ"
+        "อมฤตโชค"
       ]
     },
     {

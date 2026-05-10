@@ -11,10 +11,10 @@
       "wanThai": "รวายสัน",
       "wanThaiDesc": "หื้อแรกไม้แปลงเวียง แม้พลแสนรบบ่แพ้",
       "isSia": true,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
+      "isThongChai": true,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1388,
@@ -35,7 +35,9 @@
       "day": 1,
       "lunar": "แรม 10 ค่ำ",
       "labels": [
-        "วันเสีย"
+        "วันธงชัย",
+        "วันเสีย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -182,10 +184,10 @@
       "wanThai": "ร้วงเป้า",
       "wanThaiDesc": "อย่าแป๋งสวนปลูกอ้อย เป็นต้นงามบ่มีน้ำ",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
+      "isThongChai": true,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1388,
@@ -205,7 +207,10 @@
       "dateISO": "2027-02-05",
       "day": 6,
       "lunar": "ขึ้น 1 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันธงชัย",
+        "วันอุบาทว์"
+      ]
     },
     {
       "date": "2027-02-06T17:00:00.000Z",
@@ -215,7 +220,7 @@
       "wanThai": "เต่ายี่",
       "wanThaiDesc": "หื้อปลูกไว้ยังสวน ตกทลายขาวหม้า (มาก)",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -238,9 +243,7 @@
       "dateISO": "2027-02-06",
       "day": 7,
       "lunar": "ขึ้น 2 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2027-02-07T17:00:00.000Z",
@@ -323,8 +326,8 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
-      "isAthipadi": false,
+      "isThongChai": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1388,
       "yearZodiac": "รวายสะง้า (มะเมีย)",
@@ -344,7 +347,7 @@
       "day": 10,
       "lunar": "ขึ้น 5 ค่ำ",
       "labels": [
-        "วันธงชัย"
+        "วันอธิบดี"
       ]
     },
     {
@@ -391,7 +394,7 @@
       "wanThaiDesc": "หื้อสานแห ทอดน้ำได้เต๋มข้องพอหมาน",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -413,7 +416,9 @@
       "dateISO": "2027-02-11",
       "day": 12,
       "lunar": "ขึ้น 7 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2027-02-12T17:00:00.000Z",
@@ -424,7 +429,7 @@
       "wanThaiDesc": "หื้อใส่เหล้าบรรณาการ ขุนรักหื้อลาภมากนัก",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": true,
       "isThongChai": false,
       "isAthipadi": false,
@@ -447,7 +452,6 @@
       "day": 13,
       "lunar": "ขึ้น 8 ค่ำ",
       "labels": [
-        "วันโลกาวินาศ",
         "วันศีล"
       ]
     },
@@ -463,7 +467,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1388,
       "yearZodiac": "รวายสะง้า (มะเมีย)",
@@ -482,9 +486,7 @@
       "dateISO": "2027-02-13",
       "day": 14,
       "lunar": "ขึ้น 9 ค่ำ",
-      "labels": [
-        "วันอธิบดี"
-      ]
+      "labels": []
     },
     {
       "date": "2027-02-14T17:00:00.000Z",
@@ -698,10 +700,10 @@
       "wanThai": "รวายสี",
       "wanThaiDesc": "หื้อหาครัวศึก พลแสนรบบ่แพ้",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
+      "isThongChai": true,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1388,
@@ -721,7 +723,10 @@
       "dateISO": "2027-02-20",
       "day": 21,
       "lunar": "แรม 1 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันธงชัย",
+        "วันอุบาทว์"
+      ]
     },
     {
       "date": "2027-02-21T17:00:00.000Z",
@@ -731,7 +736,7 @@
       "wanThai": "เมืองไส้",
       "wanThaiDesc": "อย่าชวนกันรบท่าน เยียวตายถูกปืน",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -754,9 +759,7 @@
       "dateISO": "2027-02-21",
       "day": 22,
       "lunar": "แรม 2 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2027-02-22T17:00:00.000Z",
@@ -839,8 +842,8 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
-      "isAthipadi": false,
+      "isThongChai": false,
+      "isAthipadi": true,
       "sitthi": "ชัยโชค",
       "cs": 1388,
       "yearZodiac": "รวายสะง้า (มะเมีย)",
@@ -860,7 +863,7 @@
       "day": 25,
       "lunar": "แรม 5 ค่ำ",
       "labels": [
-        "วันธงชัย",
+        "วันอธิบดี",
         "ชัยโชค"
       ]
     },
@@ -908,7 +911,7 @@
       "wanThaiDesc": "อย่าถมยังชีไฟ เตาไฟ ผีดั้งจักชังเนอ",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -930,7 +933,9 @@
       "dateISO": "2027-02-26",
       "day": 27,
       "lunar": "แรม 7 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2027-02-27T17:00:00.000Z",
@@ -941,7 +946,7 @@
       "wanThaiDesc": "อย่าซื้อวัวควายมาคอก ผีด้ำซ้ำบ่ดีสังแล",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": true,
       "isThongChai": false,
       "isAthipadi": false,
@@ -965,7 +970,6 @@
       "lunar": "แรม 8 ค่ำ",
       "labels": [
         "อมฤตโชค",
-        "วันโลกาวินาศ",
         "วันศีล"
       ]
     }

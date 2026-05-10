@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "resolvedAt": "2026-05-09T00:01:41.855Z",
+    "resolvedAt": "2026-05-10T03:30:35.951Z",
     "strategy": "GENERATED_V2_2"
   },
   "month": "2032-07",
@@ -13,7 +13,7 @@
       "wanThai": "กาไส้",
       "wanThaiDesc": "อย่าเอากันกินแขก จักได้ถูกถ้อยเป็นคำ",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": true,
       "isThongChai": false,
@@ -37,7 +37,6 @@
       "day": 1,
       "lunar": "แรม 8 ค่ำ",
       "labels": [
-        "วันอุบาทว์",
         "วันศีล"
       ]
     },
@@ -49,7 +48,7 @@
       "wanThai": "กาบสะง้า",
       "wanThaiDesc": "หื้อแรกน้ำใส่นา จักได้ข้าวมาเต๋มหลอง",
       "isSia": true,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -73,7 +72,8 @@
       "day": 2,
       "lunar": "แรม 9 ค่ำ",
       "labels": [
-        "วันเสีย"
+        "วันเสีย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -118,7 +118,7 @@
       "wanThaiDesc": "หื้อแรกไม้แปลงเวียง แม้พลแสนรบบ่แพ้",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -141,7 +141,8 @@
       "day": 4,
       "lunar": "แรม 11 ค่ำ",
       "labels": [
-        "สิทธิโชค"
+        "สิทธิโชค",
+        "วันโลกาวินาศ"
       ]
     },
     {

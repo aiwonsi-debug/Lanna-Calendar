@@ -14,8 +14,8 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
-      "isAthipadi": false,
+      "isThongChai": false,
+      "isAthipadi": true,
       "sitthi": "มหาสิทธิโชค",
       "cs": 1396,
       "yearZodiac": "กาบยี่ (เสือ)",
@@ -35,7 +35,7 @@
       "day": 1,
       "lunar": "แรม 4 ค่ำ",
       "labels": [
-        "วันธงชัย",
+        "วันอธิบดี",
         "มหาสิทธิโชค"
       ]
     },
@@ -117,7 +117,7 @@
       "wanThaiDesc": "หื้อก่ายห้างยิงนก ได้เต๋มพกเพื่อวันหมาน",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -139,9 +139,7 @@
       "dateISO": "2034-11-03",
       "day": 4,
       "lunar": "แรม 7 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2034-11-04T17:00:00.000Z",
@@ -155,7 +153,7 @@
       "isLokawinat": false,
       "isSin": true,
       "isThongChai": false,
-      "isAthipadi": true,
+      "isAthipadi": false,
       "sitthi": "อมฤตโชค",
       "cs": 1396,
       "yearZodiac": "กาบยี่ (เสือ)",
@@ -175,7 +173,6 @@
       "day": 5,
       "lunar": "แรม 8 ค่ำ",
       "labels": [
-        "วันอธิบดี",
         "อมฤตโชค",
         "วันเสีย",
         "วันศีล"
@@ -224,10 +221,10 @@
       "wanThai": "เต่าไจ้",
       "wanThaiDesc": "หื้อได้ล้อมคอกวัวควาย เป็นหลายตัวใหญ่หม้า (มาก)",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
+      "isThongChai": true,
       "isAthipadi": false,
       "sitthi": "ชัยโชค",
       "cs": 1396,
@@ -248,7 +245,9 @@
       "day": 7,
       "lunar": "แรม 10 ค่ำ",
       "labels": [
-        "ชัยโชค"
+        "วันธงชัย",
+        "ชัยโชค",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -393,10 +392,10 @@
       "wanThai": "เมืองไส้",
       "wanThaiDesc": "อย่าชวนกันรบท่าน เยียวตายถูกปืน",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
+      "isThongChai": true,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1396,
@@ -416,7 +415,10 @@
       "dateISO": "2034-11-11",
       "day": 12,
       "lunar": "ขึ้น 1 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันธงชัย",
+        "วันอุบาทว์"
+      ]
     },
     {
       "date": "2034-11-12T17:00:00.000Z",
@@ -426,7 +428,7 @@
       "wanThai": "เปิกสะง้า",
       "wanThaiDesc": "อย่าสร้างครัวศึก เยียวเสียตายบ่แพ้ท่านฆ่า",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -449,9 +451,7 @@
       "dateISO": "2034-11-12",
       "day": 13,
       "lunar": "ขึ้น 2 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2034-11-13T17:00:00.000Z",
@@ -534,8 +534,8 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
-      "isAthipadi": false,
+      "isThongChai": false,
+      "isAthipadi": true,
       "sitthi": "ชัยโชค",
       "cs": 1396,
       "yearZodiac": "กาบยี่ (เสือ)",
@@ -555,7 +555,7 @@
       "day": 16,
       "lunar": "ขึ้น 5 ค่ำ",
       "labels": [
-        "วันธงชัย",
+        "วันอธิบดี",
         "ชัยโชค"
       ]
     },
@@ -603,7 +603,7 @@
       "wanThaiDesc": "อย่าซื้อวัวควายมาคอก ผีด้ำซ้ำบ่ดีสังแล",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -625,7 +625,9 @@
       "dateISO": "2034-11-17",
       "day": 18,
       "lunar": "ขึ้น 7 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2034-11-18T17:00:00.000Z",
@@ -636,7 +638,7 @@
       "wanThaiDesc": "แม่วันดี คันจักเยียะได้ หื้อหาวันปลอด (ดี เป็นสิริมงคล)",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": true,
       "isThongChai": false,
       "isAthipadi": false,
@@ -660,7 +662,6 @@
       "lunar": "ขึ้น 8 ค่ำ",
       "labels": [
         "อมฤตโชค",
-        "วันโลกาวินาศ",
         "วันศีล"
       ]
     },
@@ -676,7 +677,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1396,
       "yearZodiac": "กาบยี่ (เสือ)",
@@ -695,9 +696,7 @@
       "dateISO": "2034-11-19",
       "day": 20,
       "lunar": "ขึ้น 9 ค่ำ",
-      "labels": [
-        "วันอธิบดี"
-      ]
+      "labels": []
     },
     {
       "date": "2034-11-20T17:00:00.000Z",
@@ -910,10 +909,10 @@
       "wanThai": "เต่าสัน",
       "wanThaiDesc": "หื้อห่อหมากขอสาวหุมมาสู่ (ควรผูกมิตร)",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
+      "isThongChai": true,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1396,
@@ -933,7 +932,10 @@
       "dateISO": "2034-11-26",
       "day": 27,
       "lunar": "แรม 1 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันธงชัย",
+        "วันอุบาทว์"
+      ]
     },
     {
       "date": "2034-11-27T17:00:00.000Z",
@@ -943,7 +945,7 @@
       "wanThai": "กาเร้า",
       "wanThaiDesc": "หื้อหาขวัญลูกเต้า เอาขวัญข้าวแควนดี (ควรถักแห)",
       "isSia": true,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -967,8 +969,7 @@
       "day": 28,
       "lunar": "แรม 2 ค่ำ",
       "labels": [
-        "วันเสีย",
-        "วันอุบาทว์"
+        "วันเสีย"
       ]
     },
     {

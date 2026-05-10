@@ -114,7 +114,7 @@
       "wanThaiDesc": "อย่าสร้างดาบเถี่ยนกล้า จักพลันได้ฟันตน (อย่าประดิษฐ์หรือซื้ออาวุธ)",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -136,9 +136,7 @@
       "dateISO": "2027-07-03",
       "day": 4,
       "lunar": "ขึ้น 1 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2027-07-04T17:00:00.000Z",
@@ -151,8 +149,8 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
-      "isAthipadi": true,
+      "isThongChai": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1389,
       "yearZodiac": "เมืองเม็ด (มะแม)",
@@ -172,7 +170,7 @@
       "day": 5,
       "lunar": "ขึ้น 2 ค่ำ",
       "labels": [
-        "วันอธิบดี"
+        "วันธงชัย"
       ]
     },
     {
@@ -251,7 +249,7 @@
       "wanThai": "กาเร้า",
       "wanThaiDesc": "หื้อหาขวัญลูกเต้า เอาขวัญข้าวแควนดี (ควรถักแห)",
       "isSia": true,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -276,7 +274,8 @@
       "lunar": "ขึ้น 5 ค่ำ",
       "labels": [
         "ชัยโชค",
-        "วันเสีย"
+        "วันเสีย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -291,7 +290,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1389,
       "yearZodiac": "เมืองเม็ด (มะแม)",
@@ -310,7 +309,9 @@
       "dateISO": "2027-07-08",
       "day": 9,
       "lunar": "ขึ้น 6 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันอธิบดี"
+      ]
     },
     {
       "date": "2027-07-09T17:00:00.000Z",
@@ -320,7 +321,7 @@
       "wanThai": "ดับไค้",
       "wanThaiDesc": "อย่าตัดผม ไปม่ายสาว สาวบ่ชมบ่สู้",
       "isSia": true,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -344,8 +345,7 @@
       "day": 10,
       "lunar": "ขึ้น 7 ค่ำ",
       "labels": [
-        "วันเสีย",
-        "วันอุบาทว์"
+        "วันเสีย"
       ]
     },
     {
@@ -428,7 +428,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
+      "isThongChai": false,
       "isAthipadi": false,
       "sitthi": "ชัยโชค",
       "cs": 1389,
@@ -449,7 +449,6 @@
       "day": 13,
       "lunar": "ขึ้น 10 ค่ำ",
       "labels": [
-        "วันธงชัย",
         "ชัยโชค"
       ]
     },
@@ -600,7 +599,7 @@
       "wanThaiDesc": "อย่าฝนหลาวเถี่ยนกล้า เยียวหากฆ่าฟันตน",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": true,
       "isThongChai": false,
       "isAthipadi": false,
@@ -623,6 +622,7 @@
       "day": 18,
       "lunar": "ขึ้น 15 ค่ำ",
       "labels": [
+        "วันโลกาวินาศ",
         "วันศีล"
       ]
     },
@@ -635,7 +635,7 @@
       "wanThaiDesc": "หื้อล้อมวัวควาย มีหลายบ่น้อย",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -657,9 +657,7 @@
       "dateISO": "2027-07-18",
       "day": 19,
       "lunar": "แรม 1 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2027-07-19T17:00:00.000Z",
@@ -672,8 +670,8 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
-      "isAthipadi": true,
+      "isThongChai": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1389,
       "yearZodiac": "เมืองเม็ด (มะแม)",
@@ -693,7 +691,7 @@
       "day": 20,
       "lunar": "แรม 2 ค่ำ",
       "labels": [
-        "วันอธิบดี"
+        "วันธงชัย"
       ]
     },
     {
@@ -773,7 +771,7 @@
       "wanThai": "เปิกไจ้",
       "wanThaiDesc": "ดีใส่รัก ทาเกี๊ยะแป๋งกล่อง และกุบ ดี",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -796,7 +794,9 @@
       "dateISO": "2027-07-22",
       "day": 23,
       "lunar": "แรม 5 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันอุบาทว์"
+      ]
     },
     {
       "date": "2027-07-23T17:00:00.000Z",
@@ -810,7 +810,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1389,
       "yearZodiac": "เมืองเม็ด (มะแม)",
@@ -830,6 +830,7 @@
       "day": 24,
       "lunar": "แรม 6 ค่ำ",
       "labels": [
+        "วันอธิบดี",
         "วันเสีย"
       ]
     },
@@ -841,7 +842,7 @@
       "wanThai": "กดยี่",
       "wanThaiDesc": "-",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -864,9 +865,7 @@
       "dateISO": "2027-07-24",
       "day": 25,
       "lunar": "แรม 7 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2027-07-25T17:00:00.000Z",
@@ -949,7 +948,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
+      "isThongChai": false,
       "isAthipadi": false,
       "sitthi": "สิทธิโชค",
       "cs": 1389,
@@ -970,7 +969,6 @@
       "day": 28,
       "lunar": "แรม 10 ค่ำ",
       "labels": [
-        "วันธงชัย",
         "สิทธิโชค"
       ]
     },

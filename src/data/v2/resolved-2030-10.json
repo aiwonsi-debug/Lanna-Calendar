@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "resolvedAt": "2026-05-09T00:01:41.761Z",
+    "resolvedAt": "2026-05-10T03:30:35.834Z",
     "strategy": "GENERATED_V2_2"
   },
   "month": "2030-10",
@@ -46,8 +46,8 @@
       "wanThai": "ดับเหม้า",
       "wanThaiDesc": "หื้อตัดเสื้อผ้า แหนชู้ ขุนนางรัก",
       "isSia": false,
-      "isUbat": false,
-      "isLokawinat": true,
+      "isUbat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -70,7 +70,7 @@
       "day": 2,
       "lunar": "ขึ้น 5 ค่ำ",
       "labels": [
-        "วันโลกาวินาศ"
+        "วันอุบาทว์"
       ]
     },
     {
@@ -287,7 +287,7 @@
       "wanThai": "เต่าเส็ด",
       "wanThaiDesc": "อย่าถมยังชีไฟ เตาไฟ ผีดั้งจักชังเนอ",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -310,9 +310,7 @@
       "dateISO": "2030-10-08",
       "day": 9,
       "lunar": "ขึ้น 12 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2030-10-09T17:00:00.000Z",
@@ -391,7 +389,7 @@
       "wanThaiDesc": "อย่าได้สานหับไปค้า จะถูกฆ่ากลางทาง (อย่าเดินทางค้าขาย)",
       "isSia": true,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": true,
       "isThongChai": false,
       "isAthipadi": false,
@@ -416,6 +414,7 @@
       "labels": [
         "มหาสิทธิโชค",
         "วันเสีย",
+        "วันโลกาวินาศ",
         "วันศีล"
       ]
     },
@@ -565,8 +564,8 @@
       "wanThai": "กดสะง้า",
       "wanThaiDesc": "อย่าขี่ม้าเทียวเมือง จักตกม้าตายเผิดหน้า (อย่าออกเดินทาง)",
       "isSia": true,
-      "isUbat": false,
-      "isLokawinat": true,
+      "isUbat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -591,7 +590,7 @@
       "labels": [
         "ชัยโชค",
         "วันเสีย",
-        "วันโลกาวินาศ"
+        "วันอุบาทว์"
       ]
     },
     {
@@ -809,7 +808,7 @@
       "wanThai": "เมืองเป้า",
       "wanThaiDesc": "อย่าตัดผ้าไหมนุ่ง จะตายจากกัน",
       "isSia": true,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -833,8 +832,7 @@
       "day": 24,
       "lunar": "แรม 12 ค่ำ",
       "labels": [
-        "วันเสีย",
-        "วันอุบาทว์"
+        "วันเสีย"
       ]
     },
     {

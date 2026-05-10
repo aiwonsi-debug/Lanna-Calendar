@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "resolvedAt": "2026-05-09T00:01:41.537Z",
+    "resolvedAt": "2026-05-10T03:30:35.488Z",
     "strategy": "GENERATED_V2_2"
   },
   "month": "2026-04",
@@ -14,7 +14,7 @@
       "wanThaiDesc": "-",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": true,
       "isThongChai": false,
       "isAthipadi": false,
@@ -37,6 +37,7 @@
       "day": 1,
       "lunar": "ขึ้น 15 ค่ำ",
       "labels": [
+        "วันโลกาวินาศ",
         "วันศีล"
       ]
     },
@@ -86,7 +87,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
+      "isThongChai": true,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1387,
@@ -106,7 +107,9 @@
       "dateISO": "2026-04-02",
       "day": 3,
       "lunar": "แรม 2 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันธงชัย"
+      ]
     },
     {
       "date": "2026-04-03T17:00:00.000Z",
@@ -116,7 +119,7 @@
       "wanThai": "กาไส้",
       "wanThaiDesc": "อย่าเอากันกินแขก จักได้ถูกถ้อยเป็นคำ",
       "isSia": true,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -140,8 +143,7 @@
       "day": 4,
       "lunar": "แรม 3 ค่ำ",
       "labels": [
-        "วันเสีย",
-        "วันอุบาทว์"
+        "วันเสีย"
       ]
     },
     {
@@ -185,7 +187,7 @@
       "wanThai": "ดับเม็ด",
       "wanThaiDesc": "อย่าชวนกันไปค้า เยียวท่านฆ่าเอาครัว",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -209,7 +211,8 @@
       "day": 6,
       "lunar": "แรม 5 ค่ำ",
       "labels": [
-        "ราชาโชค"
+        "ราชาโชค",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -223,8 +226,8 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
-      "isAthipadi": false,
+      "isThongChai": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1387,
       "yearZodiac": "ดับไส้ (มะเส็ง)",
@@ -244,7 +247,7 @@
       "day": 7,
       "lunar": "แรม 6 ค่ำ",
       "labels": [
-        "วันธงชัย"
+        "วันอธิบดี"
       ]
     },
     {
@@ -327,7 +330,7 @@
       "wanThaiDesc": "อย่าก่ายห้างยิงกวาง แม่นทำดายบ่ได้",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -349,9 +352,7 @@
       "dateISO": "2026-04-09",
       "day": 10,
       "lunar": "แรม 9 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2026-04-10T17:00:00.000Z",
@@ -365,7 +366,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1387,
       "yearZodiac": "ดับไส้ (มะเส็ง)",
@@ -385,7 +386,6 @@
       "day": 11,
       "lunar": "แรม 10 ค่ำ",
       "labels": [
-        "วันอธิบดี",
         "วันเสีย"
       ]
     },
@@ -609,7 +609,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
+      "isThongChai": true,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1388,
@@ -629,7 +629,9 @@
       "dateISO": "2026-04-17",
       "day": 18,
       "lunar": "ขึ้น 3 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันธงชัย"
+      ]
     },
     {
       "date": "2026-04-18T17:00:00.000Z",
@@ -639,7 +641,7 @@
       "wanThai": "เปิกสัน",
       "wanThaiDesc": "หื้อใส่เหล้าบรรณาการ ขุนรักหื้อลาภมากนัก",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -662,9 +664,7 @@
       "dateISO": "2026-04-18",
       "day": 19,
       "lunar": "ขึ้น 4 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2026-04-19T17:00:00.000Z",
@@ -745,8 +745,8 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
-      "isAthipadi": false,
+      "isThongChai": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1388,
       "yearZodiac": "รวายสะง้า (มะเมีย)",
@@ -766,7 +766,7 @@
       "day": 22,
       "lunar": "ขึ้น 7 ค่ำ",
       "labels": [
-        "วันธงชัย",
+        "วันอธิบดี",
         "วันเสีย"
       ]
     },
@@ -814,7 +814,7 @@
       "wanThai": "กาเป้า",
       "wanThaiDesc": "อย่าชวนกันลงเรือ",
       "isSia": true,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -838,7 +838,8 @@
       "day": 24,
       "lunar": "ขึ้น 9 ค่ำ",
       "labels": [
-        "วันเสีย"
+        "วันเสีย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -850,7 +851,7 @@
       "wanThaiDesc": "หื่อสานก๋วยไปกาด ได้ของค้าหากพอหาม",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -872,9 +873,7 @@
       "dateISO": "2026-04-24",
       "day": 25,
       "lunar": "ขึ้น 10 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2026-04-25T17:00:00.000Z",
@@ -885,10 +884,10 @@
       "wanThaiDesc": "หื้อตัดเสื้อผ้า แหนชู้ ขุนนางรัก",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": true,
+      "isAthipadi": false,
       "sitthi": "สิทธิโชค",
       "cs": 1388,
       "yearZodiac": "รวายสะง้า (มะเมีย)",
@@ -908,8 +907,8 @@
       "day": 26,
       "lunar": "ขึ้น 11 ค่ำ",
       "labels": [
-        "วันอธิบดี",
-        "สิทธิโชค"
+        "สิทธิโชค",
+        "วันโลกาวินาศ"
       ]
     },
     {

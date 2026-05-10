@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "resolvedAt": "2026-05-09T00:01:41.553Z",
+    "resolvedAt": "2026-05-10T03:30:35.534Z",
     "strategy": "GENERATED_V2_2"
   },
   "month": "2026-06",
@@ -120,7 +120,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": false,
+      "isAthipadi": true,
       "sitthi": "ชัยโชค",
       "cs": 1388,
       "yearZodiac": "รวายสะง้า (มะเมีย)",
@@ -140,6 +140,7 @@
       "day": 4,
       "lunar": "แรม 5 ค่ำ",
       "labels": [
+        "วันอธิบดี",
         "ชัยโชค"
       ]
     },
@@ -151,7 +152,7 @@
       "wanThai": "ดับเม็ด",
       "wanThaiDesc": "อย่าชวนกันไปค้า เยียวท่านฆ่าเอาครัว",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -174,9 +175,7 @@
       "dateISO": "2026-06-04",
       "day": 5,
       "lunar": "แรม 6 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2026-06-05T17:00:00.000Z",
@@ -187,7 +186,7 @@
       "wanThaiDesc": "หื้อแรกไม้แปลงเวียง แม้พลแสนรบบ่แพ้",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -209,7 +208,9 @@
       "dateISO": "2026-06-05",
       "day": 6,
       "lunar": "แรม 7 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2026-06-06T17:00:00.000Z",
@@ -258,7 +259,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
+      "isThongChai": false,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1388,
@@ -278,9 +279,7 @@
       "dateISO": "2026-06-07",
       "day": 8,
       "lunar": "แรม 9 ค่ำ",
-      "labels": [
-        "วันธงชัย"
-      ]
+      "labels": []
     },
     {
       "date": "2026-06-08T17:00:00.000Z",
@@ -361,7 +360,7 @@
       "wanThaiDesc": "อย่าแป๋งสวนปลูกอ้อย เป็นต้นงามบ่มีน้ำ",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -383,9 +382,7 @@
       "dateISO": "2026-06-10",
       "day": 11,
       "lunar": "แรม 12 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2026-06-11T17:00:00.000Z",
@@ -496,11 +493,11 @@
       "wanThai": "ดับไส้",
       "wanThaiDesc": "เอาเมียมาใหม่ จักได้ลูกตายพราย",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
-      "isAthipadi": true,
+      "isThongChai": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1388,
       "yearZodiac": "รวายสะง้า (มะเมีย)",
@@ -520,7 +517,8 @@
       "day": 15,
       "lunar": "ขึ้น 1 ค่ำ",
       "labels": [
-        "วันอธิบดี"
+        "วันธงชัย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -638,7 +636,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1388,
       "yearZodiac": "รวายสะง้า (มะเมีย)",
@@ -657,7 +655,9 @@
       "dateISO": "2026-06-18",
       "day": 19,
       "lunar": "ขึ้น 5 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันอธิบดี"
+      ]
     },
     {
       "date": "2026-06-19T17:00:00.000Z",
@@ -667,7 +667,7 @@
       "wanThai": "กดเส็ด",
       "wanThaiDesc": "อย่าฝั้นเชือกวัวควาย เสียตนตาย เพื่อบ่กัดหญ้า",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -690,9 +690,7 @@
       "dateISO": "2026-06-19",
       "day": 20,
       "lunar": "ขึ้น 6 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2026-06-20T17:00:00.000Z",
@@ -703,7 +701,7 @@
       "wanThaiDesc": "อย่าชวนกันกินเหล้า เทียรย่อมผิดกัน",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -725,7 +723,9 @@
       "dateISO": "2026-06-20",
       "day": 21,
       "lunar": "ขึ้น 7 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2026-06-21T17:00:00.000Z",
@@ -773,7 +773,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
+      "isThongChai": false,
       "isAthipadi": false,
       "sitthi": "อมฤตโชค",
       "cs": 1388,
@@ -794,7 +794,6 @@
       "day": 23,
       "lunar": "ขึ้น 9 ค่ำ",
       "labels": [
-        "วันธงชัย",
         "อมฤตโชค",
         "วันเสีย"
       ]
@@ -877,7 +876,7 @@
       "wanThaiDesc": "หื้อหาครัวศึก พลแสนรบบ่แพ้",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -899,9 +898,7 @@
       "dateISO": "2026-06-25",
       "day": 26,
       "lunar": "ขึ้น 12 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2026-06-26T17:00:00.000Z",
@@ -1014,11 +1011,11 @@
       "wanThai": "กดสัน",
       "wanThaiDesc": "หื่อห่อหมากถามสาวหุม บ่ร้าง",
       "isSia": true,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
-      "isAthipadi": true,
+      "isThongChai": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1388,
       "yearZodiac": "รวายสะง้า (มะเมีย)",
@@ -1038,8 +1035,9 @@
       "day": 30,
       "lunar": "แรม 1 ค่ำ",
       "labels": [
-        "วันอธิบดี",
-        "วันเสีย"
+        "วันธงชัย",
+        "วันเสีย",
+        "วันอุบาทว์"
       ]
     }
   ]

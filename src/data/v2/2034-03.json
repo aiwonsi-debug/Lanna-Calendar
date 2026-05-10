@@ -12,7 +12,7 @@
       "wanThaiDesc": "อย่าแป๋งสวนปลูกอ้อย เป็นต้นงามบ่มีน้ำ",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -34,9 +34,7 @@
       "dateISO": "2034-02-28",
       "day": 1,
       "lunar": "ขึ้น 11 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2034-03-01T17:00:00.000Z",
@@ -50,7 +48,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1395,
       "yearZodiac": "กาเป้า (วัว)",
@@ -69,9 +67,7 @@
       "dateISO": "2034-03-01",
       "day": 2,
       "lunar": "ขึ้น 12 ค่ำ",
-      "labels": [
-        "วันอธิบดี"
-      ]
+      "labels": []
     },
     {
       "date": "2034-03-02T17:00:00.000Z",
@@ -183,11 +179,11 @@
       "wanThai": "รวายสะง้า",
       "wanThaiDesc": "หื้อแป๋งครกต๋ำเข้า ได้ข้าวมาต๋ำบ่ขาด",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
-      "isAthipadi": true,
+      "isThongChai": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1395,
       "yearZodiac": "กาเป้า (วัว)",
@@ -207,7 +203,8 @@
       "day": 6,
       "lunar": "แรม 1 ค่ำ",
       "labels": [
-        "วันอธิบดี"
+        "วันธงชัย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -325,7 +322,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1395,
       "yearZodiac": "กาเป้า (วัว)",
@@ -344,7 +341,9 @@
       "dateISO": "2034-03-09",
       "day": 10,
       "lunar": "แรม 5 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันอธิบดี"
+      ]
     },
     {
       "date": "2034-03-10T17:00:00.000Z",
@@ -354,7 +353,7 @@
       "wanThai": "ร้วงไค้",
       "wanThaiDesc": "อย่าชวนกันกินเหล้า เทียรย่อมผิดกัน",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -377,9 +376,7 @@
       "dateISO": "2034-03-10",
       "day": 11,
       "lunar": "แรม 6 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2034-03-11T17:00:00.000Z",
@@ -390,7 +387,7 @@
       "wanThaiDesc": "หื้อได้ล้อมคอกวัวควาย เป็นหลายตัวใหญ่หม้า (มาก)",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -412,7 +409,9 @@
       "dateISO": "2034-03-11",
       "day": 12,
       "lunar": "แรม 7 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2034-03-12T17:00:00.000Z",
@@ -460,7 +459,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
+      "isThongChai": false,
       "isAthipadi": false,
       "sitthi": "อมฤตโชค",
       "cs": 1395,
@@ -481,7 +480,6 @@
       "day": 14,
       "lunar": "แรม 9 ค่ำ",
       "labels": [
-        "วันธงชัย",
         "อมฤตโชค",
         "วันเสีย"
       ]
@@ -564,7 +562,7 @@
       "wanThaiDesc": "อย่าชวนกันรบท่าน เยียวตายถูกปืน",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -586,9 +584,7 @@
       "dateISO": "2034-03-16",
       "day": 17,
       "lunar": "แรม 12 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2034-03-17T17:00:00.000Z",
@@ -701,11 +697,11 @@
       "wanThai": "ร้วงเร้า",
       "wanThaiDesc": "อย่าเย็บลายเข้านุ่ง (ผ้านุ่ง) เยียวจะได้ห่มเมื่อตาย",
       "isSia": true,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
-      "isAthipadi": true,
+      "isThongChai": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1395,
       "yearZodiac": "กาเป้า (วัว)",
@@ -725,8 +721,9 @@
       "day": 21,
       "lunar": "ขึ้น 1 ค่ำ",
       "labels": [
-        "วันอธิบดี",
-        "วันเสีย"
+        "วันธงชัย",
+        "วันเสีย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -842,7 +839,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": false,
+      "isAthipadi": true,
       "sitthi": "อมฤตโชค",
       "cs": 1395,
       "yearZodiac": "กาเป้า (วัว)",
@@ -862,6 +859,7 @@
       "day": 25,
       "lunar": "ขึ้น 5 ค่ำ",
       "labels": [
+        "วันอธิบดี",
         "อมฤตโชค"
       ]
     },
@@ -873,7 +871,7 @@
       "wanThai": "รวายยี่",
       "wanThaiDesc": "-",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -896,9 +894,7 @@
       "dateISO": "2034-03-25",
       "day": 26,
       "lunar": "ขึ้น 6 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2034-03-26T17:00:00.000Z",
@@ -909,7 +905,7 @@
       "wanThaiDesc": "อย่ายอพลรบท่าน จะตายถูกปืน (อย่าสู้รบ)",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -931,7 +927,9 @@
       "dateISO": "2034-03-26",
       "day": 27,
       "lunar": "ขึ้น 7 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2034-03-27T17:00:00.000Z",
@@ -980,7 +978,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
+      "isThongChai": false,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1395,
@@ -1000,9 +998,7 @@
       "dateISO": "2034-03-28",
       "day": 29,
       "lunar": "ขึ้น 9 ค่ำ",
-      "labels": [
-        "วันธงชัย"
-      ]
+      "labels": []
     },
     {
       "date": "2034-03-29T17:00:00.000Z",

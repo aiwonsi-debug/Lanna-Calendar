@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "resolvedAt": "2026-05-09T00:01:41.579Z",
+    "resolvedAt": "2026-05-10T03:30:35.561Z",
     "strategy": "GENERATED_V2_2"
   },
   "month": "2026-12",
@@ -188,7 +188,7 @@
       "wanThai": "กัดไค้",
       "wanThaiDesc": "อย่าก่ายห้างยิงกวาง แม่นทำดายบ่ได้",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -211,9 +211,7 @@
       "dateISO": "2026-12-05",
       "day": 6,
       "lunar": "แรม 12 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2026-12-06T17:00:00.000Z",
@@ -466,7 +464,7 @@
       "wanThaiDesc": "หื้อสานแห ทอดน้ำได้เต๋มข้องพอหมาน",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -488,9 +486,7 @@
       "dateISO": "2026-12-13",
       "day": 14,
       "lunar": "ขึ้น 6 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2026-12-14T17:00:00.000Z",
@@ -572,7 +568,7 @@
       "wanThai": "กดเส็ด",
       "wanThaiDesc": "อย่าฝั้นเชือกวัวควาย เสียตนตาย เพื่อบ่กัดหญ้า",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -596,7 +592,8 @@
       "day": 17,
       "lunar": "ขึ้น 9 ค่ำ",
       "labels": [
-        "สิทธิโชค"
+        "สิทธิโชค",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -644,7 +641,7 @@
       "wanThaiDesc": "หื้อได้ล้อมคอกวัวควาย เป็นหลายตัวใหญ่หม้า (มาก)",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -666,7 +663,9 @@
       "dateISO": "2026-12-18",
       "day": 19,
       "lunar": "ขึ้น 11 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2026-12-19T17:00:00.000Z",
@@ -709,7 +708,7 @@
       "wanThai": "กาบยี่",
       "wanThaiDesc": "หื่อสานก๋วยไปกาด ได้ของค้าหากพอหาม",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -732,9 +731,7 @@
       "dateISO": "2026-12-20",
       "day": 21,
       "lunar": "ขึ้น 13 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2026-12-21T17:00:00.000Z",
@@ -989,7 +986,7 @@
       "wanThaiDesc": "อย่าถมยังชีไฟ เตาไฟ ผีดั้งจักชังเนอ",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -1011,9 +1008,7 @@
       "dateISO": "2026-12-28",
       "day": 29,
       "lunar": "แรม 6 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2026-12-29T17:00:00.000Z",

@@ -11,7 +11,7 @@
       "wanThai": "เปิกยี่",
       "wanThaiDesc": "อย่าได้สานสาด (เสื่อ) ปูชานช่อง เยียวได้ร้อนเอ่าตัวเก่า",
       "isSia": true,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -35,7 +35,8 @@
       "day": 1,
       "lunar": "แรม 9 ค่ำ",
       "labels": [
-        "วันเสีย"
+        "วันเสีย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -80,7 +81,7 @@
       "wanThaiDesc": "หื้อแรกไม้แปล๋งเรือน วัวควายหลายเต๋มชูห้อง",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -103,7 +104,8 @@
       "day": 3,
       "lunar": "แรม 11 ค่ำ",
       "labels": [
-        "สิทธิโชค"
+        "สิทธิโชค",
+        "วันโลกาวินาศ"
       ]
     },
     {

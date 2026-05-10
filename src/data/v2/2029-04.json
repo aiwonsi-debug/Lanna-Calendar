@@ -11,7 +11,7 @@
       "wanThai": "รวายสะง้า",
       "wanThaiDesc": "หื้อแป๋งครกต๋ำเข้า ได้ข้าวมาต๋ำบ่ขาด",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -34,9 +34,7 @@
       "dateISO": "2029-03-31",
       "day": 1,
       "lunar": "แรม 4 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2029-04-01T17:00:00.000Z",
@@ -117,8 +115,8 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
-      "isAthipadi": false,
+      "isThongChai": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1390,
       "yearZodiac": "เปิกสัน (วอก)",
@@ -138,7 +136,7 @@
       "day": 4,
       "lunar": "แรม 7 ค่ำ",
       "labels": [
-        "วันธงชัย",
+        "วันอธิบดี",
         "วันเสีย"
       ]
     },
@@ -186,7 +184,7 @@
       "wanThai": "ร้วงไค้",
       "wanThaiDesc": "อย่าชวนกันกินเหล้า เทียรย่อมผิดกัน",
       "isSia": true,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -210,7 +208,8 @@
       "day": 6,
       "lunar": "แรม 9 ค่ำ",
       "labels": [
-        "วันเสีย"
+        "วันเสีย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -222,7 +221,7 @@
       "wanThaiDesc": "หื้อได้ล้อมคอกวัวควาย เป็นหลายตัวใหญ่หม้า (มาก)",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -244,9 +243,7 @@
       "dateISO": "2029-04-06",
       "day": 7,
       "lunar": "แรม 10 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2029-04-07T17:00:00.000Z",
@@ -257,10 +254,10 @@
       "wanThaiDesc": "อย่าชวนกันลงเรือ",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": true,
+      "isAthipadi": false,
       "sitthi": "สิทธิโชค",
       "cs": 1390,
       "yearZodiac": "เปิกสัน (วอก)",
@@ -280,8 +277,8 @@
       "day": 8,
       "lunar": "แรม 11 ค่ำ",
       "labels": [
-        "วันอธิบดี",
-        "สิทธิโชค"
+        "สิทธิโชค",
+        "วันโลกาวินาศ"
       ]
     },
     {
@@ -504,7 +501,7 @@
       "wanThaiDesc": "หื่อห่อหมากถามสาวหุม บ่ร้าง",
       "isSia": true,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -528,7 +525,8 @@
       "lunar": "ขึ้น 3 ค่ำ",
       "labels": [
         "ราชาโชค",
-        "วันเสีย"
+        "วันเสีย",
+        "วันโลกาวินาศ"
       ]
     },
     {
@@ -543,7 +541,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1391,
       "yearZodiac": "กัดเร้า (ระกา)",
@@ -563,6 +561,7 @@
       "day": 16,
       "lunar": "ขึ้น 4 ค่ำ",
       "labels": [
+        "วันอธิบดี",
         "วันเสีย"
       ]
     },
@@ -574,7 +573,7 @@
       "wanThai": "เต่าเส็ด",
       "wanThaiDesc": "อย่าถมยังชีไฟ เตาไฟ ผีดั้งจักชังเนอ",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -597,9 +596,7 @@
       "dateISO": "2029-04-16",
       "day": 17,
       "lunar": "ขึ้น 5 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2029-04-17T17:00:00.000Z",
@@ -680,7 +677,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": true,
-      "isThongChai": true,
+      "isThongChai": false,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1391,
@@ -701,7 +698,6 @@
       "day": 20,
       "lunar": "ขึ้น 8 ค่ำ",
       "labels": [
-        "วันธงชัย",
         "วันศีล"
       ]
     },
@@ -748,10 +744,10 @@
       "wanThai": "เมืองเหม้า",
       "wanThaiDesc": "อย่ายอพลรบท่าน จะตายถูกปืน (อย่าสู้รบ)",
       "isSia": true,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
+      "isThongChai": true,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1391,
@@ -772,7 +768,9 @@
       "day": 22,
       "lunar": "ขึ้น 10 ค่ำ",
       "labels": [
-        "วันเสีย"
+        "วันธงชัย",
+        "วันเสีย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -784,7 +782,7 @@
       "wanThaiDesc": "หื้อห่อหมากถามสาว พ่อแม่หากวางหื้อลูก (ควรหมั้นหมาย)",
       "isSia": true,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -807,8 +805,7 @@
       "day": 23,
       "lunar": "ขึ้น 11 ค่ำ",
       "labels": [
-        "วันเสีย",
-        "วันโลกาวินาศ"
+        "วันเสีย"
       ]
     },
     {
@@ -823,7 +820,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1391,
       "yearZodiac": "กัดเร้า (ระกา)",
@@ -842,9 +839,7 @@
       "dateISO": "2029-04-23",
       "day": 24,
       "lunar": "ขึ้น 12 ค่ำ",
-      "labels": [
-        "วันอธิบดี"
-      ]
+      "labels": []
     },
     {
       "date": "2029-04-24T17:00:00.000Z",
@@ -955,11 +950,11 @@
       "wanThai": "กาเร้า",
       "wanThaiDesc": "หื้อหาขวัญลูกเต้า เอาขวัญข้าวแควนดี (ควรถักแห)",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
-      "isAthipadi": true,
+      "isThongChai": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1391,
       "yearZodiac": "กัดเร้า (ระกา)",
@@ -979,7 +974,8 @@
       "day": 28,
       "lunar": "แรม 1 ค่ำ",
       "labels": [
-        "วันอธิบดี"
+        "วันธงชัย",
+        "วันอุบาทว์"
       ]
     },
     {

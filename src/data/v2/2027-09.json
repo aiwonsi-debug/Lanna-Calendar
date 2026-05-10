@@ -1022,7 +1022,7 @@
       "wanThai": "เมืองเร้า",
       "wanThaiDesc": "หื้อยอพลรบท่าน ได้ทั้งช้างกับนาง",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": true,
@@ -1046,7 +1046,8 @@
       "day": 30,
       "lunar": "ขึ้น 1 ค่ำ",
       "labels": [
-        "วันธงชัย"
+        "วันธงชัย",
+        "วันอุบาทว์"
       ]
     }
   ]

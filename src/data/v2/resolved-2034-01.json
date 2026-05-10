@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "resolvedAt": "2026-05-09T00:01:41.937Z",
+    "resolvedAt": "2026-05-10T03:30:36.027Z",
     "strategy": "GENERATED_V2_2"
   },
   "month": "2034-01",
@@ -154,7 +154,7 @@
       "wanThaiDesc": "หื้อแป๋งครกต๋ำเข้า ได้ข้าวมาต๋ำบ่ขาด",
       "isSia": true,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": true,
       "isThongChai": false,
       "isAthipadi": false,
@@ -178,6 +178,7 @@
       "lunar": "ขึ้น 15 ค่ำ",
       "labels": [
         "วันเสีย",
+        "วันโลกาวินาศ",
         "วันศีล"
       ]
     },
@@ -227,7 +228,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
+      "isThongChai": true,
       "isAthipadi": false,
       "sitthi": "ราชาโชค",
       "cs": 1395,
@@ -248,6 +249,7 @@
       "day": 7,
       "lunar": "แรม 2 ค่ำ",
       "labels": [
+        "วันธงชัย",
         "ราชาโชค",
         "วันเสีย"
       ]
@@ -260,7 +262,7 @@
       "wanThai": "กัดเร้า",
       "wanThaiDesc": "หื้อก่ายห้างยิงนก ได้เต๋มพกเพื่อวันหมาน",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -284,8 +286,7 @@
       "day": 8,
       "lunar": "แรม 3 ค่ำ",
       "labels": [
-        "ราชาโชค",
-        "วันอุบาทว์"
+        "ราชาโชค"
       ]
     },
     {
@@ -329,7 +330,7 @@
       "wanThai": "ร้วงไค้",
       "wanThaiDesc": "อย่าชวนกันกินเหล้า เทียรย่อมผิดกัน",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -352,7 +353,9 @@
       "dateISO": "2034-01-09",
       "day": 10,
       "lunar": "แรม 5 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันอุบาทว์"
+      ]
     },
     {
       "date": "2034-01-10T17:00:00.000Z",
@@ -365,8 +368,8 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
-      "isAthipadi": false,
+      "isThongChai": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1395,
       "yearZodiac": "กาเป้า (วัว)",
@@ -386,7 +389,7 @@
       "day": 11,
       "lunar": "แรม 6 ค่ำ",
       "labels": [
-        "วันธงชัย"
+        "วันอธิบดี"
       ]
     },
     {
@@ -470,7 +473,7 @@
       "wanThaiDesc": "หื้อตัดเสื้อผ้า แหนชู้ ขุนนางรัก",
       "isSia": true,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -493,8 +496,7 @@
       "day": 14,
       "lunar": "แรม 9 ค่ำ",
       "labels": [
-        "วันเสีย",
-        "วันโลกาวินาศ"
+        "วันเสีย"
       ]
     },
     {
@@ -509,7 +511,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1395,
       "yearZodiac": "กาเป้า (วัว)",
@@ -528,9 +530,7 @@
       "dateISO": "2034-01-14",
       "day": 15,
       "lunar": "แรม 10 ค่ำ",
-      "labels": [
-        "วันอธิบดี"
-      ]
+      "labels": []
     },
     {
       "date": "2034-01-15T17:00:00.000Z",
@@ -749,7 +749,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
+      "isThongChai": true,
       "isAthipadi": false,
       "sitthi": "ราชาโชค",
       "cs": 1395,
@@ -770,6 +770,7 @@
       "day": 22,
       "lunar": "ขึ้น 3 ค่ำ",
       "labels": [
+        "วันธงชัย",
         "ราชาโชค"
       ]
     },
@@ -781,7 +782,7 @@
       "wanThai": "กาบไจ้",
       "wanThaiDesc": "แม่วันดี คันจักเยียะได้ หื้อหาวันปลอด (ดี เป็นสิริมงคล)",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -804,9 +805,7 @@
       "dateISO": "2034-01-22",
       "day": 23,
       "lunar": "ขึ้น 4 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2034-01-23T17:00:00.000Z",
@@ -887,8 +886,8 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
-      "isAthipadi": false,
+      "isThongChai": false,
+      "isAthipadi": true,
       "sitthi": "มหาสิทธิโชค",
       "cs": 1395,
       "yearZodiac": "กาเป้า (วัว)",
@@ -908,7 +907,7 @@
       "day": 26,
       "lunar": "ขึ้น 7 ค่ำ",
       "labels": [
-        "วันธงชัย",
+        "วันอธิบดี",
         "มหาสิทธิโชค"
       ]
     },
@@ -957,7 +956,7 @@
       "wanThai": "กัดไส้",
       "wanThaiDesc": "อย่าสร้างดาบเถี่ยนกล้า จักพลันได้ฟันตน (อย่าประดิษฐ์หรือซื้ออาวุธ)",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -980,7 +979,9 @@
       "dateISO": "2034-01-27",
       "day": 28,
       "lunar": "ขึ้น 9 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันอุบาทว์"
+      ]
     },
     {
       "date": "2034-01-28T17:00:00.000Z",
@@ -991,7 +992,7 @@
       "wanThaiDesc": "อย่าขี่ม้าเทียวเมือง จักตกม้าตายเผิดหน้า (อย่าออกเดินทาง)",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -1013,9 +1014,7 @@
       "dateISO": "2034-01-28",
       "day": 29,
       "lunar": "ขึ้น 10 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2034-01-29T17:00:00.000Z",
@@ -1026,10 +1025,10 @@
       "wanThaiDesc": "อย่าก่ายห้างยิงกวาง แม่นทำดายบ่ได้ (อย่าทำอาวุธธนูหน้าไม้ และอย่าออกล่าสัตว์)",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1395,
       "yearZodiac": "กาเป้า (วัว)",
@@ -1049,7 +1048,7 @@
       "day": 30,
       "lunar": "ขึ้น 11 ค่ำ",
       "labels": [
-        "วันอธิบดี"
+        "วันโลกาวินาศ"
       ]
     },
     {

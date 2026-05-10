@@ -183,7 +183,7 @@
       "wanThai": "ดับไส้",
       "wanThaiDesc": "เอาเมียมาใหม่ จักได้ลูกตายพราย",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -206,9 +206,7 @@
       "dateISO": "2033-09-05",
       "day": 6,
       "lunar": "ขึ้น 12 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2033-09-06T17:00:00.000Z",
@@ -287,7 +285,7 @@
       "wanThaiDesc": "หื้อใส่เหล้าบรรณาการ ขุนรักหื้อลาภมากนัก",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": true,
       "isThongChai": false,
       "isAthipadi": false,
@@ -310,6 +308,7 @@
       "day": 9,
       "lunar": "ขึ้น 15 ค่ำ",
       "labels": [
+        "วันโลกาวินาศ",
         "วันศีล"
       ]
     },
@@ -460,8 +459,8 @@
       "wanThai": "กาเป้า",
       "wanThaiDesc": "อย่าชวนกันลงเรือ",
       "isSia": false,
-      "isUbat": false,
-      "isLokawinat": true,
+      "isUbat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -484,7 +483,7 @@
       "day": 14,
       "lunar": "แรม 5 ค่ำ",
       "labels": [
-        "วันโลกาวินาศ"
+        "วันอุบาทว์"
       ]
     },
     {
@@ -701,7 +700,7 @@
       "wanThai": "กดสัน",
       "wanThaiDesc": "หื่อห่อหมากถามสาวหุม บ่ร้าง",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -724,9 +723,7 @@
       "dateISO": "2033-09-20",
       "day": 21,
       "lunar": "แรม 12 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2033-09-21T17:00:00.000Z",
@@ -979,7 +976,7 @@
       "wanThaiDesc": "หื้อห่อหมากถามสาว พ่อแม่หากวางหื้อลูก (ควรหมั้นหมาย)",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -1001,9 +998,7 @@
       "dateISO": "2033-09-28",
       "day": 29,
       "lunar": "ขึ้น 6 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2033-09-29T17:00:00.000Z",

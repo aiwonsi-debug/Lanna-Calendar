@@ -49,7 +49,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": true,
-      "isThongChai": true,
+      "isThongChai": false,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1387,
@@ -70,7 +70,6 @@
       "day": 2,
       "lunar": "ขึ้น 8 ค่ำ",
       "labels": [
-        "วันธงชัย",
         "วันเสีย",
         "วันศีล"
       ]
@@ -119,10 +118,10 @@
       "wanThai": "กัดเป้า",
       "wanThaiDesc": "อย่าได้สืบคำเมืองท่านบ่สู้",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
+      "isThongChai": true,
       "isAthipadi": false,
       "sitthi": "สิทธิโชค",
       "cs": 1387,
@@ -143,7 +142,9 @@
       "day": 4,
       "lunar": "ขึ้น 10 ค่ำ",
       "labels": [
-        "สิทธิโชค"
+        "วันธงชัย",
+        "สิทธิโชค",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -155,7 +156,7 @@
       "wanThaiDesc": "-",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -177,9 +178,7 @@
       "dateISO": "2025-06-04",
       "day": 5,
       "lunar": "ขึ้น 11 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2025-06-05T17:00:00.000Z",
@@ -193,7 +192,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1387,
       "yearZodiac": "ดับไส้ (มะเส็ง)",
@@ -212,9 +211,7 @@
       "dateISO": "2025-06-05",
       "day": 6,
       "lunar": "ขึ้น 12 ค่ำ",
-      "labels": [
-        "วันอธิบดี"
-      ]
+      "labels": []
     },
     {
       "date": "2025-06-06T17:00:00.000Z",
@@ -398,7 +395,7 @@
       "wanThaiDesc": "หื้อยอพลรบท่าน ได้ทั้งช้างกับนาง",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -420,7 +417,9 @@
       "dateISO": "2025-06-11",
       "day": 12,
       "lunar": "แรม 3 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2025-06-12T17:00:00.000Z",
@@ -434,7 +433,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1387,
       "yearZodiac": "ดับไส้ (มะเส็ง)",
@@ -453,7 +452,9 @@
       "dateISO": "2025-06-12",
       "day": 13,
       "lunar": "แรม 4 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันอธิบดี"
+      ]
     },
     {
       "date": "2025-06-13T17:00:00.000Z",
@@ -463,7 +464,7 @@
       "wanThai": "กัดไค้",
       "wanThaiDesc": "อย่าก่ายห้างยิงกวาง แม่นทำดายบ่ได้",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -487,8 +488,7 @@
       "day": 14,
       "lunar": "แรม 5 ค่ำ",
       "labels": [
-        "อมฤตโชค",
-        "วันอุบาทว์"
+        "อมฤตโชค"
       ]
     },
     {
@@ -572,7 +572,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": true,
-      "isThongChai": true,
+      "isThongChai": false,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1387,
@@ -593,7 +593,6 @@
       "day": 17,
       "lunar": "แรม 8 ค่ำ",
       "labels": [
-        "วันธงชัย",
         "วันศีล"
       ]
     },
@@ -640,10 +639,10 @@
       "wanThai": "กาบสี",
       "wanThaiDesc": "แป๋งเครื่องย้อมไหมแดงดี",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
+      "isThongChai": true,
       "isAthipadi": false,
       "sitthi": "ราชาโชค",
       "cs": 1387,
@@ -664,7 +663,9 @@
       "day": 19,
       "lunar": "แรม 10 ค่ำ",
       "labels": [
-        "ราชาโชค"
+        "วันธงชัย",
+        "ราชาโชค",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -676,7 +677,7 @@
       "wanThaiDesc": "เอาเมียมาใหม่ จักได้ลูกตายพราย",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -699,8 +700,7 @@
       "day": 20,
       "lunar": "แรม 11 ค่ำ",
       "labels": [
-        "ชัยโชค",
-        "วันโลกาวินาศ"
+        "ชัยโชค"
       ]
     },
     {
@@ -715,7 +715,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1387,
       "yearZodiac": "ดับไส้ (มะเส็ง)",
@@ -734,9 +734,7 @@
       "dateISO": "2025-06-20",
       "day": 21,
       "lunar": "แรม 12 ค่ำ",
-      "labels": [
-        "วันอธิบดี"
-      ]
+      "labels": []
     },
     {
       "date": "2025-06-21T17:00:00.000Z",
@@ -854,11 +852,11 @@
       "wanThai": "กดเส็ด",
       "wanThaiDesc": "อย่าฝั้นเชือกวัวควาย เสียตนตาย เพื่อบ่กัดหญ้า",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
-      "isAthipadi": true,
+      "isThongChai": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1387,
       "yearZodiac": "ดับไส้ (มะเส็ง)",
@@ -878,7 +876,8 @@
       "day": 25,
       "lunar": "ขึ้น 1 ค่ำ",
       "labels": [
-        "วันอธิบดี"
+        "วันธงชัย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -994,7 +993,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1387,
       "yearZodiac": "ดับไส้ (มะเส็ง)",
@@ -1013,7 +1012,9 @@
       "dateISO": "2025-06-28",
       "day": 29,
       "lunar": "ขึ้น 5 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันอธิบดี"
+      ]
     },
     {
       "date": "2025-06-29T17:00:00.000Z",
@@ -1023,7 +1024,7 @@
       "wanThai": "ดับเหม้า",
       "wanThaiDesc": "หื้อตัดเสื้อผ้า แหนชู้ ขุนนางรัก",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -1046,9 +1047,7 @@
       "dateISO": "2025-06-29",
       "day": 30,
       "lunar": "ขึ้น 6 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     }
   ]
 }

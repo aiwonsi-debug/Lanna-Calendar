@@ -177,7 +177,7 @@ const getStatusLines = (day: Day) => {
   if (day.isLomLuang) 
     lines.push({ text: 'หล่มหลวง', className: 'text-[#d71920] font-black' });
 
-  // Good days
+  // Good days (Calculated OR JSON fallback)
   if (day.isThongChai || check("ธงชัย")) 
     lines.push({ text: 'ธงชัย', className: 'text-[#0f8a2a] font-black' });
   
@@ -185,8 +185,15 @@ const getStatusLines = (day: Day) => {
     lines.push({ text: 'อธิบดี', className: 'text-[#0f8a2a] font-black' });
 
   // Special/Labels
-  if (day.sitthi || check("สิทธิโชค")) 
-    lines.push({ text: toArabicDigits(day.sitthi || ""), className: 'text-[#0645c0] font-black' });
+  const sitthiLabel = day.sitthi || 
+    (check("มหาสิทธิโชค") ? "มหาสิทธิโชค" : 
+     check("อมฤตโชค") ? "อมฤตโชค" : 
+     check("สิทธิโชค") ? "สิทธิโชค" : 
+     check("ราชาโชค") ? "ราชาโชค" : 
+     check("ชัยโชค") ? "ชัยโชค" : null);
+
+  if (sitthiLabel) 
+    lines.push({ text: toArabicDigits(sitthiLabel), className: 'text-[#0645c0] font-black' });
   
   if (day.songkranLabel) 
     lines.push({ text: toArabicDigits(day.songkranLabel), className: 'text-[#0645c0] font-black' });

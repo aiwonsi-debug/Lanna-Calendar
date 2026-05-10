@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "resolvedAt": "2026-05-09T00:01:41.861Z",
+    "resolvedAt": "2026-05-10T03:30:35.960Z",
     "strategy": "GENERATED_V2_2"
   },
   "month": "2032-09",
@@ -13,7 +13,7 @@
       "wanThai": "ดับเม็ด",
       "wanThaiDesc": "อย่าชวนกันไปค้า เยียวท่านฆ่าเอาครัว",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -36,9 +36,7 @@
       "dateISO": "2032-08-31",
       "day": 1,
       "lunar": "แรม 11 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2032-09-01T17:00:00.000Z",
@@ -321,8 +319,8 @@
       "wanThai": "กาบสี",
       "wanThaiDesc": "แป๋งเครื่องย้อมไหมแดงดี",
       "isSia": false,
-      "isUbat": false,
-      "isLokawinat": true,
+      "isUbat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -345,7 +343,7 @@
       "day": 10,
       "lunar": "ขึ้น 5 ค่ำ",
       "labels": [
-        "วันโลกาวินาศ"
+        "วันอุบาทว์"
       ]
     },
     {
@@ -565,7 +563,7 @@
       "wanThai": "ร้วงไค้",
       "wanThaiDesc": "อย่าชวนกันกินเหล้า เทียรย่อมผิดกัน",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -588,9 +586,7 @@
       "dateISO": "2032-09-16",
       "day": 17,
       "lunar": "ขึ้น 12 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2032-09-17T17:00:00.000Z",
@@ -671,7 +667,7 @@
       "wanThaiDesc": "หื่อสานก๋วยไปกาด ได้ของค้าหากพอหาม",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": true,
       "isThongChai": false,
       "isAthipadi": false,
@@ -694,6 +690,7 @@
       "day": 20,
       "lunar": "ขึ้น 15 ค่ำ",
       "labels": [
+        "วันโลกาวินาศ",
         "วันศีล"
       ]
     },
@@ -843,8 +840,8 @@
       "wanThai": "กัดเม็ด",
       "wanThaiDesc": "หื้อเอาวัวควายมาคอก เป็นหลายตัว สุขมาก",
       "isSia": true,
-      "isUbat": false,
-      "isLokawinat": true,
+      "isUbat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -869,7 +866,7 @@
       "labels": [
         "อมฤตโชค",
         "วันเสีย",
-        "วันโลกาวินาศ"
+        "วันอุบาทว์"
       ]
     },
     {

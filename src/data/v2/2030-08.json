@@ -987,7 +987,7 @@
       "wanThai": "ร้วงไส้",
       "wanThaiDesc": "อย่ากระทำการเอาขวัญ เยียวเสียหลานเหลนกับลูกเต้า",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": true,
@@ -1011,7 +1011,8 @@
       "day": 29,
       "lunar": "ขึ้น 1 ค่ำ",
       "labels": [
-        "วันธงชัย"
+        "วันธงชัย",
+        "วันอุบาทว์"
       ]
     },
     {

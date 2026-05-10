@@ -11,7 +11,7 @@
       "wanThai": "กดเส็ด",
       "wanThaiDesc": "อย่าฝั้นเชือกวัวควาย เสียตนตาย เพื่อบ่กัดหญ้า",
       "isSia": true,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -35,8 +35,7 @@
       "day": 1,
       "lunar": "แรม 12 ค่ำ",
       "labels": [
-        "วันเสีย",
-        "วันอุบาทว์"
+        "วันเสีย"
       ]
     },
     {
@@ -294,7 +293,7 @@
       "wanThaiDesc": "อย่าสร้างครัวศึก เยียวเสียตายบ่แพ้ท่านฆ่า",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -316,9 +315,7 @@
       "dateISO": "2035-09-08",
       "day": 9,
       "lunar": "ขึ้น 6 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2035-09-09T17:00:00.000Z",
@@ -398,7 +395,7 @@
       "wanThai": "ร้วงเร้า",
       "wanThaiDesc": "อย่าเย็บลายเข้านุ่ง (ผ้านุ่ง) เยียวจะได้ห่มเมื่อตาย",
       "isSia": true,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -422,7 +419,8 @@
       "day": 12,
       "lunar": "ขึ้น 9 ค่ำ",
       "labels": [
-        "วันเสีย"
+        "วันเสีย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -469,7 +467,7 @@
       "wanThaiDesc": "อย่าซื้อวัวควายมาคอก ผีด้ำซ้ำบ่ดีสังแล",
       "isSia": true,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -493,7 +491,8 @@
       "lunar": "ขึ้น 11 ค่ำ",
       "labels": [
         "ชัยโชค",
-        "วันเสีย"
+        "วันเสีย",
+        "วันโลกาวินาศ"
       ]
     },
     {
@@ -537,7 +536,7 @@
       "wanThai": "ดับเป้า",
       "wanThaiDesc": "อย่าได้สานหับไปค้า จะถูกฆ่ากลางทาง (อย่าเดินทางค้าขาย)",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -561,8 +560,7 @@
       "day": 16,
       "lunar": "ขึ้น 13 ค่ำ",
       "labels": [
-        "ชัยโชค",
-        "วันอุบาทว์"
+        "ชัยโชค"
       ]
     },
     {
@@ -817,7 +815,7 @@
       "wanThaiDesc": "หื้อหาขวัญลูกเต้า เอาขวัญข้าวแควนดี (ควรถักแห)",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -839,9 +837,7 @@
       "dateISO": "2035-09-23",
       "day": 24,
       "lunar": "แรม 6 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2035-09-24T17:00:00.000Z",
@@ -923,7 +919,7 @@
       "wanThai": "รวายไจ้",
       "wanThaiDesc": "อย่าได้ขี่ม้าแอ่วเที่ยวทาง จะเสียนางร่วมห้อง",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -947,7 +943,8 @@
       "day": 27,
       "lunar": "แรม 9 ค่ำ",
       "labels": [
-        "สิทธิโชค"
+        "สิทธิโชค",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -995,7 +992,7 @@
       "wanThaiDesc": "อย่าได้สานสาด (เสื่อ) ปูชานช่อง เยียวได้ร้อนเอ่าตัวเก่า",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -1017,7 +1014,9 @@
       "dateISO": "2035-09-28",
       "day": 29,
       "lunar": "แรม 11 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2035-09-29T17:00:00.000Z",

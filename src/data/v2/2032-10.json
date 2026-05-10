@@ -46,7 +46,7 @@
       "wanThai": "รวายยี่",
       "wanThaiDesc": "-",
       "isSia": true,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -70,8 +70,7 @@
       "day": 2,
       "lunar": "แรม 12 ค่ำ",
       "labels": [
-        "วันเสีย",
-        "วันอุบาทว์"
+        "วันเสีย"
       ]
     },
     {
@@ -329,7 +328,7 @@
       "wanThaiDesc": "อย่าม้วนหูกทอลาย จะตกตาย บ่ดี",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -351,9 +350,7 @@
       "dateISO": "2032-10-09",
       "day": 10,
       "lunar": "ขึ้น 6 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2032-10-10T17:00:00.000Z",
@@ -433,7 +430,7 @@
       "wanThai": "เมืองเป้า",
       "wanThaiDesc": "อย่าตัดผ้าไหมนุ่ง จะตายจากกัน",
       "isSia": true,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -457,7 +454,8 @@
       "day": 13,
       "lunar": "ขึ้น 9 ค่ำ",
       "labels": [
-        "วันเสีย"
+        "วันเสีย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -504,7 +502,7 @@
       "wanThaiDesc": "ดีฟันเรือไว้หว้ายท่า ไปค้าได้แสนคำ",
       "isSia": true,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -528,7 +526,8 @@
       "lunar": "ขึ้น 11 ค่ำ",
       "labels": [
         "ชัยโชค",
-        "วันเสีย"
+        "วันเสีย",
+        "วันโลกาวินาศ"
       ]
     },
     {
@@ -572,7 +571,7 @@
       "wanThai": "ร้วงไส้",
       "wanThaiDesc": "อย่ากระทำการเอาขวัญ เยียวเสียหลานเหลนกับลูกเต้า",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -596,8 +595,7 @@
       "day": 17,
       "lunar": "ขึ้น 13 ค่ำ",
       "labels": [
-        "ชัยโชค",
-        "วันอุบาทว์"
+        "ชัยโชค"
       ]
     },
     {
@@ -852,7 +850,7 @@
       "wanThaiDesc": "อย่าได้สืบคำเมืองท่านบ่สู้",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -874,9 +872,7 @@
       "dateISO": "2032-10-24",
       "day": 25,
       "lunar": "แรม 6 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2032-10-25T17:00:00.000Z",
@@ -958,7 +954,7 @@
       "wanThai": "เต่าสี",
       "wanThaiDesc": "หื้อกระทำการเรือหอม สวนผักก็ดาดี",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -982,7 +978,8 @@
       "day": 28,
       "lunar": "แรม 9 ค่ำ",
       "labels": [
-        "สิทธิโชค"
+        "สิทธิโชค",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -1030,7 +1027,7 @@
       "wanThaiDesc": "หื้อแรกน้ำใส่นา จักได้ข้าวมาเต๋มหลอง",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -1052,7 +1049,9 @@
       "dateISO": "2032-10-29",
       "day": 30,
       "lunar": "แรม 11 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2032-10-30T17:00:00.000Z",

@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "resolvedAt": "2026-05-09T00:01:41.684Z",
+    "resolvedAt": "2026-05-10T03:30:35.686Z",
     "strategy": "GENERATED_V2_2"
   },
   "month": "2028-10",
@@ -83,7 +83,7 @@
       "wanThai": "รวายสะง้า",
       "wanThaiDesc": "หื้อแป๋งครกต๋ำเข้า ได้ข้าวมาต๋ำบ่ขาด",
       "isSia": true,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": true,
@@ -108,7 +108,8 @@
       "lunar": "แรม 1 ค่ำ",
       "labels": [
         "วันธงชัย",
-        "วันเสีย"
+        "วันเสีย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -189,7 +190,7 @@
       "wanThaiDesc": "หื้อก่ายห้างยิงนก ได้เต๋มพกเพื่อวันหมาน",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -211,9 +212,7 @@
       "dateISO": "2028-10-05",
       "day": 6,
       "lunar": "แรม 4 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2028-10-06T17:00:00.000Z",
@@ -293,7 +292,7 @@
       "wanThaiDesc": "หื้อได้ล้อมคอกวัวควาย เป็นหลายตัวใหญ่หม้า (มาก)",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -315,7 +314,9 @@
       "dateISO": "2028-10-08",
       "day": 9,
       "lunar": "แรม 7 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2028-10-09T17:00:00.000Z",
@@ -429,7 +430,7 @@
       "wanThai": "รวายสี",
       "wanThaiDesc": "หื้อหาครัวศึก พลแสนรบบ่แพ้",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -453,8 +454,7 @@
       "day": 13,
       "lunar": "แรม 11 ค่ำ",
       "labels": [
-        "ชัยโชค",
-        "วันอุบาทว์"
+        "ชัยโชค"
       ]
     },
     {
@@ -744,8 +744,8 @@
       "wanThai": "ดับเป้า",
       "wanThaiDesc": "อย่าได้สานหับไปค้า จะถูกฆ่ากลางทาง (อย่าเดินทางค้าขาย)",
       "isSia": false,
-      "isUbat": false,
-      "isLokawinat": true,
+      "isUbat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -768,7 +768,7 @@
       "day": 22,
       "lunar": "ขึ้น 5 ค่ำ",
       "labels": [
-        "วันโลกาวินาศ"
+        "วันอุบาทว์"
       ]
     },
     {
@@ -989,7 +989,7 @@
       "wanThai": "เต่าสัน",
       "wanThaiDesc": "หื้อห่อหมากขอสาวหุมมาสู่ (ควรผูกมิตร)",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -1012,9 +1012,7 @@
       "dateISO": "2028-10-28",
       "day": 29,
       "lunar": "ขึ้น 12 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2028-10-29T17:00:00.000Z",

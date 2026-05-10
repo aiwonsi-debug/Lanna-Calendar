@@ -11,7 +11,7 @@
       "wanThai": "กาบเส็ด",
       "wanThaiDesc": "อย่าม้วนหูกทอลาย จะตกตาย บ่ดี",
       "isSia": true,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": true,
@@ -36,7 +36,8 @@
       "lunar": "แรม 1 ค่ำ",
       "labels": [
         "วันธงชัย",
-        "วันเสีย"
+        "วันเสีย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -117,7 +118,7 @@
       "wanThaiDesc": "อย่าตัดผ้าไหมนุ่ง จะตายจากกัน",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -139,9 +140,7 @@
       "dateISO": "2034-08-03",
       "day": 4,
       "lunar": "แรม 4 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2034-08-04T17:00:00.000Z",
@@ -221,7 +220,7 @@
       "wanThaiDesc": "หื้อแรกไม้แปล๋งเรือน วัวควายหลายเต๋มชูห้อง",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -243,7 +242,9 @@
       "dateISO": "2034-08-06",
       "day": 7,
       "lunar": "แรม 7 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2034-08-07T17:00:00.000Z",
@@ -357,7 +358,7 @@
       "wanThai": "กาบสัน",
       "wanThaiDesc": "หื้อล้อมวัวควาย มีหลายบ่น้อย",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -381,8 +382,7 @@
       "day": 11,
       "lunar": "แรม 11 ค่ำ",
       "labels": [
-        "ชัยโชค",
-        "วันอุบาทว์"
+        "ชัยโชค"
       ]
     },
     {
@@ -672,8 +672,8 @@
       "wanThai": "กาไส้",
       "wanThaiDesc": "อย่าเอากันกินแขก จักได้ถูกถ้อยเป็นคำ",
       "isSia": false,
-      "isUbat": false,
-      "isLokawinat": true,
+      "isUbat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -696,7 +696,7 @@
       "day": 20,
       "lunar": "ขึ้น 5 ค่ำ",
       "labels": [
-        "วันโลกาวินาศ"
+        "วันอุบาทว์"
       ]
     },
     {
@@ -917,7 +917,7 @@
       "wanThai": "กดไจ้",
       "wanThaiDesc": "หื้อสานก๋วยไว้ (รอท่า) จะได้เวินคำเต็มก๋วย",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -940,9 +940,7 @@
       "dateISO": "2034-08-26",
       "day": 27,
       "lunar": "ขึ้น 12 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2034-08-27T17:00:00.000Z",
@@ -1021,7 +1019,7 @@
       "wanThaiDesc": "อย่าหื้อของแก่ท่าน จักเสียล้านภายลูน",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": true,
       "isThongChai": false,
       "isAthipadi": false,
@@ -1044,6 +1042,7 @@
       "day": 30,
       "lunar": "ขึ้น 15 ค่ำ",
       "labels": [
+        "วันโลกาวินาศ",
         "วันศีล"
       ]
     },

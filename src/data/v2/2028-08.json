@@ -153,7 +153,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
+      "isThongChai": false,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1390,
@@ -173,9 +173,7 @@
       "dateISO": "2028-08-04",
       "day": 5,
       "lunar": "แรม 1 ค่ำ",
-      "labels": [
-        "วันธงชัย"
-      ]
+      "labels": []
     },
     {
       "date": "2028-08-05T17:00:00.000Z",
@@ -186,7 +184,7 @@
       "wanThaiDesc": "หื้อใส่เหล้าบรรณาการ ขุนรักหื้อลาภมากนัก",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -208,9 +206,7 @@
       "dateISO": "2028-08-05",
       "day": 6,
       "lunar": "แรม 2 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2028-08-06T17:00:00.000Z",
@@ -223,8 +219,8 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
-      "isAthipadi": true,
+      "isThongChai": true,
+      "isAthipadi": false,
       "sitthi": "อมฤตโชค",
       "cs": 1390,
       "yearZodiac": "เปิกสัน (วอก)",
@@ -244,7 +240,7 @@
       "day": 7,
       "lunar": "แรม 3 ค่ำ",
       "labels": [
-        "วันอธิบดี",
+        "วันธงชัย",
         "อมฤตโชค"
       ]
     },
@@ -361,7 +357,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1390,
       "yearZodiac": "เปิกสัน (วอก)",
@@ -381,6 +377,7 @@
       "day": 11,
       "lunar": "แรม 7 ค่ำ",
       "labels": [
+        "วันอธิบดี",
         "วันเสีย"
       ]
     },
@@ -392,7 +389,7 @@
       "wanThai": "กาบยี่",
       "wanThaiDesc": "หื่อสานก๋วยไปกาด ได้ของค้าหากพอหาม",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": true,
       "isThongChai": false,
@@ -416,7 +413,6 @@
       "day": 12,
       "lunar": "แรม 8 ค่ำ",
       "labels": [
-        "วันอุบาทว์",
         "วันศีล"
       ]
     },
@@ -428,7 +424,7 @@
       "wanThai": "ดับเหม้า",
       "wanThaiDesc": "หื้อตัดเสื้อผ้า แหนชู้ ขุนนางรัก",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -451,7 +447,9 @@
       "dateISO": "2028-08-12",
       "day": 13,
       "lunar": "แรม 9 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันอุบาทว์"
+      ]
     },
     {
       "date": "2028-08-13T17:00:00.000Z",
@@ -495,7 +493,7 @@
       "wanThaiDesc": "อย่าชวนกันรบท่าน เยียวตายถูกปืน",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -518,7 +516,8 @@
       "day": 15,
       "lunar": "แรม 11 ค่ำ",
       "labels": [
-        "ราชาโชค"
+        "ราชาโชค",
+        "วันโลกาวินาศ"
       ]
     },
     {

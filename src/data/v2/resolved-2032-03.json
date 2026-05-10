@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "resolvedAt": "2026-05-09T00:01:41.839Z",
+    "resolvedAt": "2026-05-10T03:30:35.923Z",
     "strategy": "GENERATED_V2_2"
   },
   "month": "2032-03",
@@ -84,8 +84,8 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
-      "isAthipadi": false,
+      "isThongChai": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1393,
       "yearZodiac": "ร้วงใค้ (กุน)",
@@ -105,7 +105,7 @@
       "day": 3,
       "lunar": "แรม 7 ค่ำ",
       "labels": [
-        "วันธงชัย",
+        "วันอธิบดี",
         "วันเสีย"
       ]
     },
@@ -153,7 +153,7 @@
       "wanThai": "ดับเม็ด",
       "wanThaiDesc": "อย่าชวนกันไปค้า เยียวท่านฆ่าเอาครัว",
       "isSia": true,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -177,7 +177,8 @@
       "day": 5,
       "lunar": "แรม 9 ค่ำ",
       "labels": [
-        "วันเสีย"
+        "วันเสีย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -189,7 +190,7 @@
       "wanThaiDesc": "หื้อแรกไม้แปลงเวียง แม้พลแสนรบบ่แพ้",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -211,9 +212,7 @@
       "dateISO": "2032-03-05",
       "day": 6,
       "lunar": "แรม 10 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2032-03-06T17:00:00.000Z",
@@ -224,10 +223,10 @@
       "wanThaiDesc": "หื้อยอพลรบท่าน ได้ทั้งช้างกับนาง",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": true,
+      "isAthipadi": false,
       "sitthi": "สิทธิโชค",
       "cs": 1393,
       "yearZodiac": "ร้วงใค้ (กุน)",
@@ -247,8 +246,8 @@
       "day": 7,
       "lunar": "แรม 11 ค่ำ",
       "labels": [
-        "วันอธิบดี",
-        "สิทธิโชค"
+        "สิทธิโชค",
+        "วันโลกาวินาศ"
       ]
     },
     {
@@ -471,7 +470,7 @@
       "wanThaiDesc": "แป๋งเครื่องย้อมไหมแดงดี",
       "isSia": true,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -495,7 +494,8 @@
       "lunar": "ขึ้น 3 ค่ำ",
       "labels": [
         "ราชาโชค",
-        "วันเสีย"
+        "วันเสีย",
+        "วันโลกาวินาศ"
       ]
     },
     {
@@ -510,7 +510,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1393,
       "yearZodiac": "ร้วงใค้ (กุน)",
@@ -530,6 +530,7 @@
       "day": 15,
       "lunar": "ขึ้น 4 ค่ำ",
       "labels": [
+        "วันอธิบดี",
         "วันเสีย"
       ]
     },
@@ -541,7 +542,7 @@
       "wanThai": "รวายสะง้า",
       "wanThaiDesc": "หื้อแป๋งครกต๋ำเข้า ได้ข้าวมาต๋ำบ่ขาด",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -564,9 +565,7 @@
       "dateISO": "2032-03-15",
       "day": 16,
       "lunar": "ขึ้น 5 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2032-03-16T17:00:00.000Z",
@@ -647,7 +646,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": true,
-      "isThongChai": true,
+      "isThongChai": false,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1393,
@@ -668,7 +667,6 @@
       "day": 19,
       "lunar": "ขึ้น 8 ค่ำ",
       "labels": [
-        "วันธงชัย",
         "วันศีล"
       ]
     },
@@ -715,10 +713,10 @@
       "wanThai": "ร้วงไค้",
       "wanThaiDesc": "อย่าชวนกันกินเหล้า เทียรย่อมผิดกัน",
       "isSia": true,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
+      "isThongChai": true,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1393,
@@ -739,7 +737,9 @@
       "day": 21,
       "lunar": "ขึ้น 10 ค่ำ",
       "labels": [
-        "วันเสีย"
+        "วันธงชัย",
+        "วันเสีย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -751,7 +751,7 @@
       "wanThaiDesc": "หื้อได้ล้อมคอกวัวควาย เป็นหลายตัวใหญ่หม้า (มาก)",
       "isSia": true,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -774,8 +774,7 @@
       "day": 22,
       "lunar": "ขึ้น 11 ค่ำ",
       "labels": [
-        "วันเสีย",
-        "วันโลกาวินาศ"
+        "วันเสีย"
       ]
     },
     {
@@ -790,7 +789,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1393,
       "yearZodiac": "ร้วงใค้ (กุน)",
@@ -809,9 +808,7 @@
       "dateISO": "2032-03-22",
       "day": 23,
       "lunar": "ขึ้น 12 ค่ำ",
-      "labels": [
-        "วันอธิบดี"
-      ]
+      "labels": []
     },
     {
       "date": "2032-03-23T17:00:00.000Z",
@@ -922,11 +919,11 @@
       "wanThai": "เมืองไส้",
       "wanThaiDesc": "อย่าชวนกันรบท่าน เยียวตายถูกปืน",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
-      "isAthipadi": true,
+      "isThongChai": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1393,
       "yearZodiac": "ร้วงใค้ (กุน)",
@@ -946,7 +943,8 @@
       "day": 27,
       "lunar": "แรม 1 ค่ำ",
       "labels": [
-        "วันอธิบดี"
+        "วันธงชัย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -1064,7 +1062,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1393,
       "yearZodiac": "ร้วงใค้ (กุน)",
@@ -1083,7 +1081,9 @@
       "dateISO": "2032-03-30",
       "day": 31,
       "lunar": "แรม 5 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันอธิบดี"
+      ]
     }
   ]
 }

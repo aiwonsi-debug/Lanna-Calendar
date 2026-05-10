@@ -920,7 +920,7 @@
       "wanThai": "กาบไจ้",
       "wanThaiDesc": "แม่วันดี คันจักเยียะได้ หื้อหาวันปลอด (ดี เป็นสิริมงคล)",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": true,
@@ -944,7 +944,8 @@
       "day": 27,
       "lunar": "ขึ้น 1 ค่ำ",
       "labels": [
-        "วันธงชัย"
+        "วันธงชัย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -1024,7 +1025,7 @@
       "wanThaiDesc": "อย่ายอพลรบท่าน จะตายถูกปืน (อย่าสู้รบ)",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -1047,8 +1048,7 @@
       "day": 30,
       "lunar": "ขึ้น 4 ค่ำ",
       "labels": [
-        "ชัยโชค",
-        "วันโลกาวินาศ"
+        "ชัยโชค"
       ]
     },
     {

@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "resolvedAt": "2026-05-09T00:01:41.638Z",
+    "resolvedAt": "2026-05-10T03:30:35.641Z",
     "strategy": "GENERATED_V2_2"
   },
   "month": "2027-10",
@@ -82,7 +82,7 @@
       "wanThaiDesc": "หื้อสานก๋วยไว้ (รอท่า) จะได้เวินคำเต็มก๋วย",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -104,9 +104,7 @@
       "dateISO": "2027-10-02",
       "day": 3,
       "lunar": "ขึ้น 4 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2027-10-03T17:00:00.000Z",
@@ -188,7 +186,7 @@
       "wanThaiDesc": "อย่าหื้อของแก่ท่าน จักเสียล้านภายลูน",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -210,7 +208,9 @@
       "dateISO": "2027-10-05",
       "day": 6,
       "lunar": "ขึ้น 7 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2027-10-06T17:00:00.000Z",
@@ -321,7 +321,7 @@
       "wanThai": "เมืองเม็ด",
       "wanThaiDesc": "หื้อสานแห ทอดน้ำได้เต๋มข้องพอหมาน",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -345,8 +345,7 @@
       "day": 10,
       "lunar": "ขึ้น 11 ค่ำ",
       "labels": [
-        "สิทธิโชค",
-        "วันอุบาทว์"
+        "สิทธิโชค"
       ]
     },
     {
@@ -498,7 +497,7 @@
       "wanThai": "เต่าไจ้",
       "wanThaiDesc": "หื้อได้ล้อมคอกวัวควาย เป็นหลายตัวใหญ่หม้า (มาก)",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": true,
@@ -523,7 +522,8 @@
       "lunar": "แรม 1 ค่ำ",
       "labels": [
         "วันธงชัย",
-        "ราชาโชค"
+        "ราชาโชค",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -606,7 +606,7 @@
       "wanThaiDesc": "หื้อตัดเสื้อผ้า แหนชู้ ขุนนางรัก",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -628,9 +628,7 @@
       "dateISO": "2027-10-17",
       "day": 18,
       "lunar": "แรม 4 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2027-10-18T17:00:00.000Z",
@@ -710,7 +708,7 @@
       "wanThaiDesc": "อย่าสร้างครัวศึก เยียวเสียตายบ่แพ้ท่านฆ่า",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -733,7 +731,8 @@
       "day": 21,
       "lunar": "แรม 7 ค่ำ",
       "labels": [
-        "มหาสิทธิโชค"
+        "มหาสิทธิโชค",
+        "วันโลกาวินาศ"
       ]
     },
     {
@@ -845,7 +844,7 @@
       "wanThai": "เต่าเส็ด",
       "wanThaiDesc": "อย่าถมยังชีไฟ เตาไฟ ผีดั้งจักชังเนอ",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -868,9 +867,7 @@
       "dateISO": "2027-10-24",
       "day": 25,
       "lunar": "แรม 11 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2027-10-25T17:00:00.000Z",

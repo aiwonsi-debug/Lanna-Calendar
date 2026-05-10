@@ -47,8 +47,8 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
-      "isAthipadi": false,
+      "isThongChai": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1387,
       "yearZodiac": "ดับไส้ (มะเส็ง)",
@@ -68,7 +68,7 @@
       "day": 2,
       "lunar": "ขึ้น 7 ค่ำ",
       "labels": [
-        "วันธงชัย",
+        "วันอธิบดี",
         "วันเสีย"
       ]
     },
@@ -116,7 +116,7 @@
       "wanThai": "เปิกสะง้า",
       "wanThaiDesc": "อย่าสร้างครัวศึก เยียวเสียตายบ่แพ้ท่านฆ่า",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -139,7 +139,9 @@
       "dateISO": "2025-05-03",
       "day": 4,
       "lunar": "ขึ้น 9 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันอุบาทว์"
+      ]
     },
     {
       "date": "2025-05-04T17:00:00.000Z",
@@ -150,7 +152,7 @@
       "wanThaiDesc": "หื้อเอาวัวควายมาคอก เป็นหลายตัว สุขมาก",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -172,9 +174,7 @@
       "dateISO": "2025-05-04",
       "day": 5,
       "lunar": "ขึ้น 10 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2025-05-05T17:00:00.000Z",
@@ -185,10 +185,10 @@
       "wanThaiDesc": "หื่อห่อหมากถามสาวหุม บ่ร้าง",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": true,
+      "isAthipadi": false,
       "sitthi": "ราชาโชค",
       "cs": 1387,
       "yearZodiac": "ดับไส้ (มะเส็ง)",
@@ -208,8 +208,8 @@
       "day": 6,
       "lunar": "ขึ้น 11 ค่ำ",
       "labels": [
-        "วันอธิบดี",
-        "ราชาโชค"
+        "ราชาโชค",
+        "วันโลกาวินาศ"
       ]
     },
     {
@@ -426,7 +426,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
+      "isThongChai": true,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1387,
@@ -446,7 +446,9 @@
       "dateISO": "2025-05-12",
       "day": 13,
       "lunar": "แรม 3 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันธงชัย"
+      ]
     },
     {
       "date": "2025-05-13T17:00:00.000Z",
@@ -456,7 +458,7 @@
       "wanThai": "เปิกสี",
       "wanThaiDesc": "หื้อห่อหมากถามสาว พ่อแม่หากวางหื้อลูก (ควรหมั้นหมาย)",
       "isSia": true,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -481,8 +483,7 @@
       "lunar": "แรม 4 ค่ำ",
       "labels": [
         "มหาสิทธิโชค",
-        "วันเสีย",
-        "วันอุบาทว์"
+        "วันเสีย"
       ]
     },
     {
@@ -566,8 +567,8 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
-      "isAthipadi": false,
+      "isThongChai": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1387,
       "yearZodiac": "ดับไส้ (มะเส็ง)",
@@ -587,7 +588,7 @@
       "day": 17,
       "lunar": "แรม 7 ค่ำ",
       "labels": [
-        "วันธงชัย"
+        "วันอธิบดี"
       ]
     },
     {
@@ -635,7 +636,7 @@
       "wanThai": "กาเร้า",
       "wanThaiDesc": "หื้อหาขวัญลูกเต้า เอาขวัญข้าวแควนดี (ควรถักแห)",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -658,7 +659,9 @@
       "dateISO": "2025-05-18",
       "day": 19,
       "lunar": "แรม 9 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันอุบาทว์"
+      ]
     },
     {
       "date": "2025-05-19T17:00:00.000Z",
@@ -669,7 +672,7 @@
       "wanThaiDesc": "อย่าม้วนหูกทอลาย จะตกตาย บ่ดี",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -692,8 +695,7 @@
       "day": 20,
       "lunar": "แรม 10 ค่ำ",
       "labels": [
-        "ชัยโชค",
-        "วันโลกาวินาศ"
+        "ชัยโชค"
       ]
     },
     {
@@ -705,10 +707,10 @@
       "wanThaiDesc": "อย่าตัดผม ไปม่ายสาว สาวบ่ชมบ่สู้",
       "isSia": true,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1387,
       "yearZodiac": "ดับไส้ (มะเส็ง)",
@@ -728,8 +730,8 @@
       "day": 21,
       "lunar": "แรม 11 ค่ำ",
       "labels": [
-        "วันอธิบดี",
-        "วันเสีย"
+        "วันเสีย",
+        "วันโลกาวินาศ"
       ]
     },
     {
@@ -945,7 +947,7 @@
       "wanThaiDesc": "ฝั้นเชือกวัวควาย เยียวตัวตายตมม้วย",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -967,7 +969,9 @@
       "dateISO": "2025-05-27",
       "day": 28,
       "lunar": "ขึ้น 3 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2025-05-28T17:00:00.000Z",
@@ -981,7 +985,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": false,
+      "isAthipadi": true,
       "sitthi": "อมฤตโชค",
       "cs": 1387,
       "yearZodiac": "ดับไส้ (มะเส็ง)",
@@ -1001,6 +1005,7 @@
       "day": 29,
       "lunar": "ขึ้น 4 ค่ำ",
       "labels": [
+        "วันอธิบดี",
         "อมฤตโชค"
       ]
     },
@@ -1012,7 +1017,7 @@
       "wanThai": "กาบสัน",
       "wanThaiDesc": "หื้อล้อมวัวควาย มีหลายบ่น้อย",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -1035,9 +1040,7 @@
       "dateISO": "2025-05-29",
       "day": 30,
       "lunar": "ขึ้น 5 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2025-05-30T17:00:00.000Z",

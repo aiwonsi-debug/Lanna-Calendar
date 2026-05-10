@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "resolvedAt": "2026-05-09T00:01:41.567Z",
+    "resolvedAt": "2026-05-10T03:30:35.547Z",
     "strategy": "GENERATED_V2_2"
   },
   "month": "2026-09",
@@ -85,7 +85,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": false,
+      "isAthipadi": true,
       "sitthi": "มหาสิทธิโชค",
       "cs": 1388,
       "yearZodiac": "รวายสะง้า (มะเมีย)",
@@ -105,6 +105,7 @@
       "day": 3,
       "lunar": "แรม 7 ค่ำ",
       "labels": [
+        "วันอธิบดี",
         "มหาสิทธิโชค"
       ]
     },
@@ -116,7 +117,7 @@
       "wanThai": "รวายยี่",
       "wanThaiDesc": "-",
       "isSia": true,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": true,
       "isThongChai": false,
@@ -141,7 +142,6 @@
       "lunar": "แรม 8 ค่ำ",
       "labels": [
         "วันเสีย",
-        "วันอุบาทว์",
         "วันศีล"
       ]
     },
@@ -153,7 +153,7 @@
       "wanThai": "เมืองเหม้า",
       "wanThaiDesc": "อย่ายอพลรบท่าน จะตายถูกปืน (อย่าสู้รบ)",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -176,7 +176,9 @@
       "dateISO": "2026-09-04",
       "day": 5,
       "lunar": "แรม 9 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันอุบาทว์"
+      ]
     },
     {
       "date": "2026-09-05T17:00:00.000Z",
@@ -220,7 +222,7 @@
       "wanThaiDesc": "อย่าสร้างดาบเถี่ยนกล้า จักพลันได้ฟันตน (อย่าประดิษฐ์หรือซื้ออาวุธ)",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -242,7 +244,9 @@
       "dateISO": "2026-09-06",
       "day": 7,
       "lunar": "แรม 11 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2026-09-07T17:00:00.000Z",

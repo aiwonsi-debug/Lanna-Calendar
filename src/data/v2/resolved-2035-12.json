@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "resolvedAt": "2026-05-09T00:01:42.022Z",
+    "resolvedAt": "2026-05-10T03:30:36.135Z",
     "strategy": "GENERATED_V2_2"
   },
   "month": "2035-12",
@@ -85,7 +85,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
+      "isThongChai": true,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1397,
@@ -105,7 +105,9 @@
       "dateISO": "2035-12-02",
       "day": 3,
       "lunar": "ขึ้น 2 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันธงชัย"
+      ]
     },
     {
       "date": "2035-12-03T17:00:00.000Z",
@@ -115,7 +117,7 @@
       "wanThai": "กาบสัน",
       "wanThaiDesc": "หื้อล้อมวัวควาย มีหลายบ่น้อย",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -138,9 +140,7 @@
       "dateISO": "2035-12-03",
       "day": 4,
       "lunar": "ขึ้น 3 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2035-12-04T17:00:00.000Z",
@@ -185,7 +185,7 @@
       "wanThai": "รวายเส็ด",
       "wanThaiDesc": "อย่าปลูกครัวยังสวน เยียดหลือใจบ่ได้มาก",
       "isSia": true,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -210,7 +210,8 @@
       "lunar": "ขึ้น 5 ค่ำ",
       "labels": [
         "ชัยโชค",
-        "วันเสีย"
+        "วันเสีย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -224,8 +225,8 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
-      "isAthipadi": false,
+      "isThongChai": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1397,
       "yearZodiac": "ดับเม้า (เถาะ)",
@@ -245,7 +246,7 @@
       "day": 7,
       "lunar": "ขึ้น 6 ค่ำ",
       "labels": [
-        "วันธงชัย"
+        "วันอธิบดี"
       ]
     },
     {
@@ -329,7 +330,7 @@
       "wanThaiDesc": "-",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -351,9 +352,7 @@
       "dateISO": "2035-12-09",
       "day": 10,
       "lunar": "ขึ้น 9 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2035-12-10T17:00:00.000Z",
@@ -367,7 +366,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": true,
+      "isAthipadi": false,
       "sitthi": "ชัยโชค",
       "cs": 1397,
       "yearZodiac": "ดับเม้า (เถาะ)",
@@ -387,7 +386,6 @@
       "day": 11,
       "lunar": "ขึ้น 10 ค่ำ",
       "labels": [
-        "วันอธิบดี",
         "ชัยโชค"
       ]
     },
@@ -536,7 +534,7 @@
       "wanThaiDesc": "หื้อแรกไม้แปลงเวียง แม้พลแสนรบบ่แพ้",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": true,
       "isThongChai": false,
       "isAthipadi": false,
@@ -559,6 +557,7 @@
       "day": 16,
       "lunar": "ขึ้น 15 ค่ำ",
       "labels": [
+        "วันโลกาวินาศ",
         "วันศีล"
       ]
     },
@@ -606,7 +605,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
+      "isThongChai": true,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1397,
@@ -626,7 +625,9 @@
       "dateISO": "2035-12-17",
       "day": 18,
       "lunar": "แรม 2 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันธงชัย"
+      ]
     },
     {
       "date": "2035-12-18T17:00:00.000Z",
@@ -636,7 +637,7 @@
       "wanThai": "กัดไค้",
       "wanThaiDesc": "อย่าก่ายห้างยิงกวาง แม่นทำดายบ่ได้",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -659,9 +660,7 @@
       "dateISO": "2035-12-18",
       "day": 19,
       "lunar": "แรม 3 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2035-12-19T17:00:00.000Z",
@@ -707,7 +706,7 @@
       "wanThai": "ร้วงเป้า",
       "wanThaiDesc": "อย่าแป๋งสวนปลูกอ้อย เป็นต้นงามบ่มีน้ำ",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -730,7 +729,9 @@
       "dateISO": "2035-12-20",
       "day": 21,
       "lunar": "แรม 5 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันอุบาทว์"
+      ]
     },
     {
       "date": "2035-12-21T17:00:00.000Z",
@@ -743,8 +744,8 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
-      "isAthipadi": false,
+      "isThongChai": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1397,
       "yearZodiac": "ดับเม้า (เถาะ)",
@@ -764,7 +765,7 @@
       "day": 22,
       "lunar": "แรม 6 ค่ำ",
       "labels": [
-        "วันธงชัย",
+        "วันอธิบดี",
         "วันเสีย"
       ]
     },
@@ -847,7 +848,7 @@
       "wanThaiDesc": "เอาเมียมาใหม่ จักได้ลูกตายพราย",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -870,8 +871,7 @@
       "day": 25,
       "lunar": "แรม 9 ค่ำ",
       "labels": [
-        "อมฤตโชค",
-        "วันโลกาวินาศ"
+        "อมฤตโชค"
       ]
     },
     {
@@ -886,7 +886,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": true,
+      "isAthipadi": false,
       "sitthi": "สิทธิโชค",
       "cs": 1397,
       "yearZodiac": "ดับเม้า (เถาะ)",
@@ -906,7 +906,6 @@
       "day": 26,
       "lunar": "แรม 10 ค่ำ",
       "labels": [
-        "วันอธิบดี",
         "สิทธิโชค"
       ]
     },

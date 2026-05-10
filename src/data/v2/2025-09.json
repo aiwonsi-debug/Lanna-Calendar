@@ -45,7 +45,7 @@
       "wanThaiDesc": "หื้อเอาวัวควายมาคอก เป็นหลายตัว สุขมาก",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -68,7 +68,8 @@
       "day": 2,
       "lunar": "ขึ้น 11 ค่ำ",
       "labels": [
-        "ราชาโชค"
+        "ราชาโชค",
+        "วันโลกาวินาศ"
       ]
     },
     {
@@ -222,7 +223,7 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": true,
+      "isThongChai": false,
       "isAthipadi": false,
       "sitthi": null,
       "cs": 1387,
@@ -242,9 +243,7 @@
       "dateISO": "2025-09-06",
       "day": 7,
       "lunar": "แรม 1 ค่ำ",
-      "labels": [
-        "วันธงชัย"
-      ]
+      "labels": []
     },
     {
       "date": "2025-09-07T17:00:00.000Z",
@@ -255,7 +254,7 @@
       "wanThaiDesc": "อย่าได้สานหับไปค้า จะถูกฆ่ากลางทาง (อย่าเดินทางค้าขาย)",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -277,9 +276,7 @@
       "dateISO": "2025-09-07",
       "day": 8,
       "lunar": "แรม 2 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2025-09-08T17:00:00.000Z",
@@ -292,8 +289,8 @@
       "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
-      "isThongChai": false,
-      "isAthipadi": true,
+      "isThongChai": true,
+      "isAthipadi": false,
       "sitthi": null,
       "cs": 1387,
       "yearZodiac": "ดับไส้ (มะเส็ง)",
@@ -313,7 +310,7 @@
       "day": 9,
       "lunar": "แรม 3 ค่ำ",
       "labels": [
-        "วันอธิบดี"
+        "วันธงชัย"
       ]
     },
     {
@@ -434,7 +431,7 @@
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
-      "isAthipadi": false,
+      "isAthipadi": true,
       "sitthi": null,
       "cs": 1387,
       "yearZodiac": "ดับไส้ (มะเส็ง)",
@@ -453,7 +450,9 @@
       "dateISO": "2025-09-12",
       "day": 13,
       "lunar": "แรม 7 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันอธิบดี"
+      ]
     },
     {
       "date": "2025-09-13T17:00:00.000Z",
@@ -463,7 +462,7 @@
       "wanThai": "ร้วงเม็ด",
       "wanThaiDesc": "อย่าก่ายห้างยิงกวาง แม่นทำดายบ่ได้ (อย่าทำอาวุธธนูหน้าไม้ และอย่าออกล่าสัตว์)",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": true,
       "isThongChai": false,
@@ -488,7 +487,6 @@
       "lunar": "แรม 8 ค่ำ",
       "labels": [
         "อมฤตโชค",
-        "วันอุบาทว์",
         "วันศีล"
       ]
     },
@@ -500,7 +498,7 @@
       "wanThai": "เต่าสัน",
       "wanThaiDesc": "หื้อห่อหมากขอสาวหุมมาสู่ (ควรผูกมิตร)",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -523,7 +521,9 @@
       "dateISO": "2025-09-14",
       "day": 15,
       "lunar": "แรม 9 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันอุบาทว์"
+      ]
     },
     {
       "date": "2025-09-15T17:00:00.000Z",
@@ -569,7 +569,7 @@
       "wanThaiDesc": "อย่าม้วนหูกทอลาย จะตกตาย บ่ดี",
       "isSia": true,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -592,7 +592,8 @@
       "day": 17,
       "lunar": "แรม 11 ค่ำ",
       "labels": [
-        "วันเสีย"
+        "วันเสีย",
+        "วันโลกาวินาศ"
       ]
     },
     {

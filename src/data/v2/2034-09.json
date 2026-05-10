@@ -115,8 +115,8 @@
       "wanThai": "เปิกสัน",
       "wanThaiDesc": "หื้อใส่เหล้าบรรณาการ ขุนรักหื้อลาภมากนัก",
       "isSia": false,
-      "isUbat": false,
-      "isLokawinat": true,
+      "isUbat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -140,7 +140,7 @@
       "lunar": "แรม 5 ค่ำ",
       "labels": [
         "ราชาโชค",
-        "วันโลกาวินาศ"
+        "วันอุบาทว์"
       ]
     },
     {
@@ -358,7 +358,7 @@
       "wanThai": "ดับเหม้า",
       "wanThaiDesc": "หื้อตัดเสื้อผ้า แหนชู้ ขุนนางรัก",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -382,8 +382,7 @@
       "day": 11,
       "lunar": "แรม 12 ค่ำ",
       "labels": [
-        "มหาสิทธิโชค",
-        "วันอุบาทว์"
+        "มหาสิทธิโชค"
       ]
     },
     {
@@ -639,7 +638,7 @@
       "wanThaiDesc": "อย่าซื้อวัวควายมาคอก ผีด้ำซ้ำบ่ดีสังแล",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -661,9 +660,7 @@
       "dateISO": "2034-09-18",
       "day": 19,
       "lunar": "ขึ้น 6 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2034-09-19T17:00:00.000Z",
@@ -744,7 +741,7 @@
       "wanThai": "รวายยี่",
       "wanThaiDesc": "-",
       "isSia": true,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -768,7 +765,8 @@
       "day": 22,
       "lunar": "ขึ้น 9 ค่ำ",
       "labels": [
-        "วันเสีย"
+        "วันเสีย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -813,7 +811,7 @@
       "wanThaiDesc": "หื้อห่อหมากถามสาว พ่อแม่หากวางหื้อลูก (ควรหมั้นหมาย)",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -836,7 +834,8 @@
       "day": 24,
       "lunar": "ขึ้น 11 ค่ำ",
       "labels": [
-        "สิทธิโชค"
+        "สิทธิโชค",
+        "วันโลกาวินาศ"
       ]
     },
     {
@@ -882,7 +881,7 @@
       "wanThai": "กดสะง้า",
       "wanThaiDesc": "อย่าขี่ม้าเทียวเมือง จักตกม้าตายเผิดหน้า (อย่าออกเดินทาง)",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -906,8 +905,7 @@
       "day": 26,
       "lunar": "ขึ้น 13 ค่ำ",
       "labels": [
-        "มหาสิทธิโชค",
-        "วันอุบาทว์"
+        "มหาสิทธิโชค"
       ]
     },
     {

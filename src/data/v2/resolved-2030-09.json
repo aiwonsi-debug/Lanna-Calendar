@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "resolvedAt": "2026-05-09T00:01:41.758Z",
+    "resolvedAt": "2026-05-10T03:30:35.823Z",
     "strategy": "GENERATED_V2_2"
   },
   "month": "2030-09",
@@ -14,7 +14,7 @@
       "wanThaiDesc": "หื้อล้อมวัวควาย มีหลายบ่น้อย",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -36,9 +36,7 @@
       "dateISO": "2030-08-31",
       "day": 1,
       "lunar": "ขึ้น 4 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2030-09-01T17:00:00.000Z",
@@ -120,7 +118,7 @@
       "wanThaiDesc": "หื้อยอพลรบกับท่าน ได้ทั้งช้างกับนาง",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -142,7 +140,9 @@
       "dateISO": "2030-09-03",
       "day": 4,
       "lunar": "ขึ้น 7 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2030-09-04T17:00:00.000Z",
@@ -253,7 +253,7 @@
       "wanThai": "ร้วงเหม้า",
       "wanThaiDesc": "ดีเยียะสวน ปลูกยา หากเป็นดอกดีงาม",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -277,8 +277,7 @@
       "day": 8,
       "lunar": "ขึ้น 11 ค่ำ",
       "labels": [
-        "สิทธิโชค",
-        "วันอุบาทว์"
+        "สิทธิโชค"
       ]
     },
     {
@@ -430,7 +429,7 @@
       "wanThai": "รวายสัน",
       "wanThaiDesc": "หื้อแรกไม้แปลงเวียง แม้พลแสนรบบ่แพ้",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": true,
@@ -455,7 +454,8 @@
       "lunar": "แรม 1 ค่ำ",
       "labels": [
         "วันธงชัย",
-        "ราชาโชค"
+        "ราชาโชค",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -538,7 +538,7 @@
       "wanThaiDesc": "อย่าก่ายห้างยิงกวาง แม่นทำดายบ่ได้",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -560,9 +560,7 @@
       "dateISO": "2030-09-15",
       "day": 16,
       "lunar": "แรม 4 ค่ำ",
-      "labels": [
-        "วันโลกาวินาศ"
-      ]
+      "labels": []
     },
     {
       "date": "2030-09-16T17:00:00.000Z",
@@ -642,7 +640,7 @@
       "wanThaiDesc": "หื้อปลูกไว้ยังสวน ตกทลายขาวหม้า (มาก)",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -665,7 +663,8 @@
       "day": 19,
       "lunar": "แรม 7 ค่ำ",
       "labels": [
-        "มหาสิทธิโชค"
+        "มหาสิทธิโชค",
+        "วันโลกาวินาศ"
       ]
     },
     {
@@ -777,7 +776,7 @@
       "wanThai": "รวายสะง้า",
       "wanThaiDesc": "หื้อแป๋งครกต๋ำเข้า ได้ข้าวมาต๋ำบ่ขาด",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -800,9 +799,7 @@
       "dateISO": "2030-09-22",
       "day": 23,
       "lunar": "แรม 11 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2030-09-23T17:00:00.000Z",

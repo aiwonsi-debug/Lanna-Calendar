@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "resolvedAt": "2026-05-09T00:01:41.682Z",
+    "resolvedAt": "2026-05-10T03:30:35.682Z",
     "strategy": "GENERATED_V2_2"
   },
   "month": "2028-09",
@@ -600,7 +600,7 @@
       "wanThai": "ร้วงเหม้า",
       "wanThaiDesc": "ดีเยียะสวน ปลูกยา หากเป็นดอกดีงาม",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": true,
@@ -624,7 +624,8 @@
       "day": 18,
       "lunar": "ขึ้น 1 ค่ำ",
       "labels": [
-        "วันธงชัย"
+        "วันธงชัย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -705,7 +706,7 @@
       "wanThaiDesc": "หื้อแรกน้ำใส่นา จักได้ข้าวมาเต๋มหลอง",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -728,8 +729,7 @@
       "day": 21,
       "lunar": "ขึ้น 4 ค่ำ",
       "labels": [
-        "อมฤตโชค",
-        "วันโลกาวินาศ"
+        "อมฤตโชค"
       ]
     },
     {
@@ -809,7 +809,7 @@
       "wanThaiDesc": "หื้อยอพลรบท่าน ได้ทั้งช้างกับนาง",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -831,7 +831,9 @@
       "dateISO": "2028-09-23",
       "day": 24,
       "lunar": "ขึ้น 7 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2028-09-24T17:00:00.000Z",
@@ -947,7 +949,7 @@
       "wanThai": "ร้วงเป้า",
       "wanThaiDesc": "อย่าแป๋งสวนปลูกอ้อย เป็นต้นงามบ่มีน้ำ",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -970,9 +972,7 @@
       "dateISO": "2028-09-27",
       "day": 28,
       "lunar": "ขึ้น 11 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2028-09-28T17:00:00.000Z",

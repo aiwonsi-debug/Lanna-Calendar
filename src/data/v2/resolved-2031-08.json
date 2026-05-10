@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "resolvedAt": "2026-05-09T00:01:41.800Z",
+    "resolvedAt": "2026-05-10T03:30:35.891Z",
     "strategy": "GENERATED_V2_2"
   },
   "month": "2031-08",
@@ -600,7 +600,7 @@
       "wanThai": "ดับไค้",
       "wanThaiDesc": "อย่าตัดผม ไปม่ายสาว สาวบ่ชมบ่สู้",
       "isSia": false,
-      "isUbat": false,
+      "isUbat": true,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": true,
@@ -624,7 +624,8 @@
       "day": 18,
       "lunar": "ขึ้น 1 ค่ำ",
       "labels": [
-        "วันธงชัย"
+        "วันธงชัย",
+        "วันอุบาทว์"
       ]
     },
     {
@@ -705,7 +706,7 @@
       "wanThaiDesc": "อย่าได้สานสาด (เสื่อ) ปูชานช่อง เยียวได้ร้อนเอ่าตัวเก่า",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": true,
+      "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -728,8 +729,7 @@
       "day": 21,
       "lunar": "ขึ้น 4 ค่ำ",
       "labels": [
-        "อมฤตโชค",
-        "วันโลกาวินาศ"
+        "อมฤตโชค"
       ]
     },
     {
@@ -809,7 +809,7 @@
       "wanThaiDesc": "อย่ากระทำการเอาขวัญ เยียวเสียหลานเหลนกับลูกเต้า",
       "isSia": false,
       "isUbat": false,
-      "isLokawinat": false,
+      "isLokawinat": true,
       "isSin": false,
       "isThongChai": false,
       "isAthipadi": false,
@@ -831,7 +831,9 @@
       "dateISO": "2031-08-23",
       "day": 24,
       "lunar": "ขึ้น 7 ค่ำ",
-      "labels": []
+      "labels": [
+        "วันโลกาวินาศ"
+      ]
     },
     {
       "date": "2031-08-24T17:00:00.000Z",
@@ -947,7 +949,7 @@
       "wanThai": "ดับเร้า",
       "wanThaiDesc": "หื้อตัดผม ม่ายชู้สาวหากสู้มาหา",
       "isSia": false,
-      "isUbat": true,
+      "isUbat": false,
       "isLokawinat": false,
       "isSin": false,
       "isThongChai": false,
@@ -970,9 +972,7 @@
       "dateISO": "2031-08-27",
       "day": 28,
       "lunar": "ขึ้น 11 ค่ำ",
-      "labels": [
-        "วันอุบาทว์"
-      ]
+      "labels": []
     },
     {
       "date": "2031-08-28T17:00:00.000Z",

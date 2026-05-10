@@ -241,15 +241,22 @@ export function getLannaDate(date: Date) {
     return (rules[month] || []).includes(d);
   })(currentMonth, dow, date.getHours());
 
-  const thongChaiRules = [10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1];
-  const athipadiRules = [4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3];
-  const ubatRules = [10, 11, 12, 13, 1, 2, 3, 4, 5, 6, 7, 8];
-  const lokawinatRules = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2];
+  // Lanna Kala Yoga Rules (Snean Dhammathi style - 4 month cycles)
+  // Group 1: Months 1, 5, 9
+  // Group 2: Months 2, 6, 10
+  // Group 3: Months 3, 7, 11
+  // Group 4: Months 4, 8, 12
+  const group = (currentMonth - 1) % 4;
+  
+  const thongChaiRules = [10, 1, 2, 3];
+  const athipadiRules = [4, 5, 6, 7];
+  const ubatRules = [10, 1, 5, 9];
+  const lokawinatRules = [3, 7, 15, 11]; // Group 3 (Month 11) -> 15
 
-  const isThongChai = (currentKham === thongChaiRules[currentMonth - 1]);
-  const isAthipadi = (currentKham === athipadiRules[currentMonth - 1]);
-  const isUbat = (currentKham === ubatRules[currentMonth - 1]);
-  const isLokawinat = (currentKham === lokawinatRules[currentMonth - 1]);
+  const isThongChai = (currentKham === thongChaiRules[group]);
+  const isAthipadi = (currentKham === athipadiRules[group]);
+  const isUbat = (currentKham === ubatRules[group]);
+  const isLokawinat = (currentKham === lokawinatRules[group]);
 
   const sitthi = getSitthiChok(currentKham, dow);
 
