@@ -158,30 +158,32 @@ const getStatusLines = (day: Day) => {
   const raw = day.raw || {};
   const labels = Array.isArray(raw.labels) ? raw.labels : [];
   const warnings = Array.isArray(raw.warnings) ? raw.warnings : [];
+  const description = raw.rawText || "";
   
-  // Combine all possible sources of status text and clean messy characters
-  const combinedText = [...labels, ...warnings].join('|').replace(/[\s]/g, '');
+  // Combine everything and nuke ALL whitespace and special characters for stable matching
+  const clean = (text: string) => text.replace(/[^\u0E00-\u0E7F]/g, ''); // Keep only Thai characters
+  const haystack = clean([...labels, ...warnings, description].join(''));
   
-  const check = (term: string) => combinedText.includes(term);
+  const check = (term: string) => haystack.includes(clean(term));
 
-  // High priority bad days
-  if (day.isSia) 
+  // High priority bad days (Calculated OR Deep String Match)
+  if (day.isSia || check("วันเสีย")) 
     lines.push({ text: 'วันเสีย', className: 'text-[#d71920] font-black' });
   
-  if (day.isUbat) 
+  if (day.isUbat || check("อุบาทว์") || check("วันอุบาทว์")) 
     lines.push({ text: 'วันอุบาทว์', className: 'text-[#d71920] font-black' });
   
-  if (day.isLokawinat) 
+  if (day.isLokawinat || check("โลกาวินาศ") || check("วันโลกาวินาศ")) 
     lines.push({ text: 'โลกาวินาศ', className: 'text-[#d71920] font-black' });
   
-  if (day.isLomLuang) 
+  if (day.isLomLuang || check("หล่มหลวง")) 
     lines.push({ text: 'หล่มหลวง', className: 'text-[#d71920] font-black' });
 
   // Good days (Calculated OR JSON fallback)
-  if (day.isThongChai || check("ธงชัย")) 
+  if (day.isThongChai || check("วันธงชัย") || check("ธงชัย")) 
     lines.push({ text: 'ธงชัย', className: 'text-[#0f8a2a] font-black' });
   
-  if (day.isAthipadi || check("อธิบดี")) 
+  if (day.isAthipadi || check("วันอธิบดี") || check("อธิบดี")) 
     lines.push({ text: 'อธิบดี', className: 'text-[#0f8a2a] font-black' });
 
   // Special/Labels
@@ -232,8 +234,13 @@ export default function App() {
             ...lanna,
             day: d.day,
             isSin: lanna.isSin || labels.includes("วันศีล"),
+            isSia: lanna.isSia,
             isUbat: lanna.isUbat,
             isLokawinat: lanna.isLokawinat,
+            isThongChai: lanna.isThongChai,
+            isAthipadi: lanna.isAthipadi,
+            isLomLuang: lanna.isLomLuang,
+            sitthi: lanna.sitthi,
             songkranLabel: getSongkranLabel(date),
             raw: d
           };

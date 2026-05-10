@@ -155,9 +155,12 @@ export function getWanPhiKin(day: number, phase: 'ออก' | 'แรม') {
 export function getLannaDate(date: Date) {
   if (!date || isNaN(date.getTime())) return null;
 
-  // Reference Point: Dec 31, 2025 -> 4 ออก 13, กัดเม็ด (55), Transitions = 0, fahTeeSangIdx = 0
-  const refDate = new Date(2025, 11, 31);
-  const diffDays = Math.floor((date.getTime() - refDate.getTime()) / 86400000);
+  // Use midnight-normalized date for day calculation
+  const d = new Date(date);
+  d.setHours(12, 0, 0, 0); // Use noon to avoid DST edge cases
+  
+  const refDate = new Date(2025, 11, 31, 12, 0, 0, 0);
+  const diffDays = Math.round((d.getTime() - refDate.getTime()) / 86400000);
   
   let currentMonth = 4, currentKham = 13, currentPhase: 'ออก' | 'แรม' = 'ออก', currentYearBE = 2569;
   let isLeapMonthActive = false;
@@ -170,7 +173,6 @@ export function getLannaDate(date: Date) {
   for (let i = 0; i < absDiff; i++) {
     const yrInfo = getLunarYearInfo(currentYearBE);
     
-    // Day counter for Fah Tee Sang
     if (step === 1) {
       fahTeeSangIdx = (fahTeeSangIdx + 1) % 9;
       currentKham++;
@@ -180,11 +182,9 @@ export function getLannaDate(date: Date) {
       if (currentPhase === 'ออก' && currentKham > 15) { 
         currentKham = 1; 
         currentPhase = 'แรม'; 
-        // Special Lanna rule: Some traditions jump month number at Full Moon in leap years
         if (currentMonth === 9 && yrInfo.isAthikamat && !isLeapMonthActive) {
-           // This handles the user's specific case where May 29 (Waning 1) becomes Month 10
            isLeapMonthActive = true;
-           currentMonth = 10;
+           currentMonth = 10; // Shift month name jump at Full Moon in leap years
            totalTransitions++;
         }
       } else if (currentPhase === 'แรม' && currentKham > maxKham) {
@@ -193,7 +193,6 @@ export function getLannaDate(date: Date) {
         if (currentMonth === 9 && yrInfo.isAthikamat && !isLeapMonthActive) {
           isLeapMonthActive = true; 
         } else { 
-          // If we jumped to 10 at Full Moon, we don't jump again at New Moon
           if (currentMonth !== 10 || !isLeapMonthActive) {
             currentMonth++; 
             if (currentMonth > 12) { currentMonth = 1; currentYearBE++; } 
@@ -223,35 +222,26 @@ export function getLannaDate(date: Date) {
   }
 
   const dow = date.getDay();
-  // Align Tai Day cycle: 2025-12-31 was กัดเม็ด (idx 55)
-  // Kab Chai is Idx 0.
-  const diffWan = Math.floor((date.getTime() - refDate.getTime()) / 86400000);
-  const wanThaiIdx = (55 + diffWan % 60 + 60) % 60;
+  const wanThaiIdx = (55 + diffDays % 60 + 60) % 60;
   const wanThai = MAE_MUE[wanThaiIdx % 10] + LUK_MUE[wanThaiIdx % 12];
   
-  // Day types
-  const isSia = ((month, d, h) => {
+  const h = date.getHours();
+  const isSia = ((month, d, hours) => {
     const rules: Record<number, number[]> = {
       1: [0, 1], 2: [2], 3: [4, 6], 4: [3, 5],
       5: [0, 1], 6: [2], 7: [4, 6], 8: [3, 5],
       9: [0, 1], 10: [2], 11: [4, 6], 12: [3, 5]
     };
-    // Rahu (Wed night) for months 2, 6, 10
-    if ([2, 6, 10].includes(month) && d === 3 && h >= 18) return true;
+    if ([2, 6, 10].includes(month) && d === 3 && hours >= 18) return true;
     return (rules[month] || []).includes(d);
-  })(currentMonth, dow, date.getHours());
+  })(currentMonth, dow, h);
 
-  // Lanna Kala Yoga Rules (Snean Dhammathi style - 4 month cycles)
-  // Group 1: Months 1, 5, 9
-  // Group 2: Months 2, 6, 10
-  // Group 3: Months 3, 7, 11
-  // Group 4: Months 4, 8, 12
+  // Grouping for Kala Yoga (1,5,9; 2,6,10; 3,7,11; 4,8,12)
   const group = (currentMonth - 1) % 4;
-  
   const thongChaiRules = [10, 1, 2, 3];
   const athipadiRules = [4, 5, 6, 7];
   const ubatRules = [10, 1, 5, 9];
-  const lokawinatRules = [3, 7, 15, 11]; // Group 3 (Month 11) -> 15
+  const lokawinatRules = [3, 7, 15, 11];
 
   const isThongChai = (currentKham === thongChaiRules[group]);
   const isAthipadi = (currentKham === athipadiRules[group]);
