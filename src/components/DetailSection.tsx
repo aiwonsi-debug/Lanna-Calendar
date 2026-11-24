@@ -317,8 +317,11 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
             );
           })}
         </div>
-        <div className="mt-6 text-[18px] text-slate-400 font-bold text-center italic">
-          * ••••=ดีมาก, •=ดี/รีบไป, ๐=ปกติ, ×=ห้ามไป
+        <div className="mt-6 flex flex-wrap justify-center gap-x-4 gap-y-1 text-[16px] sm:text-[18px] text-slate-400 font-bold italic">
+          <span className="whitespace-nowrap">* •••• = ดีมาก</span>
+          <span className="whitespace-nowrap">• = ดี/รีบไป</span>
+          <span className="whitespace-nowrap">๐ = ปกติ</span>
+          <span className="whitespace-nowrap">× = ห้ามไป</span>
         </div>
       </Card>
 

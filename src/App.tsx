@@ -392,8 +392,8 @@ export default function App() {
       <header className="grid grid-cols-[32px_minmax(0,1fr)_32px] items-center min-h-[35px] border-b border-black text-black bg-white">
         <button onClick={() => stepMonth(-1)} className="h-full text-[24px] leading-none text-left pl-1 font-bold">&lt;</button>
         <div className="min-w-0 text-center font-bold leading-tight py-1">
-          <div className="text-[15px] sm:text-[18px] whitespace-nowrap overflow-hidden text-ellipsis">ปี{headerInfo.yearZodiac}<span className="mx-2 sm:mx-7">{headerInfo.monthTitle}</span></div>
-          <div className="text-[12px] sm:text-[13px] font-semibold text-gray-600">จ.ศ. {headerInfo.cs}</div>
+          <div className="text-[15px] sm:text-[18px] whitespace-nowrap overflow-hidden text-ellipsis">ปี{headerInfo.yearZodiac}<span className="ml-2 sm:ml-7">จ.ศ. {headerInfo.cs}</span></div>
+          <div className="text-[14px] sm:text-[15px] font-bold text-gray-700">{headerInfo.monthTitle}</div>
         </div>
         <button onClick={() => stepMonth(1)} className="h-full text-[24px] leading-none text-right pr-1 font-bold">&gt;</button>
       </header>
