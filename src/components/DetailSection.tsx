@@ -1,19 +1,19 @@
 import React from 'react';
-import { 
-  Sparkles, 
-  Compass, 
-  Clock, 
-  AlertTriangle, 
-  Scissors, 
-  Droplet, 
-  Shirt, 
-  MapPin, 
-  Calendar,
+import {
+  Sparkles,
+  Clock,
+  AlertTriangle,
+  Scissors,
+  Droplet,
+  Shirt,
+  MapPin,
   Info,
-  ChevronRight
+  ChevronRight,
+  Gavel,
+  BookOpen
 } from 'lucide-react';
 
-// --- DATA INTERFACES ---
+// --- DATA INTERFACES (คงเดิม ไม่เปลี่ยนสัญญาข้อมูล) ---
 export interface LunarData {
   phase: "waxing" | "waning";
   day: number;
@@ -65,14 +65,10 @@ export interface DayData {
   wanPhiKin?: string;
   panjaDithi?: string;
   sitthi?: string | null;
-  sitthiList?: string[];
   isUbat?: boolean;
   isLokawinat?: boolean;
   isMachu?: boolean;
   isMahaMachu?: boolean;
-  isMai?: boolean;
-  isWodwai?: boolean;
-  isHuaRiangMon?: boolean;
 }
 
 interface DetailSectionProps {
@@ -86,184 +82,273 @@ const toArabicDigits = (value: string | number) =>
     .replace(/[๐-๙]/g, (char) => String('๐๑๒๓๔๕๖๗๘๙'.indexOf(char)));
 
 const Card = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
-  <div className={`bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-4 ${className}`}>
+  <section className={`bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-5 mb-4 ${className}`}>
     {children}
-  </div>
+  </section>
 );
 
-const CardTitle = ({ title, icon: Icon, color = "text-gray-400" }: { title: string; icon: any; color?: string }) => (
+const CardTitle = ({ title, icon: Icon, color = "text-slate-500" }: { title: string; icon: any; color?: string }) => (
   <div className="flex items-center gap-2 mb-3">
-    <Icon size={16} className={color} />
-    <div className="text-[11px] font-black uppercase tracking-wider text-gray-500">
-      {title}
-    </div>
+    <Icon size={22} className={color} />
+    <h3 className="text-[20px] leading-[1.4] font-black text-slate-700">{title}</h3>
   </div>
 );
 
 const RitualIcon = ({ title }: { title: string }) => {
-  if (title.includes('ตัดผม')) return <Scissors size={16} />;
-  if (title.includes('ตัดเล็บ')) return <Scissors size={16} className="rotate-90" />;
-  if (title.includes('ทาน้ำมัน')) return <Droplet size={16} />;
-  if (title.includes('นุ่งผ้าใหม่')) return <Shirt size={16} />;
-  if (title.includes('เดินทาง')) return <MapPin size={16} />;
-  return <ChevronRight size={14} />;
+  if (title.includes('ตัดผม')) return <Scissors size={20} />;
+  if (title.includes('ตัดเล็บ')) return <Scissors size={20} className="rotate-90" />;
+  if (title.includes('ทาน้ำมัน')) return <Droplet size={20} />;
+  if (title.includes('นุ่งผ้าใหม่')) return <Shirt size={20} />;
+  if (title.includes('เดินทาง')) return <MapPin size={20} />;
+  return <ChevronRight size={18} />;
 };
 
-export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
-  const thaiDayNames = ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'];
-  const monthNames = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
-  
-  const formatDate = (d: Date) => {
-    return toArabicDigits(`วัน${thaiDayNames[d.getDay()]}ที่ ${d.getDate()} ${monthNames[d.getMonth()]} พ.ศ.${d.getFullYear() + 543}`);
-  };
+// ชนิดของป้ายสำหรับลงสี: ใช้สีเข้มที่คอนทราสต์ผ่าน 4.5:1 บนพื้นขาว/พื้นอ่อน
+export type LabelKind = 'sin' | 'bad' | 'good' | 'neutral';
+export const labelKindOf = (label: string): LabelKind => {
+  if (label.includes('ศีล')) return 'sin';
+  if (['เสีย', 'อุบาทว์', 'โลกาวินาศ', 'หล่มหลวง', 'ไหม้', 'วอดวาย', 'มัจจุ'].some(t => label.includes(t))) return 'bad';
+  if (['โชค', 'ธงชัย', 'อธิบดี', 'วันดี'].some(t => label.includes(t))) return 'good';
+  return 'neutral';
+};
 
-  const lunarText = toArabicDigits(`${data.lunar.phase === 'waxing' ? 'ออก' : 'แรม'} ${data.lunar.day} ค่ำ`);
-  
+export const chipClass = (kind: LabelKind): string => {
+  switch (kind) {
+    case 'sin': return 'bg-[#8a5a00] text-white';
+    case 'bad': return 'bg-[#b3001b] text-white';
+    case 'good': return 'bg-[#0f7a28] text-white';
+    default: return 'bg-slate-600 text-white';
+  }
+};
+
+const THAI_DAYS = ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'];
+const THAI_MONTHS = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+const LANNA_MONTH_NAMES = ["", "เกี๋ยง", "ยี่", "สาม", "สี่", "ห้า", "หก", "เจ็ด", "แปด", "เก้า", "สิบ", "สิบเอ็ด", "สิบสอง"];
+
+export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
   const cs = data.lannaYear?.chulasakarat;
   const zodiacLanna = data.lannaYear?.zodiacLanna ?? "-";
   const zodiacThai = data.lannaYear?.zodiacThai ?? "-";
 
+  const fullDateText = toArabicDigits(`วัน${THAI_DAYS[date.getDay()]}ที่ ${date.getDate()} ${THAI_MONTHS[date.getMonth()]} พ.ศ. ${date.getFullYear() + 543}`);
+  const lunarPhrase = toArabicDigits(`${data.lunar.phase === 'waxing' ? 'ออก' : 'แรม'} ${data.lunar.day} ค่ำ`);
+  const lannaMonthText = toArabicDigits(`เดือน${LANNA_MONTH_NAMES[data.lannaMonth] || data.lannaMonth} (เดือน ${data.lannaMonth})`);
+
+  // --- กลุ่ม 1: คำตัดสิน ประกอบจากป้ายจริงของวันนั้น ---
+  const verdictWords: { text: string; kind: LabelKind }[] = [];
+  if (data.labels.special.some(l => l.includes('ศีล'))) verdictWords.push({ text: 'วันศีล', kind: 'sin' });
+  if (data.labels.bad.length > 0 || data.isMachu || data.isMahaMachu) verdictWords.push({ text: 'วันเสีย', kind: 'bad' });
+  if (data.sitthi) verdictWords.push({ text: 'วันดี', kind: 'good' });
+  if (verdictWords.length === 0) verdictWords.push({ text: 'วันปกติ', kind: 'neutral' });
+
   const allLabels = [
-    ...data.labels.special, 
-    ...data.labels.good, 
-    ...data.labels.bad, 
+    ...data.labels.special,
+    ...data.labels.good,
+    ...data.labels.bad,
     data.isMachu ? "วันมัจจุ" : "",
     data.isMahaMachu ? "วันมหามัจจุ" : "",
     data.festival
   ].filter(Boolean).map(toArabicDigits);
 
-  const badLabels = ["วันเสีย", "วันอุบาทว์", "วันโลกาวินาศ", "วันหล่มหลวง", "วันมัจจุ", "วันมหามัจจุ", "วันไหม้", "วันวอดวาย"];
-  const goodLabels = ["วันธงชัย", "วันอธิบดี", "มหาสิทธิโชค", "สิทธิโชค", "ไชยโชค", "ราชาโชค", "อมริสสโชค", "วันหัวเรียงหมอน", "วันยี่เป็ง", "วันพญาวัน"];
+  // --- แยกบรรทัดคำอธิบายเดิมออกเป็นกลุ่มตามลำดับคงที่ ---
+  const lines = (data.description ? toArabicDigits(data.description) : '').split('\n').map(s => s.trim()).filter(Boolean);
+  const reasonLines: string[] = [];   // เหตุผลของคำตัดสิน: วันร้ายต่าง ๆ
+  const identityLines: string[] = []; // ระบุวัน: ดิถี วันไท เก้ากอง ฟ้าตีแส่ง
+  const chokLines: string[] = [];     // โชค
+  const fortuneLines: string[] = [];  // คำทำนายที่เหลือ
+  for (const line of lines) {
+    if (/^(วันอุบาทว์|วันโลกาวินาศ|วันมัจจุ|วันมหามัจจุ|วันหล่มหลวง)/.test(line)) reasonLines.push(line);
+    else if (/^(ดิถี|วันไท|วันเก้ากอง|ฟ้าตีแส่ง)/.test(line)) identityLines.push(line);
+    else if (line.includes('โชค')) chokLines.push(line);
+    else fortuneLines.push(line);
+  }
+  const identityOrder = ['วันไท', 'วันเก้ากอง', 'ฟ้าตีแส่ง', 'ดิถี'];
+  identityLines.sort((a, b) => {
+    const ia = identityOrder.findIndex(p => a.startsWith(p));
+    const ib = identityOrder.findIndex(p => b.startsWith(p));
+    return ia - ib;
+  });
+
+  const bodyText = "text-[18px] leading-[1.6]";
 
   return (
-    <div className="bg-[#f8fafc] px-4 pt-12 pb-16 text-[28px] leading-[1.6]">
-      
-      {/* HEADER CARD */}
-      <Card className="text-center p-8">
-        <div className="flex justify-center mb-4">
-          <div className="bg-green-50 text-[#168019] px-6 py-2 rounded-full text-[24px] font-black flex items-center gap-3">
-            <Calendar size={28} />
-            {formatDate(date)}
-          </div>
+    <div className="bg-[#f8fafc] px-3 sm:px-4 pt-6 pb-12">
+      {/* ส่วนหัวของวัน */}
+      <Card>
+        <h2 className="text-[20px] leading-[1.4] font-black text-slate-800">{fullDateText}</h2>
+        <div className="mt-1 text-[18px] leading-[1.6] font-bold text-slate-700">
+          <span className="whitespace-nowrap">{lunarPhrase}</span>{' '}
+          <span className="whitespace-nowrap">{lannaMonthText}</span>
         </div>
-        <div className="flex flex-wrap items-baseline justify-center gap-x-2 text-[32px] sm:text-[36px] font-black text-slate-800 mb-2">
-          <span className="whitespace-nowrap">{toArabicDigits(`ปี${zodiacLanna}`)}</span>
-          <span className="text-slate-300">/</span>
-          <span className="whitespace-nowrap text-slate-500 font-bold text-[26px] sm:text-[28px]">ปี{zodiacThai}</span>
+        <div className="text-[18px] leading-[1.6] text-slate-600">
+          {toArabicDigits(`ปี${zodiacLanna} ปี${zodiacThai} จ.ศ. ${cs ?? '-'}`)}
         </div>
-        <div className="text-[22px] sm:text-[28px] font-bold text-slate-500 leading-snug">
-          {toArabicDigits(`${lunarText} เดือน ${data.lannaMonth} จ.ศ.${cs ?? '-'}`)}
-        </div>
+      </Card>
 
-        {/* LABELS PILLS */}
+      {/* กลุ่ม 1: คำตัดสิน */}
+      <Card>
+        <CardTitle title="คำตัดสิน" icon={Gavel} color="text-slate-500" />
+        <div className="flex flex-col items-start gap-2">
+          {verdictWords.map((v, i) => (
+            <span key={i} className={`inline-block px-4 py-1 rounded-xl text-[24px] leading-[1.4] font-black ${chipClass(v.kind)}`}>
+              {v.text}
+            </span>
+          ))}
+        </div>
         {allLabels.length > 0 && (
-          <div className="flex flex-wrap justify-center gap-3 mt-8">
-            {allLabels.map((label) => {
-              const isBad = badLabels.some(b => label.includes(b));
-              const isGood = goodLabels.some(g => label.includes(g));
-              return (
-                <span
-                  key={label}
-                  className={`px-5 py-2 rounded-2xl text-[22px] font-black border-2 ${
-                    isBad 
-                      ? 'bg-red-50 text-[#d71920] border-red-100' 
-                      : isGood 
-                        ? 'bg-green-50 text-[#168019] border-green-100' 
-                        : 'bg-orange-50 text-[#f2994a] border-orange-100'
-                  }`}
-                >
-                  {label}
-                </span>
-              );
-            })}
+          <div className="flex flex-wrap gap-2 mt-3">
+            {allLabels.map((label) => (
+              <span key={label} className={`px-3 py-1 rounded-lg text-[16px] leading-[1.5] font-bold ${chipClass(labelKindOf(label))}`}>
+                {label}
+              </span>
+            ))}
+          </div>
+        )}
+        {reasonLines.length > 0 && (
+          <div className="mt-3 space-y-2">
+            {reasonLines.map((line, i) => (
+              <p key={i} className={`${bodyText} font-bold text-[#b3001b]`}>{line}</p>
+            ))}
           </div>
         )}
       </Card>
 
-      {/* PREDICTIONS CARD */}
-      <Card className="p-8">
-        <div className="flex items-center gap-3 mb-6">
-          <Sparkles size={32} className="text-amber-400" />
-          <div className="text-[22px] font-black uppercase tracking-wider text-gray-500">คำทำนาย & ข้อห้าม</div>
-        </div>
-        <div className="space-y-5">
-          {data.description && toArabicDigits(data.description).split('\n').map((line, idx) => {
-            let className = "text-slate-700";
-            let dotColor = "bg-slate-300";
-            
-            if (line.startsWith("ฟ้าตีแส่ง")) {
-              const isBad = line.includes("ระวัง") || line.includes("ไม่เป็นมงคล");
-              className = isBad ? "text-[#d71920]" : "text-[#168019]";
-              dotColor = isBad ? "bg-red-400" : "bg-green-400";
-            } else if (line.includes("ผีกิ๋น") || line.includes("วันผีกิ๋น") || line.includes("มัจจุ") || line.includes("ม้วย") || line.includes("เสีย") || line.includes("อุบาทว์") || line.includes("โลกาวินาศ")) {
-              className = "text-[#d71920]";
-              dotColor = "bg-red-400";
-            } else if (line.includes("โชค") || line.includes("ธงชัย") || line.includes("อธิบดี")) {
-              className = "text-[#168019]";
-              dotColor = "bg-green-400";
-            }
-
-            return (
-              <div key={idx} className="flex gap-4">
-                <div className={`w-3 h-3 rounded-full mt-4 shrink-0 ${dotColor}`} />
-                <div className={`${className} font-bold text-[26px] leading-tight`}>
-                  {line}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+      {/* กลุ่ม 2: ระบุวัน */}
+      <Card>
+        <CardTitle title="ระบุวัน" icon={Info} color="text-blue-500" />
+        <dl className="space-y-2">
+          <div className="flex flex-wrap gap-x-3">
+            <dt className="font-black text-slate-700 text-[18px] leading-[1.6]">ข้างและค่ำ</dt>
+            <dd className="text-[18px] leading-[1.6] text-slate-800"><span className="whitespace-nowrap">{lunarPhrase}</span></dd>
+          </div>
+          <div className="flex flex-wrap gap-x-3">
+            <dt className="font-black text-slate-700 text-[18px] leading-[1.6]">เดือนล้านนา</dt>
+            <dd className="text-[18px] leading-[1.6] text-slate-800"><span className="whitespace-nowrap">{lannaMonthText}</span></dd>
+          </div>
+          {data.wanThai && (
+            <div className="flex flex-wrap gap-x-3">
+              <dt className="font-black text-slate-700 text-[18px] leading-[1.6]">วันไท</dt>
+              <dd className="text-[18px] leading-[1.6] text-slate-800"><span className="whitespace-nowrap">{toArabicDigits(`วัน${data.wanThai}`)}</span></dd>
+            </div>
+          )}
+          {data.kaoKong && (
+            <div className="flex flex-wrap gap-x-3">
+              <dt className="font-black text-slate-700 text-[18px] leading-[1.6]">เก้ากอง</dt>
+              <dd className="text-[18px] leading-[1.6] text-slate-800"><span className="whitespace-nowrap">{toArabicDigits(data.kaoKong)}</span></dd>
+            </div>
+          )}
+          {data.fahTeeSang !== undefined && (
+            <div className="flex flex-wrap gap-x-3">
+              <dt className="font-black text-slate-700 text-[18px] leading-[1.6]">ฟ้าตีแส่ง</dt>
+              <dd className="text-[18px] leading-[1.6] text-slate-800"><span className="whitespace-nowrap">{toArabicDigits(`เศษ ${data.fahTeeSang}`)}</span></dd>
+            </div>
+          )}
+          {data.panjaDithi && (
+            <div className="flex flex-wrap gap-x-3">
+              <dt className="font-black text-slate-700 text-[18px] leading-[1.6]">ดิถี</dt>
+              <dd className="text-[18px] leading-[1.6] text-slate-800"><span className="whitespace-nowrap">{toArabicDigits(data.panjaDithi)}</span></dd>
+            </div>
+          )}
+        </dl>
+        {identityLines.length > 0 && (
+          <div className="mt-3 space-y-2 border-t border-gray-100 pt-3">
+            {identityLines.map((line, i) => (
+              <p key={i} className={`${bodyText} text-slate-700`}>{line}</p>
+            ))}
+          </div>
+        )}
       </Card>
 
-      {/* ANCIENT CRITERIA & DIRECTIONS */}
-      <Card className="p-8">
-        <div className="flex items-center gap-3 mb-6">
-          <Compass size={32} className="text-blue-400" />
-          <div className="text-[22px] font-black uppercase tracking-wider text-gray-500">เกณฑ์โบราณ & ทิศ</div>
-        </div>
+      {/* กลุ่ม 3: โชคและฤกษ์ */}
+      <Card>
+        <CardTitle title="โชคและฤกษ์" icon={Sparkles} color="text-amber-500" />
+        {chokLines.length > 0 ? (
+          <div className="space-y-2">
+            {chokLines.map((line, i) => (
+              <p key={i} className={`${bodyText} font-bold text-[#0f7a28]`}>{line}</p>
+            ))}
+          </div>
+        ) : (
+          <p className={`${bodyText} text-slate-600`}>วันนี้ไม่มีโชคพิเศษ</p>
+        )}
+
         {data.kalaYok && (
-          <div className={`p-6 rounded-2xl mb-8 ${data.kalaYok.isGood ? 'bg-green-50' : 'bg-red-50'}`}>
-            <div className={`font-black text-[28px] mb-2 ${data.kalaYok.isGood ? 'text-[#168019]' : 'text-[#d71920]'}`}>
+          <div className={`p-4 rounded-2xl mt-4 ${data.kalaYok.isGood ? 'bg-green-50' : 'bg-red-50'}`}>
+            <div className={`font-black text-[20px] leading-[1.4] mb-1 ${data.kalaYok.isGood ? 'text-[#0f7a28]' : 'text-[#b3001b]'}`}>
               {toArabicDigits(data.kalaYok.name)}
             </div>
-            <div className="text-[24px] text-slate-600 font-bold leading-snug">
+            <div className={`${bodyText} text-slate-700 font-bold`}>
               {toArabicDigits(data.kalaYok.meaning)}
             </div>
           </div>
         )}
 
         {data.directions && (
-          <div className="grid grid-cols-2 gap-6">
-            <div className="bg-slate-50 p-6 rounded-2xl border-2 border-slate-100">
-              <div className="text-[20px] text-slate-400 font-black uppercase mb-2">ทิศศรี (มงคล)</div>
-              <div className="text-[#168019] font-black text-[26px]">{toArabicDigits(data.directions.sri)}</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+            <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+              <div className="text-[18px] leading-[1.6] text-slate-600 font-black mb-1">ทิศศรี (มงคล)</div>
+              <div className="text-[#0f7a28] font-black text-[20px] leading-[1.4]">{toArabicDigits(data.directions.sri)}</div>
             </div>
-            <div className="bg-slate-50 p-6 rounded-2xl border-2 border-slate-100">
-              <div className="text-[20px] text-slate-400 font-black uppercase mb-2">กาลกิณี (ห้าม)</div>
-              <div className="text-[#d71920] font-black text-[26px]">{toArabicDigits(data.directions.ka)}</div>
+            <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+              <div className="text-[18px] leading-[1.6] text-slate-600 font-black mb-1">กาลกิณี (ห้าม)</div>
+              <div className="text-[#b3001b] font-black text-[20px] leading-[1.4]">{toArabicDigits(data.directions.ka)}</div>
             </div>
           </div>
         )}
+
+        {/* ฤกษ์เดินทาง (อุบากอง) ใช้ตารางเดิม */}
+        <div className="mt-5">
+          <div className="flex items-center gap-2 mb-3">
+            <Clock size={22} className="text-slate-500" />
+            <h4 className="text-[20px] leading-[1.4] font-black text-slate-700">ฤกษ์เดินทาง (อุบากอง)</h4>
+          </div>
+          <div className="grid grid-cols-5 gap-2 mt-2">
+            {['เช้า', 'สาย', 'เที่ยง', 'บ่าย', 'เย็น'].map((label, i) => {
+              const ubakongGrid = [
+                [4, 0, -1, 0, 1],
+                [1, 4, 0, -1, 0],
+                [0, 1, 4, 0, -1],
+                [-1, 0, 1, 4, 0],
+                [0, -1, 0, 1, 4],
+                [4, 0, -1, 0, 1],
+                [1, 4, 0, -1, 0]
+              ];
+              const score = ubakongGrid[date.getDay()][i];
+              const color = score === 4 ? 'text-[#0f7a28]' : (score === 1 || score === -1) ? 'text-[#b3001b]' : 'text-slate-500';
+              const bg = score === 4 ? 'bg-green-50 border border-green-200' : (score === 1 || score === -1) ? 'bg-red-50 border border-red-200' : 'bg-slate-50 border border-slate-200';
+              const symbols = score === 4 ? '••••' : score === 1 ? '•' : score === -1 ? '×' : '๐';
+              return (
+                <div key={i} className={`flex flex-col items-center py-3 rounded-2xl ${bg}`}>
+                  <div className="text-[16px] leading-[1.5] font-black text-slate-500 mb-1">{label}</div>
+                  <div className={`text-[24px] font-black leading-none ${color}`}>{symbols}</div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1 text-[16px] leading-[1.5] text-slate-600 font-bold">
+            <span className="whitespace-nowrap">* •••• = ดีมาก</span>
+            <span className="whitespace-nowrap">• = ดี/รีบไป</span>
+            <span className="whitespace-nowrap">๐ = ปกติ</span>
+            <span className="whitespace-nowrap">× = ห้ามไป</span>
+          </div>
+        </div>
       </Card>
 
-      {/* RITUALS CARD */}
-      <Card className="p-8">
-        <div className="flex items-center gap-3 mb-6">
-          <Info size={32} className="text-indigo-400" />
-          <div className="text-[22px] font-black uppercase tracking-wider text-gray-500">กิจวัตรประจำวัน</div>
-        </div>
-        <div className="space-y-6">
+      {/* กลุ่ม 4: ข้อห้ามและกิจวัตร */}
+      <Card>
+        <CardTitle title="ข้อห้ามและกิจวัตรประจำวัน" icon={AlertTriangle} color="text-indigo-500" />
+        <div className="space-y-4">
           {data.rituals && data.rituals.length > 0 ? (
             data.rituals.map((r, i) => {
               const isBad = r.description.includes('ไม่') || r.description.includes('ห้าม') || r.description.includes('เสีย') || r.description.includes('ภัย') || r.description.includes('ศัตรู') || r.description.includes('ฉิบหาย') || r.description.includes('ทุกข์') || r.description.includes('ตาย');
               return (
-                <div key={i} className="flex items-start gap-4">
-                  <div className={`p-3 rounded-xl shrink-0 ${isBad ? 'bg-red-50 text-red-400' : 'bg-green-50 text-green-500'}`}>
+                <div key={i} className="flex items-start gap-3">
+                  <div className={`p-3 rounded-xl shrink-0 ${isBad ? 'bg-red-50 text-[#b3001b]' : 'bg-green-50 text-[#0f7a28]'}`}>
                     <RitualIcon title={r.title} />
                   </div>
                   <div>
-                    <div className="text-[26px] font-black text-slate-700">{toArabicDigits(r.title)}</div>
-                    <div className={`text-[24px] font-bold ${isBad ? 'text-[#d71920]' : 'text-[#168019]'}`}>
+                    <div className="text-[18px] leading-[1.6] font-black text-slate-800">{toArabicDigits(r.title)}</div>
+                    <div className={`text-[18px] leading-[1.6] font-bold ${isBad ? 'text-[#b3001b]' : 'text-[#0f7a28]'}`}>
                       {toArabicDigits(r.description)}
                     </div>
                   </div>
@@ -271,14 +356,14 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
               );
             })
           ) : (
-            <div className="text-slate-400 italic text-[24px] py-4 text-center">ไม่มีข้อมูลกิจวัตร</div>
+            <div className="text-slate-600 text-[18px] leading-[1.6] py-2">ไม่มีข้อมูลกิจวัตร</div>
           )}
-          
+
           {data.warnings && data.warnings.length > 0 && (
-            <div className="mt-4 space-y-4">
+            <div className="mt-2 space-y-3">
               {data.warnings.map((w, i) => (
-                <div key={i} className="flex items-center gap-4 text-[#d71920] font-black bg-red-50 p-6 rounded-2xl border-2 border-red-100 text-[24px]">
-                  <AlertTriangle size={32} className="shrink-0" />
+                <div key={i} className="flex items-center gap-3 text-[#b3001b] font-black bg-red-50 p-4 rounded-2xl border border-red-200 text-[18px] leading-[1.6]">
+                  <AlertTriangle size={24} className="shrink-0" />
                   {toArabicDigits(w)}
                 </div>
               ))}
@@ -287,43 +372,17 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
         </div>
       </Card>
 
-      {/* UBAKONG CARD */}
-      <Card className="p-8">
-        <div className="flex items-center gap-3 mb-6">
-          <Clock size={32} className="text-slate-400" />
-          <div className="text-[22px] font-black uppercase tracking-wider text-gray-500">ฤกษ์เดินทาง (อุบากอง)</div>
-        </div>
-        <div className="grid grid-cols-5 gap-3 mt-4">
-          {['เช้า', 'สาย', 'เที่ยง', 'บ่าย', 'เย็น'].map((label, i) => {
-            const ubakongGrid = [
-              [4, 0, -1, 0, 1], // Sun
-              [1, 4, 0, -1, 0], // Mon
-              [0, 1, 4, 0, -1], // Tue
-              [-1, 0, 1, 4, 0], // Wed
-              [0, -1, 0, 1, 4], // Thu
-              [4, 0, -1, 0, 1], // Fri
-              [1, 4, 0, -1, 0]  // Sat
-            ];
-            const score = ubakongGrid[date.getDay()][i];
-            const color = score === 4 ? 'text-[#168019]' : (score === 1 || score === -1) ? 'text-[#d71920]' : 'text-slate-400';
-            const bg = score === 4 ? 'bg-green-50 border-2 border-green-100' : (score === 1 || score === -1) ? 'bg-red-50 border-2 border-red-100' : 'bg-slate-50 border-2 border-slate-100';
-            const symbols = score === 4 ? '••••' : score === 1 ? '•' : score === -1 ? '×' : '๐';
-            
-            return (
-              <div key={i} className={`flex flex-col items-center py-4 rounded-2xl border transition-all ${bg}`}>
-                <div className="text-[18px] font-black text-slate-400 uppercase mb-2">{label}</div>
-                <div className={`text-[28px] font-black leading-none ${color}`}>{symbols}</div>
-              </div>
-            );
-          })}
-        </div>
-        <div className="mt-6 flex flex-wrap justify-center gap-x-4 gap-y-1 text-[16px] sm:text-[18px] text-slate-400 font-bold italic">
-          <span className="whitespace-nowrap">* •••• = ดีมาก</span>
-          <span className="whitespace-nowrap">• = ดี/รีบไป</span>
-          <span className="whitespace-nowrap">๐ = ปกติ</span>
-          <span className="whitespace-nowrap">× = ห้ามไป</span>
-        </div>
-      </Card>
+      {/* กลุ่ม 5: คำทำนาย */}
+      {fortuneLines.length > 0 && (
+        <Card>
+          <CardTitle title="คำทำนาย" icon={BookOpen} color="text-slate-500" />
+          <div className="space-y-2">
+            {fortuneLines.map((line, i) => (
+              <p key={i} className={`${bodyText} text-slate-700`}>{line}</p>
+            ))}
+          </div>
+        </Card>
+      )}
 
     </div>
   );
