@@ -459,11 +459,12 @@ export default function App() {
                       key={day.day}
                       onClick={() => handleSelect(day.date)}
                       className={`relative ${viewMode === 'week' ? 'min-h-[150px]' : 'min-h-[110px] sm:min-h-[125px]'} border-r border-b border-black cursor-pointer overflow-hidden ${
-                        isToday ? 'shadow-[inset_0_0_0_3px_#d71920]' : ''
-                      } ${
                         isSelected ? 'bg-[#fff1d8] outline outline-1 outline-[#0b62ff] outline-offset-[-1px]' : `${style.cell} hover:bg-[#f8f8f8]`
                       }`}
                     >
+                      {isToday && (
+                        <div className="absolute inset-0 z-30 border-[3px] border-[#d71920] pointer-events-none" />
+                      )}
                       {isToday ? (
                         <span className="absolute right-1 bottom-1 z-20 w-[26px] h-[26px] sm:w-[30px] sm:h-[30px] rounded-full bg-[#d71920] text-white text-[15px] sm:text-[17px] font-black leading-none flex items-center justify-center select-none pointer-events-none">
                           {toArabicDigits(day.day)}
