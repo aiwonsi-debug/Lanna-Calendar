@@ -193,47 +193,52 @@ const getStatusLines = (day: Day) => {
   
   const has = (term: string) => allText.includes(term);
 
+  // ป้ายในช่องวัน: ขนาดเล็กบนจอมือถือ ไม่ล้นช่อง ตัดบรรทัดตามพยางค์ไทยเท่านั้น
+  const badgeClass = 'text-white bg-[#d71920] px-[3px] sm:px-1 rounded mb-[2px] block w-fit max-w-full text-[9px] sm:text-[12px] leading-[1.3] font-black';
+  const goodClass = 'text-[#0f8a2a] font-black block max-w-full text-[9px] sm:text-[12px] leading-[1.3]';
+  const goodBlueClass = 'text-[#0645c0] font-black block max-w-full text-[9px] sm:text-[12px] leading-[1.3]';
+
   // High priority bad days (ค่าจากตัวคำนวณสูตรล้วน)
   if (day.isSia || has("วันเสีย"))
-    badLines.push({ text: 'วันเสีย', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
+    badLines.push({ text: 'วันเสีย', className: badgeClass });
 
   if (day.isUbat || has("อุบาทว์"))
-    badLines.push({ text: 'วันอุบาทว์', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
+    badLines.push({ text: 'วันอุบาทว์', className: badgeClass });
 
   if (day.isLokawinat || has("โลกาวินาศ"))
-    badLines.push({ text: 'โลกาวินาศ', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
+    badLines.push({ text: 'โลกาวินาศ', className: badgeClass });
 
   if (day.isLomLuang || has("หล่มหลวง"))
-    badLines.push({ text: 'หล่มหลวง', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
+    badLines.push({ text: 'หล่มหลวง', className: badgeClass });
 
   if (day.isMai)
-    badLines.push({ text: 'วันไหม้', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
+    badLines.push({ text: 'วันไหม้', className: badgeClass });
 
   if (day.isWodwai)
-    badLines.push({ text: 'วันวอดวาย', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
+    badLines.push({ text: 'วันวอดวาย', className: badgeClass });
 
   if (day.isMachu)
-    badLines.push({ text: 'วันมัจจุ', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
+    badLines.push({ text: 'วันมัจจุ', className: badgeClass });
 
   // Good days
   if (day.isThongChai || has("ธงชัย"))
-    goodLines.push({ text: 'ธงชัย', className: 'text-[#0f8a2a] font-black' });
+    goodLines.push({ text: 'ธงชัย', className: goodClass });
 
   if (day.isAthipadi || has("อธิบดี"))
-    goodLines.push({ text: 'อธิบดี', className: 'text-[#0f8a2a] font-black' });
+    goodLines.push({ text: 'อธิบดี', className: goodClass });
 
   // สิทธิโชคเป็นชุด แสดงทุกโชคของวันนั้น
   const sitthiLabels = day.sitthiList && day.sitthiList.length > 0
     ? day.sitthiList
     : (day.sitthi ? [day.sitthi] : []);
   for (const s of sitthiLabels)
-    goodLines.push({ text: toArabicDigits(s), className: 'text-[#0645c0] font-black' });
+    goodLines.push({ text: toArabicDigits(s), className: goodBlueClass });
 
   if (day.isHuaRiangMon)
-    goodLines.push({ text: 'หัวเรียงหมอน', className: 'text-[#0645c0] font-black' });
+    goodLines.push({ text: 'หัวเรียงหมอน', className: goodBlueClass });
 
   if (day.songkranLabel)
-    goodLines.push({ text: toArabicDigits(day.songkranLabel), className: 'text-[#0645c0] font-black' });
+    goodLines.push({ text: toArabicDigits(day.songkranLabel), className: goodBlueClass });
 
   return [...badLines, ...goodLines];
 };
@@ -247,6 +252,7 @@ export default function App() {
     return new Date(t.getFullYear(), t.getMonth(), 1);
   });
   const [selectedDate, setSelectedDate] = useState<Date | null>(() => new Date());
+  const [viewMode, setViewMode] = useState<'month' | 'week'>('month');
 
   const dailyRef = useRef<HTMLDivElement>(null);
 
@@ -276,6 +282,30 @@ export default function App() {
     const firstDay = monthData[0].date.getDay();
     return Array.from({ length: firstDay }, (_, i) => i);
   }, [monthData]);
+
+  // จัดช่องเป็นแถวสัปดาห์: ช่องว่างต้นเดือน + วันในเดือน + ช่องว่างท้ายแถวให้ครบ 7 ช่อง
+  const weeks = useMemo<(Day | null)[][]>(() => {
+    const cells: (Day | null)[] = [...blanks.map(() => null), ...monthData];
+    while (cells.length % 7 !== 0) cells.push(null);
+    const rows: (Day | null)[][] = [];
+    for (let i = 0; i < cells.length; i += 7) rows.push(cells.slice(i, i + 7));
+    return rows;
+  }, [blanks, monthData]);
+
+  // โหมดสัปดาห์: แสดงเฉพาะแถวของวันที่เลือก (ถ้าวันที่เลือกไม่อยู่ในเดือนที่ดู ใช้สัปดาห์ของวันนี้หรือสัปดาห์แรก)
+  const visibleCells = useMemo<(Day | null)[]>(() => {
+    if (viewMode === 'month' || weeks.length === 0) return weeks.flat();
+    const inViewMonth = (d: Date | null) =>
+      !!d && d.getMonth() === viewMonth.getMonth() && d.getFullYear() === viewMonth.getFullYear();
+    let target: Date | null = inViewMonth(selectedDate) ? selectedDate : null;
+    if (!target) {
+      const today = new Date();
+      if (inViewMonth(today)) target = today;
+    }
+    const targetDay = target ? target.getDate() : 1;
+    const row = weeks.find((r) => r.some((c) => c !== null && c.day === targetDay));
+    return row ? [...row] : [...(weeks[0] || [])];
+  }, [viewMode, weeks, selectedDate, viewMonth]);
 
   const headerInfo = useMemo(() => {
     const months = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
@@ -356,17 +386,33 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white font-sans text-black selection:bg-[#b8d7ff] selection:text-black">
-      
+    <div className="min-h-screen bg-white font-sans text-black selection:bg-[#b8d7ff] selection:text-black overflow-x-hidden">
+
       {/* APP HEADER */}
-      <header className="grid grid-cols-[32px_1fr_32px] items-center h-[35px] border-b border-black text-black bg-white">
+      <header className="grid grid-cols-[32px_minmax(0,1fr)_32px] items-center min-h-[35px] border-b border-black text-black bg-white">
         <button onClick={() => stepMonth(-1)} className="h-full text-[24px] leading-none text-left pl-1 font-bold">&lt;</button>
-        <div className="text-center font-bold text-[18px] leading-none whitespace-nowrap">
-          ปี{headerInfo.yearZodiac}<span className="mx-7">{headerInfo.monthTitle}</span>จ.ศ. {headerInfo.cs}
-          <span className="ml-2 text-[10px] text-gray-300 font-normal">v0.0.3d-TRUE</span>
+        <div className="min-w-0 text-center font-bold text-[15px] sm:text-[18px] leading-tight py-1">
+          ปี{headerInfo.yearZodiac}<span className="mx-2 sm:mx-7">{headerInfo.monthTitle}</span>จ.ศ. {headerInfo.cs}
+          <span className="ml-1 sm:ml-2 text-[10px] text-gray-300 font-normal">v0.0.3d-TRUE</span>
         </div>
         <button onClick={() => stepMonth(1)} className="h-full text-[24px] leading-none text-right pr-1 font-bold">&gt;</button>
       </header>
+
+      {/* VIEW MODE TOGGLE */}
+      <div className="flex items-center justify-center gap-2 py-2 border-b border-black bg-white">
+        <button
+          onClick={() => setViewMode('week')}
+          className={`px-4 py-1 rounded-full border border-black text-[13px] font-bold leading-tight ${viewMode === 'week' ? 'bg-black text-white' : 'bg-white text-black'}`}
+        >
+          สัปดาห์
+        </button>
+        <button
+          onClick={() => setViewMode('month')}
+          className={`px-4 py-1 rounded-full border border-black text-[13px] font-bold leading-tight ${viewMode === 'month' ? 'bg-black text-white' : 'bg-white text-black'}`}
+        >
+          ทั้งเดือน
+        </button>
+      </div>
 
       {/* VIEWPORT */}
       <main className="bg-white">
@@ -386,18 +432,22 @@ export default function App() {
 
               {/* Calendar Grid */}
               <div className="grid grid-cols-7 border-l border-black">
-                {/* Blanks */}
-                {blanks.map((_, i) => (
-                  <div key={`blank-${i}`} className="min-h-[100px] border-r border-b border-black bg-white" />
-                ))}
-
-                {/* Days */}
-                {monthData.map((day) => {
+                {visibleCells.map((cell, cellIdx) => {
+                  if (cell === null) {
+                    return (
+                      <div key={`blank-${cellIdx}`} className={`${viewMode === 'week' ? 'min-h-[150px]' : 'min-h-[110px] sm:min-h-[125px]'} border-r border-b border-black bg-white`} />
+                    );
+                  }
+                  const day = cell;
                   const dow = day.date.getDay();
                   const style = WEEKDAY_STYLES[dow];
                   const isSelected = selectedDate?.getDate() === day.day &&
                     selectedDate?.getMonth() === viewMonth.getMonth() &&
                     selectedDate?.getFullYear() === viewMonth.getFullYear();
+                  const now = new Date();
+                  const isToday = day.date.getDate() === now.getDate() &&
+                    day.date.getMonth() === now.getMonth() &&
+                    day.date.getFullYear() === now.getFullYear();
                   const statusLines = getStatusLines(day);
                   const compactLines = [
                     { text: toArabicDigits(`เดือน ${day.lannaMonth}`), className: 'text-black font-bold' },
@@ -408,21 +458,35 @@ export default function App() {
                     <div 
                       key={day.day}
                       onClick={() => handleSelect(day.date)}
-                      className={`relative min-h-[125px] border-r border-b border-black cursor-pointer overflow-hidden ${
+                      className={`relative ${viewMode === 'week' ? 'min-h-[150px]' : 'min-h-[110px] sm:min-h-[125px]'} border-r border-b border-black cursor-pointer overflow-hidden ${
+                        isToday ? 'shadow-[inset_0_0_0_3px_#d71920]' : ''
+                      } ${
                         isSelected ? 'bg-[#fff1d8] outline outline-1 outline-[#0b62ff] outline-offset-[-1px]' : `${style.cell} hover:bg-[#f8f8f8]`
                       }`}
                     >
-                      <span
-                        className={`absolute right-1 bottom-1 text-[36px] font-black leading-[0.8] opacity-20 select-none pointer-events-none ${
-                          dow === 0 ? 'text-red-600' : 'text-black'
-                        }`}
-                      >
-                        {toArabicDigits(day.day)}
-                      </span>
+                      {isToday ? (
+                        <span className="absolute right-1 bottom-1 z-20 w-[26px] h-[26px] sm:w-[30px] sm:h-[30px] rounded-full bg-[#d71920] text-white text-[15px] sm:text-[17px] font-black leading-none flex items-center justify-center select-none pointer-events-none">
+                          {toArabicDigits(day.day)}
+                        </span>
+                      ) : (
+                        <span
+                          className={`absolute right-1 bottom-1 text-[36px] font-black leading-[0.8] opacity-20 select-none pointer-events-none ${
+                            dow === 0 ? 'text-red-600' : 'text-black'
+                          }`}
+                        >
+                          {toArabicDigits(day.day)}
+                        </span>
+                      )}
+
+                      {isToday && (
+                        <span className="absolute left-[2px] bottom-[2px] z-20 bg-[#d71920] text-white text-[8px] sm:text-[9px] font-black px-[3px] rounded leading-[1.4] select-none pointer-events-none">
+                          วันนี้
+                        </span>
+                      )}
 
                       <div
-                        className={`relative z-10 m-[2px] p-[4px] leading-[1.15] max-h-[calc(100%-10px)] overflow-y-auto no-scrollbar ${
-                          isSelected ? 'text-[12px] bg-[#fff4df]/80' : 'text-[12px] bg-transparent'
+                        className={`relative z-10 m-[1px] sm:m-[2px] p-[2px] sm:p-[4px] leading-[1.3] max-h-[calc(100%-10px)] overflow-y-auto no-scrollbar text-[10px] sm:text-[12px] ${
+                          isSelected ? 'bg-[#fff4df]/80' : 'bg-transparent'
                         }`}
                       >
                         {/* Status lines at the VERY TOP */}
@@ -452,7 +516,7 @@ export default function App() {
                 })}
               </div>
 
-              <div className="h-[42px] flex items-center justify-center gap-3 text-[12px] border-b border-black">
+              <div className="min-h-[42px] flex flex-wrap items-center justify-center gap-x-3 gap-y-1 py-1 text-[12px] border-b border-black">
                 <span className="inline-flex items-center gap-1 text-[#f2994a]"><span className="w-[10px] h-[10px] rounded-full bg-[#f2994a]" />วันศีล</span>
                 <span className="inline-flex items-center gap-1 text-[#d71920]"><span className="w-[10px] h-[10px] rounded-full bg-[#d71920]" />วันไม่ดี</span>
                 <span className="inline-flex items-center gap-1 text-[#138a2e]"><span className="w-[10px] h-[10px] rounded-full bg-[#138a2e]" />วันดี</span>
