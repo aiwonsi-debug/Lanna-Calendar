@@ -9,7 +9,6 @@ import {
   MapPin,
   Info,
   ChevronRight,
-  Gavel,
   BookOpen
 } from 'lucide-react';
 
@@ -54,11 +53,11 @@ export interface DayData {
     sri: string;
     ka: string;
   };
-  kalaYok?: {
+  kalaYoks?: {
     name: string;
     meaning: string;
     isGood: boolean;
-  };
+  }[];
   phiKin?: string;
   phiKinMonthly?: string;
   wanMuai?: string;
@@ -134,25 +133,22 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
   const lunarPhrase = toArabicDigits(`${data.lunar.phase === 'waxing' ? 'ออก' : 'แรม'} ${data.lunar.day} ค่ำ`);
   const lannaMonthText = toArabicDigits(`เดือน${LANNA_MONTH_NAMES[data.lannaMonth] || data.lannaMonth} (เดือน ${data.lannaMonth})`);
 
-  // --- กลุ่ม 1: คำตัดสิน ประกอบจากป้ายจริงของวันนั้น ---
-  const verdictWords: { text: string; kind: LabelKind }[] = [];
-  if (data.labels.special.some(l => l.includes('ศีล'))) verdictWords.push({ text: 'วันศีล', kind: 'sin' });
-  if (data.labels.bad.length > 0 || data.isMachu || data.isMahaMachu) verdictWords.push({ text: 'วันเสีย', kind: 'bad' });
-  if (data.sitthi) verdictWords.push({ text: 'วันดี', kind: 'good' });
-  if (verdictWords.length === 0) verdictWords.push({ text: 'วันปกติ', kind: 'neutral' });
-
+  // --- กลุ่ม 1: ป้ายของวัน ส่งมาจาก App ซึ่ง derive จากแฟล็กตัวคำนวณเท่านั้น ---
+  // (เดิมกลุ่มนี้ประกอบ "วันเสีย" จาก labels.bad ชุดใดก็ได้ ทำให้วันที่มีเฉพาะ
+  //  วันอุบาทว์แสดง วันเสีย เท็จ ปัจจุบันแสดงป้ายจริงของวันนั้นตรง ๆ)
   const allLabels = [
     ...data.labels.special,
     ...data.labels.good,
     ...data.labels.bad,
-    data.isMachu ? "วันมัจจุ" : "",
-    data.isMahaMachu ? "วันมหามัจจุ" : "",
     data.festival
   ].filter(Boolean).map(toArabicDigits);
 
   // --- แยกบรรทัดคำอธิบายเดิมออกเป็นกลุ่มตามลำดับคงที่ ---
-  const lines = (data.description ? toArabicDigits(data.description) : '').split('\n').map(s => s.trim()).filter(Boolean);
-  const reasonLines: string[] = [];   // เหตุผลของคำตัดสิน: วันร้ายต่าง ๆ
+  // ทิ้งบรรทัดที่ไม่มีข้อมูลจริง: ลงท้ายด้วย ": -" หรือ ":" เฉย ๆ ไม่แสดงเครื่องหมายขีดเปล่า
+  const lines = (data.description ? toArabicDigits(data.description) : '')
+    .split('\n').map(s => s.trim())
+    .filter(s => s && !/[:：]\s*(-|–|—)?\s*$/.test(s));
+  const reasonLines: string[] = [];   // คำอธิบายวันร้ายต่าง ๆ
   const identityLines: string[] = []; // ระบุวัน: ดิถี วันไท เก้ากอง ฟ้าตีแส่ง
   const chokLines: string[] = [];     // โชค
   const fortuneLines: string[] = [];  // คำทำนายที่เหลือ
@@ -185,25 +181,19 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
         </div>
       </Card>
 
-      {/* กลุ่ม 1: คำตัดสิน */}
+      {/* กลุ่ม 1: ป้ายของวัน (ไม่มีหัวข้อกำกับตามคำสั่งผู้ใช้) */}
       <Card>
-        <CardTitle title="คำตัดสิน" icon={Gavel} color="text-slate-500" />
         <div className="flex flex-col items-start gap-2">
-          {verdictWords.map((v, i) => (
-            <span key={i} className={`inline-block px-4 py-1 rounded-xl text-[24px] leading-[1.4] font-black ${chipClass(v.kind)}`}>
-              {v.text}
+          {allLabels.length > 0 ? allLabels.map((label) => (
+            <span key={label} className={`inline-block px-4 py-1 rounded-xl text-[24px] leading-[1.4] font-black ${chipClass(labelKindOf(label))}`}>
+              {label}
             </span>
-          ))}
+          )) : (
+            <span className={`inline-block px-4 py-1 rounded-xl text-[24px] leading-[1.4] font-black ${chipClass('neutral')}`}>
+              วันปกติ
+            </span>
+          )}
         </div>
-        {allLabels.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-3">
-            {allLabels.map((label) => (
-              <span key={label} className={`px-3 py-1 rounded-lg text-[16px] leading-[1.5] font-bold ${chipClass(labelKindOf(label))}`}>
-                {label}
-              </span>
-            ))}
-          </div>
-        )}
         {reasonLines.length > 0 && (
           <div className="mt-3 space-y-2">
             {reasonLines.map((line, i) => (
@@ -272,16 +262,16 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
           <p className={`${bodyText} text-slate-600`}>วันนี้ไม่มีโชคพิเศษ</p>
         )}
 
-        {data.kalaYok && (
-          <div className={`p-4 rounded-2xl mt-4 ${data.kalaYok.isGood ? 'bg-green-50' : 'bg-red-50'}`}>
-            <div className={`font-black text-[20px] leading-[1.4] mb-1 ${data.kalaYok.isGood ? 'text-[#0f7a28]' : 'text-[#b3001b]'}`}>
-              {toArabicDigits(data.kalaYok.name)}
+        {data.kalaYoks && data.kalaYoks.map((ky, i) => (
+          <div key={i} className={`p-4 rounded-2xl mt-4 ${ky.isGood ? 'bg-green-50' : 'bg-red-50'}`}>
+            <div className={`font-black text-[20px] leading-[1.4] mb-1 ${ky.isGood ? 'text-[#0f7a28]' : 'text-[#b3001b]'}`}>
+              {toArabicDigits(ky.name)}
             </div>
             <div className={`${bodyText} text-slate-700 font-bold`}>
-              {toArabicDigits(data.kalaYok.meaning)}
+              {toArabicDigits(ky.meaning)}
             </div>
           </div>
-        )}
+        ))}
 
         {data.directions && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">

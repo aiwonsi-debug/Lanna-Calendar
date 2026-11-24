@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef } from 'react';
-import { getLannaDate, getDirections, getDailyKalaYoga, getSongkranLabel, getDailyRituals, LannaCalcResult } from './utils/lannaCalc';
-import { DetailSection, DayData, labelKindOf, chipClass, LabelKind } from './components/DetailSection';
+import { getLannaDate, getDirections, getSongkranLabel, getDailyRituals, LannaCalcResult } from './utils/lannaCalc';
+import { DetailSection, DayData, chipClass } from './components/DetailSection';
+import { flagChips, monthChips, weekLabel, flagKalaYoks } from './utils/dayLabels';
 
 const toArabicDigits = (value: string | number) =>
   value
@@ -21,58 +22,10 @@ const startOfWeek = (d: Date) => {
   return x;
 };
 
-interface Chip { text: string; kind: LabelKind }
-
-/** ป้ายคำเต็มของวันนั้น ประกอบจากแฟล็กจริงของตัวคำนวณ เรียงลำดับคงที่ ป้ายละบรรทัดเสมอ */
-function dayChips(r: LannaCalcResult, date: Date): Chip[] {
-  const chips: Chip[] = [];
-  if (r.isSin) chips.push({ text: 'วันศีล', kind: 'sin' });
-  if (r.isSia) chips.push({ text: 'วันเสีย', kind: 'bad' });
-  if (r.isUbat) chips.push({ text: 'วันอุบาทว์', kind: 'bad' });
-  if (r.isLokawinat) chips.push({ text: 'วันโลกาวินาศ', kind: 'bad' });
-  if (r.isMai) chips.push({ text: 'วันไหม้', kind: 'bad' });
-  if (r.isWodwai) chips.push({ text: 'วันวอดวาย', kind: 'bad' });
-  if (r.isMahaMachu) chips.push({ text: 'วันมหามัจจุ', kind: 'bad' });
-  else if (r.isMachu) chips.push({ text: 'วันมัจจุ', kind: 'bad' });
-  if (r.isLomLuang) chips.push({ text: 'วันหล่มหลวง', kind: 'bad' });
-  if (r.isHuaRiangMon) chips.push({ text: 'หัวเรียงหมอน', kind: 'neutral' });
-  for (const s of r.sitthiList) chips.push({ text: s, kind: 'good' });
-  const song = getSongkranLabel(date);
-  if (song) chips.push({ text: song, kind: 'neutral' });
-  return chips;
-}
-
-const isBadResult = (r: LannaCalcResult) =>
-  r.isSia || r.isUbat || r.isLokawinat || r.isMai || r.isWodwai || r.isMachu || r.isMahaMachu;
-/** วันดีในชั้นคำตัดสินและป้ายย่อ ยึดจากชุดสิทธิโชค (โชค) ตามชั้นข้อมูลที่พิสูจน์เทียบฉบับ มช. แล้ว ส่วนธงชัย/อธิบดีเป็นเกณฑ์โบราณที่แสดงเฉพาะในรายละเอียดวันตามพฤติกรรมเดิม */
-const isGoodResult = (r: LannaCalcResult) => r.sitthiList.length > 0;
-
-/** ป้ายหลักสำหรับมุมมองเดือน: วันศีล วันเสีย วันดี และป้ายร้าย/พิเศษที่จำเป็น ใช้คำเต็ม ป้ายละบรรทัด */
-function monthChips(r: LannaCalcResult): Chip[] {
-  const chips: Chip[] = [];
-  if (r.isSin) chips.push({ text: 'วันศีล', kind: 'sin' });
-  if (r.isSia) chips.push({ text: 'วันเสีย', kind: 'bad' });
-  if (r.isUbat) chips.push({ text: 'วันอุบาทว์', kind: 'bad' });
-  if (r.isLokawinat) chips.push({ text: 'วันโลกาวินาศ', kind: 'bad' });
-  if (r.isMai) chips.push({ text: 'วันไหม้', kind: 'bad' });
-  if (r.isWodwai) chips.push({ text: 'วันวอดวาย', kind: 'bad' });
-  if (r.isMahaMachu) chips.push({ text: 'วันมหามัจจุ', kind: 'bad' });
-  else if (r.isMachu) chips.push({ text: 'วันมัจจุ', kind: 'bad' });
-  if (r.isLomLuang) chips.push({ text: 'วันหล่มหลวง', kind: 'bad' });
-  if (r.isHuaRiangMon) chips.push({ text: 'หัวเรียงหมอน', kind: 'neutral' });
-  if (isGoodResult(r)) chips.push({ text: 'วันดี', kind: 'good' });
-  return chips;
-}
-
-/** คำตัดสินของวัน ประกอบจากป้ายจริง: วันศีล วันเสีย วันดี หรือวันปกติ */
-function verdictWords(r: LannaCalcResult): { text: string; kind: LabelKind }[] {
-  const words: { text: string; kind: LabelKind }[] = [];
-  if (r.isSin) words.push({ text: 'วันศีล', kind: 'sin' });
-  if (isBadResult(r)) words.push({ text: 'วันเสีย', kind: 'bad' });
-  if (isGoodResult(r)) words.push({ text: 'วันดี', kind: 'good' });
-  if (words.length === 0) words.push({ text: 'วันปกติ', kind: 'neutral' });
-  return words;
-}
+/* ป้ายทุกส่วนของ UI มาจาก src/utils/dayLabels.ts ซึ่ง derive จากแฟล็กของ
+   getLannaDate เท่านั้น ห้ามประกอบป้ายจากข้อความคำอธิบายหรือแฟล็กรวมอีก
+   (เดิม verdictWords ใช้ isBadResult รวมทุกแฟล็กร้ายเป็น "วันเสีย" ป้ายเดียว
+   ทำให้ 25 พ.ย. 2569 ซึ่งมีเฉพาะ isUbat กลับแสดง วันเสีย เท็จ) */
 
 function buildDescription(lanna: LannaCalcResult): string {
   const lines: string[] = [];
@@ -108,8 +61,9 @@ function buildDescription(lanna: LannaCalcResult): string {
   if (lanna.isMachu) lines.push("วันมัจจุ: วันแห่งความตายและการสูญเสีย ห้ามทำการมงคลหรือเริ่มต้นสิ่งใหม่");
   if (lanna.isMahaMachu) lines.push("วันมหามัจจุ: วันแห่งมหาเคราะห์ร้ายแรง ห้ามกระทำการมงคลทุกชนิด");
 
-  if (lanna.wanThaiDesc) lines.push(`วันไท (${lanna.wanThai}): ${lanna.wanThaiDesc}`);
-  if (lanna.kaoKong && lanna.kaoKongDesc) lines.push(`วันเก้ากอง (${lanna.kaoKong}): ${lanna.kaoKongDesc}`);
+  // ตัวคำนวณคืน "-" เมื่อไม่มีคำอธิบาย: ถือว่าไม่มีข้อมูล ไม่สร้างบรรทัดเครื่องหมายขีดเปล่า
+  if (lanna.wanThaiDesc && lanna.wanThaiDesc !== '-') lines.push(`วันไท (${lanna.wanThai}): ${lanna.wanThaiDesc}`);
+  if (lanna.kaoKong && lanna.kaoKongDesc && lanna.kaoKongDesc !== '-') lines.push(`วันเก้ากอง (${lanna.kaoKong}): ${lanna.kaoKongDesc}`);
 
   if (lanna.fahTeeSang !== undefined && lanna.fahTeeSang !== null) {
     const good = [2, 4, 5, 6].includes(lanna.fahTeeSang);
@@ -166,8 +120,9 @@ export default function App() {
     if (!selectedInfo) return null;
     const lanna = selectedInfo;
     const dir = getDirections(selectedDate.getDay());
-    const rawLunarDay = lanna.phase === 'ออก' ? lanna.lunarDay : lanna.lunarDay + 15;
-    const kalaYok = getDailyKalaYoga(rawLunarDay, selectedDate.getDay());
+    // เกณฑ์กาลโยคยึดแฟล็กตัวคำนวณเท่านั้น (เดิมใช้ getDailyKalaYoga คำนวณ (วันค่ำ+วันสัปดาห์)%4
+    // แยกต่างหาก ทำให้ 25 พ.ย. 2569 แสดง โลกาวินาศ ทั้งที่ isLokawinat=false)
+    const kalaYoks = flagKalaYoks(lanna);
     return {
       y: selectedDate.getFullYear() + 543,
       m: selectedDate.getMonth() + 1,
@@ -181,9 +136,17 @@ export default function App() {
       fahTeeSang: lanna.fahTeeSang,
       lunar: { phase: lanna.phase === 'ออก' ? "waxing" : "waning", day: lanna.lunarDay },
       labels: {
-        good: [lanna.isThongChai ? "วันธงชัย" : "", lanna.isAthipadi ? "วันอธิบดี" : "", lanna.sitthi || ""].filter(Boolean),
-        bad: [lanna.isSia ? "วันเสีย" : "", lanna.isUbat ? "วันอุบาทว์" : "", lanna.isLokawinat ? "วันโลกาวินาศ" : "", lanna.isLomLuang ? "วันหล่มหลวง" : ""].filter(Boolean),
-        special: lanna.isSin ? ["วันศีล"] : []
+        good: [lanna.isThongChai ? "วันธงชัย" : "", lanna.isAthipadi ? "วันอธิบดี" : "", ...lanna.sitthiList].filter(Boolean),
+        bad: [
+          lanna.isSia ? "วันเสีย" : "",
+          lanna.isUbat ? "วันอุบาทว์" : "",
+          lanna.isLokawinat ? "วันโลกาวินาศ" : "",
+          lanna.isMai ? "วันไหม้" : "",
+          lanna.isWodwai ? "วันวอดวาย" : "",
+          lanna.isMahaMachu ? "วันมหามัจจุ" : (lanna.isMachu ? "วันมัจจุ" : ""),
+          lanna.isLomLuang ? "วันหล่มหลวง" : ""
+        ].filter(Boolean),
+        special: [lanna.isSin ? "วันศีล" : "", lanna.isHuaRiangMon ? "หัวเรียงหมอน" : ""].filter(Boolean)
       },
       description: buildDescription(lanna),
       warnings: [],
@@ -191,7 +154,7 @@ export default function App() {
       festival: getSongkranLabel(selectedDate) || "",
       rawText: "",
       directions: { sri: dir.sri, ka: dir.ka },
-      kalaYok,
+      kalaYoks,
       wanMuai: lanna.wanMuai,
       wanPhiKin: lanna.wanPhiKin,
       panjaDithi: lanna.panjaDithi,
@@ -224,8 +187,7 @@ export default function App() {
     ? toArabicDigits(`ปี${selectedInfo.lannaYear.zodiacLanna} (ปี${selectedInfo.lannaYear.zodiacThai}) จ.ศ. ${selectedInfo.cs}`)
     : '';
 
-  const todayVerdict = todayInfo ? verdictWords(todayInfo) : [];
-  const todayChips = todayInfo ? dayChips(todayInfo, today) : [];
+  const todayChips = todayInfo ? flagChips(todayInfo, today) : [];
 
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900">
@@ -264,25 +226,19 @@ export default function App() {
                   <span className="text-slate-600">{toArabicDigits(`ปี${todayInfo.lannaYear.zodiacLanna} จ.ศ. ${todayInfo.cs}`)}</span>
                 </div>
 
-                {/* กล่องคำตัดสิน */}
+                {/* กล่องป้ายของวันนี้: ป้ายคำเต็มจากแฟล็กเท่านั้น ไม่มีหัวข้อกำกับ */}
                 <div className="mt-3 bg-white border-2 border-slate-300 rounded-2xl p-3">
-                  <div className="text-[16px] leading-[1.5] font-black text-slate-500">คำตัดสินวันนี้</div>
-                  <div className="flex flex-col items-start gap-2 mt-1">
-                    {todayVerdict.map((v, i) => (
-                      <span key={i} className={`inline-block px-4 py-1 rounded-xl text-[24px] leading-[1.4] font-black ${chipClass(v.kind)}`}>
-                        {v.text}
+                  <div className="flex flex-col items-start gap-2">
+                    {todayChips.length > 0 ? todayChips.map((c, i) => (
+                      <span key={i} className={`inline-block px-4 py-1 rounded-xl text-[24px] leading-[1.4] font-black ${chipClass(c.kind)}`}>
+                        {c.text}
                       </span>
-                    ))}
+                    )) : (
+                      <span className={`inline-block px-4 py-1 rounded-xl text-[24px] leading-[1.4] font-black ${chipClass('neutral')}`}>
+                        วันปกติ
+                      </span>
+                    )}
                   </div>
-                  {todayChips.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-3">
-                      {todayChips.map((c, i) => (
-                        <span key={i} className={`px-3 py-1 rounded-lg text-[16px] leading-[1.5] font-bold ${chipClass(c.kind)}`}>
-                          {c.text}
-                        </span>
-                      ))}
-                    </div>
-                  )}
                   <div className="mt-3 space-y-1 text-[18px] leading-[1.6]">
                     <div><b>วันไท:</b> <span className="whitespace-nowrap">{toArabicDigits(`วัน${todayInfo.wanThai}`)}</span></div>
                     <div><b>เก้ากอง:</b> <span className="whitespace-nowrap">{toArabicDigits(todayInfo.kaoKong)}</span></div>
@@ -326,9 +282,12 @@ export default function App() {
                       <span className="text-[18px] leading-[1.4] font-bold">{toArabicDigits(date.getDate())}</span>
                     )}
                     {isToday && <span className="text-[12px] leading-[1.3] font-black text-[#b3001b]">วันนี้</span>}
-                    {!isToday && info && isBadResult(info) && <span className="text-[12px] leading-[1.3] font-black text-[#b3001b]">วันเสีย</span>}
-                    {!isToday && info && !isBadResult(info) && info.isSin && <span className="text-[12px] leading-[1.3] font-black text-[#8a5a00]">วันศีล</span>}
-                    {!isToday && info && !isBadResult(info) && !info.isSin && isGoodResult(info) && <span className="text-[12px] leading-[1.3] font-black text-[#0f7a28]">วันดี</span>}
+                    {!isToday && info && (() => {
+                      const wl = weekLabel(info);
+                      if (!wl) return null;
+                      const color = wl.kind === 'sin' ? 'text-[#8a5a00]' : wl.kind === 'good' ? 'text-[#0f7a28]' : 'text-[#b3001b]';
+                      return <span className={`text-[12px] leading-[1.3] font-black whitespace-nowrap ${color}`}>{wl.text}</span>;
+                    })()}
                   </button>
                 );
               })}
@@ -344,7 +303,7 @@ export default function App() {
                 if (!info) return null;
                 const isToday = sameDay(date, today);
                 const isSelected = sameDay(date, selectedDate);
-                const chips = dayChips(info, date);
+                const chips = flagChips(info, date);
                 return (
                   <button
                     key={date.toISOString()}
@@ -389,15 +348,15 @@ export default function App() {
           </div>
 
           {/* 6. มุมมองเดือน: นำทางเท่านั้น */}
-          <section className="px-3 pt-2 pb-10" aria-label="ตารางเดือน">
-            <h2 className="text-[20px] leading-[1.4] font-black text-slate-700">ตารางเดือน</h2>
-            <p className="text-[15px] leading-[1.5] text-slate-600">ใช้เลือกวันเท่านั้น แตะช่องวันเพื่อดูรายละเอียดด้านบน</p>
-            <div className="grid grid-cols-7 gap-1 mt-2 text-center">
+          <section className="px-0 pt-2 pb-10" aria-label="ตารางเดือน">
+            <h2 className="px-3 text-[20px] leading-[1.4] font-black text-slate-700">ตารางเดือน</h2>
+            <p className="px-3 text-[15px] leading-[1.5] text-slate-600">ใช้เลือกวันเท่านั้น แตะช่องวันเพื่อดูรายละเอียดด้านบน</p>
+            <div className="grid grid-cols-7 gap-[2px] mt-2 text-center">
               {THAI_DAYS_SHORT.map((label, i) => (
                 <div key={i} className={`text-[15px] leading-[1.5] font-black text-white rounded-md py-1 ${WEEKDAY_HEADER_BG[i]}`}>{label}</div>
               ))}
               {monthDays.map((cell, idx) => {
-                if (!cell || !cell.info) return <div key={idx} className="min-h-[78px]" />;
+                if (!cell || !cell.info) return <div key={idx} className="min-h-[84px]" />;
                 const { date, info } = cell;
                 const isToday = sameDay(date, today);
                 const isSelected = sameDay(date, selectedDate);
@@ -406,7 +365,7 @@ export default function App() {
                   <button
                     key={idx}
                     onClick={() => selectAndScroll(date)}
-                    className={`relative min-h-[78px] rounded-lg bg-white px-[1px] pt-1 pb-1 flex flex-col items-center ${isSelected ? 'border-[3px] border-[#0b62ff]' : 'border border-slate-300'}`}
+                    className={`relative min-h-[84px] rounded-lg bg-white px-0 pt-1 pb-1 flex flex-col items-center ${isSelected ? 'border-[3px] border-[#0b62ff]' : 'border border-slate-300'}`}
                   >
                     {isToday ? (
                       <span className="w-[30px] h-[30px] rounded-full bg-[#b3001b] text-white flex items-center justify-center text-[16px] font-black leading-none">
@@ -417,7 +376,10 @@ export default function App() {
                     )}
                     {isToday && <span className="text-[11px] leading-[1.3] font-black text-[#b3001b]">วันนี้</span>}
                     {chips.map((c, i) => (
-                      <span key={i} className={`block w-full text-center text-[12.5px] leading-[1.3] font-black ${c.kind === 'sin' ? 'text-[#8a5a00]' : c.kind === 'bad' ? 'text-[#b3001b]' : c.kind === 'good' ? 'text-[#0f7a28]' : 'text-slate-600'}`}>
+                      /* ป้ายละบรรทัดและครบคำเสมอ: nowrap ห้ามตัดกลางคำ ขนาด 9.5px วัดจากฟอนต์จริงแล้ว
+                         คำยาวสุด (หัวเรียงหมอน, วันโลกาวินาศ) กว้างประมาณ 53px ช่องกว้างประมาณ 48px
+                         จึงยอมให้ตัวอักษรล้นขอบช่องเล็กน้อยแบบสมมาตร (overflow visible) แทนการตัดคำ */
+                      <span key={i} className={`block w-full text-center whitespace-nowrap overflow-visible text-[9.5px] leading-[1.35] font-black ${c.kind === 'sin' ? 'text-[#8a5a00]' : c.kind === 'bad' ? 'text-[#b3001b]' : c.kind === 'good' ? 'text-[#0f7a28]' : 'text-slate-600'}`}>
                         {c.text}
                       </span>
                     ))}
@@ -425,14 +387,6 @@ export default function App() {
                 );
               })}
             </div>
-            <div className="flex flex-wrap justify-center gap-x-5 gap-y-1 mt-3 text-[15px] leading-[1.5] font-bold">
-              <span className="inline-flex items-center gap-1 text-[#8a5a00]"><span className="w-[10px] h-[10px] rounded-full bg-[#8a5a00]" />วันศีล</span>
-              <span className="inline-flex items-center gap-1 text-[#b3001b]"><span className="w-[10px] h-[10px] rounded-full bg-[#b3001b]" />วันเสีย</span>
-              <span className="inline-flex items-center gap-1 text-[#0f7a28]"><span className="w-[10px] h-[10px] rounded-full bg-[#0f7a28]" />วันดี</span>
-            </div>
-            <p className="text-center text-[14px] leading-[1.5] text-slate-500 mt-3 px-2">
-              ข้อมูลทุกปีคำนวณจากสูตรที่ผ่านการทดสอบเทียบกับปฏิทินล้านนา 2569 ฉบับมหาวิทยาลัยเชียงใหม่ ครบ 365 วันแล้ว
-            </p>
           </section>
         </main>
       </div>

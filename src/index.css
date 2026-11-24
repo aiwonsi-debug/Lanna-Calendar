@@ -18,10 +18,12 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* ห้ามตั้ง background/border ให้ button แบบไม่จัดเลเยอร์:
+   CSS ที่ไม่จัดเลเยอร์ชนะ utility ของ Tailwind v4 (อยู่ใน @layer utilities)
+   เคยทำให้ปุ่มพื้นสีเข้มทุกปุ่มกลายเป็นพื้นใส (ปุ่มวันนี้และปุ่มดูรายละเอียดมองไม่เห็น)
+   การรีเซ็ตปุ่มพื้นฐานให้ preflight ของ Tailwind จัดการเอง */
 button {
   cursor: pointer;
-  background: transparent;
-  border: 0;
   font: inherit;
 }
 
