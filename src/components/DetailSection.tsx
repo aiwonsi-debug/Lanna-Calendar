@@ -146,10 +146,12 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
             {formatDate(date)}
           </div>
         </div>
-        <div className="text-[36px] font-black text-slate-800 mb-2">
-          {toArabicDigits(`ปี${zodiacLanna}`)} <span className="text-slate-300 mx-2">/</span> <span className="text-slate-500 font-bold text-[28px]">ปี{zodiacThai}</span>
+        <div className="flex flex-wrap items-baseline justify-center gap-x-2 text-[32px] sm:text-[36px] font-black text-slate-800 mb-2">
+          <span className="whitespace-nowrap">{toArabicDigits(`ปี${zodiacLanna}`)}</span>
+          <span className="text-slate-300">/</span>
+          <span className="whitespace-nowrap text-slate-500 font-bold text-[26px] sm:text-[28px]">ปี{zodiacThai}</span>
         </div>
-        <div className="text-[28px] font-bold text-slate-500">
+        <div className="text-[22px] sm:text-[28px] font-bold text-slate-500 leading-snug">
           {toArabicDigits(`${lunarText} เดือน ${data.lannaMonth} จ.ศ.${cs ?? '-'}`)}
         </div>
 
