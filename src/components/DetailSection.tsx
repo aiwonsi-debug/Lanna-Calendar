@@ -65,10 +65,14 @@ export interface DayData {
   wanPhiKin?: string;
   panjaDithi?: string;
   sitthi?: string | null;
+  sitthiList?: string[];
   isUbat?: boolean;
   isLokawinat?: boolean;
   isMachu?: boolean;
   isMahaMachu?: boolean;
+  isMai?: boolean;
+  isWodwai?: boolean;
+  isHuaRiangMon?: boolean;
 }
 
 interface DetailSectionProps {
@@ -128,8 +132,8 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
     data.festival
   ].filter(Boolean).map(toArabicDigits);
 
-  const badLabels = ["วันเสีย", "วันอุบาทว์", "วันโลกาวินาศ", "วันหล่มหลวง", "วันมัจจุ", "วันมหามัจจุ"];
-  const goodLabels = ["วันธงชัย", "วันอธิบดี", "มหาสิทธิโชค", "สิทธิโชค", "ชัยโชค", "ราชาโชค", "อมฤตโชค"];
+  const badLabels = ["วันเสีย", "วันอุบาทว์", "วันโลกาวินาศ", "วันหล่มหลวง", "วันมัจจุ", "วันมหามัจจุ", "วันไหม้", "วันวอดวาย"];
+  const goodLabels = ["วันธงชัย", "วันอธิบดี", "มหาสิทธิโชค", "สิทธิโชค", "ไชยโชค", "ราชาโชค", "อมริสสโชค", "วันหัวเรียงหมอน", "วันยี่เป็ง", "วันพญาวัน"];
 
   return (
     <div className="bg-[#f8fafc] px-4 pt-12 pb-16 text-[28px] leading-[1.6]">

@@ -1,5 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
-import { loadMonthData } from './utils/lanna';
+import React, { useState, useMemo, useRef } from 'react';
 import { getLannaDate, getDirections, getDailyKalaYoga, getSongkranLabel, getDailyRituals } from './utils/lannaCalc';
 import { DetailSection, DayData } from './components/DetailSection';
 
@@ -31,7 +30,16 @@ interface Day {
   isThongChai: boolean;
   isAthipadi: boolean;
   isLomLuang: boolean;
+  isMai: boolean;
+  isWodwai: boolean;
+  isMachu: boolean;
+  isMahaMachu: boolean;
+  isHuaRiangMon: boolean;
+  isPhayaWan: boolean;
+  lannaMonthName: string;
+  tithi: number;
   sitthi: string | null;
+  sitthiList: string[];
   songkranLabel: string | null;
   yearZodiac: string;
   cs: number;
@@ -68,10 +76,14 @@ function buildDescription(lanna: {
   isLomLuang?: boolean;
   panjaDithi?: string;
   sitthi?: string | null;
+  sitthiList?: string[];
   isUbat?: boolean;
   isLokawinat?: boolean;
   isMachu?: boolean;
   isMahaMachu?: boolean;
+  isMai?: boolean;
+  isWodwai?: boolean;
+  isHuaRiangMon?: boolean;
 }): string {
   if (!lanna) return "";
   const lines: string[] = [];
@@ -80,24 +92,42 @@ function buildDescription(lanna: {
   if (lanna.panjaDithi) {
     const dithiDesc: Record<string, string> = {
       "นันทาดิถี": "ควรสร้างบ้านเรือนวิหาร ศาลา ขุดสระน้ำ หล่อพระพุทธรูปสร้างพระธาตุ ออกเดินทางไปค้าขายยกยอมหาเถระสังฆราช ราชาภิเษกพระมหากษัตริย์ ตัดช่อและตุงไชยดีมาก",
+      "ภัททราดิถี": "คนส่งศุภสารการทูตส่งบ่าวสาวแต่งงาน ดำหัว ล้างทำความสะอาดเครื่องประดับ ย้ายที่อยู่ แกะสลักเขียนภาพ ตัดไม้ทำเรือนเข้าอยู่บ้าน ตั้งชื่อยศนามศักดิ์ ดีมาก",
       "ภัทราดิถี": "คนส่งศุภสารการทูตส่งบ่าวสาวแต่งงาน ดำหัว ล้างทำความสะอาดเครื่องประดับ ย้ายที่อยู่ แกะสลักเขียนภาพ ตัดไม้ทำเรือนเข้าอยู่บ้าน ตั้งชื่อยศนามศักดิ์ ดีมาก",
       "ไชยาดิถี": "ควรเริ่มสร้างอาวุธยกทัพ เจรจาความเมือง เลี้ยงหมู่ทหาร เรียนศิลปศาสตร์วิชาคุณก่อสร้างเมืองใหม่ ทำความสะอาดอาวุธ ทำรั้ว",
       "ปุณณาดิถี": "ควรนำเข้าใหม่ขึ้นสู่ยุ้งฉาง นำคนใช้มาอยู่บ้าน พระสงฆ์เริ่มเรียนพระธรรมคัมภีร์ต่าง ๆ สร้างเวียงวัง เพิ่มนาม แต่งตั้งอำมาตย์ข้าราชการ เริ่มเรียนเวทมนต์คาถา",
-      "ริตตาดิถี": "ควรสร้างสวนทำไร่นา ปลูกต้นไม้ สร้างถนนหนทาง ทำแก้วแหวนมิ่งมงคล ตัดเสื้อผ้าทำขวัญสู่ขวัญตัดผมเข้าเฝ้าเจ้านาย"
+      "ริตตาดิถี": "ควรสร้างสวนทำไร่นา ปลูกต้นไม้ สร้างถนนหนทาง ทำแก้วแหวนมิ่งมงคล ตัดเสื้อผ้าทำขวัญสู่ขวัญตัดผมเข้าเฝ้าเจ้านาย",
+      "ริทธาดิถี": "ควรสร้างสวนทำไร่นา ปลูกต้นไม้ สร้างถนนหนทาง ทำแก้วแหวนมิ่งมงคล ตัดเสื้อผ้าทำขวัญสู่ขวัญตัดผมเข้าเฝ้าเจ้านาย"
     };
     lines.push(`ดิถี (${lanna.panjaDithi}): ${dithiDesc[lanna.panjaDithi] || ""}`);
   }
 
-  // วันโชค (สิทธิโชค)
-  if (lanna.sitthi) {
+  // วันโชค (สิทธิโชค) เป็นชุด: หนึ่งวันมีได้หลายโชค
+  const sitthiList = lanna.sitthiList && lanna.sitthiList.length > 0
+    ? lanna.sitthiList
+    : (lanna.sitthi ? [lanna.sitthi] : []);
+  if (sitthiList.length > 0) {
     const sitthiDesc: Record<string, string> = {
-      "อมฤตโชค": "ให้ผลดีมหาศาล มีความอุดมสมบูรณ์ และอายุยืนยาว เหมาะสำหรับงานมงคลทุกชนิด โดยเฉพาะการทำพิธีเพื่อความยั่งยืน",
+      "อมริสสโชค": "ให้ผลดีมหาศาล มีความอุดมสมบูรณ์ และอายุยืนยาว เหมาะสำหรับงานมงคลทุกชนิด โดยเฉพาะการทำพิธีเพื่อความยั่งยืน",
       "มหาสิทธิโชค": "ให้ผลดีมหาศาล เหมาะสำหรับงานมงคลทุกประการ การเริ่มต้นใหม่ การเปิดกิจการ หรือการทำพิธีใหญ่",
       "สิทธิโชค": "ให้ผลสำเร็จสมปรารถนา เหมาะสำหรับงานมงคลทั่วไป การติดต่อเจรจา และการทำงานที่ต้องการความราบรื่น",
-      "ชัยโชค": "ให้ผลทางชัยชนะ การแข่งขัน การเอาชนะอุปสรรค เหมาะสำหรับงานที่ต้องใช้ความกล้าหาญหรือการชิงชัย",
+      "ไชยโชค": "ให้ผลทางชัยชนะ การแข่งขัน การเอาชนะอุปสรรค เหมาะสำหรับงานที่ต้องใช้ความกล้าหาญหรือการชิงชัย",
       "ราชาโชค": "ให้ผลทางบารมี เกียรติยศ การได้รับการอุปถัมภ์จากผู้ใหญ่ เหมาะสำหรับงานที่เกี่ยวกับยศถาบรรดาศักดิ์"
     };
-    lines.push(`วัน${lanna.sitthi}: ${sitthiDesc[lanna.sitthi] || ""}`);
+    for (const s of sitthiList) {
+      lines.push(`วัน${s}: ${sitthiDesc[s] || ""}`);
+    }
+  }
+
+  // ป้ายกฎตำรา (คำนวณจากสูตร)
+  if (lanna.isMai) {
+    lines.push("วันไหม้: ห้ามทำการมงคลหรือเริ่มต้นสิ่งใหม่");
+  }
+  if (lanna.isWodwai) {
+    lines.push("วันวอดวาย: ห้ามทำการมงคลทุกอย่าง");
+  }
+  if (lanna.isHuaRiangMon) {
+    lines.push("วันหัวเรียงหมอน: เหมาะแก่การแต่งงานสมรสดีนักแล");
   }
 
   // วันเสียต่างๆ
@@ -163,42 +193,53 @@ const getStatusLines = (day: Day) => {
   
   const has = (term: string) => allText.includes(term);
 
-  // High priority bad days
-  if (day.isSia || has("วันเสีย")) 
+  // High priority bad days (ค่าจากตัวคำนวณสูตรล้วน)
+  if (day.isSia || has("วันเสีย"))
     badLines.push({ text: 'วันเสีย', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
-  
-  if (day.isUbat || has("อุบาทว์")) 
+
+  if (day.isUbat || has("อุบาทว์"))
     badLines.push({ text: 'วันอุบาทว์', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
-  
-  if (day.isLokawinat || has("โลกาวินาศ")) 
+
+  if (day.isLokawinat || has("โลกาวินาศ"))
     badLines.push({ text: 'โลกาวินาศ', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
-  
-  if (day.isLomLuang || has("หล่มหลวง")) 
+
+  if (day.isLomLuang || has("หล่มหลวง"))
     badLines.push({ text: 'หล่มหลวง', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
 
+  if (day.isMai)
+    badLines.push({ text: 'วันไหม้', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
+
+  if (day.isWodwai)
+    badLines.push({ text: 'วันวอดวาย', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
+
+  if (day.isMachu)
+    badLines.push({ text: 'วันมัจจุ', className: 'text-white bg-[#d71920] px-1 rounded mb-[2px] block w-fit font-black' });
+
   // Good days
-  if (day.isThongChai || has("ธงชัย")) 
+  if (day.isThongChai || has("ธงชัย"))
     goodLines.push({ text: 'ธงชัย', className: 'text-[#0f8a2a] font-black' });
-  
-  if (day.isAthipadi || has("อธิบดี")) 
+
+  if (day.isAthipadi || has("อธิบดี"))
     goodLines.push({ text: 'อธิบดี', className: 'text-[#0f8a2a] font-black' });
 
-  // Special/Labels (Sitthi Chok)
-  const sitthiLabel = day.sitthi || 
-    (has("มหาสิทธิโชค") ? "มหาสิทธิโชค" : 
-     has("อมฤตโชค") ? "อมฤตโชค" : 
-     has("สิทธิโชค") ? "สิทธิโชค" : 
-     has("ราชาโชค") ? "ราชาโชค" : 
-     has("ชัยโชค") ? "ชัยโชค" : null);
+  // สิทธิโชคเป็นชุด แสดงทุกโชคของวันนั้น
+  const sitthiLabels = day.sitthiList && day.sitthiList.length > 0
+    ? day.sitthiList
+    : (day.sitthi ? [day.sitthi] : []);
+  for (const s of sitthiLabels)
+    goodLines.push({ text: toArabicDigits(s), className: 'text-[#0645c0] font-black' });
 
-  if (sitthiLabel) 
-    goodLines.push({ text: toArabicDigits(sitthiLabel), className: 'text-[#0645c0] font-black' });
-  
-  if (day.songkranLabel) 
+  if (day.isHuaRiangMon)
+    goodLines.push({ text: 'หัวเรียงหมอน', className: 'text-[#0645c0] font-black' });
+
+  if (day.songkranLabel)
     goodLines.push({ text: toArabicDigits(day.songkranLabel), className: 'text-[#0645c0] font-black' });
 
   return [...badLines, ...goodLines];
 };
+
+// ค่าทุกฟิลด์หลักมาจากตัวคำนวณสูตรล้วน (src/utils/lannaCalc.ts) ทุกปี
+// ไม่โหลดไฟล์ข้อมูลรายปีมาแทนค่าอีก
 
 export default function App() {
   const [viewMonth, setViewMonth] = useState(() => {
@@ -206,52 +247,28 @@ export default function App() {
     return new Date(t.getFullYear(), t.getMonth(), 1);
   });
   const [selectedDate, setSelectedDate] = useState<Date | null>(() => new Date());
-  const [monthData, setMonthData] = useState<Day[]>([]);
-  const [rawMonthData, setRawMonthData] = useState<DayData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  
+
   const dailyRef = useRef<HTMLDivElement>(null);
 
-  // Load Lanna data
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const data = await loadMonthData(viewMonth);
-        setRawMonthData(data);
-        
-        const enriched = data.map(d => {
-          const date = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), d.day);
-          const lanna = getLannaDate(date);
-          if (!lanna) return null;
-
-          const labels = d.labels || [];
-
-          return {
-            ...lanna,
-            day: d.day,
-            isSin: lanna.isSin || labels.includes("วันศีล"),
-            isSia: lanna.isSia || labels.includes("วันเสีย"),
-            isUbat: lanna.isUbat || labels.some(l => l.includes("อุบาทว์")),
-            isLokawinat: lanna.isLokawinat || labels.some(l => l.includes("โลกาวินาศ")),
-            isThongChai: lanna.isThongChai,
-            isAthipadi: lanna.isAthipadi,
-            isLomLuang: lanna.isLomLuang,
-            sitthi: lanna.sitthi,
-            songkranLabel: getSongkranLabel(date),
-            raw: d
-          };
-        }).filter(Boolean) as Day[];
-
-        
-        setMonthData(enriched);
-      } catch (e) {
-        console.error("fetchData error", e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
+  // สร้างข้อมูลเดือนจากตัวคำนวณโดยตรง
+  const monthData = useMemo<Day[]>(() => {
+    const y = viewMonth.getFullYear();
+    const m = viewMonth.getMonth();
+    const daysInMonth = new Date(y, m + 1, 0).getDate();
+    const out: Day[] = [];
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date = new Date(y, m, d);
+      const lanna = getLannaDate(date);
+      if (!lanna) continue;
+      out.push({
+        ...lanna,
+        date,
+        day: d,
+        songkranLabel: getSongkranLabel(date),
+        raw: { day: d, labels: [] }
+      });
+    }
+    return out;
   }, [viewMonth]);
 
   const blanks = useMemo(() => {
@@ -261,12 +278,13 @@ export default function App() {
   }, [monthData]);
 
   const headerInfo = useMemo(() => {
-    const lanna = getLannaDate(new Date(viewMonth.getFullYear(), viewMonth.getMonth(), 1));
     const months = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+    const monthTitle = `${months[viewMonth.getMonth()]} ${viewMonth.getFullYear() + 543}`;
+    const lanna = getLannaDate(new Date(viewMonth.getFullYear(), viewMonth.getMonth(), 1));
     return {
       yearZodiac: lanna?.yearZodiac || "",
       cs: lanna?.cs || 0,
-      monthTitle: `${months[viewMonth.getMonth()]} ${viewMonth.getFullYear() + 543}`
+      monthTitle
     };
   }, [viewMonth]);
 
@@ -275,7 +293,6 @@ export default function App() {
     const lanna = getLannaDate(selectedDate);
     if (!lanna) return null;
 
-    const raw = rawMonthData.find(d => d.day === selectedDate.getDate());
     const song = getSongkranLabel(selectedDate);
     const dir = getDirections(selectedDate.getDay());
     const rawLunarDay = lanna.phase === 'ออก' ? lanna.lunarDay : lanna.lunarDay + 15;
@@ -283,7 +300,6 @@ export default function App() {
 
     const description = buildDescription(lanna);
     const dailyRituals = getDailyRituals(selectedDate.getDay());
-    const mergedRituals = [...(Array.isArray(raw?.rituals) ? raw.rituals : []), ...dailyRituals];
 
     const detailData: DayData = {
       y: selectedDate.getFullYear() + 543,
@@ -298,17 +314,17 @@ export default function App() {
       fahTeeSang: lanna.fahTeeSang,
       lunar: { phase: lanna.phase === 'ออก' ? "waxing" : "waning", day: lanna.lunarDay },
       labels: {
-        good: [lanna.isThongChai ? "วันธงชัย" : "", lanna.isAthipadi ? "วันอธิบดี" : "", lanna.sitthi || ""].filter(Boolean),
-        bad: [lanna.isSia ? "วันเสีย" : "", lanna.isUbat ? "วันอุบาทว์" : "", lanna.isLokawinat ? "วันโลกาวินาศ" : "", lanna.isLomLuang ? "วันหล่มหลวง" : ""].filter(Boolean),
+        good: [lanna.isThongChai ? "วันธงชัย" : "", lanna.isAthipadi ? "วันอธิบดี" : "", ...lanna.sitthiList, lanna.isHuaRiangMon ? "วันหัวเรียงหมอน" : ""].filter(Boolean),
+        bad: [lanna.isSia ? "วันเสีย" : "", lanna.isUbat ? "วันอุบาทว์" : "", lanna.isLokawinat ? "วันโลกาวินาศ" : "", lanna.isLomLuang ? "วันหล่มหลวง" : "", lanna.isMai ? "วันไหม้" : "", lanna.isWodwai ? "วันวอดวาย" : ""].filter(Boolean),
         special: lanna.isSin ? ["วันศีล"] : []
       },
       description: description,
-      warnings: Array.isArray(raw?.warnings) ? raw.warnings : [],
-      rituals: mergedRituals,
+      warnings: [],
+      rituals: dailyRituals,
       festival: song || "",
-      rawText: raw?.rawText || "",
-      directions: { 
-        sri: dir.sri, 
+      rawText: "",
+      directions: {
+        sri: dir.sri,
         ka: dir.ka
       },
       kalaYok,
@@ -316,14 +332,18 @@ export default function App() {
       wanPhiKin: lanna.wanPhiKin,
       panjaDithi: lanna.panjaDithi,
       sitthi: lanna.sitthi,
+      sitthiList: lanna.sitthiList,
       isUbat: lanna.isUbat,
       isLokawinat: lanna.isLokawinat,
       isMachu: lanna.isMachu,
-      isMahaMachu: lanna.isMahaMachu
+      isMahaMachu: lanna.isMahaMachu,
+      isMai: lanna.isMai,
+      isWodwai: lanna.isWodwai,
+      isHuaRiangMon: lanna.isHuaRiangMon
     };
 
     return { ...lanna, detailData };
-  }, [selectedDate, rawMonthData]);
+  }, [selectedDate]);
 
   const handleSelect = (date: Date) => {
     setSelectedDate(date);
@@ -351,9 +371,6 @@ export default function App() {
       {/* VIEWPORT */}
       <main className="bg-white">
         <div>
-          {isLoading ? (
-            <div className="py-20 text-center text-[13px] font-bold">กำลังโหลดข้อมูล...</div>
-          ) : (
             <div className="flex flex-col">
               {/* Day Labels Header Row */}
               <div className="grid grid-cols-7 border-t border-l border-black">
@@ -422,11 +439,11 @@ export default function App() {
                           </div>
                         ))}
                         
-                        {(isSelected || day.isSin || day.isSia || day.isUbat || day.isLokawinat || day.isThongChai || day.isAthipadi || day.sitthi) && (
+                        {(isSelected || day.isSin || day.isSia || day.isUbat || day.isLokawinat || day.isMai || day.isWodwai || day.isMachu || day.isThongChai || day.isAthipadi || day.sitthiList.length > 0) && (
                           <div className="flex gap-[5px] mt-2">
                             {day.isSin && <span className="w-[10px] h-[10px] rounded-full bg-[#f2994a]" />}
-                            {(day.isSia || day.isUbat || day.isLokawinat) && <span className="w-[10px] h-[10px] rounded-full bg-[#d71920]" />}
-                            {(day.isThongChai || day.isAthipadi || day.sitthi) && <span className="w-[10px] h-[10px] rounded-full bg-[#138a2e]" />}
+                            {(day.isSia || day.isUbat || day.isLokawinat || day.isMai || day.isWodwai || day.isMachu) && <span className="w-[10px] h-[10px] rounded-full bg-[#d71920]" />}
+                            {(day.isThongChai || day.isAthipadi || day.sitthiList.length > 0) && <span className="w-[10px] h-[10px] rounded-full bg-[#138a2e]" />}
                           </div>
                         )}
                       </div>
@@ -440,8 +457,11 @@ export default function App() {
                 <span className="inline-flex items-center gap-1 text-[#d71920]"><span className="w-[10px] h-[10px] rounded-full bg-[#d71920]" />วันไม่ดี</span>
                 <span className="inline-flex items-center gap-1 text-[#138a2e]"><span className="w-[10px] h-[10px] rounded-full bg-[#138a2e]" />วันดี</span>
               </div>
+
+              <div className="py-2 px-3 text-center text-[11px] text-gray-500 border-b border-black">
+                ข้อมูลทุกปีคำนวณจากสูตรที่ผ่านการทดสอบเทียบกับปฏิทินล้านนา 2569 มื้อจั๋นวันดี ฉบับมหาวิทยาลัยเชียงใหม่ ครบ 365 วันแล้ว
+              </div>
             </div>
-          )}
         </div>
 
         {/* DAILY DETAIL SECTION */}

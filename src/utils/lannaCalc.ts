@@ -1,8 +1,194 @@
-import { lannaYearTransitionByGregorianYear, LannaZodiacThaiMap } from '../data/lannaYearTransitions';
+// ============================================================
+// ตัวคำนวณปฏิทินล้านนา (สูตรล้วน ไม่ใช้ตารางรายวัน)
+// พอร์ตตรงจากตัวคำนวณ Python ที่พิสูจน์แล้ว: calc/lanna_calc.py
+// แหล่งสูตรและจุดยึด: audit/formula-report.md และ audit/sitthi-labels-report.md
+// - อัตตาสุริยยาตร์ (หรคุณ/อวมาน/มาสเกณฑ์/ดิถี) จากคัมภีร์สุริยยาตร์ (มานัตต์)
+// - โครงสร้างเดือนจันทรคติราชการ: ออก 15 ค่ำเสมอ, แรม 14 (เดือนคี่) / 15 (เดือนคู่)
+//   อธิกมาส = เดือน 8 ภาคกลาง (เดือน 10 ล้านนา) สองหน
+// - เดือนล้านนา = เดือนภาคกลาง + 2 (เกี๋ยง..สิบสอง = 1..12)
+// - การสะกดตามฉบับมหาวิทยาลัยเชียงใหม่: ดับใส้, ริทธาดิถี, ภัททราดิถี,
+//   อมริสสโชค, ไชยโชค, ยีเพียง, พืน, ท้ายป้าว
+// ============================================================
 
-// ============================================================
-// DATA & CONSTANTS
-// ============================================================
+// ---------- ตัวช่วยวันที่ (ทำงานบนเลขวัน UTC กันปัญหาเขตเวลา) ----------
+const DAY_MS = 86400000;
+const dayNumOf = (y: number, m0: number, d: number) => Math.floor(Date.UTC(y, m0, d) / DAY_MS);
+const dayNumFromDate = (date: Date) => dayNumOf(date.getFullYear(), date.getMonth(), date.getDate());
+const dateFromDayNum = (n: number) => new Date(n * DAY_MS);
+const fmtISO = (n: number) => {
+  const d = dateFromDayNum(n);
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
+};
+const mod = (a: number, n: number) => ((a % n) + n) % n;
+// อาทิตย์ = 0 (dayNum 0 = 1970-01-01 = วันพฤหัสบดี)
+const weekday0 = (dayNum: number) => mod(dayNum + 4, 7);
+
+// ---------- สุริยยาตร์: อัตตาเถลิงศกของจุลศักราช ----------
+export function atta(cs: number) {
+  const x = cs * 292207 + 373;
+  const horakhun = Math.floor(x / 800) + 1;
+  const kammachapon = 800 - (x % 800);
+  const a = 11 * horakhun + 650;
+  const avoman = a % 692;
+  const q = Math.floor(a / 692);
+  const masaken = Math.floor((q + horakhun) / 30);
+  const dithi = (q + horakhun) % 30;
+  return { horakhun, kammachapon, avoman, masaken, dithi };
+}
+
+// จุดยึด: วันพญาวัน (เถลิงศก) จ.ศ. 1388 = 16 เม.ย. 2026 (ฉบับ มช. 2569)
+const PHAYAWAN_1388 = dayNumOf(2026, 3, 16);
+
+export function phayawanDay(cs: number): number {
+  return PHAYAWAN_1388 + (atta(cs).horakhun - atta(1388).horakhun);
+}
+
+export function isAdhikamasaCS(cs: number): boolean {
+  return atta(cs + 1).masaken - atta(cs).masaken === 13;
+}
+
+// ---------- โครงสร้างปีจันทรคติ ----------
+// จุดยึด: ออก 1 ค่ำ เดือนเกี๋ยง ของปีจันทรคติที่สงกรานต์ 1388 ตกอยู่ = 23 ก.ย. 2025
+const LUNAR_YEAR0_START = dayNumOf(2025, 8, 23);
+const LUNAR_YEAR0_CS = 1388;
+
+export const LANNA_MONTH_NAMES = ["", "เกี๋ยง", "ยี่", "สาม", "สี่", "ห้า", "หก", "เจ็ด", "แปด", "เก้า", "สิบ", "สิบเอ็ด", "สิบสอง"];
+
+function lunarYearMonths(csInside: number): [number, number][] {
+  const months: [number, number][] = [];
+  for (let m = 1; m <= 12; m++) {
+    months.push([m, m % 2 === 1 ? 29 : 30]);
+    if (m === 10 && isAdhikamasaCS(csInside)) months.push([10, 30]); // เดือนสิบสองหน (อธิกมาส)
+  }
+  return months;
+}
+function lunarYearLength(csInside: number): number {
+  return lunarYearMonths(csInside).reduce((s, [, L]) => s + L, 0);
+}
+
+export function lunarFromGregorian(dayNum: number): { lannaMonth: number; phase: 'ออก' | 'แรม'; kham: number } {
+  let start = LUNAR_YEAR0_START;
+  let cs = LUNAR_YEAR0_CS;
+  if (dayNum >= start) {
+    while (dayNum >= start + lunarYearLength(cs)) { start += lunarYearLength(cs); cs += 1; }
+  } else {
+    while (dayNum < start) { cs -= 1; start -= lunarYearLength(cs); }
+  }
+  let offset = dayNum - start;
+  for (const [m, L] of lunarYearMonths(cs)) {
+    if (offset < L) {
+      if (offset < 15) return { lannaMonth: m, phase: 'ออก', kham: offset + 1 };
+      return { lannaMonth: m, phase: 'แรม', kham: offset - 14 };
+    }
+    offset -= L;
+  }
+  throw new Error("lunarFromGregorian: unreachable");
+}
+
+// ---------- ปีล้านนา / จุลศักราช ----------
+export const MAE_MUE = ["กาบ", "ดับ", "รวาย", "เมือง", "เปิก", "กัด", "กด", "ร้วง", "เต่า", "ก่า"];
+export const LUK_MUE = ["ใจ้", "เป้า", "ยี", "เหม้า", "สี", "ใส้", "สะง้า", "เม็ด", "สัน", "เร้า", "เส็ด", "ใค้"];
+export const LUK_THAI = ["ชวด", "ฉลู", "ขาล", "เถาะ", "มะโรง", "มะเส็ง", "มะเมีย", "มะแม", "วอก", "ระกา", "จอ", "กุน"];
+
+export function lannaYearOf(dayNum: number, gregYear: number): { yearName: string; cs: number; lukThai: string } {
+  let cs = gregYear - 638;
+  if (dayNum < phayawanDay(cs)) cs -= 1;
+  const mae = MAE_MUE[mod(cs + 4, 10)];
+  const lukIdx = mod(cs + 10, 12);
+  return { yearName: mae + LUK_MUE[lukIdx], cs, lukThai: LUK_THAI[lukIdx] };
+}
+
+// ---------- วันไท (รอบ 60) ----------
+const MAE_DAY = MAE_MUE;
+const LUK_DAY = ["ใค้", "ใจ้", "เป้า", "ยี", "เหม้า", "สี", "ใส้", "สะง้า", "เม็ด", "สัน", "เร้า", "เส็ด"];
+const WANTHAI_ANCHOR = dayNumOf(2026, 0, 1); // = ดับใค้ (ฉบับ มช.)
+
+export function wanThaiOf(dayNum: number): string {
+  const n = dayNum - WANTHAI_ANCHOR;
+  return MAE_DAY[mod(1 + n, 10)] + LUK_DAY[mod(n, 12)];
+}
+
+// ---------- วันเก้ากอง (รอบ 12) ----------
+export const KAO_KONG_TYPES = [
+  "วันเก้ากอง", "วันรองพืน", "วันพืนดอก", "วันพืนดาย", "วันสุพัก", "วันรับได้",
+  "วันรับตาย", "วันขว้ำได้", "วันไสเจ้า", "วันไสเสีย", "วันท้ายป้าว", "วันยีเพียง"
+];
+const KAO_ANCHOR_DATE = dayNumOf(2025, 11, 20); // ออก 1 ค่ำ เดือน 4 = ขว้ำได้ (ดัชนี 7)
+const KAO_ANCHOR_IDX = 7;
+
+function monthStartsBetween(a: number, b: number): number[] {
+  const out: number[] = [];
+  let start = LUNAR_YEAR0_START;
+  let cs = LUNAR_YEAR0_CS;
+  while (start > a) { cs -= 1; start -= lunarYearLength(cs); }
+  while (start <= b) {
+    let cur = start;
+    const seen = new Set<number>();
+    for (const [m, L] of lunarYearMonths(cs)) {
+      if (!seen.has(m) && a <= cur && cur <= b) out.push(cur);
+      seen.add(m);
+      cur += L;
+    }
+    start = cur;
+    cs += 1;
+  }
+  return out;
+}
+
+export function kaoKongOf(dayNum: number): string {
+  const days = dayNum - KAO_ANCHOR_DATE;
+  const starts = monthStartsBetween(Math.min(KAO_ANCHOR_DATE, dayNum), Math.max(KAO_ANCHOR_DATE, dayNum));
+  let monthsCrossed: number;
+  if (dayNum >= KAO_ANCHOR_DATE) {
+    monthsCrossed = starts.filter(s => KAO_ANCHOR_DATE < s && s <= dayNum).length;
+  } else {
+    monthsCrossed = -starts.filter(s => dayNum < s && s <= KAO_ANCHOR_DATE).length;
+  }
+  return KAO_KONG_TYPES[mod(KAO_ANCHOR_IDX + days + monthsCrossed, 12)];
+}
+
+// ---------- ฟ้าตีแส่งเศษ (รอบ 9) ----------
+const FAH_BASE: Record<number, number> = { 1: 2, 2: 7, 3: 3, 4: 3, 5: 8, 6: 4, 7: 0, 8: 4, 9: 0, 10: 5, 11: 1, 12: 6 };
+export function fahTeeSangOf(lannaMonth: number, tithi: number): number {
+  return mod(5 * (tithi - 1) + FAH_BASE[lannaMonth], 9);
+}
+
+// ---------- ปัญจดิถี (สะกดตามฉบับ มช.) ----------
+export const DITHI_NAMES = ["นันทาดิถี", "ภัททราดิถี", "ไชยาดิถี", "ริทธาดิถี", "ปุณณาดิถี"];
+export function panjaDithiOf(tithi: number): string {
+  return DITHI_NAMES[mod(tithi - 1, 5)];
+}
+
+// ---------- วันเสียประจำเดือน (ตำราล้านนา/วัดธาตุคำ) ----------
+const SIA_WEEKDAYS: Record<number, number[]> = {
+  1: [0, 1], 5: [0, 1], 9: [0, 1],
+  2: [2], 6: [2], 10: [2],
+  3: [4, 6], 7: [4, 6], 11: [4, 6],
+  4: [3, 5], 8: [3, 5], 12: [3, 5]
+};
+export function isWanSiaOf(dayNum: number, gregYear: number, lannaMonth: number): boolean {
+  if (dayNum === phayawanDay(gregYear - 638)) return false; // วันพญาวันไม่นับเป็นวันเสีย
+  return (SIA_WEEKDAYS[lannaMonth] || []).includes(weekday0(dayNum));
+}
+
+// ---------- วันไหม้ / วันมัจจุ / วันวอดวาย / วันหัวเรียงหมอน ----------
+const MAI_KHAM: Record<number, number> = { 0: 1, 1: 4, 2: 6, 3: 9, 4: 5, 5: 3, 6: 7 };
+const MACHU_KHAM: Record<number, number> = { 0: 12, 1: 11, 2: 10, 3: 9, 4: 8, 5: 7, 6: 6 };
+const WODWAI_KHAM: Record<number, number> = { 1: 9, 2: 9, 3: 9, 4: 10, 5: 10, 6: 10, 7: 7, 8: 7, 9: 7, 10: 8, 11: 8, 12: 8 };
+const HUA_WAXING = new Set([2, 7, 10, 11, 12, 13]);
+const HUA_WANING = new Set([4, 7, 10, 13, 14]);
+
+// ---------- สิทธิโชค (ตำราวัดธาตุคำ บทที่ 17) ----------
+// ค่าเป็น [ค่ำ, ข้างที่จำกัดหรือ null] ต่อวันในสัปดาห์ (อาทิตย์ = 0)
+type SitthiEntry = [number, ('ออก' | 'แรม' | null)];
+const SITTHI_TABLE: Record<string, Record<number, SitthiEntry>> = {
+  "อมริสสโชค": { 0: [8, null], 1: [3, null], 2: [9, null], 3: [2, null], 4: [4, null], 5: [1, 'แรม'], 6: [5, null] },
+  "ไชยโชค": { 0: [8, null], 1: [3, null], 2: [11, null], 3: [7, 'แรม'], 4: [4, null], 5: [1, null], 6: [11, null] },
+  "สิทธิโชค": { 0: [11, null], 1: [5, null], 2: [14, null], 3: [10, null], 4: [9, 'แรม'], 5: [11, 'แรม'], 6: [4, null] },
+  "มหาสิทธิโชค": { 0: [14, null], 1: [12, null], 2: [13, null], 3: [4, null], 4: [7, null], 5: [10, null], 6: [15, null] },
+  "ราชาโชค": { 0: [6, null], 1: [3, null], 2: [9, null], 3: [6, null], 4: [10, null], 5: [1, 'ออก'], 6: [5, null] }
+};
+export const CHOK_NAMES = ["มหาสิทธิโชค", "อมริสสโชค", "ไชยโชค", "ราชาโชค", "สิทธิโชค"];
 
 export const ZODIAC_EMOJI_MAP: Record<string, string> = {
   "ชวด": "🐭", "ฉลู": "🐮", "ขาล": "🐯", "เถาะ": "🐰", "มะโรง": "🐲",
@@ -10,18 +196,11 @@ export const ZODIAC_EMOJI_MAP: Record<string, string> = {
   "จอ": "🐶", "กุน": "🐷"
 };
 
-export const MAE_MUE = ["กาบ", "ดับ", "รวาย", "เมือง", "เปิก", "กัด", "กด", "ร้วง", "เต่า", "กา"];
-export const LUK_MUE = ["ไจ้", "เป้า", "ยี่", "เหม้า", "สี", "ไส้", "สะง้า", "เม็ด", "สัน", "เร้า", "เส็ด", "ไค้"];
-
-export const KAO_KONG_TYPES = [
-  "วันรองพื้น", "วันพื้นดอก", "วันพื้นดาย", "วันสุพัก", "วันรับได้", "วันรับตาย",
-  "วันขว้ำได้", "วันไสเจ้า", "วันไสเสีย", "วันท้ายป้าว", "วันยี่เพียง", "วันเก้ากอง"
-];
 
 export const KAO_KONG_DESC: Record<string, string> = {
-  "วันรองพื้น": "อย่าเก็บเอาและเผาถ่าน ไม้ฟืนหลัว บ่ดี การทำไร่ใส่นาและทำสวนดี การปลูกบ้านแปลงเรือนจักอยู่เย็นเป็นสุข",
-  "วันพื้นดอก": "กระทำการมงคลกรรมดีทุกอย่าง จักมีลูกหลานมากมาย ทำคอกวัว คอกควาย สร้างแปลงรั้วดี นำสัตว์เลี้ยงมาเลี้ยงดีจักแพร่หลาย",
-  "วันพื้นดาย": "ซื้องัวควายและสัตว์เลี้ยงมาเลี้ยงจักตายจาก นำข้าทาสมาเรือนบ่วุฒิ",
+  "วันรองพืน": "อย่าเก็บเอาและเผาถ่าน ไม้ฟืนหลัว บ่ดี การทำไร่ใส่นาและทำสวนดี การปลูกบ้านแปลงเรือนจักอยู่เย็นเป็นสุข",
+  "วันพืนดอก": "กระทำการมงคลกรรมดีทุกอย่าง จักมีลูกหลานมากมาย ทำคอกวัว คอกควาย สร้างแปลงรั้วดี นำสัตว์เลี้ยงมาเลี้ยงดีจักแพร่หลาย",
+  "วันพืนดาย": "ซื้องัวควายและสัตว์เลี้ยงมาเลี้ยงจักตายจาก นำข้าทาสมาเรือนบ่วุฒิ",
   "วันสุพัก": "รับซื้อสัตว์เลี้ยงวัวควายช้างม้า เป็ดไก่ดี การจัดกินแขกแต่งงานวิวาห์มงคลดี มีลูกหญิงชายจักอยู่ในโอวาท",
   "วันรับได้": "อย่าได้รับฝากของไว้ การไปติดต่อผู้ใหญ่บ่ดี",
   "วันรับตาย": "งดการวิวาห์มงคล การกินแขกแต่งงานและห้ามนำสัตว์เลี้ยง 2 ตีน 4 ตีน มาเลี้ยง",
@@ -29,11 +208,11 @@ export const KAO_KONG_DESC: Record<string, string> = {
   "วันไสเจ้า": "อย่าทำการวิวาห์มงคล อย่าซื้อสิ่งของและนำสัตว์ 2 ตีน และ 4 ตีนมาเลี้ยง บ่ดี",
   "วันไสเสีย": "อย่าออกจากเรือนไปค้าขายทางไกล จักประสบอุบัติเหตุกลางทาง",
   "วันท้ายป้าว": "อย่าเดินทางทางน้ำ อย่าไปค้าขายทางเรือ หากำไรยาก ขาดทุนเร็ว การไปค้าขายทางบกดี",
-  "วันยี่เพียง": "การวิวาห์มงคลแต่งผัวแต่งเมีย การเอาคนเข้าบ้านเข้าเมือง การซื้อของ สัตว์ 2 ตีน 4 ตีนทุกสิ่งทุกอย่างดี จัดค้าขายมีกำไรดี จักทำกิจการทุกอย่างในวันนี้ดีมาก",
+  "วันยีเพียง": "การวิวาห์มงคลแต่งผัวแต่งเมีย การเอาคนเข้าบ้านเข้าเมือง การซื้อของ สัตว์ 2 ตีน 4 ตีนทุกสิ่งทุกอย่างดี จัดค้าขายมีกำไรดี จักทำกิจการทุกอย่างในวันนี้ดีมาก",
   "วันเก้ากอง": "เป็นวันที่กระทำการมงคลดี จะทำกิจการใด ๆ ดีทุกอย่าง จักมีเงินคำสัมปัตติพอหมื่นบ่ไร้ เอาข้าวใหม่ใส่ยุ้งฉางดี เทียวทางไกลจะกลับคืนมาโดยสวัสดี แต่ห้ามกระทำการฌาปนกิจศพในวันนี้เป็นอันขาด"
 };
 
-export const WAN_THAI_DETAILED: Record<string, string> = {
+const WAN_THAI_DETAILED_RAW: Record<string, string> = {
   "กาบไจ้": "แม่วันดี คันจักเยียะได้ หื้อหาวันปลอด (ดี เป็นสิริมงคล)",
   "ดับเป้า": "อย่าได้สานหับไปค้า จะถูกฆ่ากลางทาง (อย่าเดินทางค้าขาย)",
   "รวายยี": "อย่าเอาเหล้าสู่ขวัญ วันลูนเกิดเป็นหนี้ (อย่าให้เหล้าแก่ท้าวพระญา)",
@@ -96,18 +275,14 @@ export const WAN_THAI_DETAILED: Record<string, string> = {
   "กาไค้": "อย่าซื้อวัวควายมาคอก ผีด้ำซ้ำบ่ดีสังแล"
 };
 
-const FAH_TEE_SANG_SEQ = [0, 5, 1, 6, 2, 7, 3, 8, 4];
 
-// ============================================================
-// LOGIC ENGINE
-// ============================================================
-
-export function getLunarYearInfo(yearBE: number) {
-  const cs = yearBE - 1181;
-  const harkun = Math.floor((cs * 292207 + 373) / 800);
-  const isAthikamat = ((cs * 7 + 13) % 19) < 7;
-  const isAthikawan = !isAthikamat && ((harkun * 11 + 650) % 692 <= 137);
-  return { isAthikamat, isAthikawan };
+// ชื่อวันไทในตำราเดิมสะกดหลายแบบ (ไจ้/ใจ้, ไค้/ใค้, ยี่/ยี, ไส้/ใส้) จับคู่ด้วยรูปมาตรฐานเดียวกัน
+const canonWanThai = (s: string) => s.replace(/ไจ้/g, "ใจ้").replace(/ไค้/g, "ใค้").replace(/ยี่/g, "ยี").replace(/ไส้/g, "ใส้");
+const WAN_THAI_BY_CANON: Record<string, string> = {};
+for (const [k, v] of Object.entries(WAN_THAI_DETAILED_RAW)) WAN_THAI_BY_CANON[canonWanThai(k)] = v;
+export const WAN_THAI_DETAILED: Record<string, string> = WAN_THAI_DETAILED_RAW;
+export function wanThaiDescOf(wanThai: string): string {
+  return WAN_THAI_DETAILED_RAW[wanThai] || WAN_THAI_BY_CANON[canonWanThai(wanThai)] || "-";
 }
 
 export function getWanPhiKin(day: number, phase: 'ออก' | 'แรม') {
@@ -152,181 +327,157 @@ export function getWanPhiKin(day: number, phase: 'ออก' | 'แรม') {
     }
 }
 
-export function getLannaDate(date: Date) {
+
+// ============================================================
+// ฟังก์ชันหลัก
+// ============================================================
+
+export interface LannaCalcResult {
+  date: Date;
+  dateISO: string;
+  lannaMonth: number;
+  lannaMonthName: string;
+  lunarDay: number;
+  phase: 'ออก' | 'แรม';
+  tithi: number;
+  wanThai: string;
+  wanThaiDesc: string;
+  isSia: boolean;
+  isSin: boolean;
+  isMai: boolean;
+  isWodwai: boolean;
+  isMachu: boolean;
+  isMahaMachu: boolean;
+  isHuaRiangMon: boolean;
+  isUbat: boolean;
+  isLokawinat: boolean;
+  isThongChai: boolean;
+  isAthipadi: boolean;
+  isLomLuang: boolean;
+  sitthi: string | null;
+  sitthiList: string[];
+  cs: number;
+  yearZodiac: string;
+  lannaYear: { zodiacLanna: string; zodiacThai: string; chulasakarat: number };
+  kaoKong: string;
+  kaoKongDesc: string;
+  fahTeeSang: number;
+  wanMuai: string;
+  wanPhiKin: string;
+  panjaDithi: string;
+  isPhayaWan: boolean;
+}
+
+export function getLannaDate(date: Date): LannaCalcResult | null {
   if (!date || isNaN(date.getTime())) return null;
+  const dayNum = dayNumFromDate(date);
+  const gregYear = date.getFullYear();
+  const dow = date.getDay();
 
-  // Use UTC-normalized date difference for absolute accuracy
-  const getDaysSinceRef = (d: Date) => {
-    return Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - 
-                       Date.UTC(2025, 11, 31)) / 86400000);
-  };
+  const { lannaMonth, phase, kham } = lunarFromGregorian(dayNum);
+  const tithi = phase === 'ออก' ? kham : kham + 15;
 
-  const diffDays = getDaysSinceRef(date);
-  
-  let currentMonth = 4, currentKham = 13, currentPhase: 'ออก' | 'แรม' = 'ออก', currentYearBE = 2569;
-  let isLeapMonthActive = false;
-  let totalTransitions = 0;
-  let fahTeeSangIdx = 0;
-  
-  const step = diffDays >= 0 ? 1 : -1;
-  const absDiff = Math.abs(diffDays);
-  
-  for (let i = 0; i < absDiff; i++) {
-    const yrInfo = getLunarYearInfo(currentYearBE);
-    
-    if (step === 1) {
-      fahTeeSangIdx = (fahTeeSangIdx + 1) % 9;
-      currentKham++;
-      let maxKham = (currentMonth % 2 === 0) ? 15 : 14;
-      if (currentMonth === 9 && yrInfo.isAthikawan) maxKham = 15;
-      
-      if (currentPhase === 'ออก' && currentKham > 15) { 
-        currentKham = 1; 
-        currentPhase = 'แรม'; 
-        if (currentMonth === 9 && yrInfo.isAthikamat && !isLeapMonthActive) {
-           isLeapMonthActive = true;
-           currentMonth = 10;
-           totalTransitions++;
-        }
-      } else if (currentPhase === 'แรม' && currentKham > maxKham) {
-        currentKham = 1; 
-        currentPhase = 'ออก';
-        if (currentMonth === 9 && yrInfo.isAthikamat && !isLeapMonthActive) {
-          isLeapMonthActive = true; 
-        } else { 
-          if (currentMonth !== 10 || !isLeapMonthActive) {
-            currentMonth++; 
-            if (currentMonth > 12) { currentMonth = 1; currentYearBE++; } 
-            totalTransitions++; 
-          }
-          isLeapMonthActive = false; 
-        }
-      }
-    } else {
-      fahTeeSangIdx = (fahTeeSangIdx - 1 + 9) % 9;
-      currentKham--;
-      if (currentPhase === 'ออก' && currentKham < 1) {
-        totalTransitions--;
-        const prevMonth = (currentMonth === 1) ? 12 : currentMonth - 1;
-        const prevYear = (currentMonth === 1) ? currentYearBE - 1 : currentYearBE;
-        if (currentMonth === 9 && isLeapMonthActive) { isLeapMonthActive = false; currentMonth = 9; }
-        else if (currentMonth === 10 && getLunarYearInfo(currentYearBE).isAthikamat) { isLeapMonthActive = true; currentMonth = 9; }
-        else { isLeapMonthActive = false; currentMonth = prevMonth; currentYearBE = prevYear; }
-        currentPhase = 'แรม'; 
-        const yrInfoNow = getLunarYearInfo(currentYearBE);
-        currentKham = (currentMonth % 2 === 0 || (currentMonth === 9 && yrInfoNow.isAthikawan)) ? 15 : 14;
-      } else if (currentPhase === 'แรม' && currentKham < 1) { 
-        currentKham = 15; 
-        currentPhase = 'ออก'; 
-      }
+  // วันพระ: ออก 8, ออก 15, แรม 8, แรมวันสุดท้ายของเดือน
+  const next = lunarFromGregorian(dayNum + 1);
+  const isLastWaning = phase === 'แรม' && next.phase === 'ออก' && next.kham === 1;
+  const isSin = (phase === 'ออก' && (kham === 8 || kham === 15)) || (phase === 'แรม' && (kham === 8 || isLastWaning));
+
+  const { yearName, cs, lukThai } = lannaYearOf(dayNum, gregYear);
+  const wd = weekday0(dayNum);
+
+  const isSia = isWanSiaOf(dayNum, gregYear, lannaMonth);
+  const isMai = kham === MAI_KHAM[wd];
+  const isMachu = kham === MACHU_KHAM[wd];
+  const isWodwai = kham === WODWAI_KHAM[lannaMonth];
+  const isBad = isSia || isMai || isMachu || isWodwai;
+
+  const huaSet = phase === 'ออก' ? HUA_WAXING : HUA_WANING;
+  const isHuaRiangMon = huaSet.has(kham) && !isBad;
+
+  // สิทธิโชคเป็นชุด: ฉบับ มช. ไม่พิมพ์โชคในวันร้าย
+  const sitthiList: string[] = [];
+  if (!isBad) {
+    for (const name of CHOK_NAMES) {
+      const [k, onlyPhase] = SITTHI_TABLE[name][wd];
+      if (kham === k && (onlyPhase === null || onlyPhase === phase)) sitthiList.push(name);
     }
   }
 
-  const dow = date.getDay();
-  const wanThaiIdx = (55 + diffDays % 60 + 60) % 60;
-  const wanThai = MAE_MUE[wanThaiIdx % 10] + LUK_MUE[wanThaiIdx % 12];
-  
-  const h = date.getHours();
-  const isSia = ((month, d, hours) => {
-    const rules: Record<number, number[]> = {
-      1: [0, 1], 2: [2], 3: [4, 6], 4: [3, 5],
-      5: [0, 1], 6: [2], 7: [4, 6], 8: [3, 5],
-      9: [0, 1], 10: [2], 11: [4, 6], 12: [3, 5]
-    };
-    if ([2, 6, 10].includes(month) && d === 3 && hours >= 18) return true;
-    return (rules[month] || []).includes(d);
-  })(currentMonth, dow, h);
+  // ฟิลด์ตำราทั่วไปที่ตัวคำนวณหลักไม่มี: คงพฤติกรรมเดิมของแอพ (คำนวณจากเดือน/ค่ำที่แก้แล้ว)
+  const group = (lannaMonth - 1) % 4;
+  const isThongChai = kham === [10, 1, 2, 3][group];
+  const isAthipadi = kham === [4, 5, 6, 7][group];
+  const isUbat = kham === [10, 1, 5, 9][group];
+  const isLokawinat = kham === [3, 7, 15, 11][group];
+  const isMahaMachu = phase === 'แรม' && kham === 14 && (dow === 2 || dow === 6);
+  const isLomLuang = lannaMonth === kham;
 
-  // Grouping for Kala Yoga (1,5,9; 2,6,10; 3,7,11; 4,8,12)
-  const group = (currentMonth - 1) % 4;
-  const thongChaiRules = [10, 1, 2, 3];
-  const athipadiRules = [4, 5, 6, 7];
-  const ubatRules = [10, 1, 5, 9];
-  const lokawinatRules = [3, 7, 15, 11];
-
-  const isThongChai = (currentKham === thongChaiRules[group]);
-  const isAthipadi = (currentKham === athipadiRules[group]);
-  const isUbat = (currentKham === ubatRules[group]);
-  const isLokawinat = (currentKham === lokawinatRules[group]);
-
-  const sitthi = getSitthiChok(currentKham, dow);
-
-  // Machu day logic
-  // กฎวันมัจจุ: แรม 4/8/9/13 ค่ำ ตรงกับวัน อาทิตย์/อังคาร/พฤหัส/เสาร์ เป็นต้น (สมมติฐานตามตำราทั่วไป)
-  // เพื่อความแม่นยำ จะใช้กฎที่มักพบในปั๊กกะตืนล้านนา
-  const isMachu = (currentPhase === 'แรม' && (
-    (currentKham === 4 && dow === 0) || 
-    (currentKham === 8 && dow === 2) || 
-    (currentKham === 9 && dow === 4) || 
-    (currentKham === 13 && dow === 6)
-  ));
-  const isMahaMachu = (currentPhase === 'แรม' && currentKham === 14 && (dow === 2 || dow === 6));
-
-  // CS and Zodiac logic
-  const transition = lannaYearTransitionByGregorianYear.get(date.getFullYear());
-  const payaWan = transition ? new Date(transition.payaWanDate) : new Date(date.getFullYear(), 3, 16);
-  const isNewYear = (
-    date.getMonth() > payaWan.getMonth() ||
-    (date.getMonth() === payaWan.getMonth() && date.getDate() >= payaWan.getDate())
-  );
-  const cs = isNewYear
-    ? transition?.newChulasakarat ?? (date.getFullYear() - 638)
-    : transition?.oldChulasakarat ?? (date.getFullYear() - 639);
-  const zodiacLannaRaw = isNewYear ? transition?.newZodiac ?? "" : transition?.oldZodiac ?? "";
-  const zodiacThai = zodiacLannaRaw ? (LannaZodiacThaiMap[zodiacLannaRaw as keyof typeof LannaZodiacThaiMap] ?? "") : "";
-  // Mae Mue for Zodiac: CS ending in 6 is "กาบ" (index 0)
-  const zodiacMaeMueIdx = (cs + 4) % 10;
-  const zodiacLanna = zodiacLannaRaw ? `${MAE_MUE[zodiacMaeMueIdx]}${zodiacLannaRaw}` : "";
-
-  // Kao Kong logic
-  const kaoKongIdx = (wanThaiIdx + totalTransitions + 7) % 12;
-  const kaoKong = KAO_KONG_TYPES[kaoKongIdx];
-
-  // Fah Tee Sang
-  const fahTeeSang = FAH_TEE_SANG_SEQ[fahTeeSangIdx];
-
-  // Panja Dithi
-  const panjaDithiList = ["นันทาดิถี", "ภัทราดิถี", "ไชยาดิถี", "ปุณณาดิถี", "ริตตาดิถี"];
-  const panjaDithi = panjaDithiList[(currentKham - 1) % 5];
+  const wanThai = wanThaiOf(dayNum);
+  const kaoKong = kaoKongOf(dayNum);
 
   return {
     date,
-    lannaMonth: currentMonth,
-    lunarDay: currentKham,
-    phase: currentPhase,
+    dateISO: fmtISO(dayNum),
+    lannaMonth,
+    lannaMonthName: LANNA_MONTH_NAMES[lannaMonth],
+    lunarDay: kham,
+    phase,
+    tithi,
     wanThai,
-    wanThaiDesc: WAN_THAI_DETAILED[wanThai] || "-",
+    wanThaiDesc: wanThaiDescOf(wanThai),
     isSia,
+    isSin,
+    isMai,
+    isWodwai,
+    isMachu,
+    isMahaMachu,
+    isHuaRiangMon,
     isUbat,
     isLokawinat,
-    isSin: (currentKham === 8 || currentKham === 15 || (currentPhase === 'แรม' && currentKham === ((currentMonth % 2 === 0) ? 15 : 14))),
     isThongChai,
     isAthipadi,
-    sitthi,
+    isLomLuang,
+    sitthi: sitthiList[0] ?? null,
+    sitthiList,
     cs,
-    yearZodiac: zodiacLanna + (zodiacThai ? ` (${zodiacThai})` : ""),
-    lannaYear: { zodiacLanna, zodiacThai, chulasakarat: cs },
+    yearZodiac: `${yearName} (${lukThai})`,
+    lannaYear: { zodiacLanna: yearName, zodiacThai: lukThai, chulasakarat: cs },
     kaoKong,
-    kaoKongDesc: KAO_KONG_DESC[kaoKong],
-    fahTeeSang,
-    isLomLuang: (currentMonth === currentKham),
-    wanMuai: getWanMuai(currentKham, currentPhase),
-    wanPhiKin: getWanPhiKin(currentKham, currentPhase),
-    panjaDithi
+    kaoKongDesc: KAO_KONG_DESC[kaoKong] || "",
+    fahTeeSang: fahTeeSangOf(lannaMonth, tithi),
+    wanMuai: getWanMuai(kham, phase),
+    wanPhiKin: getWanPhiKin(kham, phase),
+    panjaDithi: panjaDithiOf(tithi),
+    isPhayaWan: dayNum === phayawanDay(gregYear - 638)
   };
 }
 
-export function getSongkranLabel(date: Date) {
-  const transition = lannaYearTransitionByGregorianYear.get(date.getFullYear());
-  if (transition) {
-    const formatDate = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-    const dateStr = formatDate(date);
-    if (dateStr === transition.sankranLongDate) return "วันสังขานต์ล่อง";
-    if (dateStr === transition.naoDate) return "วันเนาว์";
-    if (dateStr === transition.payaWanDate) return "วันพญาวัน";
-    const payaWan = new Date(transition.payaWanDate);
-    payaWan.setDate(payaWan.getDate() + 1);
-    if (dateStr === formatDate(payaWan)) return "วันปากปี";
+// วันสำคัญตามเทศกาล (คำนวณจากเดือน/ค่ำและวันพญาวัน ไม่ใช้ตารางข้อมูล)
+export function getSongkranLabel(date: Date): string | null {
+  if (!date || isNaN(date.getTime())) return null;
+  const dayNum = dayNumFromDate(date);
+  const pw = phayawanDay(date.getFullYear() - 638);
+  if (dayNum === pw - 2) return "วันสังขานต์ล่อง";
+  if (dayNum === pw - 1) return "วันเน่า";
+  if (dayNum === pw) return "วันพญาวัน";
+  if (dayNum === pw + 1) return "วันปากปี";
+  const { lannaMonth, phase, kham } = lunarFromGregorian(dayNum);
+  if (phase === 'ออก' && kham === 15 && lannaMonth === 2) return "วันยี่เป็ง";
+  if (phase === 'ออก' && kham === 15 && lannaMonth === 12) return "วันสิบสองเป็ง";
+  return null;
+}
+
+export function getLunarYearInfo(yearBE: number) {
+  // เกณฑ์อธิกมาสจากมาสเกณฑ์อัตตา (แทนสูตรรอบ 19 ปีเดิม) อธิกวารยังไม่มีเกณฑ์ที่พิสูจน์ด้วยกรณีบวก
+  const cs = yearBE - 1181;
+  return { isAthikamat: isAdhikamasaCS(cs), isAthikawan: false };
+}
+
+// ค่าเดี่ยวแบบเดิม (เลิกใช้ในแอพหลัก แอพใช้ sitthiList จาก getLannaDate)
+export function getSitthiChok(kham: number, dow: number): string | null {
+  const wd = mod(dow, 7);
+  for (const name of CHOK_NAMES) {
+    if (SITTHI_TABLE[name][wd][0] === kham) return name;
   }
   return null;
 }
@@ -461,18 +612,3 @@ export function getDailyRituals(dow: number) {
   return rituals[dow] || [];
 }
 
-export function getSitthiChok(kham: number, dow: number): string | null {
-  // มาตรฐานดิถีโชค (อมฤตโชค, มหาสิทธิโชค, สิทธิโชค, ชัยโชค, ราชาโชค)
-  // อ้างอิงความสัมพันธ์ระหว่าง วันในสัปดาห์ (DOW) และ ค่ำ (1-15)
-  const rules: Record<number, Record<number, string>> = {
-    0: { 8: "อมฤตโชค", 14: "มหาสิทธิโชค", 11: "สิทธิโชค", 13: "ชัยโชค", 3: "ราชาโชค" }, // Sun
-    1: { 3: "อมฤตโชค", 12: "มหาสิทธิโชค", 5: "สิทธิโชค", 14: "ชัยโชค", 5: "ราชาโชค" }, // Mon (5 duplicated in some texts)
-    2: { 9: "อมฤตโชค", 13: "มหาสิทธิโชค", 14: "สิทธิโชค", 10: "ชัยโชค", 11: "ราชาโชค" }, // Tue
-    3: { 2: "อมฤตโชค", 4: "มหาสิทธิโชค", 10: "สิทธิโชค", 8: "ชัยโชค", 14: "ราชาโชค" }, // Wed
-    4: { 4: "อมฤตโชค", 7: "มหาสิทธิโชค", 9: "สิทธิโชค", 5: "ชัยโชค", 10: "ราชาโชค" }, // Thu
-    5: { 1: "อมฤตโชค", 10: "มหาสิทธิโชค", 11: "สิทธิโชค", 11: "ชัยโชค", 1: "ราชาโชค" }, // Fri
-    6: { 5: "อมฤตโชค", 15: "มหาสิทธิโชค", 4: "สิทธิโชค", 4: "ชัยโชค", 2: "ราชาโชค" }, // Sat
-  };
-
-  return rules[dow]?.[kham] || null;
-}

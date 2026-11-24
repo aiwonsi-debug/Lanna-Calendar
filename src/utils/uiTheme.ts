@@ -14,8 +14,8 @@ export const getDayTheme = (date: Date): { status: DayStatus; theme: DayTheme; i
   const info = getLannaDate(date);
   if (!info) return { status: 'neutral', theme: {} as DayTheme, info: null };
 
-  const isAuspicious = !!(info.isThongChai || info.isAthipadi || info.sitthi || info.isFoo);
-  const isInauspicious = !!(info.isUbat || info.isLokawinat || info.isWanMutju || info.isSia);
+  const isAuspicious = !!(info.isThongChai || info.isAthipadi || info.sitthiList.length > 0 || info.isHuaRiangMon);
+  const isInauspicious = !!(info.isUbat || info.isLokawinat || info.isMachu || info.isMai || info.isWodwai || info.isSia);
   const song = getSongkranLabel(date);
 
   let status: DayStatus = 'neutral';
