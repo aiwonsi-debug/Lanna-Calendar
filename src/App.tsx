@@ -56,13 +56,9 @@ function buildDescription(lanna: LannaCalcResult): string {
     lines.push(`วัน${lanna.sitthi}: ${sitthiDesc[lanna.sitthi] || ""}`);
   }
 
-  // ข้อความธงชัย/อธิบดีใช้ข้อความเดิมที่มีอยู่ในโค้ดเบส (dayLabels.ts flagKalaYoks และ getDailyKalaYoga ใน lannaCalc.ts)
-  if (lanna.isThongChai) lines.push("วันธงชัย: เป็นวันดีเลิศ");
-  if (lanna.isAthipadi) lines.push("วันอธิบดี: เป็นวันแห่งความสำเร็จ");
-  if (lanna.isUbat) lines.push("วันอุบาทว์: เป็นวันแห่งอุปสรรค เคราะห์ร้าย และความไม่สงบสุข ห้ามทำการมงคล");
-  if (lanna.isLokawinat) lines.push("วันโลกาวินาศ: เป็นวันแห่งความวิบัติ ฉิบหาย และอันตรายร้ายแรงที่สุด ห้ามกระทำการมงคลเด็ดขาด");
-  if (lanna.isMachu) lines.push("วันมัจจุ: วันแห่งความตายและการสูญเสีย ห้ามทำการมงคลหรือเริ่มต้นสิ่งใหม่");
-  if (lanna.isMahaMachu) lines.push("วันมหามัจจุ: วันแห่งมหาเคราะห์ร้ายแรง ห้ามกระทำการมงคลทุกชนิด");
+  // หมายเหตุ: คำอธิบายกาลโยคทั้ง 4 ตามตำราวัดธาตุคำไม่ใส่ใน description แล้ว
+  // เพราะการ์ดป้ายในรายละเอียดวันถูกลบ (ซ้ำกับกลุ่มโชคและฤกษ์) คำอธิบายทั้ง 4
+  // แสดงในกลุ่มโชคและฤกษ์ผ่าน flagKalaYoks ใน dayLabels.ts แทน
 
   // ตัวคำนวณคืน "-" เมื่อไม่มีคำอธิบาย: ถือว่าไม่มีข้อมูล ไม่สร้างบรรทัดเครื่องหมายขีดเปล่า
   if (lanna.wanThaiDesc && lanna.wanThaiDesc !== '-') lines.push(`วันไท (${lanna.wanThai}): ${lanna.wanThaiDesc}`);
@@ -80,7 +76,6 @@ function buildDescription(lanna: LannaCalcResult): string {
 
   if (lanna.wanMuai) lines.push(`วัน${lanna.wanMuai}`);
   if (lanna.wanPhiKin) lines.push(`${lanna.wanPhiKin}`);
-  if (lanna.isLomLuang) lines.push("วันหล่มหลวง: ห้ามกระทำการมงคลอื่น เว้นแต่แต่งงานและบวช");
 
   return lines.join("\n");
 }
@@ -173,11 +168,6 @@ export default function App() {
     setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth() + n, 1));
   };
 
-  const goToday = () => {
-    setSelectedDate(today);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const selectAndScroll = (date: Date) => {
     setSelectedDate(date);
     requestAnimationFrame(() => {
@@ -194,24 +184,19 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900">
-      <div className="max-w-[560px] mx-auto">
-        {/* 1. แถบหัว */}
-        <header className="border-b-2 border-slate-800 bg-white sticky top-0 z-40">
-          <div className="grid grid-cols-[48px_minmax(0,1fr)_48px] items-center px-1 pt-1">
-            <button onClick={() => stepMonth(-1)} aria-label="เดือนก่อนหน้า" className="min-w-[48px] min-h-[48px] text-[26px] font-black leading-none">&lt;</button>
-            <div className="min-w-0 text-center">
-              <div className="text-[20px] leading-[1.4] font-black whitespace-nowrap overflow-hidden text-ellipsis">{monthTitle}</div>
-              <div className="text-[15px] leading-[1.4] font-bold text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis">{headerYear}</div>
-            </div>
-            <button onClick={() => stepMonth(1)} aria-label="เดือนถัดไป" className="min-w-[48px] min-h-[48px] text-[26px] font-black leading-none">&gt;</button>
+      {/* 1. แถบหัว: กว้างเต็มจอถึงขอบทั้งสองด้าน ลูกศรชิดขอบ ชื่อเดือนกึ่งกลางจอ (อยู่นอกคอลัมน์เนื้อหา) */}
+      <header className="border-b-2 border-slate-800 bg-white sticky top-0 z-40 w-full">
+        <div className="grid grid-cols-[48px_minmax(0,1fr)_48px] items-center px-1 pt-1">
+          <button onClick={() => stepMonth(-1)} aria-label="เดือนก่อนหน้า" className="min-w-[48px] min-h-[48px] text-[26px] font-black leading-none">&lt;</button>
+          <div className="min-w-0 text-center">
+            <div className="text-[20px] leading-[1.4] font-black whitespace-nowrap overflow-hidden text-ellipsis">{monthTitle}</div>
+            <div className="text-[15px] leading-[1.4] font-bold text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis">{headerYear}</div>
           </div>
-          <div className="flex justify-center pb-2">
-            <button onClick={goToday} className="min-h-[48px] px-8 rounded-full bg-[#7a1f1f] text-white text-[18px] leading-[1.6] font-black">
-              วันนี้
-            </button>
-          </div>
-        </header>
+          <button onClick={() => stepMonth(1)} aria-label="เดือนถัดไป" className="min-w-[48px] min-h-[48px] text-[26px] font-black leading-none">&gt;</button>
+        </div>
+      </header>
 
+      <div className="max-w-[560px] mx-auto">
         <main>
           {/* 2. การ์ดวันนี้ */}
           {todayInfo && (
@@ -242,11 +227,12 @@ export default function App() {
                       </span>
                     )}
                   </div>
+                  {/* สีประจำหัวข้อ 4 หัวข้อ ใช้ชุดเดียวกับย่อหน้าคำอธิบายใน DetailSection */}
                   <div className="mt-3 space-y-1 text-[18px] leading-[1.6]">
-                    <div><b>วันไท:</b> <span className="whitespace-nowrap">{toArabicDigits(`วัน${todayInfo.wanThai}`)}</span></div>
-                    <div><b>เก้ากอง:</b> <span className="whitespace-nowrap">{toArabicDigits(todayInfo.kaoKong)}</span></div>
-                    <div><b>ดิถี:</b> <span className="whitespace-nowrap">{toArabicDigits(todayInfo.panjaDithi)}</span></div>
-                    <div><b>ฟ้าตีแส่ง:</b> <span className="whitespace-nowrap">{toArabicDigits(`เศษ ${todayInfo.fahTeeSang}`)}</span></div>
+                    <div className="text-[#1d4ed8]"><b>วันไท:</b> <span className="whitespace-nowrap">{toArabicDigits(`วัน${todayInfo.wanThai}`)}</span></div>
+                    <div className="text-[#7e22ce]"><b>เก้ากอง:</b> <span className="whitespace-nowrap">{toArabicDigits(todayInfo.kaoKong)}</span></div>
+                    <div className="text-[#0f766e]"><b>ดิถี:</b> <span className="whitespace-nowrap">{toArabicDigits(todayInfo.panjaDithi)}</span></div>
+                    <div className="text-[#8a5a00]"><b>ฟ้าตีแส่ง:</b> <span className="whitespace-nowrap">{toArabicDigits(`เศษ ${todayInfo.fahTeeSang}`)}</span></div>
                   </div>
                 </div>
 
@@ -352,8 +338,6 @@ export default function App() {
 
           {/* 6. มุมมองเดือน: นำทางเท่านั้น */}
           <section className="px-0 pt-2 pb-10" aria-label="ตารางเดือน">
-            <h2 className="px-3 text-[20px] leading-[1.4] font-black text-slate-700">ตารางเดือน</h2>
-            <p className="px-3 text-[15px] leading-[1.5] text-slate-600">ใช้เลือกวันเท่านั้น แตะช่องวันเพื่อดูรายละเอียดด้านบน</p>
             <div className="grid grid-cols-7 gap-[2px] mt-2 text-center">
               {THAI_DAYS_SHORT.map((label, i) => (
                 <div key={i} className={`text-[15px] leading-[1.5] font-black text-white rounded-md py-1 ${WEEKDAY_HEADER_BG[i]}`}>{label}</div>

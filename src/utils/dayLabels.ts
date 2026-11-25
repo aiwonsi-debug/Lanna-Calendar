@@ -59,9 +59,10 @@ export function weekLabel(r: LannaCalcResult): { text: string; kind: ChipKind } 
 export interface KalaYokEntry { name: string; meaning: string; isGood: boolean }
 export function flagKalaYoks(r: LannaCalcResult): KalaYokEntry[] {
   const out: KalaYokEntry[] = [];
-  if (r.isThongChai) out.push({ name: 'วันธงชัย', meaning: 'เป็นวันดีเลิศ', isGood: true });
-  if (r.isAthipadi) out.push({ name: 'วันอธิบดี', meaning: 'เป็นวันแห่งความสำเร็จ', isGood: true });
-  if (r.isUbat) out.push({ name: 'วันอุบาทว์', meaning: 'เป็นวันแห่งอุปสรรค เคราะห์ร้าย และความไม่สงบสุข ห้ามทำการมงคล', isGood: false });
-  if (r.isLokawinat) out.push({ name: 'วันโลกาวินาศ', meaning: 'เป็นวันแห่งความวิบัติ ฉิบหาย และอันตรายร้ายแรงที่สุด ห้ามกระทำการมงคลเด็ดขาด', isGood: false });
+  // คำอธิบายใช้ข้อความตามตำราวัดธาตุคำตรงตัว (ผู้ใช้สั่ง 25 พ.ย. 2569)
+  if (r.isThongChai) out.push({ name: 'วันธงชัย', meaning: 'วันธงชัยเป็นวันที่ดี เมื่อประกอบกับวันดีอื่นๆ เปรียบเหมือนผู้นำกองทัพ มีธงแห่งชัยชนะเป็นเครื่องหมาย ทำให้วันอื่นๆ ดีที่สุด', isGood: true });
+  if (r.isAthipadi) out.push({ name: 'วันอธิบดี', meaning: 'วันอธิบดีเป็นวันเดชานุภาพด้วยความเป็นใหญ่สามารถช่วยปกป้องคุ้มภัยอันตรายสิ่งร้ายๆ ทั้งปวง', isGood: true });
+  if (r.isUbat) out.push({ name: 'วันอุบาทว์', meaning: 'วันอุบาทว์เป็นวันที่จะนำมาซึ่งอุปัทวเหตุเพศภัย สิ่งร้ายๆ ทั้งปวงจะเกิดขึ้น', isGood: false });
+  if (r.isLokawinat) out.push({ name: 'วันโลกาวินาศ', meaning: 'วันโลกาวินาศ เป็นวันที่ไม่ดีจะทำอะไรก็ไม่เจริญ ไม่ก้าวหน้า', isGood: false });
   return out;
 }

@@ -7,7 +7,6 @@ import {
   Droplet,
   Shirt,
   MapPin,
-  Info,
   ChevronRight,
   BookOpen
 } from 'lucide-react';
@@ -111,6 +110,16 @@ export const labelKindOf = (label: string): LabelKind => {
   return 'neutral';
 };
 
+// สีประจำหัวข้อข้อมูล 4 หัวข้อ ใช้ชุดเดียวกันกับการ์ดวันนี้ใน App.tsx
+// ทุกสีคอนทราสต์อย่างน้อย 4.5:1 บนพื้นขาว
+export const topicColorClass = (line: string): string => {
+  if (line.startsWith('วันไท')) return 'text-[#1d4ed8]';
+  if (line.startsWith('วันเก้ากอง')) return 'text-[#7e22ce]';
+  if (line.startsWith('ดิถี')) return 'text-[#0f766e]';
+  if (line.startsWith('ฟ้าตีแส่ง')) return 'text-[#8a5a00]';
+  return 'text-slate-700';
+};
+
 export const chipClass = (kind: LabelKind): string => {
   switch (kind) {
     case 'sin': return 'bg-[#8a5a00] text-white';
@@ -121,28 +130,18 @@ export const chipClass = (kind: LabelKind): string => {
 };
 
 export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
-  // --- กลุ่ม 1: ป้ายของวัน ส่งมาจาก App ซึ่ง derive จากแฟล็กตัวคำนวณเท่านั้น ---
-  // (เดิมกลุ่มนี้ประกอบ "วันเสีย" จาก labels.bad ชุดใดก็ได้ ทำให้วันที่มีเฉพาะ
-  //  วันอุบาทว์แสดง วันเสีย เท็จ ปัจจุบันแสดงป้ายจริงของวันนั้นตรง ๆ)
-  const allLabels = [
-    ...data.labels.special,
-    ...data.labels.good,
-    ...data.labels.bad,
-    data.festival
-  ].filter(Boolean).map(toArabicDigits);
-
   // --- แยกบรรทัดคำอธิบายเดิมออกเป็นกลุ่มตามลำดับคงที่ ---
   // ทิ้งบรรทัดที่ไม่มีข้อมูลจริง: ลงท้ายด้วย ": -" หรือ ":" เฉย ๆ ไม่แสดงเครื่องหมายขีดเปล่า
+  // หมายเหตุ: การ์ดป้ายเดิมถูกลบตามคำสั่งผู้ใช้ (ซ้ำกับกลุ่มโชคและฤกษ์)
+  // คำอธิบายกาลโยคทั้ง 4 ตามตำราวัดธาตุคำแสดงในกลุ่มโชคและฤกษ์ผ่าน flagKalaYoks
   const lines = (data.description ? toArabicDigits(data.description) : '')
     .split('\n').map(s => s.trim())
     .filter(s => s && !/[:：]\s*(-|–|—)?\s*$/.test(s));
-  const reasonLines: string[] = [];   // คำอธิบายวันร้ายต่าง ๆ
   const identityLines: string[] = []; // ระบุวัน: ดิถี วันไท เก้ากอง ฟ้าตีแส่ง
   const chokLines: string[] = [];     // โชค
   const fortuneLines: string[] = [];  // คำทำนายที่เหลือ
   for (const line of lines) {
-    if (/^(วันอุบาทว์|วันโลกาวินาศ|วันมัจจุ|วันมหามัจจุ|วันหล่มหลวง|วันธงชัย|วันอธิบดี)/.test(line)) reasonLines.push(line);
-    else if (/^(ดิถี|วันไท|วันเก้ากอง|ฟ้าตีแส่ง)/.test(line)) identityLines.push(line);
+    if (/^(ดิถี|วันไท|วันเก้ากอง|ฟ้าตีแส่ง)/.test(line)) identityLines.push(line);
     else if (line.includes('โชค')) chokLines.push(line);
     else fortuneLines.push(line);
   }
@@ -157,35 +156,12 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
 
   return (
     <div className="bg-[#f8fafc] px-3 sm:px-4 pt-6 pb-12">
-      {/* กลุ่ม 1: ป้ายของวัน (ไม่มีหัวข้อกำกับตามคำสั่งผู้ใช้) */}
+      {/* กลุ่ม 2: คำอธิบายระบุวัน (ไม่มีหัวข้อกลุ่มตามคำสั่งผู้ใช้) */}
       <Card>
-        <div className="flex flex-col items-start gap-2">
-          {allLabels.length > 0 ? allLabels.map((label) => (
-            <span key={label} className={`inline-block px-4 py-1 rounded-xl text-[24px] leading-[1.4] font-black ${chipClass(labelKindOf(label))}`}>
-              {label}
-            </span>
-          )) : (
-            <span className={`inline-block px-4 py-1 rounded-xl text-[24px] leading-[1.4] font-black ${chipClass('neutral')}`}>
-              วันปกติ
-            </span>
-          )}
-        </div>
-        {reasonLines.length > 0 && (
-          <div className="mt-3 space-y-2">
-            {reasonLines.map((line, i) => (
-              <p key={i} className={`${bodyText} font-bold ${labelKindOf(line) === 'good' ? 'text-[#0f7a28]' : 'text-[#b3001b]'}`}>{line}</p>
-            ))}
-          </div>
-        )}
-      </Card>
-
-      {/* กลุ่ม 2: ระบุวัน */}
-      <Card>
-        <CardTitle title="ระบุวัน" icon={Info} color="text-blue-500" />
         {identityLines.length > 0 && (
           <div className="space-y-2">
             {identityLines.map((line, i) => (
-              <p key={i} className={`${bodyText} text-slate-700`}>{line}</p>
+              <p key={i} className={`${bodyText} ${topicColorClass(line)}`}>{line}</p>
             ))}
           </div>
         )}
