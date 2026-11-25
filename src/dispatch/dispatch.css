@@ -2,7 +2,18 @@
    ดีไซน์ใหม่แนว Dispatch (สาขา dispatch-design)
    พื้นหลังดำ + แผ่นกระดาษครีมคอลัมน์เดียว
    สไตล์ทั้งหมดอยู่ใต้ .dp-root เพื่อไม่ให้กระทบดีไซน์เดิมในสาขา main
+   (ยกเว้นกฎ html, body ด้านล่าง ซึ่งไฟล์นี้โหลดเฉพาะ entry ของสาขานี้เท่านั้น)
    ============================================================ */
+
+/* รีเซ็ตขอบหน้าและกันการเลื่อนแนวนอนระดับเอกสาร:
+   entry ของสาขานี้ไม่โหลด index.css จึงต้องรีเซ็ต margin ของ body ที่นี่
+   ไม่อย่างนั้น body มี margin เริ่มต้น 8px และเนื้อหาที่กว้างเต็มจอจะดันหน้าล้น */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
 
 .dp-root {
   --dp-paper: #faf6ec;
@@ -20,6 +31,8 @@
 
   margin: 0;
   min-height: 100vh;
+  max-width: 100%;
+  overflow-x: clip;
   background: #111;
   color: var(--dp-ink);
   font-family: "Sarabun", "Noto Sans Thai", Tahoma, Arial, sans-serif;
@@ -48,9 +61,14 @@
   max-width: 560px;
   margin: 0 auto;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
+  gap: 0 10px;
   padding: 0 6px 10px;
+}
+.dp-masthead > * {
+  min-width: 0;
 }
 .dp-masthead-name {
   font-size: 30px;
@@ -212,6 +230,7 @@
 }
 .dp-dirbox {
   flex: 1;
+  min-width: 0;
   border: 1.5px solid #ddd5c0;
   border-radius: 8px;
   padding: 8px 10px;
@@ -233,6 +252,7 @@
 }
 .dp-ubakong-cell {
   flex: 1;
+  min-width: 0;
   border: 1.5px solid #ddd5c0;
   border-radius: 8px;
   padding: 7px 0;
@@ -275,6 +295,9 @@
   padding: 6px 0;
   border-bottom: 1px dotted #d8d0ba;
 }
+.dp-ritual-row > * {
+  min-width: 0;
+}
 .dp-ritual-row:last-child {
   border-bottom: none;
 }
@@ -298,7 +321,9 @@
 /* --- ตารางเดือน --- */
 .dp-monthgrid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  /* minmax(0, 1fr) จำเป็น: ถ้าใช้ 1fr เปล่า แทร็กจะยืดตามความกว้างขั้นต่ำ
+     ของป้าย nowrap ในช่อง (เช่น หัวเรียงหมอน) จนตารางกว้างเกินจอทั้งหน้า */
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 3px;
   margin-top: 8px;
   text-align: center;
@@ -308,9 +333,11 @@
   color: var(--dp-label);
   font-weight: 700;
   line-height: 1.6;
+  min-width: 0;
 }
 .dp-cell {
   min-height: 64px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -347,6 +374,7 @@
 }
 .dp-cell-empty {
   min-height: 64px;
+  min-width: 0;
 }
 
 /* --- ท้ายฉบับ --- */
@@ -365,4 +393,48 @@
   letter-spacing: 2px;
   padding-top: 10px;
   line-height: 1.6;
+}
+
+/* --- จอแคบ (มือถือ 430px ลงมา): ย่อส่วนที่เสี่ยงล้นให้พอดีช่อง
+   ป้ายช่องเดือนคงคำเต็มบรรทัดเดียวแบบ nowrap เสมอ ตัวป้ายอาจล้นขอบช่อง
+   เล็กน้อยแบบสมมาตรได้ แต่ห้ามดันความกว้างตารางหรือหน้า --- */
+@media (max-width: 430px) {
+  .dp-root {
+    padding: 12px 8px 16px;
+  }
+  .dp-paper {
+    padding: 18px 14px 14px;
+  }
+  .dp-masthead-name {
+    font-size: 26px;
+  }
+  .dp-masthead-issue {
+    font-size: 10.5px;
+    letter-spacing: 1px;
+  }
+  .dp-monthbar-title {
+    font-size: 19px;
+  }
+  .dp-monthbar-year {
+    font-size: 12.5px;
+  }
+  .dp-cell-label {
+    font-size: 9.5px;
+  }
+  .dp-dirbox {
+    font-size: 15px;
+    padding: 8px;
+  }
+  .dp-dirbox b {
+    font-size: 16px;
+  }
+}
+
+/* จอแคบมาก (374px ลงมา): ช่องเดือนเหลือประมาณ 43px
+   ป้ายยาวสุด (วันสังขานต์ล่อง) ที่ 9.5px กว้างประมาณ 61px จึงลดเหลือ 8.5px
+   ให้ล้นขอบช่องรวมไม่เกินประมาณ 12px (ข้างละประมาณ 6px) */
+@media (max-width: 374px) {
+  .dp-cell-label {
+    font-size: 8.5px;
+  }
 }
