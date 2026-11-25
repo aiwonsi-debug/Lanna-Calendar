@@ -120,19 +120,7 @@ export const chipClass = (kind: LabelKind): string => {
   }
 };
 
-const THAI_DAYS = ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'];
-const THAI_MONTHS = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
-const LANNA_MONTH_NAMES = ["", "เกี๋ยง", "ยี่", "สาม", "สี่", "ห้า", "หก", "เจ็ด", "แปด", "เก้า", "สิบ", "สิบเอ็ด", "สิบสอง"];
-
 export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
-  const cs = data.lannaYear?.chulasakarat;
-  const zodiacLanna = data.lannaYear?.zodiacLanna ?? "-";
-  const zodiacThai = data.lannaYear?.zodiacThai ?? "-";
-
-  const fullDateText = toArabicDigits(`วัน${THAI_DAYS[date.getDay()]}ที่ ${date.getDate()} ${THAI_MONTHS[date.getMonth()]} พ.ศ. ${date.getFullYear() + 543}`);
-  const lunarPhrase = toArabicDigits(`${data.lunar.phase === 'waxing' ? 'ออก' : 'แรม'} ${data.lunar.day} ค่ำ`);
-  const lannaMonthText = toArabicDigits(`เดือน${LANNA_MONTH_NAMES[data.lannaMonth] || data.lannaMonth} (เดือน ${data.lannaMonth})`);
-
   // --- กลุ่ม 1: ป้ายของวัน ส่งมาจาก App ซึ่ง derive จากแฟล็กตัวคำนวณเท่านั้น ---
   // (เดิมกลุ่มนี้ประกอบ "วันเสีย" จาก labels.bad ชุดใดก็ได้ ทำให้วันที่มีเฉพาะ
   //  วันอุบาทว์แสดง วันเสีย เท็จ ปัจจุบันแสดงป้ายจริงของวันนั้นตรง ๆ)
@@ -153,7 +141,7 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
   const chokLines: string[] = [];     // โชค
   const fortuneLines: string[] = [];  // คำทำนายที่เหลือ
   for (const line of lines) {
-    if (/^(วันอุบาทว์|วันโลกาวินาศ|วันมัจจุ|วันมหามัจจุ|วันหล่มหลวง)/.test(line)) reasonLines.push(line);
+    if (/^(วันอุบาทว์|วันโลกาวินาศ|วันมัจจุ|วันมหามัจจุ|วันหล่มหลวง|วันธงชัย|วันอธิบดี)/.test(line)) reasonLines.push(line);
     else if (/^(ดิถี|วันไท|วันเก้ากอง|ฟ้าตีแส่ง)/.test(line)) identityLines.push(line);
     else if (line.includes('โชค')) chokLines.push(line);
     else fortuneLines.push(line);
@@ -169,18 +157,6 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
 
   return (
     <div className="bg-[#f8fafc] px-3 sm:px-4 pt-6 pb-12">
-      {/* ส่วนหัวของวัน */}
-      <Card>
-        <h2 className="text-[20px] leading-[1.4] font-black text-slate-800">{fullDateText}</h2>
-        <div className="mt-1 text-[18px] leading-[1.6] font-bold text-slate-700">
-          <span className="whitespace-nowrap">{lunarPhrase}</span>{' '}
-          <span className="whitespace-nowrap">{lannaMonthText}</span>
-        </div>
-        <div className="text-[18px] leading-[1.6] text-slate-600">
-          {toArabicDigits(`ปี${zodiacLanna} ปี${zodiacThai} จ.ศ. ${cs ?? '-'}`)}
-        </div>
-      </Card>
-
       {/* กลุ่ม 1: ป้ายของวัน (ไม่มีหัวข้อกำกับตามคำสั่งผู้ใช้) */}
       <Card>
         <div className="flex flex-col items-start gap-2">
@@ -197,7 +173,7 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
         {reasonLines.length > 0 && (
           <div className="mt-3 space-y-2">
             {reasonLines.map((line, i) => (
-              <p key={i} className={`${bodyText} font-bold text-[#b3001b]`}>{line}</p>
+              <p key={i} className={`${bodyText} font-bold ${labelKindOf(line) === 'good' ? 'text-[#0f7a28]' : 'text-[#b3001b]'}`}>{line}</p>
             ))}
           </div>
         )}
@@ -206,42 +182,8 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
       {/* กลุ่ม 2: ระบุวัน */}
       <Card>
         <CardTitle title="ระบุวัน" icon={Info} color="text-blue-500" />
-        <dl className="space-y-2">
-          <div className="flex flex-wrap gap-x-3">
-            <dt className="font-black text-slate-700 text-[18px] leading-[1.6]">ข้างและค่ำ</dt>
-            <dd className="text-[18px] leading-[1.6] text-slate-800"><span className="whitespace-nowrap">{lunarPhrase}</span></dd>
-          </div>
-          <div className="flex flex-wrap gap-x-3">
-            <dt className="font-black text-slate-700 text-[18px] leading-[1.6]">เดือนล้านนา</dt>
-            <dd className="text-[18px] leading-[1.6] text-slate-800"><span className="whitespace-nowrap">{lannaMonthText}</span></dd>
-          </div>
-          {data.wanThai && (
-            <div className="flex flex-wrap gap-x-3">
-              <dt className="font-black text-slate-700 text-[18px] leading-[1.6]">วันไท</dt>
-              <dd className="text-[18px] leading-[1.6] text-slate-800"><span className="whitespace-nowrap">{toArabicDigits(`วัน${data.wanThai}`)}</span></dd>
-            </div>
-          )}
-          {data.kaoKong && (
-            <div className="flex flex-wrap gap-x-3">
-              <dt className="font-black text-slate-700 text-[18px] leading-[1.6]">เก้ากอง</dt>
-              <dd className="text-[18px] leading-[1.6] text-slate-800"><span className="whitespace-nowrap">{toArabicDigits(data.kaoKong)}</span></dd>
-            </div>
-          )}
-          {data.fahTeeSang !== undefined && (
-            <div className="flex flex-wrap gap-x-3">
-              <dt className="font-black text-slate-700 text-[18px] leading-[1.6]">ฟ้าตีแส่ง</dt>
-              <dd className="text-[18px] leading-[1.6] text-slate-800"><span className="whitespace-nowrap">{toArabicDigits(`เศษ ${data.fahTeeSang}`)}</span></dd>
-            </div>
-          )}
-          {data.panjaDithi && (
-            <div className="flex flex-wrap gap-x-3">
-              <dt className="font-black text-slate-700 text-[18px] leading-[1.6]">ดิถี</dt>
-              <dd className="text-[18px] leading-[1.6] text-slate-800"><span className="whitespace-nowrap">{toArabicDigits(data.panjaDithi)}</span></dd>
-            </div>
-          )}
-        </dl>
         {identityLines.length > 0 && (
-          <div className="mt-3 space-y-2 border-t border-gray-100 pt-3">
+          <div className="space-y-2">
             {identityLines.map((line, i) => (
               <p key={i} className={`${bodyText} text-slate-700`}>{line}</p>
             ))}

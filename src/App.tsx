@@ -56,6 +56,9 @@ function buildDescription(lanna: LannaCalcResult): string {
     lines.push(`วัน${lanna.sitthi}: ${sitthiDesc[lanna.sitthi] || ""}`);
   }
 
+  // ข้อความธงชัย/อธิบดีใช้ข้อความเดิมที่มีอยู่ในโค้ดเบส (dayLabels.ts flagKalaYoks และ getDailyKalaYoga ใน lannaCalc.ts)
+  if (lanna.isThongChai) lines.push("วันธงชัย: เป็นวันดีเลิศ");
+  if (lanna.isAthipadi) lines.push("วันอธิบดี: เป็นวันแห่งความสำเร็จ");
   if (lanna.isUbat) lines.push("วันอุบาทว์: เป็นวันแห่งอุปสรรค เคราะห์ร้าย และความไม่สงบสุข ห้ามทำการมงคล");
   if (lanna.isLokawinat) lines.push("วันโลกาวินาศ: เป็นวันแห่งความวิบัติ ฉิบหาย และอันตรายร้ายแรงที่สุด ห้ามกระทำการมงคลเด็ดขาด");
   if (lanna.isMachu) lines.push("วันมัจจุ: วันแห่งความตายและการสูญเสีย ห้ามทำการมงคลหรือเริ่มต้นสิ่งใหม่");
