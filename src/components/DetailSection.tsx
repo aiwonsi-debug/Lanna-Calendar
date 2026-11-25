@@ -145,7 +145,7 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
     else if (line.includes('โชค')) chokLines.push(line);
     else fortuneLines.push(line);
   }
-  const identityOrder = ['วันไท', 'วันเก้ากอง', 'ฟ้าตีแส่ง', 'ดิถี'];
+  const identityOrder = ['วันไท', 'วันเก้ากอง', 'ดิถี', 'ฟ้าตีแส่ง'];
   identityLines.sort((a, b) => {
     const ia = identityOrder.findIndex(p => a.startsWith(p));
     const ib = identityOrder.findIndex(p => b.startsWith(p));
@@ -170,14 +170,12 @@ export const DetailSection: React.FC<DetailSectionProps> = ({ date, data }) => {
       {/* กลุ่ม 3: โชคและฤกษ์ */}
       <Card>
         <CardTitle title="โชคและฤกษ์" icon={Sparkles} color="text-amber-500" />
-        {chokLines.length > 0 ? (
+        {chokLines.length > 0 && (
           <div className="space-y-2">
             {chokLines.map((line, i) => (
               <p key={i} className={`${bodyText} font-bold text-[#0f7a28]`}>{line}</p>
             ))}
           </div>
-        ) : (
-          <p className={`${bodyText} text-slate-600`}>วันนี้ไม่มีโชคพิเศษ</p>
         )}
 
         {data.kalaYoks && data.kalaYoks.map((ky, i) => (

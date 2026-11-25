@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { getLannaDate, getDirections, getSongkranLabel, getDailyRituals, LannaCalcResult } from './utils/lannaCalc';
 import { DetailSection, DayData, chipClass } from './components/DetailSection';
-import { flagChips, monthChips, weekLabel, flagKalaYoks } from './utils/dayLabels';
+import { flagChips, monthChips, flagKalaYoks } from './utils/dayLabels';
 
 const toArabicDigits = (value: string | number) =>
   value
@@ -246,45 +246,7 @@ export default function App() {
             </section>
           )}
 
-          {/* 3. แถบสัปดาห์ */}
-          <section className="px-3 pt-5" aria-label="แถบสัปดาห์">
-            <h2 className="text-[20px] leading-[1.4] font-black text-slate-700">สัปดาห์นี้</h2>
-            <div className="grid grid-cols-7 gap-1 mt-2 text-center">
-              {THAI_DAYS_SHORT.map((label, i) => (
-                <div key={i} className={`text-[15px] leading-[1.5] font-black text-white rounded-md py-1 ${WEEKDAY_HEADER_BG[i]}`}>{label}</div>
-              ))}
-              {weekDays.map(({ date, info }) => {
-                const isToday = sameDay(date, today);
-                const isSelected = sameDay(date, selectedDate);
-                return (
-                  <button
-                    key={date.toISOString()}
-                    onClick={() => setSelectedDate(date)}
-                    aria-label={toArabicDigits(`${date.getDate()} ${THAI_MONTHS[date.getMonth()]}`)}
-                    className={`relative min-h-[56px] rounded-xl flex flex-col items-center justify-center gap-0 bg-white ${isSelected ? 'border-[3px] border-[#0b62ff]' : 'border border-slate-300'}`}
-                  >
-                    {isToday ? (
-                      <span className="w-[38px] h-[38px] rounded-full bg-[#b3001b] text-white flex items-center justify-center text-[18px] font-black leading-none">
-                        {toArabicDigits(date.getDate())}
-                      </span>
-                    ) : (
-                      <span className="text-[18px] leading-[1.4] font-bold">{toArabicDigits(date.getDate())}</span>
-                    )}
-                    {isToday && <span className="text-[12px] leading-[1.3] font-black text-[#b3001b]">วันนี้</span>}
-                    {!isToday && info && (() => {
-                      const wl = weekLabel(info);
-                      if (!wl) return null;
-                      const color = wl.kind === 'sin' ? 'text-[#8a5a00]' : wl.kind === 'good' ? 'text-[#0f7a28]' : 'text-[#b3001b]';
-                      return <span className={`text-[12px] leading-[1.3] font-black whitespace-nowrap ${color}`}>{wl.text}</span>;
-                    })()}
-                  </button>
-                );
-              })}
-            </div>
-            <p className="text-[15px] leading-[1.5] text-slate-600 text-center mt-1">วงกลมแดงทึบคือวันนี้ กรอบน้ำเงินหนาคือวันที่เลือก</p>
-          </section>
-
-          {/* 4. รายการ 7 วันแบบแถวแนวตั้ง */}
+          {/* 3. รายการ 7 วันแบบแถวแนวตั้ง */}
           <section className="px-3 pt-4" aria-label="รายการ 7 วัน">
             <h2 className="text-[20px] leading-[1.4] font-black text-slate-700">รายการ 7 วัน</h2>
             <div className="mt-2 border-t-2 border-slate-200">
@@ -327,7 +289,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* 5. รายละเอียดของวันที่เลือก */}
+          {/* 4. รายละเอียดของวันที่เลือก */}
           <div ref={detailRef} className="scroll-mt-[120px]">
             {selectedDate && detailData ? (
               <DetailSection date={selectedDate} data={detailData} />
@@ -336,7 +298,7 @@ export default function App() {
             )}
           </div>
 
-          {/* 6. มุมมองเดือน: นำทางเท่านั้น */}
+          {/* 5. มุมมองเดือน: นำทางเท่านั้น */}
           <section className="px-0 pt-2 pb-10" aria-label="ตารางเดือน">
             <div className="grid grid-cols-7 gap-[2px] mt-2 text-center">
               {THAI_DAYS_SHORT.map((label, i) => (
