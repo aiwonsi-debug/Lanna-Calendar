@@ -248,8 +248,7 @@ export default function App() {
 
           {/* 3. รายการ 7 วันแบบแถวแนวตั้ง */}
           <section className="px-3 pt-4" aria-label="รายการ 7 วัน">
-            <h2 className="text-[20px] leading-[1.4] font-black text-slate-700">รายการ 7 วัน</h2>
-            <div className="mt-2 border-t-2 border-slate-200">
+            <div className="border-t-2 border-slate-200">
               {weekDays.map(({ date, info }) => {
                 if (!info) return null;
                 const isToday = sameDay(date, today);
