@@ -192,12 +192,13 @@ body {
 .dp-kalayok p:last-child {
   margin-bottom: 0;
 }
-/* ป้ายสิทธิโชคทุกชื่อ: ชื่อป้ายเป็นตัวหนา (แท็ก b) คำอธิบายน้ำหนักปกติ ไม่มี ":" คั่น */
+/* ป้ายสิทธิโชคทุกชื่อ: ชื่อป้ายเป็นตัวหนา (แท็ก b) คำอธิบายน้ำหนักปกติ ไม่มี ":" คั่น
+   ทั้งรายการใช้สีเขียวเข้มชุด -strong สีเดียวกับหัวข้อ (รวมราชาโชค) */
 .dp-chok {
   font-size: 16.5px;
   line-height: 1.75;
   margin-top: 8px;
-  color: var(--dp-good);
+  color: var(--dp-good-strong);
 }
 .dp-dirboxes {
   display: flex;

@@ -234,10 +234,9 @@ export default function DispatchApp() {
             {kalaYoks.length > 0 && (
               <div className="dp-kalayok">
                 {kalaYoks.map((ky, i) => (
-                  <p key={i}>
-                    <b style={{ color: ky.isGood ? 'var(--dp-good)' : 'var(--dp-bad)' }}>
-                      {toArabicDigits(ky.name)}
-                    </b>{' '}
+                  /* ทั้งรายการใช้สีเดียวกับหัวข้อ: ธงชัย/อธิบดี เขียวเข้ม อุบาทว์/โลกาวินาศ แดงเข้ม (ชุด -strong คอนทราสต์ผ่านบนพื้นครีม) */
+                  <p key={i} style={{ color: ky.isGood ? 'var(--dp-good-strong)' : 'var(--dp-bad-strong)' }}>
+                    <b>{toArabicDigits(ky.name)}</b>{' '}
                     {toArabicDigits(ky.meaning)}
                   </p>
                 ))}
@@ -252,13 +251,14 @@ export default function DispatchApp() {
               ) : null,
             )}
             <div className="dp-dirboxes">
-              <div className="dp-dirbox">
+              {/* หัวข้อและเนื้อหาในกล่องใช้สีเดียวกันทั้งกล่อง: ทิศศรีเขียวเข้ม กาลกิณีแดงเข้ม */}
+              <div className="dp-dirbox" style={{ color: 'var(--dp-good-strong)' }}>
                 ทิศศรี (มงคล)<br />
-                <b style={{ color: 'var(--dp-good)' }}>{toArabicDigits(directions.sri)}</b>
+                <b>{toArabicDigits(directions.sri)}</b>
               </div>
-              <div className="dp-dirbox">
+              <div className="dp-dirbox" style={{ color: 'var(--dp-bad-strong)' }}>
                 กาลกิณี (ห้าม)<br />
-                <b style={{ color: 'var(--dp-bad)' }}>{toArabicDigits(directions.ka)}</b>
+                <b>{toArabicDigits(directions.ka)}</b>
               </div>
             </div>
 
