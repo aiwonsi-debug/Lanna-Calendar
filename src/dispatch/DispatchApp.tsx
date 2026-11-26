@@ -140,25 +140,6 @@ export default function DispatchApp() {
     `${isToday ? 'วันนี้ · ' : ''}วัน${THAI_DAYS[selectedDate.getDay()]}ที่ ${selectedDate.getDate()} ${THAI_MONTHS[selectedDate.getMonth()]} พ.ศ. ${selectedDate.getFullYear() + 543}`,
   );
 
-  /* ย่อหน้าคำอธิบายประจำวัน: ข้อความตำราของกาลโยคประจำวันเรียงต่อกันตรงตัว
-     ถ้าวันนั้นไม่มีกาลโยค ใช้คำอธิบายสิทธิโชคจากพจนานุกรมเดิมแทน ไม่มีคือไม่แสดง */
-  const dayParagraph = useMemo(() => {
-    if (!info) return null;
-    if (kalaYoks.length > 0) return toArabicDigits(kalaYoks.map((k) => k.meaning).join(' '));
-    const parts: React.ReactNode[] = [];
-    info.sitthiList.forEach((s) => {
-      if (!SITTHI_DESC[s]) return;
-      if (parts.length > 0) parts.push(' ');
-      /* ป้ายสิทธิโชคทุกชื่อ: ชื่อป้ายตัวหนา ไม่มีเครื่องหมาย ":" คั่น ตามด้วยคำอธิบายเดิม (คำสั่งผู้ใช้) */
-      parts.push(
-        <React.Fragment key={s}>
-          <b>{toArabicDigits(`วัน${s}`)}</b> {toArabicDigits(SITTHI_DESC[s])}
-        </React.Fragment>,
-      );
-    });
-    return parts.length > 0 ? parts : null;
-  }, [info, kalaYoks]);
-
   /* คำทำนาย: ข้อความต้นทางจากตัวคำนวณมี ":" คั่นหัวข้อกับคำทำนาย (แก้ที่ต้นทางไม่ได้)
      จึงแยกที่ตัวคั่นแรกตอนแสดงผล: หัวข้อเป็นตัวหนา คำทำนายน้ำหนักปกติ ไม่มี ":" */
   const fortuneLines = useMemo(() => {
@@ -196,8 +177,6 @@ export default function DispatchApp() {
               <span style={{ whiteSpace: 'nowrap' }}>{toArabicDigits(`${info.phase} ${info.lunarDay} ค่ำ`)}</span>{' '}
               <span style={{ whiteSpace: 'nowrap' }}>{toArabicDigits(`เดือน${info.lannaMonthName}${info.isSin ? ' วันศีล' : ''}`)}</span>
             </div>
-
-            {dayParagraph && <div className="dp-daytext">{dayParagraph}</div>}
 
             {/* มาตรวัด 3 ขั้น */}
             <div className="dp-gauge" aria-label="มาตรวัดวันเสีย วันปกติ วันดี">
