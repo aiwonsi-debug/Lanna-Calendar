@@ -301,16 +301,17 @@ export default function DispatchApp() {
             )}
 
             <div className="dp-rule" />
-            {/* หัวข้อตารางเดือน: ปุ่มเลื่อนเดือนเหลือชุดเดียวที่แถบหัวข้อด้านบน
-                ช่องซ้ายของแถวนี้เป็นปุ่มกลับวันนี้ แสดงเฉพาะเมื่อวันที่เลือกไม่ใช่วันนี้ */}
+            {/* หัวข้อตารางเดือน: ช่องซ้ายเป็นปุ่มกลับวันนี้ (แสดงเฉพาะเมื่อวันที่เลือกไม่ใช่วันนี้)
+                ลูกศรเลื่อนเดือนขนาบชื่อเดือนตามคำสั่งผู้ใช้ เรียก stepMonth ตัวเดียวกับแถบด้านบน */}
             <div className="dp-gridbar">
               {isToday ? (
                 <span aria-hidden="true" />
               ) : (
                 <button className="dp-today-btn" onClick={() => selectDay(today)}>วันนี้</button>
               )}
+              <button className="dp-gridbar-btn" onClick={() => stepMonth(-1)} aria-label="เดือนก่อนหน้า">&lt;</button>
               <div className="dp-gridbar-title">{toArabicDigits(monthTitle)}</div>
-              <span aria-hidden="true" />
+              <button className="dp-gridbar-btn" onClick={() => stepMonth(1)} aria-label="เดือนถัดไป">&gt;</button>
             </div>
             <div className="dp-monthgrid">
               {THAI_DAYS_SHORT.map((label, i) => (

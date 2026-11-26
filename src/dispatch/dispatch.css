@@ -309,18 +309,29 @@ body {
   margin-bottom: 0;
 }
 
-/* --- แถวหัวข้อตารางเดือน: ชื่อเดือนอยู่กลาง ไม่มีลูกศรเลื่อนเดือน
-   (เหลือชุดเดียวที่แถบหัวข้อด้านบน) ช่องซ้ายเป็นปุ่มกลับวันนี้ --- */
+/* --- แถวหัวข้อตารางเดือน: [ปุ่มกลับวันนี้] [‹] [ชื่อเดือนกลาง] [›]
+   วัดด้วยฟอนต์จริงที่จอ 360px: ปุ่มวันนี้ 52 + ลูกศร 96 + ชื่อเดือนยาวสุด 136 = 284
+   น้อยกว่าความกว้างเนื้อหา 304 จึงไม่ล้นและชื่อเดือนอยู่กลางช่องของตัวเอง --- */
 .dp-gridbar {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-columns: auto 48px minmax(0, 1fr) 48px;
   align-items: center;
+}
+.dp-gridbar-btn {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--dp-ink);
 }
 .dp-today-btn {
   justify-self: start;
   min-width: 48px;
   min-height: 48px;
-  padding: 0 16px;
+  padding: 0 12px;
   font-size: 15px;
   font-weight: 800;
   line-height: 1;
