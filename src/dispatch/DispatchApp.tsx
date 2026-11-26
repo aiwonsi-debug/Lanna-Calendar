@@ -81,14 +81,16 @@ const UBAKONG_LABELS = ['เช้า', 'สาย', 'เที่ยง', 'บ�
 const ritualIsBad = (description: string) =>
   ['ไม่', 'ห้าม', 'เสีย', 'ภัย', 'ศัตรู', 'ฉิบหาย', 'ทุกข์', 'ตาย'].some((t) => description.includes(t));
 
+/* สีป้ายในตารางเดือนใช้ชุดสีเข้มเฉพาะ (ตัวแปร -strong ใน dispatch.css)
+   คอนทราสต์ต่อพื้นครีม #faf6ec ไม่ต่ำกว่า 6.6:1 ทุกสี เกินเกณฑ์ 4.5:1 */
 const chipColor = (kind: string) =>
   kind === 'sin'
-    ? 'var(--dp-sin)'
+    ? 'var(--dp-sin-strong)'
     : kind === 'bad'
-      ? 'var(--dp-bad)'
+      ? 'var(--dp-bad-strong)'
       : kind === 'good'
-        ? 'var(--dp-good)'
-        : 'var(--dp-neutral)';
+        ? 'var(--dp-good-strong)'
+        : 'var(--dp-neutral-strong)';
 
 export default function DispatchApp() {
   const today = useMemo(() => {
@@ -194,6 +196,20 @@ export default function DispatchApp() {
               </div>
             </div>
 
+            {/* ข้อห้ามและกิจวัตรอยู่ก่อนข้อมูลยาว: ผู้ใช้ส่วนใหญ่อยากรู้ก่อนว่าวันนี้ทำอะไรได้/ไม่ได้ */}
+            <div className="dp-rule" />
+            <div className="dp-section-label">ข้อห้ามและกิจวัตรประจำวัน</div>
+            <div className="dp-rituals">
+              {rituals.map((r, i) => (
+                <div key={i} className="dp-ritual-row">
+                  <span>{toArabicDigits(r.title)}</span>
+                  <b style={{ color: ritualIsBad(r.description) ? 'var(--dp-bad)' : 'var(--dp-good)' }}>
+                    {toArabicDigits(r.description)}
+                  </b>
+                </div>
+              ))}
+            </div>
+
             <div className="dp-rule" />
             <div className="dp-section-label">ข้อมูลประจำวัน</div>
             <div className="dp-topics">
@@ -253,7 +269,7 @@ export default function DispatchApp() {
             <div className="dp-ubakong">
               {UBAKONG_LABELS.map((label, i) => {
                 const score = UBAKONG_GRID[selectedDate.getDay()][i];
-                const cls = score === 4 ? 'good' : score === 1 || score === -1 ? 'bad' : '';
+                const cls = score === 4 ? 'good' : score === 1 || score === -1 ? 'bad' : 'normal';
                 const sym = score === 4 ? '••••' : score === 1 ? '•' : score === -1 ? '×' : '๐';
                 const color = score === 4 ? 'var(--dp-good)' : score === 1 || score === -1 ? 'var(--dp-bad)' : 'var(--dp-muted)';
                 return (
@@ -272,19 +288,6 @@ export default function DispatchApp() {
               <span>× = ห้ามไป</span>
             </div>
 
-            <div className="dp-rule" />
-            <div className="dp-section-label">ข้อห้ามและกิจวัตรประจำวัน</div>
-            <div className="dp-rituals">
-              {rituals.map((r, i) => (
-                <div key={i} className="dp-ritual-row">
-                  <span>{toArabicDigits(r.title)}</span>
-                  <b style={{ color: ritualIsBad(r.description) ? 'var(--dp-bad)' : 'var(--dp-good)' }}>
-                    {toArabicDigits(r.description)}
-                  </b>
-                </div>
-              ))}
-            </div>
-
             {fortuneLines.length > 0 && (
               <>
                 <div className="dp-rule" />
@@ -298,10 +301,16 @@ export default function DispatchApp() {
             )}
 
             <div className="dp-rule" />
+            {/* หัวข้อตารางเดือน: ปุ่มเลื่อนเดือนเหลือชุดเดียวที่แถบหัวข้อด้านบน
+                ช่องซ้ายของแถวนี้เป็นปุ่มกลับวันนี้ แสดงเฉพาะเมื่อวันที่เลือกไม่ใช่วันนี้ */}
             <div className="dp-gridbar">
-              <button className="dp-gridbar-btn" onClick={() => stepMonth(-1)} aria-label="เดือนก่อนหน้า">&lt;</button>
+              {isToday ? (
+                <span aria-hidden="true" />
+              ) : (
+                <button className="dp-today-btn" onClick={() => selectDay(today)}>วันนี้</button>
+              )}
               <div className="dp-gridbar-title">{toArabicDigits(monthTitle)}</div>
-              <button className="dp-gridbar-btn" onClick={() => stepMonth(1)} aria-label="เดือนถัดไป">&gt;</button>
+              <span aria-hidden="true" />
             </div>
             <div className="dp-monthgrid">
               {THAI_DAYS_SHORT.map((label, i) => (
@@ -330,7 +339,7 @@ export default function DispatchApp() {
                       </span>
                     ))}
                     {festival && (
-                      <span className="dp-cell-label" style={{ color: 'var(--dp-neutral)' }}>
+                      <span className="dp-cell-label" style={{ color: 'var(--dp-neutral-strong)' }}>
                         {festival}
                       </span>
                     )}

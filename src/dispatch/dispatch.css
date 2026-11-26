@@ -27,6 +27,12 @@ body {
   --dp-good: #0f7a28;
   --dp-sin: #8a5a00;
   --dp-neutral: #5b6b7c;
+  /* สีป้ายตารางเดือนชุดเข้ม: คอนทราสต์ต่อพื้นครีม #faf6ec
+     แดง 7.96:1 เขียว 7.29:1 ทอง 6.67:1 น้ำเงินเทา 7.00:1 (เกณฑ์ขั้นต่ำ 4.5:1) */
+  --dp-bad-strong: #9d0015;
+  --dp-good-strong: #0a5f1f;
+  --dp-sin-strong: #7a4e00;
+  --dp-neutral-strong: #43566a;
   --dp-selected: #0b62ff;
 
   margin: 0;
@@ -73,6 +79,9 @@ body {
   align-items: center;
 }
 .dp-monthbar-btn {
+  /* พื้นที่แตะขั้นต่ำ 48x48px บังคับตายตัว ปุ่มเลื่อนเดือนเหลือชุดนี้ชุดเดียวในหน้า */
+  width: 48px;
+  height: 48px;
   min-width: 48px;
   min-height: 48px;
   font-size: 22px;
@@ -231,12 +240,20 @@ body {
   border-radius: 8px;
   padding: 7px 0;
 }
+/* สีพื้นหลังช่องอุบากองสื่อความหมายคู่กับสัญลักษณ์:
+   ดี = เขียวอ่อน, ปกติ = ครีมเทาอ่อน, ห้าม/รีบไป = แดงอ่อน
+   คำอธิบายสัญลักษณ์อยู่ใต้แถวช่องทันทีใน .dp-ubakong-legend */
 .dp-ubakong-cell.good {
-  border-color: #a9d3ae;
-  background: #f0f7ee;
+  border-color: #8fc787;
+  background: #e2f1dc;
+}
+.dp-ubakong-cell.normal {
+  border-color: #ddd5c0;
+  background: #f2eddd;
 }
 .dp-ubakong-cell.bad {
-  border-color: #d9b3b3;
+  border-color: #d9a3a3;
+  background: #fae6e6;
 }
 .dp-ubakong-sym {
   font-size: 17px;
@@ -292,20 +309,25 @@ body {
   margin-bottom: 0;
 }
 
-/* --- แถวหัวข้อตารางเดือน: ชื่อเดือนอยู่กลาง ลูกศรเปลี่ยนเดือนสองข้าง
-   แบบเดียวกับแถบหัวข้อเดือนด้านบน แต่ชื่อเดือนใช้โทนป้ายชื่อส่วน --- */
+/* --- แถวหัวข้อตารางเดือน: ชื่อเดือนอยู่กลาง ไม่มีลูกศรเลื่อนเดือน
+   (เหลือชุดเดียวที่แถบหัวข้อด้านบน) ช่องซ้ายเป็นปุ่มกลับวันนี้ --- */
 .dp-gridbar {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
 }
-.dp-gridbar-btn {
+.dp-today-btn {
+  justify-self: start;
   min-width: 48px;
   min-height: 48px;
-  font-size: 20px;
-  font-weight: 900;
+  padding: 0 16px;
+  font-size: 15px;
+  font-weight: 800;
   line-height: 1;
   color: var(--dp-ink);
+  border: 1.5px solid var(--dp-rule);
+  border-radius: 999px;
+  background: #fffdf6;
 }
 .dp-gridbar-title {
   text-align: center;
@@ -367,7 +389,9 @@ body {
   display: inline-block;
 }
 .dp-cell-label {
-  font-size: 10.5px;
+  /* ป้ายเดือนอย่างน้อย 11px ทุกขนาดจอตามข้อกำหนดอ่านง่ายสำหรับผู้สูงอายุ
+     สีใช้ชุด -strong ที่คอนทราสต์ต่อพื้นครีมไม่ต่ำกว่า 6.6:1 */
+  font-size: 11.5px;
   font-weight: 800;
   line-height: 1.3;
   white-space: nowrap;
@@ -412,7 +436,7 @@ body {
     font-size: 12.5px;
   }
   .dp-cell-label {
-    font-size: 9.5px;
+    font-size: 11px;
   }
   .dp-dirbox {
     font-size: 15px;
@@ -424,10 +448,11 @@ body {
 }
 
 /* จอแคบมาก (374px ลงมา): ช่องเดือนเหลือประมาณ 43px
-   ป้ายยาวสุด (วันสังขานต์ล่อง) ที่ 9.5px กว้างประมาณ 61px จึงลดเหลือ 8.5px
-   ให้ล้นขอบช่องรวมไม่เกินประมาณ 12px (ข้างละประมาณ 6px) */
+   ป้ายยังคง 11px ตามข้อกำหนดขั้นต่ำ ตัวป้ายคำยาว (เช่น วันสังขานต์ล่อง)
+   จะล้นขอบช่องแบบสมมาตร แต่โครง minmax(0, 1fr) และ min-width: 0
+   รับประกันว่าป้ายดันความกว้างตารางหรือหน้าไม่ได้ */
 @media (max-width: 374px) {
   .dp-cell-label {
-    font-size: 8.5px;
+    font-size: 11px;
   }
 }
