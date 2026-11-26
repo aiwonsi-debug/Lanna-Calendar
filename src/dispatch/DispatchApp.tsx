@@ -102,6 +102,19 @@ export default function DispatchApp() {
 
   const info = useMemo(() => getLannaDate(selectedDate), [selectedDate]);
   const kalaYoks = useMemo(() => (info ? flagKalaYoks(info) : []), [info]);
+  /* ป้ายประจำวันจากแฟล็กจริงที่ไม่มีข้อความตำรา (ลำดับเดียวกับ flagChips ใน dayLabels)
+     กาลโยค 4 ตัว (ธงชัย อธิบดี อุบาทว์ โลกาวินาศ) แสดงเป็นข้อความตำราแยกแล้วจึงไม่รวมที่นี่ */
+  const flagLabels = useMemo(() => {
+    if (!info) return [] as { text: string; kind: string }[];
+    const out: { text: string; kind: string }[] = [];
+    if (info.isMai) out.push({ text: 'วันไหม้', kind: 'bad' });
+    if (info.isWodwai) out.push({ text: 'วันวอดวาย', kind: 'bad' });
+    if (info.isMahaMachu) out.push({ text: 'วันมหามัจจุ', kind: 'bad' });
+    else if (info.isMachu) out.push({ text: 'วันมัจจุ', kind: 'bad' });
+    if (info.isLomLuang) out.push({ text: 'วันหล่มหลวง', kind: 'bad' });
+    if (info.isHuaRiangMon) out.push({ text: 'หัวเรียงหมอน', kind: 'neutral' });
+    return out;
+  }, [info]);
   const directions = useMemo(() => getDirections(selectedDate.getDay()), [selectedDate]);
   const rituals = useMemo(() => getDailyRituals(selectedDate.getDay()), [selectedDate]);
 
@@ -207,23 +220,25 @@ export default function DispatchApp() {
             <div className="dp-rule" />
             <div className="dp-section-label">ข้อมูลประจำวัน</div>
             <div className="dp-topics">
-              <div>
-                <b style={{ color: '#1d4ed8' }}>วันไท</b>{' '}
+              {/* สีประจำหัวข้อใส่ที่ตัวบล็อกทั้งก้อน: ชื่อหัวข้อและเนื้อหาทั้งรายการเป็นสีเดียวกัน
+                  (เดิมใส่เฉพาะแท็ก b ทำให้เนื้อหาเป็นสีดำ ไม่ตรงหัวข้อ) */}
+              <div style={{ color: '#1d4ed8' }}>
+                <b>วันไท</b>{' '}
                 <span style={{ whiteSpace: 'nowrap' }}>{toArabicDigits(`วัน${info.wanThai}`)}</span>
                 {info.wanThaiDesc && info.wanThaiDesc !== '-' ? <> {toArabicDigits(info.wanThaiDesc)}</> : null}
               </div>
-              <div>
-                <b style={{ color: '#7e22ce' }}>เก้ากอง</b>{' '}
+              <div style={{ color: '#7e22ce' }}>
+                <b>เก้ากอง</b>{' '}
                 <span style={{ whiteSpace: 'nowrap' }}>{toArabicDigits(info.kaoKong)}</span>
                 {info.kaoKongDesc && info.kaoKongDesc !== '-' ? <> {toArabicDigits(info.kaoKongDesc)}</> : null}
               </div>
-              <div>
-                <b style={{ color: '#0f766e' }}>ดิถี</b>{' '}
+              <div style={{ color: '#0f766e' }}>
+                <b>ดิถี</b>{' '}
                 <span style={{ whiteSpace: 'nowrap' }}>{toArabicDigits(info.panjaDithi)}</span>
                 {DITHI_DESC[info.panjaDithi] ? <> {DITHI_DESC[info.panjaDithi]}</> : null}
               </div>
-              <div>
-                <b style={{ color: '#8a5a00' }}>ฟ้าตีแส่ง</b>{' '}
+              <div style={{ color: '#8a5a00' }}>
+                <b>ฟ้าตีแส่ง</b>{' '}
                 <span style={{ whiteSpace: 'nowrap' }}>{toArabicDigits(`เศษ ${info.fahTeeSang}`)}</span>{' '}
                 {fahMeaning(info.fahTeeSang)}
               </div>
@@ -242,6 +257,13 @@ export default function DispatchApp() {
                 ))}
               </div>
             )}
+            {/* ป้ายประจำวันอื่นตามแฟล็กจริงที่ไม่มีข้อความตำราในระบบ: แสดงเฉพาะชื่อป้ายตัวหนา
+                ห้ามแต่งคำอธิบาย (อุบาทว์/โลกาวินาศ/ธงชัย/อธิบดี มีข้อความกาลโยคด้านบนแล้ว ไม่แสดงซ้ำ) */}
+            {flagLabels.map((f) => (
+              <div key={f.text} className="dp-flaglabel" style={{ color: chipColor(f.kind) }}>
+                {toArabicDigits(f.text)}
+              </div>
+            ))}
             {info.sitthiList.map((s) =>
               SITTHI_DESC[s] ? (
                 /* ป้ายสิทธิโชคทุกชื่อ: ชื่อป้ายตัวหนา ไม่มีเครื่องหมาย ":" คั่น ตามด้วยคำอธิบายเดิม (คำสั่งผู้ใช้) */
