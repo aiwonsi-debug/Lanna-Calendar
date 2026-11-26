@@ -326,9 +326,6 @@ export default function DispatchApp() {
                     <span className={`dp-cell-num${cellToday ? ' today' : ''}`}>
                       {toArabicDigits(date.getDate())}
                     </span>
-                    {cellToday && (
-                      <span className="dp-cell-label" style={{ color: 'var(--dp-bad)' }}>วันนี้</span>
-                    )}
                     {chips.map((c, i) => (
                       <span key={i} className="dp-cell-label" style={{ color: chipColor(c.kind) }}>
                         {c.text}
