@@ -177,7 +177,7 @@ export default function DispatchApp() {
             <div className="dp-dateline">{dateLine}</div>
             <div className="dp-lunarline">
               <span style={{ whiteSpace: 'nowrap' }}>{toArabicDigits(`${info.phase} ${info.lunarDay} ค่ำ`)}</span>{' '}
-              <span style={{ whiteSpace: 'nowrap' }}>{toArabicDigits(`เดือน${info.lannaMonthName}`)}</span>
+              <span style={{ whiteSpace: 'nowrap' }}>{toArabicDigits(`เดือน${info.lannaMonthName}${info.isSin ? ' วันศีล' : ''}`)}</span>
             </div>
 
             {dayParagraph && <div className="dp-daytext">{toArabicDigits(dayParagraph)}</div>}
