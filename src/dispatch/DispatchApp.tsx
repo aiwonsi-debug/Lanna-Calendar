@@ -162,14 +162,15 @@ export default function DispatchApp() {
   );
 
   /* คำทำนาย: ข้อความต้นทางจากตัวคำนวณมี ":" คั่นหัวข้อกับคำทำนาย (แก้ที่ต้นทางไม่ได้)
-     จึงแยกที่ตัวคั่นแรกตอนแสดงผล: หัวข้อเป็นตัวหนา คำทำนายน้ำหนักปกติ ไม่มี ":" */
+     จึงแยกที่ตัวคั่นแรกตอนแสดงผล: หัวข้อเป็นตัวหนา คำทำนายน้ำหนักปกติ ไม่มี ":"
+     และตัดวงเล็บออกจากหัวข้อตอนแสดงผลตามคำสั่งผู้ใช้ (ข้อมูลต้นทางคงเดิม) */
   const fortuneLines = useMemo(() => {
     if (!info) return [] as { head: string; rest: string }[];
     const out: { head: string; rest: string }[] = [];
     const splitHead = (text: string) => {
       const i = text.indexOf(':');
-      if (i < 0) return { head: text, rest: '' };
-      return { head: text.slice(0, i), rest: text.slice(i + 1).trimStart() };
+      if (i < 0) return { head: text.replace(/[()]/g, ''), rest: '' };
+      return { head: text.slice(0, i).replace(/[()]/g, ''), rest: text.slice(i + 1).trimStart() };
     };
     if (info.wanMuai) out.push(splitHead(`วัน${info.wanMuai}`));
     if (info.wanPhiKin) out.push(splitHead(info.wanPhiKin));
