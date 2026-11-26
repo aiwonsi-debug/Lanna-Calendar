@@ -159,12 +159,6 @@ export default function DispatchApp() {
 
   return (
     <div className="dp-root">
-      {/* แถบชื่อเหนือแผ่นกระดาษ */}
-      <div className="dp-masthead">
-        <div className="dp-masthead-name">ล้านนา</div>
-        <div className="dp-masthead-issue">{toArabicDigits(`ฉบับประจำวัน · ${monthTitle}`)}</div>
-      </div>
-
       <div className="dp-paper" ref={paperRef}>
         {/* แถบหัวข้อเดือน: บรรทัดปีล้านนา/จ.ศ. มีที่เดียวในหน้านี้ */}
         <div className="dp-monthbar">
@@ -304,7 +298,11 @@ export default function DispatchApp() {
             )}
 
             <div className="dp-rule" />
-            <div className="dp-section-label">{toArabicDigits(`ทั้งเดือน · ${monthTitle}`)}</div>
+            <div className="dp-gridbar">
+              <button className="dp-gridbar-btn" onClick={() => stepMonth(-1)} aria-label="เดือนก่อนหน้า">&lt;</button>
+              <div className="dp-gridbar-title">{toArabicDigits(monthTitle)}</div>
+              <button className="dp-gridbar-btn" onClick={() => stepMonth(1)} aria-label="เดือนถัดไป">&gt;</button>
+            </div>
             <div className="dp-monthgrid">
               {THAI_DAYS_SHORT.map((label, i) => (
                 <div key={i} className="dp-monthgrid-head">{label}</div>

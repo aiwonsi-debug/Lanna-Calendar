@@ -56,35 +56,6 @@ body {
   padding: 0;
 }
 
-/* --- แถบชื่อเหนือแผ่นกระดาษ (อยู่บนพื้นดำ) --- */
-.dp-masthead {
-  max-width: 560px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 0 10px;
-  padding: 0 6px 10px;
-}
-.dp-masthead > * {
-  min-width: 0;
-}
-.dp-masthead-name {
-  font-size: 30px;
-  font-weight: 900;
-  font-style: italic;
-  color: var(--dp-masthead);
-  letter-spacing: 1px;
-  line-height: 1.2;
-}
-.dp-masthead-issue {
-  font-size: 12px;
-  letter-spacing: 2px;
-  color: #bdb4a0;
-  white-space: nowrap;
-}
-
 /* --- แผ่นกระดาษครีม --- */
 .dp-paper {
   max-width: 560px;
@@ -318,6 +289,32 @@ body {
   margin-bottom: 0;
 }
 
+/* --- แถวหัวข้อตารางเดือน: ชื่อเดือนอยู่กลาง ลูกศรเปลี่ยนเดือนสองข้าง
+   แบบเดียวกับแถบหัวข้อเดือนด้านบน แต่ชื่อเดือนใช้โทนป้ายชื่อส่วน --- */
+.dp-gridbar {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  align-items: center;
+}
+.dp-gridbar-btn {
+  min-width: 48px;
+  min-height: 48px;
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--dp-ink);
+}
+.dp-gridbar-title {
+  text-align: center;
+  min-width: 0;
+  font-size: 14px;
+  letter-spacing: 2.5px;
+  color: var(--dp-label);
+  font-weight: 700;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
 /* --- ตารางเดือน --- */
 .dp-monthgrid {
   display: grid;
@@ -404,13 +401,6 @@ body {
   }
   .dp-paper {
     padding: 18px 14px 14px;
-  }
-  .dp-masthead-name {
-    font-size: 26px;
-  }
-  .dp-masthead-issue {
-    font-size: 10.5px;
-    letter-spacing: 1px;
   }
   .dp-monthbar-title {
     font-size: 19px;
