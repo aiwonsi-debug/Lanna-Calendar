@@ -149,27 +149,28 @@ export default function DispatchApp() {
     info.sitthiList.forEach((s) => {
       if (!SITTHI_DESC[s]) return;
       if (parts.length > 0) parts.push(' ');
-      if (s === 'ราชาโชค') {
-        /* วันราชาโชค: ชื่อป้ายตัวหนา ไม่มีเครื่องหมาย ":" คั่น ตามด้วยคำอธิบายเดิม (คำสั่งผู้ใช้) */
-        parts.push(
-          <React.Fragment key={s}>
-            <b>{toArabicDigits(`วัน${s}`)}</b> {toArabicDigits(SITTHI_DESC[s])}
-          </React.Fragment>,
-        );
-      } else {
-        parts.push(
-          <React.Fragment key={s}>{toArabicDigits(`วัน${s}: ${SITTHI_DESC[s]}`)}</React.Fragment>,
-        );
-      }
+      /* ป้ายสิทธิโชคทุกชื่อ: ชื่อป้ายตัวหนา ไม่มีเครื่องหมาย ":" คั่น ตามด้วยคำอธิบายเดิม (คำสั่งผู้ใช้) */
+      parts.push(
+        <React.Fragment key={s}>
+          <b>{toArabicDigits(`วัน${s}`)}</b> {toArabicDigits(SITTHI_DESC[s])}
+        </React.Fragment>,
+      );
     });
     return parts.length > 0 ? parts : null;
   }, [info, kalaYoks]);
 
+  /* คำทำนาย: ข้อความต้นทางจากตัวคำนวณมี ":" คั่นหัวข้อกับคำทำนาย (แก้ที่ต้นทางไม่ได้)
+     จึงแยกที่ตัวคั่นแรกตอนแสดงผล: หัวข้อเป็นตัวหนา คำทำนายน้ำหนักปกติ ไม่มี ":" */
   const fortuneLines = useMemo(() => {
-    if (!info) return [] as string[];
-    const out: string[] = [];
-    if (info.wanMuai) out.push(`วัน${info.wanMuai}`);
-    if (info.wanPhiKin) out.push(info.wanPhiKin);
+    if (!info) return [] as { head: string; rest: string }[];
+    const out: { head: string; rest: string }[] = [];
+    const splitHead = (text: string) => {
+      const i = text.indexOf(':');
+      if (i < 0) return { head: text, rest: '' };
+      return { head: text.slice(0, i), rest: text.slice(i + 1).trimStart() };
+    };
+    if (info.wanMuai) out.push(splitHead(`วัน${info.wanMuai}`));
+    if (info.wanPhiKin) out.push(splitHead(info.wanPhiKin));
     return out;
   }, [info]);
 
@@ -265,14 +266,10 @@ export default function DispatchApp() {
             )}
             {info.sitthiList.map((s) =>
               SITTHI_DESC[s] ? (
-                s === 'ราชาโชค' ? (
-                  /* วันราชาโชค: ชื่อป้ายตัวหนา ไม่มีเครื่องหมาย ":" คั่น ตามด้วยคำอธิบายเดิม (คำสั่งผู้ใช้) */
-                  <div key={s} className="dp-chok-raja">
-                    <b>{toArabicDigits(`วัน${s}`)}</b> {toArabicDigits(SITTHI_DESC[s])}
-                  </div>
-                ) : (
-                  <div key={s} className="dp-chok">{toArabicDigits(`วัน${s}: ${SITTHI_DESC[s]}`)}</div>
-                )
+                /* ป้ายสิทธิโชคทุกชื่อ: ชื่อป้ายตัวหนา ไม่มีเครื่องหมาย ":" คั่น ตามด้วยคำอธิบายเดิม (คำสั่งผู้ใช้) */
+                <div key={s} className="dp-chok">
+                  <b>{toArabicDigits(`วัน${s}`)}</b> {toArabicDigits(SITTHI_DESC[s])}
+                </div>
               ) : null,
             )}
             <div className="dp-dirboxes">
@@ -315,7 +312,10 @@ export default function DispatchApp() {
                 <div className="dp-section-label">คำทำนาย</div>
                 <div className="dp-fortune">
                   {fortuneLines.map((line, i) => (
-                    <p key={i}>{toArabicDigits(line)}</p>
+                    <p key={i}>
+                      <b>{toArabicDigits(line.head)}</b>
+                      {line.rest ? <> {toArabicDigits(line.rest)}</> : null}
+                    </p>
                   ))}
                 </div>
               </>

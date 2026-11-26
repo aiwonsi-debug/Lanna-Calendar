@@ -199,15 +199,8 @@ body {
 .dp-kalayok p:last-child {
   margin-bottom: 0;
 }
+/* ป้ายสิทธิโชคทุกชื่อ: ชื่อป้ายเป็นตัวหนา (แท็ก b) คำอธิบายน้ำหนักปกติ ไม่มี ":" คั่น */
 .dp-chok {
-  font-size: 16.5px;
-  line-height: 1.75;
-  margin-top: 8px;
-  color: var(--dp-good);
-  font-weight: 700;
-}
-/* วันราชาโชค: ชื่อป้ายเป็นตัวหนา (แท็ก b) คำอธิบายน้ำหนักปกติ ไม่มี ":" คั่น */
-.dp-chok-raja {
   font-size: 16.5px;
   line-height: 1.75;
   margin-top: 8px;
