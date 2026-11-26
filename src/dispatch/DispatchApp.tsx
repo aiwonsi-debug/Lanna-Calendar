@@ -195,8 +195,10 @@ export default function DispatchApp() {
   const headerYear = info
     ? toArabicDigits(`ปี${info.lannaYear.zodiacLanna} (ปี${info.lannaYear.zodiacThai}) จ.ศ. ${info.cs}`)
     : '';
+  /* บรรทัดวันที่ในส่วนรายละเอียด: แสดงเฉพาะวันในสัปดาห์และเลขวันที่ ไม่มีชื่อเดือนและปี พ.ศ.
+     (ผู้ใช้สั่งลบเดือนปีออก ชื่อเดือนและปียังมีที่แถบเดือนด้านบนและหัวตารางเดือน) */
   const dateLine = toArabicDigits(
-    `${isToday ? 'วันนี้ · ' : ''}วัน${THAI_DAYS[selectedDate.getDay()]}ที่ ${selectedDate.getDate()} ${THAI_MONTHS[selectedDate.getMonth()]} พ.ศ. ${selectedDate.getFullYear() + 543}`,
+    `${isToday ? 'วันนี้ · ' : ''}วัน${THAI_DAYS[selectedDate.getDay()]}ที่ ${selectedDate.getDate()}`,
   );
 
   /* คำทำนาย: ข้อความต้นทางจากตัวคำนวณมี ":" คั่นหัวข้อกับคำทำนาย (แก้ที่ต้นทางไม่ได้)
