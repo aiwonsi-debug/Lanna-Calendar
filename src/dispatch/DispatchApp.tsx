@@ -102,17 +102,25 @@ export default function DispatchApp() {
 
   const info = useMemo(() => getLannaDate(selectedDate), [selectedDate]);
   const kalaYoks = useMemo(() => (info ? flagKalaYoks(info) : []), [info]);
-  /* ป้ายประจำวันจากแฟล็กจริงที่ไม่มีข้อความตำรา (ลำดับเดียวกับ flagChips ใน dayLabels)
+  /* ป้ายประจำวันจากแฟล็กจริง (ลำดับเดียวกับ flagChips ใน dayLabels)
+     ส่วนใหญ่ไม่มีข้อความตำราในระบบ ยกเว้นหัวเรียงหมอน (ตำราบทที่ 14 หน้า 33)
      กาลโยค 4 ตัว (ธงชัย อธิบดี อุบาทว์ โลกาวินาศ) แสดงเป็นข้อความตำราแยกแล้วจึงไม่รวมที่นี่ */
   const flagLabels = useMemo(() => {
-    if (!info) return [] as { text: string; kind: string }[];
-    const out: { text: string; kind: string }[] = [];
+    if (!info) return [] as { text: string; kind: string; desc?: string }[];
+    const out: { text: string; kind: string; desc?: string }[] = [];
     if (info.isMai) out.push({ text: 'วันไหม้', kind: 'bad' });
     if (info.isWodwai) out.push({ text: 'วันวอดวาย', kind: 'bad' });
     if (info.isMahaMachu) out.push({ text: 'วันมหามัจจุ', kind: 'bad' });
     else if (info.isMachu) out.push({ text: 'วันมัจจุ', kind: 'bad' });
     if (info.isLomLuang) out.push({ text: 'วันหล่มหลวง', kind: 'bad' });
-    if (info.isHuaRiangMon) out.push({ text: 'หัวเรียงหมอน', kind: 'neutral' });
+    /* หัวเรียงหมอนมีข้อความความหมายในตำราวัดธาตุคำ บทที่ 14 หน้า 33 ใช้ข้อความเดิมตรงตัว:
+       "แต่งงานสมรสดีนักแล" และ "ต้องเลือกให้ได้ในวันหัวเรียงหมอน จึงจะอยู่ด้วยกันยืนยาวนานและราบรื่น" */
+    if (info.isHuaRiangMon)
+      out.push({
+        text: 'หัวเรียงหมอน',
+        kind: 'neutral',
+        desc: 'แต่งงานสมรสดีนักแล ต้องเลือกให้ได้ในวันหัวเรียงหมอน จึงจะอยู่ด้วยกันยืนยาวนานและราบรื่น',
+      });
     return out;
   }, [info]);
   const directions = useMemo(() => getDirections(selectedDate.getDay()), [selectedDate]);
@@ -257,11 +265,13 @@ export default function DispatchApp() {
                 ))}
               </div>
             )}
-            {/* ป้ายประจำวันอื่นตามแฟล็กจริงที่ไม่มีข้อความตำราในระบบ: แสดงเฉพาะชื่อป้ายตัวหนา
-                ห้ามแต่งคำอธิบาย (อุบาทว์/โลกาวินาศ/ธงชัย/อธิบดี มีข้อความกาลโยคด้านบนแล้ว ไม่แสดงซ้ำ) */}
+            {/* ป้ายประจำวันอื่นตามแฟล็กจริง: ป้ายที่ไม่มีข้อความตำราในระบบแสดงเฉพาะชื่อป้ายตัวหนา
+                ห้ามแต่งคำอธิบาย ยกเว้นหัวเรียงหมอนซึ่งมีข้อความตำราวัดธาตุคำ บทที่ 14 หน้า 33 ตรงตัว
+                (อุบาทว์/โลกาวินาศ/ธงชัย/อธิบดี มีข้อความกาลโยคด้านบนแล้ว ไม่แสดงซ้ำ) */}
             {flagLabels.map((f) => (
               <div key={f.text} className="dp-flaglabel" style={{ color: chipColor(f.kind) }}>
-                {toArabicDigits(f.text)}
+                <b>{toArabicDigits(f.text)}</b>
+                {f.desc && <span style={{ fontWeight: 400 }}> {toArabicDigits(f.desc)}</span>}
               </div>
             ))}
             {info.sitthiList.map((s) =>
