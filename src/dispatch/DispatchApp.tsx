@@ -59,11 +59,33 @@ function fahMeaning(fah: number): string {
   return 'ไม่เป็นมงคล อย่าทำพิธีหรือกิจกรรมสำคัญ';
 }
 
-/* ตำแหน่งเครื่องหมายบนมาตรวัด 3 ขั้น ยึดแฟล็กของวันเท่านั้น:
-   isSia อยู่ขั้นวันเสีย, มีชุดสิทธิโชคและไม่ใช่วันเสียอยู่ขั้นวันดี, นอกนั้นขั้นวันปกติ */
+/* กฎวันดีตามรายการสรุปปฏิทิน มช. ที่ผู้ใช้ยอมรับ (26 พ.ย. 2569):
+   วันดี = ไม่ใช่วันร้าย (วันเสีย วันไหม้ วันมัจจุ วันวอดวาย) และเข้าเงื่อนไขใดเงื่อนไขหนึ่ง
+   (1) มีสิทธิโชคตามตัวคำนวณ (2) ดิถีตรงดิถีประจำวันในสัปดาห์ตามตารางด้านล่าง
+   (อาทิตย์และจันทร์ไม่มีดิถีประจำวัน) (3) เป็นวันพญาวัน
+   กฎนี้ให้วันดี 83 วันในปี 2569 คลาดจากรายการสรุป มช. 6 วันตามที่ผู้ใช้ยอมรับแล้ว
+   (รายละเอียดใน audit/label-source-audit.md ภาคผนวก) ใช้ตัดสินทั้งป้ายวันดี
+   ในตารางเดือนและขั้นวันดีของมาตรวัด */
+const DOW_DITHI: Record<number, string> = {
+  2: 'ไชยาดิถี',
+  3: 'ภัททราดิถี',
+  4: 'ปุณณาดิถี',
+  5: 'นันทาดิถี',
+  6: 'ริทธาดิถี',
+};
+function isWanDee(r: LannaCalcResult): boolean {
+  if (r.isSia || r.isMai || r.isMachu || r.isWodwai) return false;
+  if (r.sitthiList.length > 0) return true;
+  if (r.isPhayaWan) return true;
+  const want = DOW_DITHI[r.date.getDay()];
+  return want !== undefined && r.panjaDithi === want;
+}
+
+/* ตำแหน่งเครื่องหมายบนมาตรวัด 3 ขั้น:
+   isSia อยู่ขั้นวันเสีย, เป็นวันดีตามกฎวันดีอยู่ขั้นวันดี, นอกนั้นขั้นวันปกติ */
 function gaugeLeft(r: LannaCalcResult): string {
   if (r.isSia) return '10%';
-  if (r.sitthiList.length > 0) return '90%';
+  if (isWanDee(r)) return '90%';
   return '50%';
 }
 
@@ -369,13 +391,17 @@ export default function DispatchApp() {
                 /* monthChips เป็นฟังก์ชันร่วมกับแอพหลัก ห้ามแก้ที่ต้นทาง:
                    สาขานี้ไม่แสดงป้ายวันหล่มหลวงและวันมหามัจจุตามคำสั่งผู้ใช้ จึงส่งผลคำนวณที่
                    ปิดแฟล็ก isLomLuang และแปลง isMahaMachu เป็น isMachu (แสดงเป็นวันมัจจุ)
-                   เฉพาะตอนขอป้ายตารางเดือนของสาขานี้ (ตัวคำนวณและแอพหลักไม่เปลี่ยน) */
+                   เฉพาะตอนขอป้ายตารางเดือนของสาขานี้ (ตัวคำนวณและแอพหลักไม่เปลี่ยน)
+                   ป้ายวันดี: monthChips ติดให้เฉพาะวันที่มีสิทธิโชค แต่สาขานี้ตัดสินด้วย
+                   กฎวันดีตามรายการสรุป มช. ที่ผู้ใช้ยอมรับ (ฟังก์ชัน isWanDee ด้านบน) แทน
+                   จึงถอดป้ายวันดีเดิมออกแล้วติดใหม่ตามกฎ ในตำแหน่งท้ายสุดตำแหน่งเดิม */
                 const chips = monthChips({
                   ...ci,
                   isLomLuang: false,
                   isMachu: ci.isMachu || ci.isMahaMachu,
                   isMahaMachu: false,
-                });
+                }).filter((c) => c.text !== 'วันดี');
+                if (isWanDee(ci)) chips.push({ text: 'วันดี', kind: 'good' });
                 const festival = getSongkranLabel(date);
                 return (
                   <button
