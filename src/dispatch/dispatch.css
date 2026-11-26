@@ -72,21 +72,9 @@ body {
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
 }
 
-/* --- แถบหัวข้อเดือน --- */
+/* --- แถบหัวข้อเดือน: ไม่มีปุ่มเลื่อนเดือน (ผู้ใช้สั่งลบ) ชื่อเดือนและปีอยู่กึ่งกลาง --- */
 .dp-monthbar {
-  display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) 48px;
-  align-items: center;
-}
-.dp-monthbar-btn {
-  /* พื้นที่แตะขั้นต่ำ 48x48px บังคับตายตัว ปุ่มเลื่อนเดือนเหลือชุดนี้ชุดเดียวในหน้า */
-  width: 48px;
-  height: 48px;
-  min-width: 48px;
-  min-height: 48px;
-  font-size: 22px;
-  font-weight: 900;
-  line-height: 1;
+  text-align: center;
 }
 .dp-monthbar-center {
   text-align: center;
@@ -128,6 +116,25 @@ body {
   color: var(--dp-muted);
   margin-top: 2px;
   line-height: 1.6;
+}
+
+/* --- ปุ่มเลื่อนวันขนาบบรรทัดวันที่: พื้นที่แตะอย่างน้อย 44x44px คอลัมน์กลาง minmax(0,1fr) กันล้นจอ --- */
+.dp-daynav {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+}
+.dp-daynav-btn {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1;
+}
+.dp-daynav-center {
+  min-width: 0;
 }
 
 /* --- มาตรวัด 3 ขั้น --- */

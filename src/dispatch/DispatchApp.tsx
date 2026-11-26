@@ -177,6 +177,12 @@ export default function DispatchApp() {
     setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth() + n, 1));
   };
 
+  /* เลื่อนวันทีละ 1 วัน: selectedDate เป็นแหล่งความจริงเดียวของทั้งหน้า
+     ข้ามขอบเดือนแล้วแถบเดือนด้านบนและตารางเดือนเปลี่ยนตามอัตโนมัติ */
+  const stepDay = (n: number) => {
+    setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate() + n));
+  };
+
   const selectDay = (date: Date) => {
     setSelectedDate(date);
     requestAnimationFrame(() => {
@@ -212,24 +218,30 @@ export default function DispatchApp() {
   return (
     <div className="dp-root">
       <div className="dp-paper" ref={paperRef}>
-        {/* แถบหัวข้อเดือน: บรรทัดปีล้านนา/จ.ศ. มีที่เดียวในหน้านี้ */}
+        {/* แถบหัวข้อเดือน: ชื่อเดือนและบรรทัดปีล้านนา/จ.ศ. อยู่กึ่งกลาง ไม่มีปุ่มเลื่อนเดือน
+            (ผู้ใช้สั่งลบลูกศรแถบนี้ออก การเลื่อนเดือนใช้ลูกศรที่หัวตารางเดือนแทน) */}
         <div className="dp-monthbar">
-          <button className="dp-monthbar-btn" onClick={() => stepMonth(-1)} aria-label="เดือนก่อนหน้า">&lt;</button>
           <div className="dp-monthbar-center">
             <div className="dp-monthbar-title">{toArabicDigits(monthTitle)}</div>
             <div className="dp-monthbar-year">{headerYear}</div>
           </div>
-          <button className="dp-monthbar-btn" onClick={() => stepMonth(1)} aria-label="เดือนถัดไป">&gt;</button>
         </div>
 
         <div className="dp-rule-thick" />
 
         {info && (
           <>
-            <div className="dp-dateline">{dateLine}</div>
-            <div className="dp-lunarline">
-              <span style={{ whiteSpace: 'nowrap' }}>{toArabicDigits(`${info.phase} ${info.lunarDay} ค่ำ`)}</span>{' '}
-              <span style={{ whiteSpace: 'nowrap' }}>{toArabicDigits(`เดือน${info.lannaMonthName}${info.isSin ? ' วันศีล' : ''}`)}</span>
+            {/* ปุ่มเลื่อนวันขนาบบรรทัดวันที่และบรรทัดจันทรคติ (คำสั่งผู้ใช้) เลื่อนทีละ 1 วัน */}
+            <div className="dp-daynav">
+              <button className="dp-daynav-btn" onClick={() => stepDay(-1)} aria-label="วันก่อนหน้า">&lt;</button>
+              <div className="dp-daynav-center">
+                <div className="dp-dateline">{dateLine}</div>
+                <div className="dp-lunarline">
+                  <span style={{ whiteSpace: 'nowrap' }}>{toArabicDigits(`${info.phase} ${info.lunarDay} ค่ำ`)}</span>{' '}
+                  <span style={{ whiteSpace: 'nowrap' }}>{toArabicDigits(`เดือน${info.lannaMonthName}${info.isSin ? ' วันศีล' : ''}`)}</span>
+                </div>
+              </div>
+              <button className="dp-daynav-btn" onClick={() => stepDay(1)} aria-label="วันถัดไป">&gt;</button>
             </div>
 
             {/* มาตรวัด 3 ขั้น */}
@@ -368,7 +380,7 @@ export default function DispatchApp() {
 
             <div className="dp-rule" />
             {/* หัวข้อตารางเดือน: ช่องซ้ายเป็นปุ่มกลับวันนี้ (แสดงเฉพาะเมื่อวันที่เลือกไม่ใช่วันนี้)
-                ลูกศรเลื่อนเดือนขนาบชื่อเดือนตามคำสั่งผู้ใช้ เรียก stepMonth ตัวเดียวกับแถบด้านบน */}
+                ลูกศรเลื่อนเดือนขนาบชื่อเดือนตามคำสั่งผู้ใช้ เป็นชุดเลื่อนเดือนชุดเดียวที่เหลือในหน้า */}
             <div className="dp-gridbar">
               {isToday ? (
                 <span aria-hidden="true" />
